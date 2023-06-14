@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+	<ImportAction name="merge">
+		<AuditConfig name="AuditConfig">
+			<AuditActions>
+				<AuditAction displayName="Query Plugin" enabled="true" name="queryPluginAction" />
+			</AuditActions>
+		</AuditConfig>
+	</ImportAction>
+</sailpoint>

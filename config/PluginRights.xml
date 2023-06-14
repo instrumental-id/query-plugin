@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+    <!-- The rights granted by the below capabilities -->
+    <SPRight name="IDW_SP_QueryRunner" displayName="Query Runner Access">
+        <Description>Allows this user to access the query runner page</Description>
+    </SPRight>
+
+    <SPRight name="IDW_SP_QuerySaveReport" displayName="Query Runner Save Report Access">
+        <Description>Allows this user to save query plugin queries as reports</Description>
+    </SPRight>
+
+    <SPRight name="IDW_SP_QueryRunner_Application" displayName="Query Runner Application Access">
+        <Description>Allows this user to run Application type queries</Description>
+    </SPRight>
+
+
+    <!-- Actual capabilities (bundles of rights) that can be assigned to an IIQ user or workgroup -->
+    <Capability name="IDW_SP_QueryRunner_Capability" displayName="Query Runner Access">
+    	<Description>Allows this user to run code via the Rule Runner</Description>
+    	<RightRefs>
+            <Reference class="sailpoint.object.SPRight" name="IDW_SP_QueryRunner"/>
+    	</RightRefs>
+    </Capability>
+
+    <Capability name="IDW_SP_QuerySaveReport_Capability" displayName="Query Runner Save Report Access">
+        <Description>Allows this user to save query plugin queries as reports</Description>
+        <RightRefs>
+            <Reference class="sailpoint.object.SPRight" name="IDW_SP_QuerySaveReport"/>
+        </RightRefs>
+    </Capability>
+</sailpoint>

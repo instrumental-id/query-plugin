@@ -1,0 +1,94 @@
+.resultTable {
+	margin: 5px;
+	overflow-y: auto;
+	overflow-x: scroll;
+}
+
+.resultHostLabel {
+	float: right;
+	font-style: italic;
+	padding-right: 5px;
+}
+
+.CodeMirror-line span {
+	font-family: monospace;
+}
+
+.CodeMirror {
+	border-bottom: 1px solid #eee;
+	height: 200px;
+}
+
+#idwQueryPluginMain .container {
+	width: 100%;
+}
+
+.modal-body .container {
+	width: 100%;
+}
+
+.modal-body .container .row {
+	margin-bottom: 10px;
+}
+
+.modal-body .container p {
+	margin-bottom: 4px;
+}
+
+.query-panel {
+	margin-bottom: 15px;
+}
+
+.query-panel .panel-body {
+	padding: 0
+}
+
+.glyphicon.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+.hql-result-pane .lead {
+	margin-bottom: 5px;
+}
+
+.hql-result-pane .radio {
+	display: inline-block;
+	font-size: 120%;
+	margin-right: 12px;
+}
+
+p.query {
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	white-space: pre;
+}
+
+p.query .param {
+	text-decoration: underline dotted;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	color: #333333;
+}
+
+p.query .paramValue {
+	margin-left: 10px;
+	padding: 1px;
+	border: 1px solid #a5a5a5;
+	background-color: #fffcbd;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	color: #000000;
+	font-size: 110%;
+}
+
+div.hql-params table th {
+	width: 50%;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}

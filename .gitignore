@@ -1,0 +1,11 @@
+.gradle/
+bin/
+dist/
+build/
+.DS_Store
+proguard.map
+.idea/
+lib/iiq/*.jar
+.classpath
+.project
+.settings

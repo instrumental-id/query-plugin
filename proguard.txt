@@ -1,0 +1,49 @@
+-printmapping proguard.map
+
+-keep public class com.identityworksllc.iiq.plugins.queryplugin.** extends sailpoint.task.BasePluginTaskExecutor {
+    public *;
+}
+
+-keep public class com.identityworksllc.iiq.plugins.queryplugin.** extends sailpoint.server.BasePluginService {
+    public *;
+}
+
+-keep public class com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource
+
+-keepclassmembers,allowobfuscation public class com.identityworksllc.** extends com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter {
+    <methods>;
+    <fields>;
+}
+
+-keepclassmembers public class com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource {
+    public <methods>;
+    private <fields>;
+}
+
+-keepclassmembers,allowoptimization enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-flattenpackagehierarchy 'com.identityworksllc.iiq.plugins.queryplugin.util'
+
+-adaptclassstrings
+
+-dontoptimize
+
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable,*Annotation*
+
+
+-dontwarn sailpoint.plugin.PluginsUtil
+-dontwarn sailpoint.object.DynamicScope
+-dontwarn sailpoint.server.TriggerListener
+-dontwarn org.springframework.core.annotation.AnnotationUtils
+-dontwarn org.apache.bsf.**
+-dontwarn javax.xml.bind.**
+-dontwarn org.apache.tools.**
+-dontwarn org.junit.**
+
+-dontwarn com.identityworksllc.iiq.common.versioned.JsonUtilitiesImpl
+-dontwarn com.identityworksllc.iiq.common.testing.jutask.IIQJunit5TestBase
+-dontwarn com.identityworksllc.iiq.common.tools.formatter.FormatterAntTask

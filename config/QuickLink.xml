@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+
+  <ImportAction name="merge">
+    <Configuration name="SystemConfiguration">
+      <Attributes>
+        <Map>
+          <entry key='quickLinkCategories'>
+            <value>
+              <List>
+                <QuickLinkCategory name="IDW Plugins" messageKey="IDW Plugins" enabled="true" />
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+  <QuickLink action="external" category="IDW Plugins" messageKey="%%DISPLAY_NAME%%" name="%%DISPLAY_NAME%%" ordering="10">
+    <Attributes>
+      <Map>
+        <entry key="url" value="plugins/pluginPage.jsf?pn=%%PLUGIN_NAME%%"/>
+      </Map>
+    </Attributes>
+    <QuickLinkOptions allowSelf="true">
+      <DynamicScopeRef>
+        <Reference class="sailpoint.object.DynamicScope" name="SystemAdministration"/>
+      </DynamicScopeRef>
+    </QuickLinkOptions>
+  </QuickLink>
+
+</sailpoint>

@@ -1,0 +1,37 @@
+image: gradle:5.6-jdk8
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+
+stages:
+  - build
+  - reporting
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GIT_SUBMODULE_STRATEGY: recursive
+  
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build:
+  stage: build
+  script: ./gradlew
+  artifacts:
+    paths:
+      - build/distributions/*.zip
+    # expire_in: 1 month
+
+reporting:
+  stage: reporting
+  image: git.identityworksllc.com:5005/idw/idw-sailpoint/automation-infrastructure/idw-containers/python-badge-generator
+  before_script:
+    - pip install anybadge
+  needs: ["build"]
+  script:
+    - python $BADGE_GENERATOR
+  artifacts:
+    paths:
+      - ./badges/*.svg

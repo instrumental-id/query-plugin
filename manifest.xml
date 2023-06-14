@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Plugin certificationLevel="None" displayName="IDW Query Plugin" minSystemVersion="7.3" name="IDWQueryPlugin" version="%%BUILD_VERSION%%" rightRequired="IDW_SP_QueryRunner">
+  <Attributes>
+    <Map>
+      <entry key="minUpgradableVersion" value="1.0" />
+      <entry key="fullPage">
+        <value>
+          <FullPage title="IDW IIQ Query" />
+        </value>
+      </entry>
+      <entry key="serviceExecutors"/>
+      <entry key="restResources">
+        <value>
+          <List>
+            <String>com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource</String>
+          </List>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+</Plugin>
+
