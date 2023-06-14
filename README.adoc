@@ -1,0 +1,5 @@
+= Query plugin
+
+The IDW query plugin provides a SQL, HQL, and Filter editing and execution environment in the browser. It can also translate easily between IIQ Filters and the underlying HQL and SQL queries that the Filters represent.
+
+The Query Plugin was open-sourced under an Apache license on June 14, 2023.
