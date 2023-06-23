@@ -5,11 +5,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.guardsquare:proguard-gradle:7.1.0'
+        classpath files("lib/gradle-js/gradle-js-plugin-2.14.2-SNAPSHOT.jar")
+        classpath group: 'com.google.javascript', name: 'closure-compiler', version: 'v20210106'
     }
 }
 
 plugins {
-    id "org.ajoberstar.grgit" version '4.0.1'
+    id "org.ajoberstar.grgit" version '4.1.1'
 }
 
 apply plugin: 'java'
@@ -147,12 +149,13 @@ dependencies {
 }
 
 def versions = [
-        [
-                name: "7x",
-                sourceSet: sourceSets.h3.output,
-                implementationDeps: configurations.h3Implementation,
-                output: "${buildDir}/libs/QP-obf-7x.jar"
-        ],
+        // This is being removed for the time being seeing as we are now building with 8.0 - z
+        // [
+        //         name: "7x",
+        //         sourceSet: sourceSets.h3.output,
+        //         implementationDeps: configurations.h3Implementation,
+        //         output: "${buildDir}/libs/QP-obf-7x.jar"
+        // ],
         [
                 name: "8x",
                 sourceSet: sourceSets.h5.output,

@@ -1,4 +1,4 @@
-image: gradle:5.6-jdk8
+image: $PLUGIN_BUILDER_IMAGE
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -18,7 +18,9 @@ before_script:
 
 build:
   stage: build
-  script: ./gradlew
+  script: 
+    - get_iiq_binaries
+    - ./gradlew
   artifacts:
     paths:
       - build/distributions/*.zip
@@ -26,7 +28,7 @@ build:
 
 reporting:
   stage: reporting
-  image: git.identityworksllc.com:5005/idw/idw-sailpoint/automation-infrastructure/idw-containers/python-badge-generator
+  image: $BADGE_GENERATOR_IMAGE
   before_script:
     - pip install anybadge
   needs: ["build"]
