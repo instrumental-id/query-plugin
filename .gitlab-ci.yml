@@ -19,7 +19,7 @@ before_script:
 build:
   stage: build
   script: 
-    - get_iiq_binaries
+    - get_iiq_binaries ./lib/iiq/  identityiq connector-bundle-identityiq connector-bundle
     - ./gradlew
   artifacts:
     paths:
