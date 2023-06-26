@@ -29,8 +29,6 @@ build:
 reporting:
   stage: reporting
   image: $BADGE_GENERATOR_IMAGE
-  before_script:
-    - pip install anybadge
   needs: ["build"]
   script:
     - python $BADGE_GENERATOR
