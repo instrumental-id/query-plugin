@@ -24,7 +24,7 @@ function escape(str) {
 
 class MainApplicationComponent {
 
-	constructor(queryModuleService, $window, $timeout, $q, $scope, $uibModal, $interpolate, $log, NgTableParams) {
+	constructor(queryModuleService, $window, $timeout, $scope, $uibModal, $interpolate, $log, NgTableParams) {
 
 		this.NgTableParams = NgTableParams
 
@@ -35,7 +35,6 @@ class MainApplicationComponent {
 
 		this.$window = $window;
 		this.$timeout = $timeout
-		this.$q = $q
 		this.$scope = $scope
 		this.$uibModal = $uibModal
 		this.$log = $log
@@ -381,8 +380,8 @@ class MainApplicationComponent {
 		});
 	}
 
-	loadFilterNames() {
-		if (this.filterOptions.selectedType !== undefined && this.filterOptions.selectedType !== "") {
+	loadFilterNames(selectedType) {
+		if (selectedType !== undefined && selectedType !== "") {
 			this.filterOptions.selectedType = selectedType;
 			let request = this.queryModuleService.loadFilterOptions(this.filterOptions.selectedType);
 			return request.then(
@@ -416,9 +415,9 @@ class MainApplicationComponent {
 	 */
 	getFilterHql() {
 		if (this.type === "Filter" || this.type === "XMLFilter") {
-			saveSource();
-			saveHistory();
-			clearState()
+			this.saveSource();
+			this.saveHistory();
+			this.clearState()
 			this.$log.debug("Querying for HQL equivalent to ", this.query)
 			let request = this.queryModuleService.translateFilter(this.query, this.queryClass);
 			if (request) {
@@ -427,13 +426,13 @@ class MainApplicationComponent {
 				request.then((results) => {
 					this.$scope.submitting = false;
 					if ("query" in results) {
-						this.queryResult = formatSql(results["query"]);
+						this.queryResult = this.formatSql(results["query"]);
 						this.$scope.resultselem.open = true
 						if ("params" in results) {
 							this.$scope.queryParams = results["params"]
 						}
 						if ("sql" in results) {
-							this.$scope.querySql = formatSql(results["sql"])
+							this.$scope.querySql = this.formatSql(results["sql"])
 						}
 						this.$scope.queryFilter = results["filter"]
 						this.$scope.queryXmlFilter = results["xmlFilter"]
