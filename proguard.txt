@@ -8,19 +8,46 @@
     public *;
 }
 
--keep public class com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource
+-keep public class com.identityworksllc.iiq.plugins.queryplugin.** extends com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource {
+    public *;
+}
+
+-keep public class com.identityworksllc.iiq.plugins.queryplugin.**
 
 -keepclassmembers,allowobfuscation public class com.identityworksllc.** extends com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter {
     <methods>;
     <fields>;
 }
 
--keepclassmembers public class com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource {
+-keepclassmembers public class com.identityworksllc.iiq.plugins.queryplugin.** {
     public <methods>;
     private <fields>;
 }
 
--keepclassmembers,allowoptimization enum * {
+
+-keepclassmembers class * extends com.fasterxml.jackson.databind.ser.std.StdSerializer {
+    public <methods>;
+    <fields>;
+}
+
+-keepclassmembers class * {
+    @com.fasterxml.jackson.databind.annotation.JsonSerialize *;
+    @com.fasterxml.jackson.databind.annotation.JsonDeserialize *;
+    @com.fasterxml.jackson.annotation.JsonProperty *;
+}
+
+-keepclassmembers @com.fasterxml.jackson.databind.annotation.JsonSerialize class * {
+    public <methods>;
+    <fields>;
+}
+
+-keepclassmembers @com.fasterxml.jackson.annotation.JsonAutoDetect class * {
+    public <methods>;
+    <fields>;
+}
+
+-keepclassmembers,allowoptimization class * extends java.lang.Enum {
+    <fields>;
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }

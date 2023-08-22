@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
-<Plugin certificationLevel="None" displayName="IDW Query Plugin" minSystemVersion="8.0" name="IDWQueryPlugin" version="%%BUILD_VERSION%%" rightRequired="IDW_SP_QueryRunner">
+<Plugin displayName="IDW Query Plugin" minSystemVersion="8.0" name="IDWQueryPlugin" version="%%BUILD_VERSION%%" rightRequired="IDW_SP_QueryRunner">
   <Attributes>
     <Map>
       <entry key="minUpgradableVersion" value="1.0" />
@@ -13,7 +13,9 @@
       <entry key="restResources">
         <value>
           <List>
+            <String>com.identityworksllc.iiq.plugins.queryplugin.tools.QueryPluginMessageBodyReader</String>
             <String>com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource</String>
+            <String>com.identityworksllc.iiq.plugins.queryplugin.reporting.SaveReportResource</String>
           </List>
         </value>
       </entry>

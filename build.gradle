@@ -114,8 +114,8 @@ dependencies {
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 
 	compileOnly group: 'log4j', name: 'log4j', version: '1.2.17'
-	compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
-	compileOnly(group: 'org.glassfish.jersey.bundles', name: 'jaxrs-ri', version: '2.22.2') {
+	compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.+'
+	compileOnly(group: 'org.glassfish.jersey.bundles', name: 'jaxrs-ri', version: '2.34') {
 		transitive = false
 	}
 
@@ -149,20 +149,13 @@ dependencies {
 }
 
 def versions = [
-        // This is being removed for the time being seeing as we are now building with 8.0 - z
-        // [
-        //         name: "7x",
-        //         sourceSet: sourceSets.h3.output,
-        //         implementationDeps: configurations.h3Implementation,
-        //         output: "${buildDir}/libs/QP-obf-7x.jar"
-        // ],
         [
                 name: "8x",
                 sourceSet: sourceSets.h5.output,
                 implementationDeps: configurations.h5Implementation,
                 output: "${buildDir}/libs/QP-obf-8x.jar"
         ]
-];
+]
 
 versions.each { v ->
     def obfuscateTaskName = "obfuscateJava" + v.name
@@ -192,7 +185,7 @@ versions.each { v ->
     }
 
     tasks.register(pluginZipTaskName, Zip) {
-        archiveName = archivesBaseName + "${v.name}.zip"
+        archiveFileName = archivesBaseName + "${v.name}.zip"
 
         into('jars') {
             from obfTask
@@ -203,7 +196,7 @@ versions.each { v ->
             from("config") {
                 include "**"
                 exclude "*Example*"
-                if(!skipQuickLink){
+                if (!skipQuickLink){
                     filter { it.replace("%%DISPLAY_NAME%%", displayName) }
                     filter { it.replace("%%PLUGIN_NAME%%", pluginName) }
                 }
@@ -212,6 +205,13 @@ versions.each { v ->
                 }
             }
         }
+
+        into('import/upgrade') {
+            from("config") {
+                include "PluginRights.xml"
+            }
+        }
+
 
         from('.') {
             include 'manifest.xml'

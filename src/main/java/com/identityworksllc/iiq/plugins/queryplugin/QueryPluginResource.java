@@ -3,16 +3,10 @@ package com.identityworksllc.iiq.plugins.queryplugin;
 import com.identityworksllc.iiq.common.minimal.Utilities;
 import com.identityworksllc.iiq.common.minimal.iterators.ResultSetIterator;
 import com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource;
-import net.sf.jsqlparser.statement.Statement;
-import net.sf.jsqlparser.statement.Statements;
-import net.sf.jsqlparser.statement.select.PlainSelect;
-import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.statement.select.SelectExpressionItem;
-import net.sf.jsqlparser.statement.select.SelectItem;
-import net.sf.jsqlparser.statement.select.SelectItemVisitorAdapter;
-import net.sf.jsqlparser.util.validation.Validation;
-import net.sf.jsqlparser.util.validation.ValidationError;
-import net.sf.jsqlparser.util.validation.feature.FeaturesAllowed;
+import com.identityworksllc.iiq.plugins.queryplugin.vo.ConfigurationOutput;
+import com.identityworksllc.iiq.plugins.queryplugin.vo.MergeMapsConfig;
+import com.identityworksllc.iiq.plugins.queryplugin.vo.RunQueryInput;
+import com.identityworksllc.iiq.plugins.queryplugin.vo.TranslateFilterOutput;
 import org.apache.commons.collections4.map.ListOrderedMap;
 import sailpoint.api.DynamicValuator;
 import sailpoint.api.IncrementalObjectIterator;
@@ -32,11 +26,14 @@ import sailpoint.tools.JdbcUtil;
 import sailpoint.tools.Util;
 import sailpoint.tools.xml.AbstractXmlObject;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,65 +44,25 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter.addIfMissing;
 
+/**
+ * The primary plugin resource, used for running and translating queries
+ */
 @RequiredRight("IDW_SP_QueryRunner")
 @Path("IDWQueryPlugin")
+@Produces(MediaType.APPLICATION_JSON)
 @SuppressWarnings("unused")
 public class QueryPluginResource extends BaseCommonPluginResource {
-
-	/**
-	 * A wrapper for an output column of a report, used by the {@link #saveReport(Map)} method
-	 * and downstream from there.
-	 */
-	private static class OutputColumn {
-		private String columnDisplayName;
-		private String columnName;
-
-		public OutputColumn(String columnName) {
-			this(columnName, null);
-		}
-
-		public OutputColumn(String columnName, String columnDisplayName) {
-			this.columnName = columnName;
-			this.columnDisplayName = columnDisplayName;
-		}
-
-		public String getColumnDisplayName() {
-			return columnDisplayName;
-		}
-
-		public String getColumnName() {
-			return columnName;
-		}
-
-		public void setColumnDisplayName(String columnDisplayName) {
-			this.columnDisplayName = columnDisplayName;
-		}
-
-		public void setColumnName(String columnName) {
-			this.columnName = columnName;
-		}
-	}
-
-	enum Type {
-		XMLFilter,
-		Filter,
-		HQL,
-		SQL,
-		SQLPlugin,
-
-		Application;
-	}
 
 	@DefaultValue("200")
 	@QueryParam("limit")
@@ -120,7 +77,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	 * @param type The query type to audit
 	 * @throws GeneralException if a failure occurs
 	 */
-	private void audit(String query, Type type, String application) throws GeneralException {
+	private void audit(String query, QueryType type, String application) throws GeneralException {
 		log.info("User {0} is running query {1} of type {2}", getLoggedInUserName(), query, type);
 		if (Auditor.isEnabled("queryPluginAction")) {
 			SailPointContext old = SailPointFactory.getCurrentContext();
@@ -231,6 +188,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 			}
 
 			if (!Util.nullSafeEq(derivedType, "object")) {
+				@SuppressWarnings("unchecked")
 				Class<? extends SailPointObject> spClass = ObjectUtil.getSailPointClass(derivedType);
 				if (spClass != null) {
 					output = getContext().getObject(spClass, (String)output);
@@ -270,11 +228,20 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 		return "IDWQueryPlugin";
 	}
 
+	@Override
+	protected boolean isAllowedOutput(Object response) {
+		return (super.isAllowedOutput(response) || response instanceof ConfigurationOutput || response instanceof TranslateFilterOutput);
+	}
+
+	/**
+	 * Gets the UI configuration for this user
+	 * @return the UI configuration {@link ConfigurationOutput}
+	 */
 	@GET
 	@Path("configuration")
 	public Response getConfiguration() {
 		return handle(() -> {
-			Map<String, Object> results = new HashMap<>();
+			ConfigurationOutput results = new ConfigurationOutput();
 
 			Identity.CapabilityManager capabilityManager = getLoggedInUser().getCapabilityManager();
 
@@ -285,7 +252,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				List<String> fields = new ArrayList<>();
 				fields.add("name");
 
-				List<String> appNames = new ArrayList<>();
+				Set<String> appNames = new TreeSet<>();
 				Iterator<Object[]> searchResults = getContext().search(Application.class, qo, fields);
 
 				while(searchResults.hasNext()) {
@@ -295,7 +262,13 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 					appNames.add(name);
 				}
 
-				results.put("applications", appNames);
+				results.getApplications().addAll(appNames);
+				results.getPrivileges().queryApplications = true;
+			}
+
+
+			if (capabilityManager.hasRight("IDW_SP_QueryRunner_ReportSave") || capabilityManager.hasCapability("SystemAdministrator")) {
+				results.getPrivileges().saveReports = true;
 			}
 
 			return results;
@@ -312,40 +285,35 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	@SuppressWarnings({ "unchecked" })
 	@POST
 	@Path("query")
-	public Response getResults(Map<String, Object> payload) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getResults(RunQueryInput payload) {
 		return handle(() -> {
-			if (payload == null || payload.isEmpty()) {
+			if (payload == null) {
 				throw new IllegalArgumentException("A JSON body is mandatory for this REST endpoint");
 			}
 
-			String typeString = Util.otoa(payload.get("type"));
-			String query = Util.otoa(payload.get("query"));
-			String application = Util.otoa(payload.get("application"));
-			Map<String, Object> namedParams = (Map<String, Object>)payload.get("namedParams");
-			if (Util.isNullOrEmpty(query)) {
-				throw new IllegalArgumentException("A 'query' is required in the JSON payload to this API");
-			}
-			if (Util.isNullOrEmpty(typeString)) {
-				throw new IllegalArgumentException("A 'type' of either 'HQL' or 'SQL' is required in the JSON payload to this API");
-			}
+			payload.validate(getContext());
 
-			Type type = Type.valueOf(typeString);
+			QueryType type = payload.getType();
+			String query = payload.getQuery();
+			String application = payload.getApplication();
+			Map<String, Object> namedParams = payload.getNamedParams();
 
 			audit(query, type, application);
 
 			Map<String, Object> resultSet = new HashMap<>();
 			List<Map<String, Object>> queryResults = new ArrayList<>();
 			List<String> finalColumns = new ArrayList<>();
-			if (type.equals(Type.HQL) && query.toLowerCase().contains(" union all ")) {
+			if (type.equals(QueryType.HQL) && query.toLowerCase().contains(" union all ")) {
 				String[] queries = query.split("(?i) union all ");
 				for (String subset : queries) {
 					runQuery(subset.trim(), namedParams, type, application, queryResults, finalColumns);
 				}
-			} else if (type.equals(Type.XMLFilter) || type.equals(Type.Filter)) {
-				String objectType = Util.otoa(payload.get("queryClass"));
+			} else if (type.equals(QueryType.XMLFilter) || type.equals(QueryType.Filter)) {
+				String objectType = payload.getQueryClass();
 				Class<SailPointObject> spoClass = ObjectUtil.getSailPointClass(objectType);
 				Filter f;
-				if (type.equals(Type.XMLFilter)) {
+				if (type.equals(QueryType.XMLFilter)) {
 					Object obj = AbstractXmlObject.parseXml(getContext(), query);
 					if (obj instanceof Filter) {
 						f = (Filter)obj;
@@ -367,7 +335,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 
 				while(spoIterator.hasNext()) {
 					SailPointObject item = spoIterator.next();
-					ListOrderedMap resultRow = new ListOrderedMap();
+					ListOrderedMap<String, Object> resultRow = new ListOrderedMap<>();
 					resultRow.put("name", item.getName());
 					resultRow.put("id", item.getId());
 					addIfMissing(finalColumns, "id");
@@ -540,10 +508,13 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	 * @return The resulting list of merged input rows
 	 * @throws GeneralException on errors
 	 */
-	private List<Map<String, Object>> mergeMaps(Map<String, Object> payload, List<Map<String, Object>> initialResults) throws GeneralException {
+	private List<Map<String, Object>> mergeMaps(RunQueryInput payload, List<Map<String, Object>> initialResults) throws GeneralException {
 		List<Map<String, Object>> mergedResults = initialResults;
-		String mergeRuleName = Util.otoa(payload.get("mergeMapsRuleName"));
-		String mergeScript = Util.otoa(payload.get("mergeMapsScript"));
+		MergeMapsConfig config = payload.getMergeMaps();
+
+
+		String mergeRuleName = (config != null) ? config.getRuleName() : null;
+		String mergeScript = (config != null) ? config.getScript() : null;
 
 		DynamicValue mergeMaps = null;
 		if (Util.isNotNullOrEmpty(mergeRuleName)) {
@@ -588,15 +559,15 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	/**
 	 * Runs the query and returns the results
 	 */
-	private void runQuery(String query, Map<String, Object> namedParams, Type type, String applicationName, List<Map<String, Object>> finalResults, List<String> finalColumns) throws Exception {
-		if (type.equals(Type.HQL)) {
+	private void runQuery(String query, Map<String, Object> namedParams, QueryType type, String applicationName, List<Map<String, Object>> finalResults, List<String> finalColumns) throws Exception {
+		if (type.equals(QueryType.HQL)) {
 			HibernateAdapter adapter = getHibernateAdapter();
 			adapter.setLimitRows(limitRows);
 			adapter.setStartAt(startAt);
 			adapter.runHibernateQuery(query, namedParams, finalResults, finalColumns);
-		} else if (type.equals(Type.Application) || type.equals(Type.SQL) || type.equals(Type.SQLPlugin)) {
+		} else if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin)) {
 			Connection connection = null;
-			if (type.equals(Type.Application)) {
+			if (type.equals(QueryType.Application)) {
 				if (Util.isNullOrEmpty(applicationName)) {
 					throw new IllegalArgumentException("An application name is required for queries of type Application");
 				}
@@ -623,7 +594,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				}
 
 				connection = JdbcUtil.getConnection(appAttrs);
-			} else if (type.equals(Type.SQL)) {
+			} else if (type.equals(QueryType.SQL)) {
 				connection = Environment.getEnvironment().getSpringDataSource().getConnection();
 			} else {
 				connection = PluginBaseHelper.getConnection();
@@ -646,7 +617,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	 * @throws SQLException if any query failures occur
 	 * @throws GeneralException if any IIQ failures occur
 	 */
-	private void runSQLQuery(Connection connection, String query, Type type, List<Map<String, Object>> finalResults) throws SQLException, GeneralException {
+	private void runSQLQuery(Connection connection, String query, QueryType type, List<Map<String, Object>> finalResults) throws SQLException, GeneralException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z");
 
 		String modifiedQuery = query;
@@ -688,191 +659,11 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 		}
 	}
 
-	@POST
-	@RequiredRight("IDW_SP_QuerySaveReport")
-	public Response saveReport(Map<String, Object> jsonBody) {
-		return handle(() -> {
-			String reportName = Util.otoa(Util.get(jsonBody, "name"));
-
-			if (Util.isNullOrEmpty(reportName)) {
-				throw new GeneralException("Invalid report name: [" + reportName + "]");
-			}
-
-			String reportSql = Util.otoa(Util.get(jsonBody, "sql"));
-
-			List<OutputColumn> outputColumns = new ArrayList<>();
-			@SuppressWarnings("unchecked")
-			List<Map<String, Object>> columns = Util.asList(Util.get(jsonBody, "columns"));
-			for(Map<String, Object> col : columns) {
-				String colName = Util.otoa(Util.get(col, "name"));
-				String colDisplayName = Util.otoa(Util.get(col, "displayName"));
-
-				if (Util.isNullOrEmpty(colName)) {
-					throw new IllegalStateException("Column names cannot be blank");
-				}
-
-				if (Util.isNullOrEmpty(colDisplayName)) {
-					colDisplayName = colName;
-				}
-
-				outputColumns.add(new OutputColumn(colName, colDisplayName));
-			}
-
-			List<Argument> argumentInputs = new ArrayList<>();
-			@SuppressWarnings("unchecked")
-			List<Map<String, Object>> arguments = Util.asList(Util.get(jsonBody, "arguments"));
-			for(Map<String, Object> arg : arguments) {
-				String argName = Util.otoa(Util.get(arg, "name"));
-				String argDisplayName = Util.otoa(Util.get(arg, "displayName"));
-				String argType = Util.otoa(Util.get(arg, "type"));
-
-				if (Util.isNullOrEmpty(argName)) {
-					throw new IllegalStateException("Argument names cannot be blank");
-				}
-
-				if (Util.isNullOrEmpty(argDisplayName)) {
-					argDisplayName = argName;
-				}
-
-				Argument argument = new Argument();
-				argument.setPrompt(argDisplayName);
-				argument.setName(argName);
-				argument.setType(argType);
-
-				argumentInputs.add(argument);
-			}
-
-			TaskDefinition reportTemplate = saveSqlToReport(reportName, reportSql, argumentInputs, outputColumns);
-			getContext().saveObject(reportTemplate);
-			getContext().commitTransaction();
-
-			return Response.ok().build();
-		});
-	}
-
-	/**
-	 * Handles the technical bits of saving the given inputs into a Report using the
-	 * IIQCommon JDBCDataSource.
-	 *
-	 * @param name The name of the report template to create or modify
-	 * @param sql The SQL to run for the report
-	 * @param inputs The report input arguments
-	 * @param columns The report output columns
-	 * @return The report itself, NOT SAVED
-	 * @throws GeneralException if anything goes wrong during construction
-	 */
-	private TaskDefinition saveSqlToReport(String name, String sql, List<Argument> inputs, List<OutputColumn> columns) throws GeneralException {
-		String dataSourceClass = "com.identityworksllc.iiq.common.minimal.reporting.JDBCDataSource";
-		try {
-			Class.forName(dataSourceClass);
-		} catch(Exception e) {
-			throw new GeneralException("The IIQCommon reporting library must be in your WEB-INF/lib before you can create a report via the Query Plugin");
-		}
-
-		Validation validation = new Validation(Arrays.asList(FeaturesAllowed.SELECT), sql);
-		List<ValidationError> errors = validation.validate();
-		if (errors.size() > 0) {
-			throw new GeneralException("Unable to validate SQL query: " + errors);
-		}
-		Statements statementsObj = validation.getParsedStatements();
-
-		List<Statement> statements = statementsObj.getStatements();
-		if (statements == null || statements.size() != 1) {
-			throw new IllegalArgumentException("Unable to validate SQL query: the input SQL must resolve to a single statement");
-		}
-
-		List<ReportColumnConfig> columnConfigs = new ArrayList<>();
-
-		Select selectStatement = (Select)statements.get(0);
-		if (selectStatement.getSelectBody() instanceof PlainSelect) {
-			for (SelectItem selectItem : Util.safeIterable(((PlainSelect) selectStatement.getSelectBody()).getSelectItems())) {
-				selectItem.accept(new SelectItemVisitorAdapter() {
-					@Override
-					public void visit(SelectExpressionItem item) {
-						String alias = item.getAlias().getName();
-						OutputColumn match = null;
-						for(OutputColumn columnInput : Util.safeIterable(columns)) {
-							if (Util.nullSafeCaseInsensitiveEq(columnInput.columnName, alias)) {
-								match = columnInput;
-								break;
-							}
-						}
-						ReportColumnConfig columnConfig = new ReportColumnConfig();
-						if (match != null) {
-							columnConfig.setField(match.columnName);
-							columnConfig.setHeader(Util.isNullOrEmpty(match.columnDisplayName) ? match.columnName : match.columnDisplayName);
-							columnConfig.setProperty(match.columnName);
-						} else {
-							columnConfig.setField(alias);
-							columnConfig.setHeader(alias);
-							columnConfig.setProperty(alias);
-						}
-						columnConfigs.add(columnConfig);
-					}
-				});
-			}
-		}
-
-		TaskDefinition reportTaskDef = getContext().getObjectByName(TaskDefinition.class, name);
-		if (reportTaskDef == null) {
-			reportTaskDef = new TaskDefinition();
-			reportTaskDef.setName(name);
-			reportTaskDef.setType(TaskItemDefinition.Type.LiveReport);
-			reportTaskDef.setProgressMode(TaskItemDefinition.ProgressMode.Percentage);
-			reportTaskDef.setSubType("Query");
-			reportTaskDef.setResultAction(TaskDefinition.ResultAction.Rename);
-			reportTaskDef.setTemplate(true);
-		}
-
-		if (!reportTaskDef.isTemplate()) {
-			throw new IllegalArgumentException("Only template reports can be created or modified using this method");
-		}
-
-		LiveReport liveReport = (LiveReport) reportTaskDef.getArgument("report");
-		if (liveReport == null) {
-			liveReport = new LiveReport();
-			liveReport.setTitle(name);
-			reportTaskDef.setArgument("report", liveReport);
-		}
-
-		ReportDataSource dataSource = liveReport.getDataSource();
-		if (dataSource == null) {
-			dataSource = new ReportDataSource();
-			liveReport.setDataSource(dataSource);
-		}
-
-		liveReport.setGridColumns(columnConfigs);
-
-		dataSource.setType(ReportDataSource.DataSourceType.Java);
-		dataSource.setDataSourceClass(dataSourceClass);
-		dataSource.setQuery(sql);
-
-		Signature signature = new Signature();
-		List<Argument> arguments = new ArrayList<>();
-		List<ReportDataSource.Parameter> parameters = new ArrayList<>();
-
-		for(Argument col : Util.safeIterable(inputs)) {
-			arguments.add(col);
-			ReportDataSource.Parameter parameter = new ReportDataSource.Parameter();
-			parameter.setArgument(col.getName());
-			parameters.add(parameter);
-		}
-
-		arguments.sort(Comparator.comparing(Argument::getName));
-
-		signature.setArguments(arguments);
-		dataSource.setQueryParameters(parameters);
-
-		reportTaskDef.setSignature(signature);
-
-		return reportTaskDef;
-	}
-
 	@GET
 	@Path("filter/translate")
 	public Response translateFilter(@QueryParam("query") String filterString, @QueryParam("queryClass") String typeClass) {
 		return handle(() -> {
-			Map<String, Object> result = new HashMap<>();
+			TranslateFilterOutput result = new TranslateFilterOutput();
 			if (Util.isNullOrEmpty(typeClass)) {
 				throw new IllegalArgumentException("A type class is required");
 			}
@@ -880,6 +671,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				throw new IllegalArgumentException("A filter string is required");
 			}
 			try {
+				@SuppressWarnings("unchecked")
 				Class<SailPointObject> targetClass = ObjectUtil.getSailPointClass(typeClass);
 				if (targetClass == null) {
 					throw new IllegalArgumentException("Specified type class " + typeClass + " is invalid");
@@ -921,28 +713,29 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 						Method getQueryString = visitor.getClass().getDeclaredMethod("getQueryString");
 						getQueryString.setAccessible(true);
 						try {
-							String resultingQuery = (String) getQueryString.invoke(visitor);
-							result.put("query", resultingQuery);
+							String hqlQuery = (String) getQueryString.invoke(visitor);
+							result.setQuery(hqlQuery);
 							try {
 								HibernateAdapter adapter = getHibernateAdapter();
-								result.put("sql", adapter.convertToSql(resultingQuery));
+								result.setSql(adapter.convertToSql(hqlQuery));
 							} catch(Exception e) {
-								// Ignore this
-								// TODO make this work in Hibernate 5+ (IIQ 8.1+)
+								log.debug("Caught an error converting HQL to SQL", e);
 							}
 						} finally {
 							getQueryString.setAccessible(false);
 						}
 
-						result.put("filter", target.getExpression(true));
-						result.put("xmlFilter", target.toXml());
+						result.setFilter(target.getExpression(true));
+						result.setXmlFilter(target.toXml());
 
 						Method getParameterMap = visitor.getClass().getDeclaredMethod("getParameterMap");
 						getParameterMap.setAccessible(true);
 						try {
 							@SuppressWarnings("unchecked")
 							Map<String, Object> paramMap = (Map<String, Object>) getParameterMap.invoke(visitor);
-							result.put("params", paramMap);
+							if (paramMap != null) {
+								result.getParams().putAll(paramMap);
+							}
 						} finally {
 							getParameterMap.setAccessible(false);
 						}
