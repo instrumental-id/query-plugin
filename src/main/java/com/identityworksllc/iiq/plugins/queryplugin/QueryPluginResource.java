@@ -279,18 +279,20 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	 * REST API entry point for the Query API. Executes the given query and then
 	 * returns the results.
 	 *
-	 * @param payload The JSON body of the HTTP POST
+	 * @param json The JSON body of the HTTP POST
 	 * @return The JSON output, containing query results and other metadata
 	 */
 	@SuppressWarnings({ "unchecked" })
 	@POST
 	@Path("query")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getResults(RunQueryInput payload) {
+	public Response getResults(Map<String, Object> json) {
 		return handle(() -> {
-			if (payload == null) {
+			if (json == null) {
 				throw new IllegalArgumentException("A JSON body is mandatory for this REST endpoint");
 			}
+
+			RunQueryInput payload = QueryPluginUtil.decodeMap(json, RunQueryInput.class);
 
 			payload.validate(getContext());
 

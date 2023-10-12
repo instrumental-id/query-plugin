@@ -1,6 +1,7 @@
 package com.identityworksllc.iiq.plugins.queryplugin.reporting;
 
 import com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource;
+import com.identityworksllc.iiq.plugins.queryplugin.QueryPluginUtil;
 import com.identityworksllc.iiq.plugins.queryplugin.reporting.vo.ArgumentSpec;
 import com.identityworksllc.iiq.plugins.queryplugin.reporting.vo.ColumnSpec;
 import com.identityworksllc.iiq.plugins.queryplugin.reporting.vo.QueryReportSpec;
@@ -34,6 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -63,13 +65,19 @@ public class SaveReportResource extends BaseCommonPluginResource {
 
     /**
      * Derives the query {@link ColumnSpec} data from the query itself
-     * @param spec The input spec, including at least the query
+     * @param json The input spec, including at least the query
      * @return The same object as the input, only modified to include {@link ColumnSpec}s
      */
     @POST
     @Path("columns")
-    public Response deriveQueryColumns(QueryReportSpec spec) {
+    public Response deriveQueryColumns(Map<String, Object> json) {
         return handle(() -> {
+            if (json == null) {
+                throw new GeneralException("A JSON body is required");
+            }
+
+            QueryReportSpec spec = QueryPluginUtil.decodeMap(json, QueryReportSpec.class);
+
             if (Util.isNullOrEmpty(spec.getSql())) {
                 throw new GeneralException("Invalid report SQL: [" + spec.getSql() + "]");
             }
@@ -125,8 +133,14 @@ public class SaveReportResource extends BaseCommonPluginResource {
     @POST
     @RequiredRight("IDW_SP_QuerySaveReport")
     @Path("store")
-    public Response saveReport(QueryReportSpec spec) {
+    public Response saveReport(Map<String, Object> json) {
         return handle(() -> {
+            if (json == null) {
+                throw new GeneralException("JSON body is required");
+            }
+
+            QueryReportSpec spec = QueryPluginUtil.decodeMap(json, QueryReportSpec.class);
+
             if (Util.isNullOrEmpty(spec.getName())) {
                 throw new GeneralException("Invalid report name: [" + spec.getName() + "]");
             }
@@ -134,7 +148,6 @@ public class SaveReportResource extends BaseCommonPluginResource {
             if (Util.isNullOrEmpty(spec.getSql())) {
                 throw new GeneralException("Invalid report SQL: [" + spec.getSql() + "]");
             }
-
 
             TaskDefinition reportTemplate = saveSqlToReport(spec.getName(), spec.getSql(), spec.getArguments(), spec.getColumns());
             getContext().saveObject(reportTemplate);

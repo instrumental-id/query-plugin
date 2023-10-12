@@ -13,7 +13,6 @@
       <entry key="restResources">
         <value>
           <List>
-            <String>com.identityworksllc.iiq.plugins.queryplugin.tools.QueryPluginMessageBodyReader</String>
             <String>com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource</String>
             <String>com.identityworksllc.iiq.plugins.queryplugin.reporting.SaveReportResource</String>
           </List>
