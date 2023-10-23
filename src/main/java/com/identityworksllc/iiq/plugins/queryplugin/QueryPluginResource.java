@@ -35,23 +35,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 import static com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter.addIfMissing;
 
@@ -567,7 +563,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 			adapter.setLimitRows(limitRows);
 			adapter.setStartAt(startAt);
 			adapter.runHibernateQuery(query, namedParams, finalResults, finalColumns);
-		} else if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin)) {
+		} else if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin) || type.equals(QueryType.SQLAccessHistory)) {
 			Connection connection = null;
 			if (type.equals(QueryType.Application)) {
 				if (Util.isNullOrEmpty(applicationName)) {
@@ -598,6 +594,19 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				connection = JdbcUtil.getConnection(appAttrs);
 			} else if (type.equals(QueryType.SQL)) {
 				connection = Environment.getEnvironment().getSpringDataSource().getConnection();
+			} else if (type.equals(QueryType.SQLAccessHistory)) {
+				try {
+					Class<Environment> environmentClass = Environment.class;
+
+					// This is only present in 8.4 or higher
+					Method staticGetter = environmentClass.getMethod("getEnvironmentAccessHistory");
+
+					Environment ahEnvironment = (Environment) staticGetter.invoke(null);
+
+					connection = ahEnvironment.getSpringDataSource().getConnection();
+				} catch(Exception e) {
+					throw new GeneralException("Could not retrieve Access History connection", e);
+				}
 			} else {
 				connection = PluginBaseHelper.getConnection();
 			}
@@ -638,13 +647,37 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				while(results.next()) {
 					Map<String, Object> row = new ListOrderedMap<>();
 					for(int col = 1; col <= rsmd.getColumnCount(); col++) {
+						String rawColName = rsmd.getColumnName(col);
 						String colName = rsmd.getColumnLabel(col);
 						int colTypeCode = rsmd.getColumnType(col);
 
 						ResultSetIterator.ColumnOutput columnOutput = ResultSetIterator.extractColumnValue(results, colName, colTypeCode);
 						Object value = columnOutput.getValue();
 
-						if (Util.isNotNullOrEmpty(columnOutput.getDerivedType())) {
+						if (rawColName.equals("json") && value instanceof String && Util.otoa(value).startsWith("H4sI")) {
+							String zippedString = Util.otoa(value);
+							byte[] decoded = Base64.getDecoder().decode(zippedString);
+
+							String result;
+
+							try (GZIPInputStream gzipStream = new GZIPInputStream(new ByteArrayInputStream(decoded))) {
+								byte[] data = gzipStream.readAllBytes();
+
+								// This is actually a serialized Java object, but we do NOT want to
+								// allow the plugin to deserialize arbitrary objects from the DB for
+								// security reasons. Fortunately, a serialized String is just the
+								// UTF-8 bytes plus a 7-byte header (ac ed 00 05 74 <two byte length>).
+								byte[] removedHeader = new byte[data.length - 7];
+								System.arraycopy(data, 7, removedHeader, 0, removedHeader.length);
+
+								// This is the JSON at this point.
+								// TODO handle rendering of patch or full image JSON
+								value = new String(removedHeader, StandardCharsets.UTF_8);
+
+							} catch(IOException e) {
+								log.warn("Unable to read GZIP stream from column 'json'", e);
+							}
+						} else if (Util.isNotNullOrEmpty(columnOutput.getDerivedType())) {
 							value = ResultSetIterator.deriveTypedValue(getContext(), value, columnOutput.getDerivedType());
 						}
 

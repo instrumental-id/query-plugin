@@ -7,5 +7,7 @@ public enum QueryType {
     SQL,
     SQLPlugin,
 
+    SQLAccessHistory,
+
     Application;
 }

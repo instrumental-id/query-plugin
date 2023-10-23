@@ -19,9 +19,6 @@ apply plugin: 'java-library'
 
 defaultTasks "clean", "createPluginZip"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 def gitVersion = "v${grgit?.head()?.abbreviatedId}"
 
 // Extract the display name and plugin name from the manifest xml for usage in the QuickLink if it exists.
@@ -75,6 +72,11 @@ sourceSets {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 configurations {
