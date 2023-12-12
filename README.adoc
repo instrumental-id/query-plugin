@@ -4,4 +4,11 @@ The IDW query plugin provides a SQL, HQL, and Filter editing and execution envir
 
 The Query Plugin was open-sourced under an Apache license on June 14, 2023.
 
-*Please request project access to the project to view pipeline reports and download the plugin binary.*
+== Building
+
+To build the project, you can use either Java 8 or Java 11.
+
+Simply run `./gradlew` to start the build. If you don't have Gradle installed locally, it will be automatically downloaded and installed for you.
+
+The plugin ZIP will be deposited at `build/distributions/QueryPlugin8x.zip`.
+
