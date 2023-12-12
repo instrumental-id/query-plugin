@@ -3,6 +3,9 @@ package com.identityworksllc.iiq.plugins.queryplugin;
 import com.identityworksllc.iiq.common.minimal.Utilities;
 import com.identityworksllc.iiq.common.minimal.iterators.ResultSetIterator;
 import com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource;
+import com.identityworksllc.iiq.plugins.queryplugin.shared.ConnectorConnectionLoader;
+import com.identityworksllc.iiq.plugins.queryplugin.tools.EmbeddedJarClassloader;
+import com.identityworksllc.iiq.plugins.queryplugin.tools.PluginConnectorClassloader;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.ConfigurationOutput;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.MergeMapsConfig;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.RunQueryInput;
@@ -14,6 +17,7 @@ import sailpoint.api.ObjectUtil;
 import sailpoint.api.SailPointContext;
 import sailpoint.api.SailPointFactory;
 import sailpoint.authorization.UnauthorizedAccessException;
+import sailpoint.connector.ConnectorClassLoaderUtil;
 import sailpoint.object.*;
 import sailpoint.persistence.HibernatePersistenceManager;
 import sailpoint.plugin.PluginBaseHelper;
@@ -47,6 +51,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.zip.GZIPInputStream;
 
 import static com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter.addIfMissing;
@@ -60,6 +65,7 @@ import static com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter.addI
 @SuppressWarnings("unused")
 public class QueryPluginResource extends BaseCommonPluginResource {
 
+	public static final String PLUGIN_NAME = "IDWQueryPlugin";
 	@DefaultValue("200")
 	@QueryParam("limit")
 	private int limitRows;
@@ -221,7 +227,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 
 	@Override
 	public String getPluginName() {
-		return "IDWQueryPlugin";
+		return PLUGIN_NAME;
 	}
 
 	@Override
@@ -578,20 +584,18 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 
 				Application application = getContext().getObjectByName(Application.class, applicationName);
 				if (application == null) {
-					throw new IllegalArgumentException("No such application: " + application);
+					throw new IllegalArgumentException("No such application: " + applicationName);
 				}
 				if (!"JDBC".equals(application.getType())) {
 					throw new IllegalArgumentException("Application " + applicationName + " is not of type JDBC");
 				}
 
-				Attributes<String, Object> appAttrs = application.getAttributes();
-				String password = appAttrs.getString("password");
+				ClassLoader classloader = ConnectorClassLoaderUtil.getConnectorClassLoader(application);
+				EmbeddedJarClassloader magicLoader = new EmbeddedJarClassloader(classloader);
 
-				if (Util.isNotNullOrEmpty(password)) {
-					appAttrs.put("password", getContext().decrypt(password));
-				}
+				BiFunction<SailPointContext, Application, Connection> loader = (BiFunction<SailPointContext, Application, Connection>) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.connector.ConnectorAdapter", true, magicLoader).getConstructor().newInstance();
 
-				connection = JdbcUtil.getConnection(appAttrs);
+				connection = loader.apply(getContext(), application);
 			} else if (type.equals(QueryType.SQL)) {
 				connection = Environment.getEnvironment().getSpringDataSource().getConnection();
 			} else if (type.equals(QueryType.SQLAccessHistory)) {
