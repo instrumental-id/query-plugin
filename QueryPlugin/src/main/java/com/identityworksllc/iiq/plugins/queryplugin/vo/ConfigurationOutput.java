@@ -11,6 +11,7 @@ public class ConfigurationOutput {
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     public static class Privileges {
         public boolean queryApplications;
+        public boolean runScripts;
         public boolean saveReports;
 
     }

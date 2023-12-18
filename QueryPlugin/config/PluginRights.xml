@@ -14,6 +14,10 @@
         <Description>Allows this user to run Application type queries</Description>
     </SPRight>
 
+    <SPRight name="IDW_SP_QueryRunner_ExecuteScripts" displayName="Query Runner Script Execution Access">
+        <Description>Allows this user to invoke the /execute endpoint to run install scripts</Description>
+    </SPRight>
+
 
     <!-- Actual capabilities (bundles of rights) that can be assigned to an IIQ user or workgroup -->
     <Capability name="IDW_SP_QueryRunner_Capability" displayName="Query Runner Access">

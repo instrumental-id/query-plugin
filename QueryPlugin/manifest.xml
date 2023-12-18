@@ -18,6 +18,13 @@
           </List>
         </value>
       </entry>
+      <entry key="settings">
+        <value>
+          <List>
+            <Setting dataType="boolean" helpText="If checked, the SQL script execution endpoint will be enabled" label="Enable SQL script execution" name="enableScriptExecution" defaultValue="false"/>
+          </List>
+        </value>
+      </entry>
     </Map>
   </Attributes>
 </Plugin>

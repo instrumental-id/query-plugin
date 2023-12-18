@@ -268,6 +268,9 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				results.getPrivileges().queryApplications = true;
 			}
 
+			if (getSettingBool("enableScriptExecution") && (capabilityManager.hasRight("IDW_SP_QueryRunner_ExecuteScripts") || capabilityManager.hasCapability("SystemAdministrator"))) {
+				results.getPrivileges().runScripts = true;
+			}
 
 			if (capabilityManager.hasRight("IDW_SP_QueryRunner_ReportSave") || capabilityManager.hasCapability("SystemAdministrator")) {
 				results.getPrivileges().saveReports = true;
