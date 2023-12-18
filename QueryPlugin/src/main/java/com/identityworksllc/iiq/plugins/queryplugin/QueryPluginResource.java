@@ -107,6 +107,9 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	 * Modifies the input query to limit the rows returned. This is database-specific, so
 	 * we need to make a best effort to guess the database vendor.
 	 *
+	 * MSSQL and MySQL both respect the Statement#setMaxRows as of 2023, so we do not
+	 * need to adjust the query at all for those.
+	 *
 	 * @param connection The connection
 	 * @param query The input query
 	 * @return The modified query with rows limited
@@ -114,23 +117,13 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 	 */
 	private String createLimitRowsSqlQuery(Connection connection, String query) throws SQLException {
 		String modifiedQuery = query;
-		if (JdbcUtil.isMySQL(connection)) {
-			if (!query.toLowerCase().contains(" limit ")) {
-				modifiedQuery = query + " limit " + limitRows;
-			}
-		} else if (JdbcUtil.isOracle(connection)) {
+		if (JdbcUtil.isOracle(connection)) {
+			// TODO figure out how to handle this where a 'with' clause exists
 			modifiedQuery = "select * from (" + query + ") where rownum < " + limitRows;
 		} else {
 			String dbName = connection.getMetaData().getDatabaseProductName();
-			if (dbName != null && dbName.toLowerCase().contains("microsoft")) {
-				// Assume microsoft
-				if (query.contains("order")) {
-					modifiedQuery = "select * from ( " + query + " ) order by 1 offset 0 rows fetch next " + limitRows + " rows only";
-				} else {
-					modifiedQuery = query + " order by 1 offset 0 rows fetch next " + limitRows + " rows only";
-				}
-			} else {
-				log.warn("Unhandled database type " + dbName + "; cannot limit returned rows automatically");
+			if (dbName != null && dbName.toLowerCase().contains("postgres")) {
+				modifiedQuery = "select * from (" + query + ") limit " + limitRows;
 			}
 		}
 		return modifiedQuery;
@@ -648,6 +641,11 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(modifiedQuery)) {
+			if (limitRows > 0) {
+				// MSSQL and MySql take this into account as of Dec 2023
+				stmt.setMaxRows(limitRows);
+			}
+
 			try(ResultSet results = stmt.executeQuery()) {
 				ResultSetMetaData rsmd = results.getMetaData();
 
@@ -661,6 +659,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 						ResultSetIterator.ColumnOutput columnOutput = ResultSetIterator.extractColumnValue(results, colName, colTypeCode);
 						Object value = columnOutput.getValue();
 
+						// Handles the 'json' columns in the 8.4+ Access History DB tables
 						if (rawColName.equals("json") && value instanceof String && Util.otoa(value).startsWith("H4sI")) {
 							String zippedString = Util.otoa(value);
 							byte[] decoded = Base64.getDecoder().decode(zippedString);
