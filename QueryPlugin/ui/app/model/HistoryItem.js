@@ -24,6 +24,12 @@ class HistoryItem {
          * @type {string|null}
          */
         this.type = thing.type ?? null
+
+        /**
+         * The application name saved in this history item
+         * @type {*|null}
+         */
+        this.applicationName = thing.applicationName ?? null
     }
 
     /**
@@ -35,16 +41,18 @@ class HistoryItem {
             return false
         }
 
-        let otherQuery = other.query ?? ""
-        let otherType = other.type ?? ""
+        let otherQuery = other.query ?? null
+        let otherType = other.type ?? null
+        let otherApplication = other.applicationName ?? null
 
-        return (this.query === otherQuery && this.type === otherType)
+        return (this.query === otherQuery && this.type === otherType && this.applicationName === otherApplication)
     }
 
     toJSON() {
         let obj = {
             query: this.query,
-            type: this.type
+            type: this.type,
+            applicationName: this.applicationName
         }
 
         return JSON.stringify(obj)

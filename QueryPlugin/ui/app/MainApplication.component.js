@@ -103,13 +103,6 @@ class MainApplicationComponent {
 
 		this.applicationName = null;
 
-		let lastSource = localStorage.getItem('idw.queryplugin.lastsource');
-		if (lastSource) {
-			let lastSourceObj = new HistoryItem(JSON.parse(lastSource))
-			this.query = lastSourceObj.query
-			this.type = lastSourceObj.type
-		}
-
 		/**
 		 * The three filter panels that show up under the 'description' column in the ng-table
 		 * @expose
@@ -174,18 +167,6 @@ class MainApplicationComponent {
 		this.$scope.resultselem = {}
 		this.$scope.historyelem = {}
 
-		this.$scope.$watch("ctrl.query", (newVal, oldValue) => {
-			this.saveSource()
-		});
-
-		this.$scope.$watch("ctrl.type", (newVal, oldValue) => {
-			if (newVal === "XMLFilter") {
-				this.$scope.codeMirror.setOption("mode", "application/xml");
-			} else {
-				this.$scope.codeMirror.setOption("mode", "text/x-sql")
-			}
-		})
-
 		this.$scope.editorOptions = {
 			lineNumbers: true,
 			mode: 'text/x-sql',
@@ -205,6 +186,35 @@ class MainApplicationComponent {
 
 		this.queryModuleService.getConfiguration().then((config) => {
 			this.$scope.applications = config.applications ?? []
+
+			let lastSource = localStorage.getItem('idw.queryplugin.lastsource');
+			if (lastSource) {
+				let lastSourceObj = new HistoryItem(JSON.parse(lastSource))
+				this.query = lastSourceObj.query
+				this.type = lastSourceObj.type
+				this.applicationName = lastSourceObj.applicationName
+			}
+
+			this.$scope.$watch("$ctrl.query", (newVal, oldValue) => {
+				this.saveSource()
+			});
+
+			this.$scope.$watch("$ctrl.applicationName", (newVal, oldValue) => {
+				this.saveSource()
+			});
+
+			this.$scope.$watch("$ctrl.type", (newVal, oldValue) => {
+				if (newVal === "XMLFilter") {
+					this.$scope.codeMirror.setOption("mode", "application/xml");
+				} else {
+					this.$scope.codeMirror.setOption("mode", "text/x-sql")
+				}
+
+				if (newVal !== "Application") {
+					this.applicationName = null;
+				}
+			})
+
 		})
 
 		this._commonErrorHandlerFunction = this._commonErrorHandlerFunction.bind(this)
@@ -292,7 +302,8 @@ class MainApplicationComponent {
 	saveSource() {
 		let sourceMap = new HistoryItem({
 			"query": this.query,
-			"type": this.type
+			"type": this.type,
+			"applicationName": this.applicationName
 		})
 
 		localStorage.setItem('idw.queryplugin.lastsource', sourceMap.toJSON());
@@ -309,7 +320,9 @@ class MainApplicationComponent {
 		let execution = {
 			date: new Date().toISOString(),
 			query: this.query,
-			type: this.type
+			type: this.type,
+			applicationName: this.applicationName,
+			limit: this.limitResults
 		}
 
 		let foundIndex;
