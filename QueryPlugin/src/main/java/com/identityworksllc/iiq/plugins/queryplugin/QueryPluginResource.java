@@ -1,8 +1,8 @@
 package com.identityworksllc.iiq.plugins.queryplugin;
 
-import com.identityworksllc.iiq.common.minimal.Utilities;
-import com.identityworksllc.iiq.common.minimal.iterators.ResultSetIterator;
-import com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource;
+import com.identityworksllc.iiq.common.Utilities;
+import com.identityworksllc.iiq.common.iterators.ResultSetIterator;
+import com.identityworksllc.iiq.common.plugin.BaseCommonPluginResource;
 import com.identityworksllc.iiq.plugins.queryplugin.shared.ConnectorConnectionLoader;
 import com.identityworksllc.iiq.plugins.queryplugin.tools.EmbeddedJarClassloader;
 import com.identityworksllc.iiq.plugins.queryplugin.tools.PluginConnectorClassloader;

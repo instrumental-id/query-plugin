@@ -1,6 +1,6 @@
 package com.identityworksllc.iiq.plugins.queryplugin;
 
-import com.identityworksllc.iiq.common.minimal.Utilities;
+import com.identityworksllc.iiq.common.Utilities;
 import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

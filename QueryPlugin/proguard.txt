@@ -8,7 +8,7 @@
     public *;
 }
 
--keep public class com.identityworksllc.iiq.plugins.queryplugin.** extends com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource {
+-keep public class com.identityworksllc.iiq.plugins.queryplugin.** extends com.identityworksllc.iiq.common.plugin.BaseCommonPluginResource {
     public *;
 }
 

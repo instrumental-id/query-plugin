@@ -1,6 +1,6 @@
 package com.identityworksllc.iiq.plugins.queryplugin.reporting;
 
-import com.identityworksllc.iiq.common.minimal.plugin.BaseCommonPluginResource;
+import com.identityworksllc.iiq.common.plugin.BaseCommonPluginResource;
 import com.identityworksllc.iiq.plugins.queryplugin.QueryPluginUtil;
 import com.identityworksllc.iiq.plugins.queryplugin.reporting.vo.ArgumentSpec;
 import com.identityworksllc.iiq.plugins.queryplugin.reporting.vo.ColumnSpec;
