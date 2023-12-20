@@ -14,6 +14,7 @@
         <value>
           <List>
             <String>com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource</String>
+            <String>com.identityworksllc.iiq.plugins.queryplugin.ScriptExecutionResource</String>
             <String>com.identityworksllc.iiq.plugins.queryplugin.reporting.SaveReportResource</String>
           </List>
         </value>
@@ -21,6 +22,7 @@
       <entry key="settings">
         <value>
           <List>
+            <Setting dataType="boolean" helpText="If checked, execution against JDBC applications will be enabled" label="Enable querying JDBC applications" name="enableJdbcAppQuery" defaultValue="true"/>
             <Setting dataType="boolean" helpText="If checked, the SQL script execution endpoint will be enabled" label="Enable SQL script execution" name="enableScriptExecution" defaultValue="false"/>
           </List>
         </value>

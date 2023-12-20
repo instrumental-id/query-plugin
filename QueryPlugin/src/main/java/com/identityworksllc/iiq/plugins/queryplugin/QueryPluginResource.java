@@ -242,7 +242,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 
 			Identity.CapabilityManager capabilityManager = getLoggedInUser().getCapabilityManager();
 
-			if (capabilityManager.hasRight("IDW_SP_QueryRunner_Application") || capabilityManager.hasCapability("SystemAdministrator")) {
+			if (getSettingBool("enableJdbcAppQuery") && (capabilityManager.hasRight("IDW_SP_QueryRunner_Application") || capabilityManager.hasCapability("SystemAdministrator"))) {
 				QueryOptions qo = new QueryOptions();
 				qo.addFilter(Filter.eq("type", "JDBC"));
 
