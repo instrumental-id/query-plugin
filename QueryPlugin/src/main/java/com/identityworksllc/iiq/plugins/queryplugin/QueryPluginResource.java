@@ -3,11 +3,11 @@ package com.identityworksllc.iiq.plugins.queryplugin;
 import com.identityworksllc.iiq.common.Utilities;
 import com.identityworksllc.iiq.common.iterators.ResultSetIterator;
 import com.identityworksllc.iiq.common.plugin.BaseCommonPluginResource;
-import com.identityworksllc.iiq.plugins.queryplugin.shared.ConnectorConnectionLoader;
 import com.identityworksllc.iiq.plugins.queryplugin.tools.EmbeddedJarClassloader;
-import com.identityworksllc.iiq.plugins.queryplugin.tools.PluginConnectorClassloader;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.ConfigurationOutput;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.EnumerateDatabase;
+import com.identityworksllc.iiq.plugins.queryplugin.vo.EnumerateTablesInput;
+import com.identityworksllc.iiq.plugins.queryplugin.vo.EnumeratedTable;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.MergeMapsConfig;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.RunQueryInput;
 import com.identityworksllc.iiq.plugins.queryplugin.vo.TranslateFilterOutput;
@@ -47,6 +47,7 @@ import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -68,13 +69,62 @@ import static com.identityworksllc.iiq.plugins.queryplugin.HibernateAdapter.addI
 public class QueryPluginResource extends BaseCommonPluginResource {
 
 	public static final String PLUGIN_NAME = "IDWQueryPlugin";
+
+	public static Connection createConnection(SailPointContext context, Identity loggedInUser, QueryType type, String applicationName) throws GeneralException, IOException, URISyntaxException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException, SQLException {
+		Connection connection;
+		if (type.equals(QueryType.Application)) {
+			Identity.CapabilityManager capabilityManager = loggedInUser.getCapabilityManager();
+
+			boolean applicationQueryEnabled = PluginBaseHelper.getSettingBool(PLUGIN_NAME, "enableJdbcAppQuery");
+
+			if (!applicationQueryEnabled || !(capabilityManager.hasRight("IDW_SP_QueryRunner_Application") || capabilityManager.hasCapability("SystemAdministrator"))) {
+				throw new UnauthorizedAccessException("Access denied to Application queries");
+			}
+
+			if (Util.isNullOrEmpty(applicationName)) {
+				throw new IllegalArgumentException("An application name is required for queries of type Application");
+			}
+
+			Application application = context.getObjectByName(Application.class, applicationName);
+			if (application == null) {
+				throw new IllegalArgumentException("No such application: " + applicationName);
+			}
+			if (!"JDBC".equals(application.getType())) {
+				throw new IllegalArgumentException("Application " + applicationName + " is not of type JDBC");
+			}
+
+			ClassLoader classloader = ConnectorClassLoaderUtil.getConnectorClassLoader(application);
+			EmbeddedJarClassloader magicLoader = new EmbeddedJarClassloader(classloader);
+
+			BiFunction<SailPointContext, Application, Connection> loader = (BiFunction<SailPointContext, Application, Connection>) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.connector.ConnectorAdapter", true, magicLoader).getConstructor().newInstance();
+
+			connection = loader.apply(context, application);
+		} else if (type.equals(QueryType.SQL)) {
+			connection = Environment.getEnvironment().getSpringDataSource().getConnection();
+		} else if (type.equals(QueryType.SQLAccessHistory)) {
+			try {
+				Class<Environment> environmentClass = Environment.class;
+
+				// This is only present in 8.4 or higher
+				Method staticGetter = environmentClass.getMethod("getEnvironmentAccessHistory");
+
+				Environment ahEnvironment = (Environment) staticGetter.invoke(null);
+
+				connection = ahEnvironment.getSpringDataSource().getConnection();
+			} catch(Exception e) {
+				throw new GeneralException("Could not retrieve Access History connection", e);
+			}
+		} else {
+			connection = PluginBaseHelper.getConnection();
+		}
+		return connection;
+	}
 	@DefaultValue("200")
 	@QueryParam("limit")
 	private int limitRows;
-
 	@QueryParam("start")
 	private int startAt;
-
+	
 	/**
 	 * Audits the query if the audit action is enabled
 	 * @param query The query to audit
@@ -104,7 +154,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 			}
 		}
 	}
-	
+
 	/**
 	 * Modifies the input query to limit the rows returned. This is database-specific, so
 	 * we need to make a best effort to guess the database vendor.
@@ -200,34 +250,84 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 		return output;
 	}
 
-	/**
-	 * Builds the IIQ-version-specific Hibernate adapter for handling query execution
-	 * and translation.
-	 *
-	 * @return The Hibernate adapter for the appropriate Hibernate version
-	 * @throws GeneralException on errors
-	 */
-	private HibernateAdapter getHibernateAdapter() throws GeneralException {
-		try {
-			try {
-				Class.forName("org.hibernate.hql.QueryTranslatorFactory");
-				return (HibernateAdapter) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.h3.HibernateAdapter3").getConstructor(SailPointContext.class).newInstance(getContext());
-			} catch (ClassNotFoundException e) {
-				return (HibernateAdapter) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.h5.HibernateAdapter5").getConstructor(SailPointContext.class).newInstance(getContext());
+	@POST
+	@Path("enumerate/tables")
+	public Response enumerateTables(Map<String, Object> json) {
+		return handle(() -> {
+			EnumerateTablesInput payload = QueryPluginUtil.decodeMap(json, EnumerateTablesInput.class);
+			QueryType type = payload.getType();
+			String application = payload.getApplication();
+
+			List<EnumeratedTable> tables = new ArrayList<>();
+
+			Map<String, EnumeratedTable> tableMap = new HashMap<>();
+
+			if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin) || type.equals(QueryType.SQLAccessHistory)) {
+				Connection connection = createConnection(getContext(), getLoggedInUser(), type, application);
+				try {
+					DatabaseMetaData metaData = connection.getMetaData();
+					try (ResultSet results = metaData.getColumns(null, null, "%", null)) {
+						while (results.next()) {
+							String catalog = results.getString("TABLE_CAT");
+
+							String schema = results.getString("TABLE_SCHEM");
+							String tableName = results.getString("TABLE_NAME");
+							String columnName = results.getString("COLUMN_NAME");
+
+							if (Util.isNullOrEmpty(schema)) {
+								schema = catalog;
+							}
+
+							if (Util.isNullOrEmpty(schema)) {
+								schema = "unknown";
+							}
+
+							String key = (schema + "." + tableName).toUpperCase();
+
+							if (!tableMap.containsKey(key)) {
+								EnumeratedTable outputTable = new EnumeratedTable();
+								outputTable.setSchema(schema);
+								outputTable.setTable(tableName);
+
+								tableMap.put(key, outputTable);
+								tables.add(outputTable);
+							}
+
+							tableMap.get(key).getColumns().add(columnName);
+						}
+					} // close result set
+				} finally {
+					JdbcUtil.closeConnection(connection);
+				}
 			}
-		} catch(Exception e) {
-			throw new GeneralException(e);
-		}
+
+			return tables;
+		});
 	}
 
-	@Override
-	public String getPluginName() {
-		return PLUGIN_NAME;
-	}
+	@POST
+	@Path("enumerate/database")
+	public Response enumerateDatabase(Map<String, Object> json) {
+		return handle(() -> {
+			RunQueryInput payload = QueryPluginUtil.decodeMap(json, RunQueryInput.class);
 
-	@Override
-	protected boolean isAllowedOutput(Object response) {
-		return (super.isAllowedOutput(response) || response instanceof ConfigurationOutput || response instanceof TranslateFilterOutput || response instanceof EnumerateDatabase);
+			QueryType type = payload.getType();
+			String application = payload.getApplication();
+
+			if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin) || type.equals(QueryType.SQLAccessHistory)) {
+				Connection connection = createConnection(getContext(), getLoggedInUser(), type, application);
+				try {
+					EnumerateDatabase database = new EnumerateDatabase();
+					database.enumerate(connection);
+
+					return database;
+				} finally {
+					JdbcUtil.closeConnection(connection);
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid type: " + type);
+		});
 	}
 
 	/**
@@ -273,6 +373,31 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 
 			return results;
  		});
+	}
+
+	/**
+	 * Builds the IIQ-version-specific Hibernate adapter for handling query execution
+	 * and translation.
+	 *
+	 * @return The Hibernate adapter for the appropriate Hibernate version
+	 * @throws GeneralException on errors
+	 */
+	private HibernateAdapter getHibernateAdapter() throws GeneralException {
+		try {
+			try {
+				Class.forName("org.hibernate.hql.QueryTranslatorFactory");
+				return (HibernateAdapter) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.h3.HibernateAdapter3").getConstructor(SailPointContext.class).newInstance(getContext());
+			} catch (ClassNotFoundException e) {
+				return (HibernateAdapter) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.h5.HibernateAdapter5").getConstructor(SailPointContext.class).newInstance(getContext());
+			}
+		} catch(Exception e) {
+			throw new GeneralException(e);
+		}
+	}
+
+	@Override
+	public String getPluginName() {
+		return PLUGIN_NAME;
 	}
 
 	/**
@@ -411,6 +536,11 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 		}
 		Collections.sort(names);
 		response.put("names", names);
+	}
+
+	@Override
+	protected boolean isAllowedOutput(Object response) {
+		return (super.isAllowedOutput(response) || response instanceof ConfigurationOutput || response instanceof TranslateFilterOutput || response instanceof EnumerateDatabase);
 	}
 
 	/**
@@ -568,7 +698,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 			adapter.setStartAt(startAt);
 			adapter.runHibernateQuery(query, namedParams, finalResults, finalColumns);
 		} else if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin) || type.equals(QueryType.SQLAccessHistory)) {
-			Connection connection = createConnection(type, applicationName);
+			Connection connection = createConnection(getContext(), getLoggedInUser(), type, applicationName);
 			try {
 				runSQLQuery(connection, query, type, finalResults);
 			} finally {
@@ -577,79 +707,6 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				}
 			}
 		}
-	}
-
-	@POST
-	@Path("enumerate")
-	public Response enumerateSchema(Map<String, Object> json) {
-		return handle(() -> {
-			RunQueryInput payload = QueryPluginUtil.decodeMap(json, RunQueryInput.class);
-
-			QueryType type = payload.getType();
-			String application = payload.getApplication();
-
-			if (type.equals(QueryType.Application) || type.equals(QueryType.SQL) || type.equals(QueryType.SQLPlugin) || type.equals(QueryType.SQLAccessHistory)) {
-				Connection connection = createConnection(type, application);
-				try {
-					EnumerateDatabase database = new EnumerateDatabase();
-					database.enumerate(connection);
-
-					return database;
-				} finally {
-					JdbcUtil.closeConnection(connection);
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid type: " + type);
-		});
-	}
-
-	private Connection createConnection(QueryType type, String applicationName) throws GeneralException, IOException, URISyntaxException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException, SQLException {
-		Connection connection;
-		if (type.equals(QueryType.Application)) {
-			if (Util.isNullOrEmpty(applicationName)) {
-				throw new IllegalArgumentException("An application name is required for queries of type Application");
-			}
-
-			Identity.CapabilityManager capabilityManager = getLoggedInUser().getCapabilityManager();
-
-			if (!(capabilityManager.hasRight("IDW_SP_QueryRunner_Application") || capabilityManager.hasCapability("SystemAdministrator"))) {
-				throw new UnauthorizedAccessException("Access denied to run Application queries");
-			}
-
-			Application application = getContext().getObjectByName(Application.class, applicationName);
-			if (application == null) {
-				throw new IllegalArgumentException("No such application: " + applicationName);
-			}
-			if (!"JDBC".equals(application.getType())) {
-				throw new IllegalArgumentException("Application " + applicationName + " is not of type JDBC");
-			}
-
-			ClassLoader classloader = ConnectorClassLoaderUtil.getConnectorClassLoader(application);
-			EmbeddedJarClassloader magicLoader = new EmbeddedJarClassloader(classloader);
-
-			BiFunction<SailPointContext, Application, Connection> loader = (BiFunction<SailPointContext, Application, Connection>) Class.forName("com.identityworksllc.iiq.plugins.queryplugin.connector.ConnectorAdapter", true, magicLoader).getConstructor().newInstance();
-
-			connection = loader.apply(getContext(), application);
-		} else if (type.equals(QueryType.SQL)) {
-			connection = Environment.getEnvironment().getSpringDataSource().getConnection();
-		} else if (type.equals(QueryType.SQLAccessHistory)) {
-			try {
-				Class<Environment> environmentClass = Environment.class;
-
-				// This is only present in 8.4 or higher
-				Method staticGetter = environmentClass.getMethod("getEnvironmentAccessHistory");
-
-				Environment ahEnvironment = (Environment) staticGetter.invoke(null);
-
-				connection = ahEnvironment.getSpringDataSource().getConnection();
-			} catch(Exception e) {
-				throw new GeneralException("Could not retrieve Access History connection", e);
-			}
-		} else {
-			connection = PluginBaseHelper.getConnection();
-		}
-		return connection;
 	}
 
 	/**

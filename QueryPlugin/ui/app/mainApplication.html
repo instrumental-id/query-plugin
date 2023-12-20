@@ -23,6 +23,9 @@
                                     <i class="glyphicon glyphicon-open"></i>
                                 </button>
                             </div>
+                            <div role="doc-tip" ng-if="$ctrl.type == 'SQL' || $ctrl.type == 'SQLPlugin' || $ctrl.type == 'SQLAccessHistory' || $ctrl.type == 'Application'">
+                                <em>Tip: In a SQL mode, use <code>Ctrl + Space</code> for auto-completion.</em>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="input-group">

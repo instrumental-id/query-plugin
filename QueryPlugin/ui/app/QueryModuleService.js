@@ -15,6 +15,43 @@ class QueryModuleService {
         );
     }
 
+    enumerateDatabase(type, application) {
+        let PAGE_CONFIG_URL = PluginHelper.getPluginRestUrl('IDWQueryPlugin/enumerate/database');
+        let data = {
+            type: type,
+            application: (application || "")
+        }
+
+        return this.$http.post(PAGE_CONFIG_URL, data).then(
+            // Success
+            (response) => {
+                this.$log.debug(response.data)
+                return response.data;
+            },
+            (failure) => {
+                this.$log.error(failure)
+                return {}
+            }
+        );
+    }
+
+    enumerateTables(type, application) {
+        let PAGE_CONFIG_URL = PluginHelper.getPluginRestUrl('IDWQueryPlugin/enumerate/tables');
+        let data = {
+            type: type,
+            application: (application || "")
+        }
+
+        return this.$http.post(PAGE_CONFIG_URL, data).then(
+            // Success
+            (response) => {
+                this.$log.debug(response.data)
+                return response.data;
+            }
+        );
+    }
+
+
     loadFilter(type, name) {
         if (name && type) {
             let PAGE_CONFIG_URL = PluginHelper.getPluginRestUrl('IDWQueryPlugin/filter/load');

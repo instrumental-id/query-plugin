@@ -17,7 +17,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -102,37 +105,17 @@ public class ScriptExecutionResource extends BaseCommonPluginResource {
     /**
      * Retrieves the connection based on the given query type
      *
-     * TODO: Merge this with the method in QueryPluginResource
-     *
      * @param type The query type, which must be one of the three local IIQ databases
      * @return The connection to the DB
      * @throws GeneralException If a connection to one of the IIQ databases fails, or if you try to use SQLAccessHistory outside of 8.4+
      * @throws SQLException If a connection to the plugin DB fails
      * @throws IllegalArgumentException If you specify a type that is not supported
      */
-    private Connection getScriptConnection(QueryType type) throws GeneralException, SQLException {
-        Connection connection;
-        if (type.equals(QueryType.SQL)) {
-            connection = Environment.getEnvironment().getSpringDataSource().getConnection();
-        } else if (type.equals(QueryType.SQLAccessHistory)) {
-            try {
-                Class<Environment> environmentClass = Environment.class;
-
-                // This is only present in 8.4 or higher
-                Method staticGetter = environmentClass.getMethod("getEnvironmentAccessHistory");
-
-                Environment ahEnvironment = (Environment) staticGetter.invoke(null);
-
-                connection = ahEnvironment.getSpringDataSource().getConnection();
-            } catch(Exception e) {
-                throw new GeneralException("Could not retrieve Access History connection (not IIQ 8.4?)", e);
-            }
-        } else if (type.equals(QueryType.SQLPlugin)) {
-            connection = PluginBaseHelper.getConnection();
+    private Connection getScriptConnection(QueryType type) throws GeneralException, SQLException, IOException, URISyntaxException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        if (type.equals(QueryType.Application)) {
+            throw new UnauthorizedAccessException("Cannot use this endpoint to execute Application queries");
         } else {
-            throw new IllegalArgumentException("Invalid type for script execution: " + type);
+            return QueryPluginResource.createConnection(getContext(), getLoggedInUser(), type, null);
         }
-
-        return connection;
     }
 }

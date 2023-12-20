@@ -176,8 +176,19 @@ class MainApplicationComponent {
 			indentUnit: 2,
 			matchBrackets: true,
 			matchClosing: true,
-			styleActiveLine: true
+			styleActiveLine: true,
+			extraKeys: {"Ctrl-Space": "autocomplete"},
 		};
+
+		this.$scope.autocompleteTables = {}
+
+		CodeMirror.commands.autocomplete = (cm) => {
+			if (this.type === "Application" || this.type === "SQL" || this.type === "SQLPlugin") {
+				CodeMirror.showHint(cm, CodeMirror.hint.sql, {
+					tables: this.$scope.autocompleteTables
+				});
+			}
+		}
 
 		this.$scope.onCodeMirrorLoad = (cm) => {
 			this.$log.debug("CodeMirror loaded ", cm)
@@ -200,10 +211,14 @@ class MainApplicationComponent {
 			});
 
 			this.$scope.$watch("$ctrl.applicationName", (newVal, oldValue) => {
+				this.enumerateDatabase(this.type, newVal)
+
 				this.saveSource()
 			});
 
 			this.$scope.$watch("$ctrl.type", (newVal, oldValue) => {
+				this.enumerateDatabase(newVal, this.applicationName)
+
 				if (newVal === "XMLFilter") {
 					this.$scope.codeMirror.setOption("mode", "application/xml");
 				} else {
@@ -218,6 +233,41 @@ class MainApplicationComponent {
 		})
 
 		this._commonErrorHandlerFunction = this._commonErrorHandlerFunction.bind(this)
+	}
+	
+	enumerateTables(type, application) {
+		this.queryModuleService.enumerateTables(type, application).then((output) => {
+			if (Array.isArray(output)) {
+				for(let row of output) {
+					let rowSchema = row.schema
+					if (this.$scope.selectedSchema === rowSchema) {
+						let rowTable = row.table
+
+						this.$scope.autocompleteTables[rowTable] = row.columns || []
+					}
+				}
+			}
+		})
+	}
+
+	enumerateDatabase(type, application) {
+		if (type === "Application" && !application) {
+			return
+		}
+
+		this.$scope.autocompleteTables = {}
+		this.$scope.selectedSchema = null
+
+		this.queryModuleService.enumerateDatabase(type, application).then((output) => {
+			this.$scope.selectedSchema = output.schema || output.catalog
+			let schemaDef = output.schemas[this.$scope.selectedSchema]
+
+			for(let table of schemaDef.tables) {
+				this.$scope.autocompleteTables[table] = []
+			}
+
+			this.enumerateTables(type, application)
+		})
 	}
 
 
