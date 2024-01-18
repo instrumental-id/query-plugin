@@ -93,6 +93,10 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 				throw new IllegalArgumentException("Application " + applicationName + " is not of type JDBC");
 			}
 
+			// Gross workaround. You can't call getConnectorClassLoader without calling
+			// getConnectorClass first, or you'll end up with an NPE in 8.4.
+			ConnectorClassLoaderUtil.getConnectorClass(application, "sailpoint.connector.OpenConnectorAdapter");
+
 			ClassLoader classloader = ConnectorClassLoaderUtil.getConnectorClassLoader(application);
 			EmbeddedJarClassloader magicLoader = new EmbeddedJarClassloader(classloader);
 
