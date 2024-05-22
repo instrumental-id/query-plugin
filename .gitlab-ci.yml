@@ -1,3 +1,6 @@
+include:
+  - component: $BADGE_GENERATOR_COMPONENT
+
 image: $PLUGIN_BUILDER_IMAGE
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
@@ -25,13 +28,3 @@ build:
     paths:
       - build/distributions/*.zip
     # expire_in: 1 month
-
-reporting:
-  stage: reporting
-  image: $BADGE_GENERATOR_IMAGE
-  needs: ["build"]
-  script:
-    - python $BADGE_GENERATOR
-  artifacts:
-    paths:
-      - ./badges/*.svg
