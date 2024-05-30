@@ -179,7 +179,7 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 		} else {
 			String dbName = connection.getMetaData().getDatabaseProductName();
 			if (dbName != null && dbName.toLowerCase().contains("postgres")) {
-				modifiedQuery = "select * from (" + query + ") limit " + limitRows;
+				modifiedQuery = "select * from (" + query + ") as qqq limit " + limitRows;
 			}
 		}
 		return modifiedQuery;
