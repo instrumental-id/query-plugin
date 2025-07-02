@@ -109,6 +109,8 @@ sailpointLibs.include 'connector-bundle-identityiq.jar'
 
 def sailpointConnectorLibs = fileTree("$rootDir/lib/iiq")
 sailpointConnectorLibs.include 'connector-bundle.jar'
+sailpointConnectorLibs.include 'jdbcConnector.jar'
+sailpointConnectorLibs.include 'jdbcConnector.jar'
 
 dependencies {
     includeLibraries group: 'com.github.jsqlparser', name: 'jsqlparser', version: '4.0'
