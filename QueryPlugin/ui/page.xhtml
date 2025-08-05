@@ -9,75 +9,14 @@
 
 <ui:composition>
 	<div class="container" ng-app="QueryPluginModule">
-		<script type="text/ng-template" id="loadFilterSelectionModal.html">
-			<div class="modal-header">
-				<h3 class="modal-title">Select item to load</h3>
-			</div>
-			<div class="modal-body">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-12">
-							<p>Choose a type</p>
-							<select ng-model="selectedType" class="form-control">
-								<option ng-repeat="item in availableTypes" ng-value="item">{{item}}</option>
-							</select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<p>Choose an object</p>
-							<select ng-model="selectedName" class="form-control">
-								<option ng-repeat="name in availableNames" ng-value="name">{{name}}</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="ok()">OK</button>
-				<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-			</div>
-		</script>
-
-		<query-application></query-application>
+		<app-root></app-root>
 	</div>
 
-	<sp:style serveOffset="#{base.requestContextPath}/scripts/codemirror-4.3/lib">
-		<src>codemirror.css</src>
-	</sp:style>
-	
-	<sp:style serveOffset="#{base.requestContextPath}/scripts/codemirror-4.3/addon/hint">
-		<src>show-hint.css</src>
-	</sp:style>
-		
-	<sp:style serveOffset="#{base.requestContextPath}/scripts/codemirror-4.3/theme">
-		<src>sailpoint.css</src>
-	</sp:style>
-	
-	<link rel="stylesheet" type="text/css" href="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/css/app.css"></link>
-	<link rel="stylesheet" href="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/css/ng-table.min.css"/>
-
-	<script src="#{plugins.requestContextPath}/scripts/codemirror-4.3/lib/codemirror.js"></script>
-	<script src="#{plugins.requestContextPath}/scripts/codemirror-4.3/addon/hint/show-hint.js"></script>
-	<script src="#{plugins.requestContextPath}/scripts/codemirror-4.3/addon/hint/sql-hint.js"></script>
-	<script src="#{plugins.requestContextPath}/scripts/codemirror-4.3/mode/sql/sql.js"></script>
-	<script src="#{plugins.requestContextPath}/scripts/codemirror-4.3/mode/xml/xml.js"></script>
-	<script src="#{plugins.requestContextPath}/scripts/codemirror-4.3/addon/selection/active-line.js"></script>
-    <script src="#{plugins.requestContextPath}/ui/js/bundles/SailPointBundleLibrary.js"></script>
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/ng-table.min.js"></script>
-    <script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/ng-csv.min.js"></script>
-
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/ng-table-export.js"></script>
 	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/sql-formatter.min.js"></script>
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/ui-codemirror.min.js"></script>
 
-
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/app.js"></script>
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/app/model/HistoryItem.js"></script>
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/app/QueryModuleService.js"></script>
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/app/MainApplication.component.js"></script>
-
-</ui:composition>
+	<ui:remove>NG INSERT</ui:remove>
+<link rel="stylesheet" href="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/css/app/styles.css">
+    <script src="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/js/app/polyfills.js" type="module"></script><script src="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/js/app/main.js" type="module"></script></ui:composition>
 
 </body>
 

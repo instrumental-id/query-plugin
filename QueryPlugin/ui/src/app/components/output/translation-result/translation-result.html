@@ -1,0 +1,34 @@
+<div id="idwQueryPluginTranslationResult">
+    <div class="translation-options">
+        <label class="radio-inline">
+            <input type="radio" name="translationType" [(ngModel)]="displayType" value="SQL"> SQL
+        </label>
+
+        <label class="radio-inline">
+            <input type="radio" name="translationType" [(ngModel)]="displayType" value="HQL"> HQL
+        </label>
+
+        <label class="radio-inline">
+            <input type="radio" name="translationType" [(ngModel)]="displayType" value="Filter"> Filter
+        </label>
+
+        <label class="radio-inline">
+            <input type="radio" name="translationType" [(ngModel)]="displayType" value="XMLFilter"> XML Filter
+        </label>
+    </div>
+    <div class="translation-result">
+        <pre class="translation-text">
+            @if (translation() !== null) {
+                @if (displayType === 'SQL') {
+                    {{ translation()?.sql }}
+                } @else if (displayType === 'HQL') {
+                    {{ translation()?.query }}
+                } @else if (displayType === 'Filter') {
+                    {{ translation()?.filter }}
+                } @else if (displayType === 'XMLFilter') {
+                    {{ translation()?.xmlFilter }}
+                }
+            }
+        </pre>
+    </div>
+</div>

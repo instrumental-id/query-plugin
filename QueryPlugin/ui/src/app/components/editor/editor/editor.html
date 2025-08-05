@@ -1,0 +1,42 @@
+<div class="editor container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="idwQueryPluginEditorSlot"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-primary" (click)="executeQuery()" [disabled]="state.running">Execute</button>
+            <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running">Clear</button>
+            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running || type === null || type === 'Application' || type.startsWith('SQL')">Translate</button>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="selectQueryType">Type:</label>
+                <select id="selectQueryType" class="form-control" [(ngModel)]="editorState.queryType">
+                    <option value="SQL">SQL (primary schema)</option>
+                    <option value="SQLPlugin">SQL (plugin schema)</option>
+                    <option value="SQLAccessHistory">SQL (access history)</option>
+                    <option value="HQL">HQL</option>
+                    <option value="Filter">Filter</option>
+                    <option value="XMLFilter">XML Filter</option>
+                    @if (state.configuration.privileges.queryApplications) {
+                        <option value="Application">Application</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="applicationSelect">Select Application:</label>
+                <select id="applicationSelect" class="form-control" [(ngModel)]="editorState.application" [disabled]="editorState.queryType !== 'Application'">
+                    @for (app of applications; track app) {
+                        <option [value]="app">{{app}}</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rowLimit">Row Limit:</label>
+                <input id="rowLimit" type="number" class="form-control" [(ngModel)]="editorState.rowLimit" min="1" max="10000" placeholder="200">
+            </div>
+        </div>
+    </div>
+</div>
