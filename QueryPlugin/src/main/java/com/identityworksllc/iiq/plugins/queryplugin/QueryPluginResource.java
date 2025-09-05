@@ -842,7 +842,12 @@ public class QueryPluginResource extends BaseCommonPluginResource {
 
 						List<String> cols = new ArrayList<>();
 						cols.add("id");
-						cols.add("name");
+						if (targetClass.getSimpleName().equals("Link")) {
+							// Links don't have a 'name' field, oddly enough
+							cols.add("nativeIdentity");
+						} else {
+							cols.add("name");
+						}
 						Filter.BaseFilterVisitor visitor = (Filter.BaseFilterVisitor) visitHQLFilter.invoke(manager, targetClass, qo, cols);
 						Method getQueryString = visitor.getClass().getDeclaredMethod("getQueryString");
 						getQueryString.setAccessible(true);

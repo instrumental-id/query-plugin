@@ -1,5 +1,5 @@
 import {
-    Component, computed, effect,
+    Component, computed,
     inject,
     signal,
     Signal,
@@ -144,7 +144,6 @@ export class ResultsTable {
     set pageSize(size: number) {
         this._pageSize.set(size)
     }
-
 
     updateFilter(item: string, $event: any) {
         // Event here is the new value

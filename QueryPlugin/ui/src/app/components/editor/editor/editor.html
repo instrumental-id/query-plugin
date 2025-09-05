@@ -8,14 +8,14 @@
         <div class="col-md-4">
             <button class="btn btn-primary" (click)="executeQuery()" [disabled]="!state.ready() || state.running()">Run Query</button>
             <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running()">Clear</button>
-            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running() || type === null || type === 'Application' || type.startsWith('SQL')">Translate</button>
+            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running() || queryType() === null || queryType() === 'Application' || queryType().startsWith('SQL')">Translate</button>
         </div>
     </div>
     <div class="row options-container">
         <div class="col-md-3">
             <div class="form-group">
                 <label for="selectQueryType">Type:</label>
-                <select id="selectQueryType" class="form-control" [(ngModel)]="editorState.queryType" (ngModelChange)="stateUpdated('queryType')">
+                <select id="selectQueryType" class="form-control" [(ngModel)]="queryType" (ngModelChange)="stateUpdated('queryType')">
                     <option value="SQL">SQL (primary schema)</option>
                     <option value="SQLPlugin">SQL (plugin schema)</option>
                     <option value="SQLAccessHistory">SQL (access history)</option>
@@ -31,13 +31,13 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="rowLimit">Row Limit:</label>
-                <input id="rowLimit" type="number" class="form-control" [(ngModel)]="editorState.rowLimit" min="1" max="10000" placeholder="200">
+                <input id="rowLimit" type="number" class="form-control" [(ngModel)]="rowLimit" min="1" max="10000" placeholder="200">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="selectQueryClass">Filter Class:</label>
-                <select id="selectQueryClass" class="form-control" [(ngModel)]="editorState.queryClass" [disabled]="editorState.queryType !== 'Filter' && editorState.queryType !== 'XMLFilter'" (ngModelChange)="stateUpdated('queryClass')">
+                <select id="selectQueryClass" class="form-control" [(ngModel)]="queryClass" [disabled]="queryType() !== 'Filter' && queryType() !== 'XMLFilter'" (ngModelChange)="stateUpdated('queryClass')">
                     <option value="Application">Application</option>
                     <option value="AuditEvent">AuditEvent</option>
                     <option value="Bundle">Bundle</option>
@@ -63,7 +63,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="applicationSelect">Application:</label>
-                <select id="applicationSelect" class="form-control" [(ngModel)]="editorState.application" [disabled]="editorState.queryType !== 'Application'" (ngModelChange)="stateUpdated('application')">
+                <select id="applicationSelect" class="form-control" [(ngModel)]="application" [disabled]="queryType() !== 'Application'" (ngModelChange)="stateUpdated('application')">
                     @for (app of applications(); track app) {
                         <option [value]="app">{{app}}</option>
                     }

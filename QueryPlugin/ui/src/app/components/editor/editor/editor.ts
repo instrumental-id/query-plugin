@@ -1,9 +1,8 @@
 import {
-    AfterViewInit,
-    Component, computed, ElementRef,
-    inject,
-    OnInit, Signal, signal,
-    ViewChild, WritableSignal
+    Component, computed, effect, ElementRef,
+    inject, model,
+    resource, Signal, signal, viewChild,
+    WritableSignal
 } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {EditorState} from "../../../common/EditorState";
@@ -37,7 +36,7 @@ import {EditorView, highlightActiveLine, ViewUpdate} from "@codemirror/view";
 import {ApplicationState} from "../../../services/ApplicationState";
 import {
     API,
-    DatabaseInfo,
+    DatabaseInfo, QueryType,
     TableInfo
 } from "../../../services/API";
 
@@ -59,7 +58,6 @@ interface SchemaMap {
 }
 
 
-
 @Component({
     selector: 'qp-editor',
     templateUrl: './editor.html',
@@ -69,25 +67,43 @@ interface SchemaMap {
     standalone: true,
     styleUrl: './editor.scss'
 })
-export class Editor implements AfterViewInit, OnInit {
+export class Editor {
 
-    protected api: API = inject(API);
+    protected application = model<string | undefined>(undefined)
 
-    protected applications: Signal<string[]> = computed(() => {
+    protected readonly applications: Signal<string[]> = computed(() => {
         return this.state?.configuration().applications || [];
     });
 
-    private databaseInfo: WritableSignal<DatabaseInfo | undefined> = signal<DatabaseInfo | undefined>(undefined);
+    protected readonly databaseInfo: WritableSignal<DatabaseInfo | undefined> = signal<DatabaseInfo | undefined>(undefined);
 
-    protected editorState: EditorState;
+    protected content = model('')
 
-    @ViewChild('idwQueryPluginEditorSlot', {static: true})
-    // @ts-ignore
-    protected editor: ElementRef<HTMLDivElement>;
+    protected editor = viewChild<ElementRef<HTMLDivElement>>('idwQueryPluginEditorSlot')
 
-    protected eventBus: EventBus = inject(EventBus);
+    private editorView = resource({
+        params: () => ({nativeElement: this.editor()?.nativeElement}),
+        loader: ({params}) => this.initializeView(params),
+    })
 
-    protected historyService: HistoryService = inject(HistoryService);
+    protected readonly editorState: Signal<EditorState> = computed(() => {
+        return {
+            content: this.content(),
+            queryType: this.queryType(),
+            rowLimit: this.rowLimit(),
+            startAt: this.startAt(),
+            application: this.application(),
+            queryClass: this.queryClass()
+        }
+    })
+
+    protected queryClass = model<string | undefined>(undefined)
+
+    protected queryType = model('SQL' as QueryType)
+
+    protected rowLimit = model<number | undefined>(100)
+
+    protected startAt = model<number | undefined>(0)
 
     protected schema: Signal<string> = computed(() => {
         const dbInfo = this.databaseInfo();
@@ -97,46 +113,40 @@ export class Editor implements AfterViewInit, OnInit {
         return '';
     });
 
-    private languageCompartment: Compartment;
+    protected readonly api: API = inject(API);
+
+    protected eventBus: EventBus = inject(EventBus);
+
+    protected historyService: HistoryService = inject(HistoryService);
+
+    private languageCompartment: Compartment = new Compartment();
 
     protected state: ApplicationState = inject(ApplicationState);
 
-    private _view?: EditorView;
-
     constructor() {
-        this.editorState = {
-            content: '',
-            queryType: "SQL",
-            application: undefined,
-            rowLimit: 100,
-            startAt: 0
-        }
-
-        this.languageCompartment = new Compartment();
-    }
-
-    async ngOnInit(): Promise<void> {
         this.eventBus.on(SOURCE_REPLACE, (event: SourceUpdatedEvent) => {
             this.replaceQuery(event.content);
         });
     }
 
-    async ngAfterViewInit(): Promise<void> {
+    async initializeView(params: any): Promise<EditorView> {
+        const nativeElement = params.nativeElement as HTMLDivElement
+
         let lastState = await this.historyService.loadLastEditorState();
 
         const code = lastState?.content ?? '';
 
         if (lastState) {
-            this.editorState.queryType = lastState.queryType;
-            this.editorState.application = lastState.application;
-            this.editorState.rowLimit = lastState.rowLimit;
-            this.editorState.queryClass = lastState.queryClass || '';
+            this.queryType.set(lastState.queryType)
+            this.application.set(lastState.application)
+            this.rowLimit.set(lastState.rowLimit)
+            this.queryClass.set(lastState.queryClass || '')
         }
 
         let compartmentExtension = this.languageCompartment.of([])
 
-        const debouncedUpdate = debounce(1000, (content: string) => {
-            this.content = content;
+        const debouncedUpdate = debounce(1000, (c: string) => {
+            this.updateContent(c);
         })
 
         const extensions: Extension = [
@@ -161,10 +171,7 @@ export class Editor implements AfterViewInit, OnInit {
             })
         ];
 
-        // The actual HTML element where the editor will be rendered
-        const nativeElement = this.editor.nativeElement;
-
-        this._view = new EditorView({
+        const view = new EditorView({
             state: CMEditorState.create({
                 doc: code,
                 extensions: extensions,
@@ -173,20 +180,22 @@ export class Editor implements AfterViewInit, OnInit {
         });
 
         if (code) {
-            this.content = code;
+            this.updateContent(code);
         }
 
         setTimeout(async () => {
             await this.replaceSchema()
         }, 0)
+
+        return view;
     }
 
     private async calculateSchema(sqlConfig: SQLConfig) {
 
         try {
             let databaseInfo: DatabaseInfo = await this.api.enumerateDatabase({
-                type: this.editorState.queryType,
-                application: this.editorState.application
+                type: this.queryType(),
+                application: this.application()
             })
 
             console.info("Fetched database info:", databaseInfo);
@@ -214,8 +223,8 @@ export class Editor implements AfterViewInit, OnInit {
 
             let tableInfo: TableInfo[] = await this.api.enumerateTables(
                 {
-                    type: this.editorState.queryType,
-                    application: this.editorState.application
+                    type: this.queryType(),
+                    application: this.application()
                 }
             );
 
@@ -243,17 +252,18 @@ export class Editor implements AfterViewInit, OnInit {
     }
 
     clearQuery() {
-        this.content = '';
+        this.content.set('');
 
-        if (this._view) {
-            this._view.dispatch({
-                changes: {from: 0, to: this._view.state.doc.length, insert: ''}
+        if (this.editorView.hasValue()) {
+            const view = this.editorView.value()
+            view.dispatch({
+                changes: {from: 0, to: view.state.doc.length, insert: ''}
             });
         }
     }
 
     async executeQuery() {
-        if (this.editorState.content.trim() === '') {
+        if (this.content()?.trim() === '') {
             console.warn("Cannot execute an empty query.");
             return
         }
@@ -262,16 +272,16 @@ export class Editor implements AfterViewInit, OnInit {
 
         try {
             let response = await this.api.query({
-                query: this.editorState.content,
-                type: this.editorState.queryType,
-                application: this.editorState.application,
-                limit: this.editorState.rowLimit,
-                queryClass: this.editorState.queryClass,
+                query: this.content() ?? "",
+                type: this.queryType() ?? "SQL",
+                application: this.application(),
+                limit: this.rowLimit(),
+                queryClass: this.queryClass(),
             })
 
             this.eventBus.emit(QUERY_COMPLETED, response);
 
-            await this.historyService.storeHistory(this.editorState);
+            await this.historyService.storeHistory(this.editorState())
         } catch (error) {
             console.error("Error executing query:", error);
             this.eventBus.emit(QUERY_ERROR, {error: error});
@@ -285,9 +295,9 @@ export class Editor implements AfterViewInit, OnInit {
 
         try {
             let response = await this.api.translateQuery({
-                query: this.editorState.content,
-                type: this.editorState.queryType,
-                queryClass: this.editorState.queryClass
+                query: this.content() ?? "",
+                type: this.queryType() ?? "SQL",
+                queryClass: this.queryClass()
             });
 
             this.eventBus.emit(TRANSLATE_COMPLETED, response);
@@ -300,17 +310,10 @@ export class Editor implements AfterViewInit, OnInit {
     }
 
     /**
-     * Gets the current content of the editor.
-     */
-    get content(): any {
-        return this.editorState.content;
-    }
-
-    /**
      * Gets the current query type (SQL, HQL, etc.) from the editor state.
      */
     get type() {
-        return this.editorState.queryType;
+        return this.queryType();
     }
 
     /**
@@ -323,13 +326,14 @@ export class Editor implements AfterViewInit, OnInit {
         if (newContent === null) {
             this.clearQuery();
         } else {
-            this.content = newContent;
+            this.updateContent(newContent);
 
-            if (this._view) {
-                this._view.dispatch({
+            if (this.editorView.hasValue()) {
+                const view = this.editorView.value()
+                view.dispatch({
                     changes: {
                         from: 0,
-                        to: this._view.state.doc.length,
+                        to: view.state.doc.length,
                         insert: newContent
                     }
                 });
@@ -342,7 +346,10 @@ export class Editor implements AfterViewInit, OnInit {
      * invoked when the query type changes.
      */
     async replaceSchema() {
-        if (this.editorState.queryType === 'SQL' || this.editorState.queryType === 'SQLPlugin' || this.editorState.queryType === 'Application' || this.editorState.queryType === "SQLAccessHistory") {
+        let queryType : QueryType | undefined = this.queryType();
+        const view = this.editorView.value();
+
+        if (queryType === 'SQL' || queryType === 'SQLPlugin' || queryType === 'Application' || queryType === "SQLAccessHistory") {
             let newConfig: SQLConfig = {
                 dialect: StandardSQL,
                 schema: {}
@@ -352,23 +359,23 @@ export class Editor implements AfterViewInit, OnInit {
 
             if (databaseInfo) {
                 this.databaseInfo.set(databaseInfo);
-                this.state.databaseInfo.set(this.editorState.queryType, databaseInfo);
+                this.state.databaseInfo.set(queryType, databaseInfo);
             } else {
                 this.databaseInfo.set(undefined);
             }
 
-            this._view?.dispatch({
+            view?.dispatch({
                 effects: this.languageCompartment.reconfigure(sql(newConfig))
             });
-        } else if (this.editorState.queryType === "XMLFilter") {
+        } else if (queryType === "XMLFilter") {
             // For XMLFilter, we don't need a specific SQL configuration
-            this._view?.dispatch({
+            view?.dispatch({
                 effects: this.languageCompartment.reconfigure(xml({
                     autoCloseTags: true
                 }))
             });
         } else {
-            this._view?.dispatch({
+            view?.dispatch({
                 effects: this.languageCompartment.reconfigure([])
             });
         }
@@ -381,15 +388,15 @@ export class Editor implements AfterViewInit, OnInit {
      *
      * @param value
      */
-    set content(value: any) {
-        this.editorState.content = value;
-        this.eventBus.emit(SOURCE_UPDATED, {content: this.editorState.content});
-        this.historyService.storeEditorState(this.editorState)
+    private updateContent(value: any) {
+        this.content.set(value)
+        this.eventBus.emit(SOURCE_UPDATED, {content: this.content()});
+        this.historyService.storeEditorState(this.editorState())
     }
 
     async stateUpdated(field: string) {
         console.debug("Editor state updated for field:", field, "with value:", this.editorState);
-        await this.historyService.storeEditorState(this.editorState)
+        await this.historyService.storeEditorState(this.editorState())
         if (field === 'queryType') {
             await this.replaceSchema();
         }
