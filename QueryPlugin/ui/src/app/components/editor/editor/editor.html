@@ -1,41 +1,73 @@
 <div class="editor container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="idwQueryPluginEditorSlot"></div>
+            <div class="code-editor-container" #idwQueryPluginEditorSlot></div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <button class="btn btn-primary" (click)="executeQuery()" [disabled]="state.running">Execute</button>
-            <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running">Clear</button>
-            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running || type === null || type === 'Application' || type.startsWith('SQL')">Translate</button>
+        <div class="col-md-4">
+            <button class="btn btn-primary" (click)="executeQuery()" [disabled]="!state.ready() || state.running()">Run Query</button>
+            <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running()">Clear</button>
+            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running() || type === null || type === 'Application' || type.startsWith('SQL')">Translate</button>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row options-container">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="selectQueryType">Type:</label>
-                <select id="selectQueryType" class="form-control" [(ngModel)]="editorState.queryType">
+                <select id="selectQueryType" class="form-control" [(ngModel)]="editorState.queryType" (ngModelChange)="stateUpdated('queryType')">
                     <option value="SQL">SQL (primary schema)</option>
                     <option value="SQLPlugin">SQL (plugin schema)</option>
                     <option value="SQLAccessHistory">SQL (access history)</option>
                     <option value="HQL">HQL</option>
                     <option value="Filter">Filter</option>
                     <option value="XMLFilter">XML Filter</option>
-                    @if (state.configuration.privileges.queryApplications) {
+                    @if (state.configuration().privileges.queryApplications) {
                         <option value="Application">Application</option>
                     }
                 </select>
             </div>
-            <div class="form-group">
-                <label for="applicationSelect">Select Application:</label>
-                <select id="applicationSelect" class="form-control" [(ngModel)]="editorState.application" [disabled]="editorState.queryType !== 'Application'">
-                    @for (app of applications; track app) {
-                        <option [value]="app">{{app}}</option>
-                    }
-                </select>
-            </div>
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="rowLimit">Row Limit:</label>
                 <input id="rowLimit" type="number" class="form-control" [(ngModel)]="editorState.rowLimit" min="1" max="10000" placeholder="200">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="selectQueryClass">Filter Class:</label>
+                <select id="selectQueryClass" class="form-control" [(ngModel)]="editorState.queryClass" [disabled]="editorState.queryType !== 'Filter' && editorState.queryType !== 'XMLFilter'" (ngModelChange)="stateUpdated('queryClass')">
+                    <option value="Application">Application</option>
+                    <option value="AuditEvent">AuditEvent</option>
+                    <option value="Bundle">Bundle</option>
+                    <option value="Certification">Certification</option>
+                    <option value="CertificationEntity">CertificationEntity</option>
+                    <option value="CertificationItem">CertificationItem</option>
+                    <option value="Identity">Identity</option>
+                    <option value="IdentityRequest">IdentityRequest</option>
+                    <option value="Link">Link</option>
+                    <option value="ManagedAttribute">ManagedAttribute</option>
+                    <option value="PolicyViolation">PolicyViolation</option>
+                    <option value="Rule">Rule</option>
+                    <option value="SyslogEvent">SyslogEvent</option>
+                    <option value="TaskDefinition">TaskDefinition</option>
+                    <option value="TaskResult">TaskResult</option>
+                    <option value="Workflow">Workflow</option>
+                    <option value="WorkflowCase">WorkflowCase</option>
+                    <option value="WorkItem">WorkItem</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="applicationSelect">Application:</label>
+                <select id="applicationSelect" class="form-control" [(ngModel)]="editorState.application" [disabled]="editorState.queryType !== 'Application'" (ngModelChange)="stateUpdated('application')">
+                    @for (app of applications(); track app) {
+                        <option [value]="app">{{app}}</option>
+                    }
+                </select>
             </div>
         </div>
     </div>

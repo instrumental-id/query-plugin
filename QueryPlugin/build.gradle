@@ -199,6 +199,8 @@ versions.each { v ->
     }
 
     tasks.register(pluginZipTaskName, Zip) {
+        dependsOn tasks.named("angularBuild")
+
         archiveFileName = archivesBaseName + "${v.name}.zip"
 
         into('jars') {
@@ -234,11 +236,23 @@ versions.each { v ->
         from("$projectDir") {
             include 'manifest.xml'
             include 'db/**'
-            include "ui/**"
+            include "ui/page.xhtml"
+            include "ui/js/app/**"
+            include "ui/css/app/**"
+            include "ui/templates"
             exclude "ui/js/externs/**"
             filter { it.replace("%%BUILD_VERSION%%", getDate() + "." + gitVersion) }
         }
     }
+}
+
+/**
+ * Builds the Angular application by invoking the ng-build.sh script
+ */
+tasks.register("angularBuild", Exec) {
+    workingDir './ui'
+
+    commandLine './ng-build.sh'
 }
 
 tasks.register("createPluginZip") {task ->
@@ -248,5 +262,5 @@ tasks.register("createPluginZip") {task ->
     }
 }
 
-build.finalizedBy "createPluginZip"
+build.finalizedBy "angularBuild", "createPluginZip"
 

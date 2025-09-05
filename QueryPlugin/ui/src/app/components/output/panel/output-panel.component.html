@@ -1,6 +1,2 @@
-@if (resultVariety() === 'table') {
-    <results-table></results-table>
-}
-@if (resultVariety() === 'translation') {
-    <translation-result></translation-result>
-}
+<results-table [hidden]="resultVariety() !== 'table'"></results-table>
+<translation-result [hidden]="resultVariety() !== 'translation'"></translation-result>

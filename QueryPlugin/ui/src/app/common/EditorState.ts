@@ -10,4 +10,6 @@ export interface EditorState {
     rowLimit?: number;
     
     startAt?: number;
+
+    queryClass?: string;
 }

@@ -8,27 +8,27 @@
             <input type="radio" name="translationType" [(ngModel)]="displayType" value="HQL"> HQL
         </label>
 
-        <label class="radio-inline">
-            <input type="radio" name="translationType" [(ngModel)]="displayType" value="Filter"> Filter
-        </label>
+        @if (translation()?.filter) {
+            <label class="radio-inline">
+                <input type="radio" name="translationType" [(ngModel)]="displayType" value="Filter"> Filter
+            </label>
 
-        <label class="radio-inline">
-            <input type="radio" name="translationType" [(ngModel)]="displayType" value="XMLFilter"> XML Filter
-        </label>
+            <label class="radio-inline">
+                <input type="radio" name="translationType" [(ngModel)]="displayType" value="XMLFilter"> XML Filter
+            </label>
+        }
     </div>
     <div class="translation-result">
-        <pre class="translation-text">
-            @if (translation() !== null) {
-                @if (displayType === 'SQL') {
-                    {{ translation()?.sql }}
-                } @else if (displayType === 'HQL') {
-                    {{ translation()?.query }}
-                } @else if (displayType === 'Filter') {
-                    {{ translation()?.filter }}
-                } @else if (displayType === 'XMLFilter') {
-                    {{ translation()?.xmlFilter }}
-                }
+        @if (translation() !== null) {
+            @if (displayType === 'SQL') {
+                <div class="translation-text">{{ formatSql(translation()?.sql, false) }}</div>
+            } @else if (displayType === 'HQL') {
+                <div class="translation-text">{{ formatSql(translation()?.query, false) }}</div>
+            } @else if (displayType === 'Filter') {
+                <div class="translation-text">{{ translation()?.filter }}</div>
+            } @else if (displayType === 'XMLFilter') {
+                <div class="translation-text">{{ formatXml(translation()?.xmlFilter) }}</div>
             }
-        </pre>
+        }
     </div>
 </div>

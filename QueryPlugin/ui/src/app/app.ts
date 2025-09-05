@@ -5,13 +5,14 @@ import {Editor} from "./components/editor/editor/editor";
 import {OutputPanel} from "./components/output/panel/output-panel.component";
 import {ApplicationState} from "./services/ApplicationState";
 import {API, DatabaseInfo} from "./services/API";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
   imports: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
     Editor,
     OutputPanel
@@ -27,11 +28,12 @@ export class App implements OnInit {
   
   ngOnInit() {
     this.api.getConfiguration().then((config) => {
-      this.state.configuration = config;
+        this.state.configuration.set(config);
     });
-    
-    this.api.enumerateDatabase().then((databaseInfo: DatabaseInfo) => {
-      this.state.databaseInfo = databaseInfo;
-    });
+    this.state.ready.set(true);
+  }
+
+  closeResultsPane() {
+    this.state.resultsPresent.set(false);
   }
 }

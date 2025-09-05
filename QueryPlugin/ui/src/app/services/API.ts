@@ -14,14 +14,14 @@ export interface RunQueryRequest {
     namedParams?: { [parameterName: string]: any };
     query: string;
     queryClass?: string;
-    queryType: QueryType;
+    type: QueryType;
     startAt?: number;
     limit?: number;
 }
 
 export interface RunQueryResponse {
     columns: string[];
-    rows: any[];
+    data: any[];
     query?: string;
     elapsed?: number;
     host: string;
@@ -47,13 +47,9 @@ export interface Configuration {
 }
 
 export interface TableInfo {
-    name: string;
+    table: string;
     schema: string;
     columns: string[];
-}
-
-export interface TableEnumeration {
-    [tableName: string]: TableInfo;
 }
 
 export interface DatabaseInfo {
@@ -68,6 +64,22 @@ export interface DatabaseInfo {
 export interface SchemaDefinition {
     tables: Array<string>;
     views: Array<string>;
+}
+
+function getCookie(name: string) {
+    if (!document.cookie) {
+        return null;
+    }
+
+    const xsrfCookies = document.cookie.split(';')
+        .map(c => c.trim())
+        .filter(c => c.startsWith(name + '='));
+
+    if (xsrfCookies.length === 0) {
+        return null;
+    }
+    let cookieValue = xsrfCookies[0].substring(name.length + 1);
+    return decodeURIComponent(cookieValue);
 }
 
 @Injectable({
@@ -85,8 +97,8 @@ export class API {
         const response = await fetch(`${this.baseUrl}/configuration`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': PluginHelper.getCsrfToken()
+                'X-XSRF-TOKEN': getCookie('CSRF-TOKEN') || PluginHelper.getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest' // To indicate this is an AJAX request
             }
         });
         if (!response.ok) {
@@ -95,13 +107,17 @@ export class API {
         return await response.json();
     }
     
-    async enumerateDatabase(): Promise<DatabaseInfo> {
+    async enumerateDatabase(input: Partial<RunQueryRequest>): Promise<DatabaseInfo> {
         const response = await fetch(`${this.baseUrl}/enumerate/database`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': PluginHelper.getCsrfToken()
-            }
+                'X-XSRF-TOKEN': getCookie('CSRF-TOKEN') || PluginHelper.getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest' // To indicate this is an AJAX request
+            },
+            body: JSON.stringify({
+                type: input.type,
+                application: input.application
+            })
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -109,13 +125,17 @@ export class API {
         return await response.json();
     }
     
-    async enumerateTables(): Promise<TableEnumeration> {
+    async enumerateTables(input: Partial<RunQueryRequest>): Promise<TableInfo[]> {
         const response = await fetch(`${this.baseUrl}/enumerate/tables`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': PluginHelper.getCsrfToken()
-            }
+                'X-XSRF-TOKEN': getCookie('CSRF-TOKEN') || PluginHelper.getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest' // To indicate this is an AJAX request
+            },
+            body: JSON.stringify({
+                type: input.type,
+                application: input.application
+            })
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -138,7 +158,8 @@ export class API {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-Token': PluginHelper.getCsrfToken()
+                'X-XSRF-TOKEN': getCookie('CSRF-TOKEN') || PluginHelper.getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest' // To indicate this is an AJAX request
             },
             body: JSON.stringify(request)
         });
@@ -157,20 +178,20 @@ export class API {
         queryParams.set('query', request.query);
 
         let url;
-        if (request.queryType === "Filter" || request.queryType === "XMLFilter") {
+        if (request.type === "Filter" || request.type === "XMLFilter") {
             queryParams.set('queryClass', request.queryClass ?? "");
             url = `${this.baseUrl}/filter/translate?${queryParams.toString()}`;
-        } else if (request.queryType === "HQL") {
+        } else if (request.type === "HQL") {
             url = `${this.baseUrl}/hql/translate?${queryParams.toString()}`;
         } else {
-            throw new Error(`Unsupported query type for translation: ${request.queryType}`);
+            throw new Error(`Unsupported query type for translation: ${request.type}`);
         }
 
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': PluginHelper.getCsrfToken()
+                'X-XSRF-TOKEN': getCookie('CSRF-TOKEN') || PluginHelper.getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest' // To indicate this is an AJAX request
             }
         });
         if (!response.ok) {

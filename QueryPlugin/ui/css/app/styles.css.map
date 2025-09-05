@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/styles.scss"],
+  "sourcesContent": ["div.cm-editor, div.cm-gutter, div.cm-content {\n  height: 100%;\n  font-size: 1em;\n}\n\ndiv.cm-line {\n  font-size: 1em;\n  font-family: Menlo, Monaco, Consolas, \"Courier New\", monospace !important;\n\n  span {\n    font-size: 1em;\n    font-family: Menlo, Monaco, Consolas, \"Courier New\", monospace !important;\n  }\n}"],
+  "mappings": ";AAAA,GAAA,CAAA;AAAA,GAAA,CAAA;AAAA,GAAA,CAAA;AACE,UAAA;AACA,aAAA;;AAGF,GAAA,CAAA;AACE,aAAA;AACA;IAAA,KAAA;IAAA,MAAA;IAAA,QAAA;IAAA,aAAA;IAAA;;AAEA,GAAA,CAJF,QAIE;AACE,aAAA;AACA;IAAA,KAAA;IAAA,MAAA;IAAA,QAAA;IAAA,aAAA;IAAA;;",
+  "names": []
+}

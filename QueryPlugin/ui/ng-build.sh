@@ -87,13 +87,17 @@ if [[ ! -e "${DIST_DIR}" ]]; then
   exit 2
 fi
 
+if [[ ! -d "${CSS_DIR}/app" ]]; then
+  mkdir -p "${CSS_DIR}/app"
+fi
+
 greenecho "Copying files to '${JS_DIR}/app' directories..."
 
 if [[ -d "${DIST_DIR}/assets" ]]; then
   cp -r "${DIST_DIR}"/assets/* "${JS_DIR}/app/"
 fi
 cp "${DIST_DIR}"/*.js "${JS_DIR}/app"
-#cp "${DIST_DIR}"/*.js.map "${JS_DIR}/app"
+cp "${DIST_DIR}"/*.js.map "${JS_DIR}/app"
 cp "${DIST_DIR}"/styles*.css "${CSS_DIR}/app"
 cp "${DIST_DIR}"/styles*.css.map "${CSS_DIR}/app"
 
@@ -113,9 +117,9 @@ greenecho "Generating page.xhtml..."
 
 ( sed 's#</body></html>##' ${UI_DIR}/dist/QueryPlugin/browser/index.html |
   sed 's#<html><body>##' |
-  sed 's(src="(src="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/js/app/(g' |
-  sed 's(href="(href="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/css/app/(g' |
-  sed 's#\(<link.*?>\)#\1</link>#g' > ${temp} ) || \
+  sed 's(src="(src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/app/(g' |
+  sed 's(href="(href="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/css/app/(g' |
+  sed 's#\(<link.*css">\)#\1</link>#g' > ${temp} ) || \
   { redecho "ERROR: 'sed' substitution failed"; exit 2; }
 
 

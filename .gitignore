@@ -9,3 +9,8 @@ lib/iiq/*.jar
 .classpath
 .project
 .settings
+**/node_modules/
+**/*.js.map
+QueryPlugin/ui/js/app/*.js
+QueryPlugin/ui/js/app/**/*.js
+QueryPlugin/ui/.angular

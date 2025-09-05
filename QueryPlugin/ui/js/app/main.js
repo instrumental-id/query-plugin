@@ -30,6 +30,10 @@ var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require
 var __commonJS = (cb, mod2) => function __require2() {
   return mod2 || (0, cb[__getOwnPropNames(cb)[0]])((mod2 = { exports: {} }).exports, mod2), mod2.exports;
 };
+var __export = (target, all) => {
+  for (var name2 in all)
+    __defProp(target, name2, { get: all[name2], enumerable: true });
+};
 var __copyProps = (to, from2, except, desc) => {
   if (from2 && typeof from2 === "object" || typeof from2 === "function") {
     for (let key of __getOwnPropNames(from2))
@@ -69,11 +73,11 @@ var __async = (__this, __arguments, generator) => {
 
 // node_modules/localforage/dist/localforage.js
 var require_localforage = __commonJS({
-  "node_modules/localforage/dist/localforage.js"(exports, module) {
+  "node_modules/localforage/dist/localforage.js"(exports2, module2) {
     "use strict";
     (function(f) {
-      if (typeof exports === "object" && typeof module !== "undefined") {
-        module.exports = f();
+      if (typeof exports2 === "object" && typeof module2 !== "undefined") {
+        module2.exports = f();
       } else if (typeof define === "function" && define.amd) {
         define([], f);
       } else {
@@ -90,7 +94,7 @@ var require_localforage = __commonJS({
         g.localforage = f();
       }
     })(function() {
-      var define2, module2, exports2;
+      var define2, module3, exports3;
       return function e(t2, n, r) {
         function s(o2, u2) {
           if (!n[o2]) {
@@ -112,7 +116,7 @@ var require_localforage = __commonJS({
         var i = typeof __require == "function" && __require;
         for (var o = 0; o < r.length; o++) s(r[o]);
         return s;
-      }({ 1: [function(_dereq_, module3, exports3) {
+      }({ 1: [function(_dereq_, module4, exports4) {
         (function(global2) {
           "use strict";
           var Mutation = global2.MutationObserver || global2.WebKitMutationObserver;
@@ -121,12 +125,12 @@ var require_localforage = __commonJS({
             if (Mutation) {
               var called = 0;
               var observer = new Mutation(nextTick);
-              var element = global2.document.createTextNode("");
-              observer.observe(element, {
+              var element2 = global2.document.createTextNode("");
+              observer.observe(element2, {
                 characterData: true
               });
               scheduleDrain = function() {
-                element.data = called = ++called % 2;
+                element2.data = called = ++called % 2;
               };
             } else if (!global2.setImmediate && typeof global2.MessageChannel !== "undefined") {
               var channel = new global2.MessageChannel();
@@ -168,14 +172,14 @@ var require_localforage = __commonJS({
             }
             draining = false;
           }
-          module3.exports = immediate;
+          module4.exports = immediate;
           function immediate(task) {
             if (queue.push(task) === 1 && !draining) {
               scheduleDrain();
             }
           }
         }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {});
-      }, {}], 2: [function(_dereq_, module3, exports3) {
+      }, {}], 2: [function(_dereq_, module4, exports4) {
         "use strict";
         var immediate = _dereq_(1);
         function INTERNAL() {
@@ -184,7 +188,7 @@ var require_localforage = __commonJS({
         var REJECTED = ["REJECTED"];
         var FULFILLED = ["FULFILLED"];
         var PENDING2 = ["PENDING"];
-        module3.exports = Promise2;
+        module4.exports = Promise2;
         function Promise2(resolver) {
           if (typeof resolver !== "function") {
             throw new TypeError("resolver must be a function");
@@ -206,7 +210,7 @@ var require_localforage = __commonJS({
           var promise = new this.constructor(INTERNAL);
           if (this.state !== PENDING2) {
             var resolver = this.state === FULFILLED ? onFulfilled : onRejected;
-            unwrap(promise, resolver, this.outcome);
+            unwrap2(promise, resolver, this.outcome);
           } else {
             this.queue.push(new QueueItem(promise, onFulfilled, onRejected));
           }
@@ -227,15 +231,15 @@ var require_localforage = __commonJS({
           handlers2.resolve(this.promise, value);
         };
         QueueItem.prototype.otherCallFulfilled = function(value) {
-          unwrap(this.promise, this.onFulfilled, value);
+          unwrap2(this.promise, this.onFulfilled, value);
         };
         QueueItem.prototype.callRejected = function(value) {
           handlers2.reject(this.promise, value);
         };
         QueueItem.prototype.otherCallRejected = function(value) {
-          unwrap(this.promise, this.onRejected, value);
+          unwrap2(this.promise, this.onRejected, value);
         };
-        function unwrap(promise, func, value) {
+        function unwrap2(promise, func, value) {
           immediate(function() {
             var returnValue;
             try {
@@ -400,14 +404,14 @@ var require_localforage = __commonJS({
             });
           }
         }
-      }, { "1": 1 }], 3: [function(_dereq_, module3, exports3) {
+      }, { "1": 1 }], 3: [function(_dereq_, module4, exports4) {
         (function(global2) {
           "use strict";
           if (typeof global2.Promise !== "function") {
             global2.Promise = _dereq_(2);
           }
         }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {});
-      }, { "2": 2 }], 4: [function(_dereq_, module3, exports3) {
+      }, { "2": 2 }], 4: [function(_dereq_, module4, exports4) {
         "use strict";
         var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
           return typeof obj;
@@ -1059,7 +1063,7 @@ var require_localforage = __commonJS({
           executeCallback(promise, callback);
           return promise;
         }
-        function keys2(callback) {
+        function keys(callback) {
           var self2 = this;
           var promise = new Promise$1(function(resolve, reject) {
             self2.ready().then(function() {
@@ -1070,14 +1074,14 @@ var require_localforage = __commonJS({
                 try {
                   var store2 = transaction.objectStore(self2._dbInfo.storeName);
                   var req = store2.openKeyCursor();
-                  var keys3 = [];
+                  var keys2 = [];
                   req.onsuccess = function() {
                     var cursor = req.result;
                     if (!cursor) {
-                      resolve(keys3);
+                      resolve(keys2);
                       return;
                     }
-                    keys3.push(cursor.key);
+                    keys2.push(cursor.key);
                     cursor["continue"]();
                   };
                   req.onerror = function() {
@@ -1128,9 +1132,9 @@ var require_localforage = __commonJS({
                 var dropDBPromise = new Promise$1(function(resolve, reject) {
                   var req = idb.deleteDatabase(options.name);
                   req.onerror = function() {
-                    var db2 = req.result;
-                    if (db2) {
-                      db2.close();
+                    var db3 = req.result;
+                    if (db3) {
+                      db3.close();
                     }
                     reject(req.error);
                   };
@@ -1138,15 +1142,15 @@ var require_localforage = __commonJS({
                     console.warn('dropInstance blocked for database "' + options.name + '" until all open connections are closed');
                   };
                   req.onsuccess = function() {
-                    var db2 = req.result;
-                    if (db2) {
-                      db2.close();
+                    var db3 = req.result;
+                    if (db3) {
+                      db3.close();
                     }
-                    resolve(db2);
+                    resolve(db3);
                   };
                 });
-                return dropDBPromise.then(function(db2) {
-                  dbContext.db = db2;
+                return dropDBPromise.then(function(db3) {
+                  dbContext.db = db3;
                   for (var i2 = 0; i2 < forages.length; i2++) {
                     var _forage = forages[i2];
                     _advanceReadiness(_forage._dbInfo);
@@ -1175,25 +1179,25 @@ var require_localforage = __commonJS({
                 var dropObjectPromise = new Promise$1(function(resolve, reject) {
                   var req = idb.open(options.name, newVersion);
                   req.onerror = function(err) {
-                    var db2 = req.result;
-                    db2.close();
+                    var db3 = req.result;
+                    db3.close();
                     reject(err);
                   };
                   req.onupgradeneeded = function() {
-                    var db2 = req.result;
-                    db2.deleteObjectStore(options.storeName);
+                    var db3 = req.result;
+                    db3.deleteObjectStore(options.storeName);
                   };
                   req.onsuccess = function() {
-                    var db2 = req.result;
-                    db2.close();
-                    resolve(db2);
+                    var db3 = req.result;
+                    db3.close();
+                    resolve(db3);
                   };
                 });
-                return dropObjectPromise.then(function(db2) {
-                  dbContext.db = db2;
+                return dropObjectPromise.then(function(db3) {
+                  dbContext.db = db3;
                   for (var j = 0; j < forages.length; j++) {
                     var _forage2 = forages[j];
-                    _forage2._dbInfo.db = db2;
+                    _forage2._dbInfo.db = db3;
                     _advanceReadiness(_forage2._dbInfo);
                   }
                 })["catch"](function(err) {
@@ -1218,7 +1222,7 @@ var require_localforage = __commonJS({
           clear,
           length,
           key,
-          keys: keys2,
+          keys,
           dropInstance
         };
         function isWebSQLValid() {
@@ -1600,11 +1604,11 @@ var require_localforage = __commonJS({
               var dbInfo = self2._dbInfo;
               dbInfo.db.transaction(function(t2) {
                 tryExecuteSql(t2, dbInfo, "SELECT key FROM " + dbInfo.storeName, [], function(t3, results) {
-                  var keys3 = [];
+                  var keys2 = [];
                   for (var i = 0; i < results.rows.length; i++) {
-                    keys3.push(results.rows.item(i).key);
+                    keys2.push(results.rows.item(i).key);
                   }
-                  resolve(keys3);
+                  resolve(keys2);
                 }, function(t3, error) {
                   reject(error);
                 });
@@ -1714,9 +1718,9 @@ var require_localforage = __commonJS({
             return false;
           }
         }
-        function _getKeyPrefix(options, defaultConfig2) {
+        function _getKeyPrefix(options, defaultConfig) {
           var keyPrefix = options.name + "/";
-          if (options.storeName !== defaultConfig2.storeName) {
+          if (options.storeName !== defaultConfig.storeName) {
             keyPrefix += options.storeName + "/";
           }
           return keyPrefix;
@@ -1827,22 +1831,22 @@ var require_localforage = __commonJS({
           var promise = self2.ready().then(function() {
             var dbInfo = self2._dbInfo;
             var length2 = localStorage.length;
-            var keys3 = [];
+            var keys2 = [];
             for (var i = 0; i < length2; i++) {
               var itemKey = localStorage.key(i);
               if (itemKey.indexOf(dbInfo.keyPrefix) === 0) {
-                keys3.push(itemKey.substring(dbInfo.keyPrefix.length));
+                keys2.push(itemKey.substring(dbInfo.keyPrefix.length));
               }
             }
-            return keys3;
+            return keys2;
           });
           executeCallback(promise, callback);
           return promise;
         }
         function length$2(callback) {
           var self2 = this;
-          var promise = self2.keys().then(function(keys3) {
-            return keys3.length;
+          var promise = self2.keys().then(function(keys2) {
+            return keys2.length;
           });
           executeCallback(promise, callback);
           return promise;
@@ -2207,8 +2211,440 @@ var require_localforage = __commonJS({
           return LocalForage2;
         }();
         var localforage_js = new LocalForage();
-        module3.exports = localforage_js;
+        module4.exports = localforage_js;
       }, { "3": 3 }] }, {}, [4])(4);
+    });
+  }
+});
+
+// node_modules/nearley/lib/nearley.js
+var require_nearley = __commonJS({
+  "node_modules/nearley/lib/nearley.js"(exports2, module2) {
+    "use strict";
+    (function(root, factory) {
+      if (typeof module2 === "object" && module2.exports) {
+        module2.exports = factory();
+      } else {
+        root.nearley = factory();
+      }
+    })(exports2, function() {
+      function Rule2(name2, symbols, postprocess) {
+        this.id = ++Rule2.highestId;
+        this.name = name2;
+        this.symbols = symbols;
+        this.postprocess = postprocess;
+        return this;
+      }
+      Rule2.highestId = 0;
+      Rule2.prototype.toString = function(withCursorAt) {
+        var symbolSequence = typeof withCursorAt === "undefined" ? this.symbols.map(getSymbolShortDisplay).join(" ") : this.symbols.slice(0, withCursorAt).map(getSymbolShortDisplay).join(" ") + " \u25CF " + this.symbols.slice(withCursorAt).map(getSymbolShortDisplay).join(" ");
+        return this.name + " \u2192 " + symbolSequence;
+      };
+      function State(rule, dot, reference2, wantedBy) {
+        this.rule = rule;
+        this.dot = dot;
+        this.reference = reference2;
+        this.data = [];
+        this.wantedBy = wantedBy;
+        this.isComplete = this.dot === rule.symbols.length;
+      }
+      State.prototype.toString = function() {
+        return "{" + this.rule.toString(this.dot) + "}, from: " + (this.reference || 0);
+      };
+      State.prototype.nextState = function(child) {
+        var state = new State(this.rule, this.dot + 1, this.reference, this.wantedBy);
+        state.left = this;
+        state.right = child;
+        if (state.isComplete) {
+          state.data = state.build();
+          state.right = void 0;
+        }
+        return state;
+      };
+      State.prototype.build = function() {
+        var children = [];
+        var node = this;
+        do {
+          children.push(node.right.data);
+          node = node.left;
+        } while (node.left);
+        children.reverse();
+        return children;
+      };
+      State.prototype.finish = function() {
+        if (this.rule.postprocess) {
+          this.data = this.rule.postprocess(this.data, this.reference, Parser2.fail);
+        }
+      };
+      function Column(grammar2, index) {
+        this.grammar = grammar2;
+        this.index = index;
+        this.states = [];
+        this.wants = {};
+        this.scannable = [];
+        this.completed = {};
+      }
+      Column.prototype.process = function(nextColumn) {
+        var states = this.states;
+        var wants = this.wants;
+        var completed = this.completed;
+        for (var w = 0; w < states.length; w++) {
+          var state = states[w];
+          if (state.isComplete) {
+            state.finish();
+            if (state.data !== Parser2.fail) {
+              var wantedBy = state.wantedBy;
+              for (var i = wantedBy.length; i--; ) {
+                var left2 = wantedBy[i];
+                this.complete(left2, state);
+              }
+              if (state.reference === this.index) {
+                var exp = state.rule.name;
+                (this.completed[exp] = this.completed[exp] || []).push(state);
+              }
+            }
+          } else {
+            var exp = state.rule.symbols[state.dot];
+            if (typeof exp !== "string") {
+              this.scannable.push(state);
+              continue;
+            }
+            if (wants[exp]) {
+              wants[exp].push(state);
+              if (completed.hasOwnProperty(exp)) {
+                var nulls = completed[exp];
+                for (var i = 0; i < nulls.length; i++) {
+                  var right2 = nulls[i];
+                  this.complete(state, right2);
+                }
+              }
+            } else {
+              wants[exp] = [state];
+              this.predict(exp);
+            }
+          }
+        }
+      };
+      Column.prototype.predict = function(exp) {
+        var rules = this.grammar.byName[exp] || [];
+        for (var i = 0; i < rules.length; i++) {
+          var r = rules[i];
+          var wantedBy = this.wants[exp];
+          var s = new State(r, 0, this.index, wantedBy);
+          this.states.push(s);
+        }
+      };
+      Column.prototype.complete = function(left2, right2) {
+        var copy = left2.nextState(right2);
+        this.states.push(copy);
+      };
+      function Grammar2(rules, start2) {
+        this.rules = rules;
+        this.start = start2 || this.rules[0].name;
+        var byName = this.byName = {};
+        this.rules.forEach(function(rule) {
+          if (!byName.hasOwnProperty(rule.name)) {
+            byName[rule.name] = [];
+          }
+          byName[rule.name].push(rule);
+        });
+      }
+      Grammar2.fromCompiled = function(rules, start2) {
+        var lexer2 = rules.Lexer;
+        if (rules.ParserStart) {
+          start2 = rules.ParserStart;
+          rules = rules.ParserRules;
+        }
+        var rules = rules.map(function(r) {
+          return new Rule2(r.name, r.symbols, r.postprocess);
+        });
+        var g = new Grammar2(rules, start2);
+        g.lexer = lexer2;
+        return g;
+      };
+      function StreamLexer() {
+        this.reset("");
+      }
+      StreamLexer.prototype.reset = function(data, state) {
+        this.buffer = data;
+        this.index = 0;
+        this.line = state ? state.line : 1;
+        this.lastLineBreak = state ? -state.col : 0;
+      };
+      StreamLexer.prototype.next = function() {
+        if (this.index < this.buffer.length) {
+          var ch = this.buffer[this.index++];
+          if (ch === "\n") {
+            this.line += 1;
+            this.lastLineBreak = this.index;
+          }
+          return { value: ch };
+        }
+      };
+      StreamLexer.prototype.save = function() {
+        return {
+          line: this.line,
+          col: this.index - this.lastLineBreak
+        };
+      };
+      StreamLexer.prototype.formatError = function(token, message) {
+        var buffer = this.buffer;
+        if (typeof buffer === "string") {
+          var lines = buffer.split("\n").slice(
+            Math.max(0, this.line - 5),
+            this.line
+          );
+          var nextLineBreak = buffer.indexOf("\n", this.index);
+          if (nextLineBreak === -1) nextLineBreak = buffer.length;
+          var col = this.index - this.lastLineBreak;
+          var lastLineDigits = String(this.line).length;
+          message += " at line " + this.line + " col " + col + ":\n\n";
+          message += lines.map(function(line, i) {
+            return pad(this.line - lines.length + i + 1, lastLineDigits) + " " + line;
+          }, this).join("\n");
+          message += "\n" + pad("", lastLineDigits + col) + "^\n";
+          return message;
+        } else {
+          return message + " at index " + (this.index - 1);
+        }
+        function pad(n, length) {
+          var s = String(n);
+          return Array(length - s.length + 1).join(" ") + s;
+        }
+      };
+      function Parser2(rules, start2, options) {
+        if (rules instanceof Grammar2) {
+          var grammar2 = rules;
+          var options = start2;
+        } else {
+          var grammar2 = Grammar2.fromCompiled(rules, start2);
+        }
+        this.grammar = grammar2;
+        this.options = {
+          keepHistory: false,
+          lexer: grammar2.lexer || new StreamLexer()
+        };
+        for (var key in options || {}) {
+          this.options[key] = options[key];
+        }
+        this.lexer = this.options.lexer;
+        this.lexerState = void 0;
+        var column = new Column(grammar2, 0);
+        var table = this.table = [column];
+        column.wants[grammar2.start] = [];
+        column.predict(grammar2.start);
+        column.process();
+        this.current = 0;
+      }
+      Parser2.fail = {};
+      Parser2.prototype.feed = function(chunk) {
+        var lexer2 = this.lexer;
+        lexer2.reset(chunk, this.lexerState);
+        var token;
+        while (true) {
+          try {
+            token = lexer2.next();
+            if (!token) {
+              break;
+            }
+          } catch (e) {
+            var nextColumn = new Column(this.grammar, this.current + 1);
+            this.table.push(nextColumn);
+            var err = new Error(this.reportLexerError(e));
+            err.offset = this.current;
+            err.token = e.token;
+            throw err;
+          }
+          var column = this.table[this.current];
+          if (!this.options.keepHistory) {
+            delete this.table[this.current - 1];
+          }
+          var n = this.current + 1;
+          var nextColumn = new Column(this.grammar, n);
+          this.table.push(nextColumn);
+          var literal2 = token.text !== void 0 ? token.text : token.value;
+          var value = lexer2.constructor === StreamLexer ? token.value : token;
+          var scannable = column.scannable;
+          for (var w = scannable.length; w--; ) {
+            var state = scannable[w];
+            var expect = state.rule.symbols[state.dot];
+            if (expect.test ? expect.test(value) : expect.type ? expect.type === token.type : expect.literal === literal2) {
+              var next = state.nextState({ data: value, token, isToken: true, reference: n - 1 });
+              nextColumn.states.push(next);
+            }
+          }
+          nextColumn.process();
+          if (nextColumn.states.length === 0) {
+            var err = new Error(this.reportError(token));
+            err.offset = this.current;
+            err.token = token;
+            throw err;
+          }
+          if (this.options.keepHistory) {
+            column.lexerState = lexer2.save();
+          }
+          this.current++;
+        }
+        if (column) {
+          this.lexerState = lexer2.save();
+        }
+        this.results = this.finish();
+        return this;
+      };
+      Parser2.prototype.reportLexerError = function(lexerError) {
+        var tokenDisplay, lexerMessage;
+        var token = lexerError.token;
+        if (token) {
+          tokenDisplay = "input " + JSON.stringify(token.text[0]) + " (lexer error)";
+          lexerMessage = this.lexer.formatError(token, "Syntax error");
+        } else {
+          tokenDisplay = "input (lexer error)";
+          lexerMessage = lexerError.message;
+        }
+        return this.reportErrorCommon(lexerMessage, tokenDisplay);
+      };
+      Parser2.prototype.reportError = function(token) {
+        var tokenDisplay = (token.type ? token.type + " token: " : "") + JSON.stringify(token.value !== void 0 ? token.value : token);
+        var lexerMessage = this.lexer.formatError(token, "Syntax error");
+        return this.reportErrorCommon(lexerMessage, tokenDisplay);
+      };
+      Parser2.prototype.reportErrorCommon = function(lexerMessage, tokenDisplay) {
+        var lines = [];
+        lines.push(lexerMessage);
+        var lastColumnIndex = this.table.length - 2;
+        var lastColumn = this.table[lastColumnIndex];
+        var expectantStates = lastColumn.states.filter(function(state) {
+          var nextSymbol = state.rule.symbols[state.dot];
+          return nextSymbol && typeof nextSymbol !== "string";
+        });
+        if (expectantStates.length === 0) {
+          lines.push("Unexpected " + tokenDisplay + ". I did not expect any more input. Here is the state of my parse table:\n");
+          this.displayStateStack(lastColumn.states, lines);
+        } else {
+          lines.push("Unexpected " + tokenDisplay + ". Instead, I was expecting to see one of the following:\n");
+          var stateStacks = expectantStates.map(function(state) {
+            return this.buildFirstStateStack(state, []) || [state];
+          }, this);
+          stateStacks.forEach(function(stateStack) {
+            var state = stateStack[0];
+            var nextSymbol = state.rule.symbols[state.dot];
+            var symbolDisplay = this.getSymbolDisplay(nextSymbol);
+            lines.push("A " + symbolDisplay + " based on:");
+            this.displayStateStack(stateStack, lines);
+          }, this);
+        }
+        lines.push("");
+        return lines.join("\n");
+      };
+      Parser2.prototype.displayStateStack = function(stateStack, lines) {
+        var lastDisplay;
+        var sameDisplayCount = 0;
+        for (var j = 0; j < stateStack.length; j++) {
+          var state = stateStack[j];
+          var display = state.rule.toString(state.dot);
+          if (display === lastDisplay) {
+            sameDisplayCount++;
+          } else {
+            if (sameDisplayCount > 0) {
+              lines.push("    ^ " + sameDisplayCount + " more lines identical to this");
+            }
+            sameDisplayCount = 0;
+            lines.push("    " + display);
+          }
+          lastDisplay = display;
+        }
+      };
+      Parser2.prototype.getSymbolDisplay = function(symbol) {
+        return getSymbolLongDisplay(symbol);
+      };
+      Parser2.prototype.buildFirstStateStack = function(state, visited) {
+        if (visited.indexOf(state) !== -1) {
+          return null;
+        }
+        if (state.wantedBy.length === 0) {
+          return [state];
+        }
+        var prevState = state.wantedBy[0];
+        var childVisited = [state].concat(visited);
+        var childResult = this.buildFirstStateStack(prevState, childVisited);
+        if (childResult === null) {
+          return null;
+        }
+        return [state].concat(childResult);
+      };
+      Parser2.prototype.save = function() {
+        var column = this.table[this.current];
+        column.lexerState = this.lexerState;
+        return column;
+      };
+      Parser2.prototype.restore = function(column) {
+        var index = column.index;
+        this.current = index;
+        this.table[index] = column;
+        this.table.splice(index + 1);
+        this.lexerState = column.lexerState;
+        this.results = this.finish();
+      };
+      Parser2.prototype.rewind = function(index) {
+        if (!this.options.keepHistory) {
+          throw new Error("set option `keepHistory` to enable rewinding");
+        }
+        this.restore(this.table[index]);
+      };
+      Parser2.prototype.finish = function() {
+        var considerations = [];
+        var start2 = this.grammar.start;
+        var column = this.table[this.table.length - 1];
+        column.states.forEach(function(t2) {
+          if (t2.rule.name === start2 && t2.dot === t2.rule.symbols.length && t2.reference === 0 && t2.data !== Parser2.fail) {
+            considerations.push(t2);
+          }
+        });
+        return considerations.map(function(c) {
+          return c.data;
+        });
+      };
+      function getSymbolLongDisplay(symbol) {
+        var type = typeof symbol;
+        if (type === "string") {
+          return symbol;
+        } else if (type === "object") {
+          if (symbol.literal) {
+            return JSON.stringify(symbol.literal);
+          } else if (symbol instanceof RegExp) {
+            return "character matching " + symbol;
+          } else if (symbol.type) {
+            return symbol.type + " token";
+          } else if (symbol.test) {
+            return "token matching " + String(symbol.test);
+          } else {
+            throw new Error("Unknown symbol type: " + symbol);
+          }
+        }
+      }
+      function getSymbolShortDisplay(symbol) {
+        var type = typeof symbol;
+        if (type === "string") {
+          return symbol;
+        } else if (type === "object") {
+          if (symbol.literal) {
+            return JSON.stringify(symbol.literal);
+          } else if (symbol instanceof RegExp) {
+            return symbol.toString();
+          } else if (symbol.type) {
+            return "%" + symbol.type;
+          } else if (symbol.test) {
+            return "<" + String(symbol.test) + ">";
+          } else {
+            throw new Error("Unknown symbol type: " + symbol);
+          }
+        }
+      }
+      return {
+        Parser: Parser2,
+        Grammar: Grammar2,
+        Rule: Rule2
+      };
     });
   }
 });
@@ -2244,9 +2680,6 @@ function setActiveConsumer(consumer) {
 }
 function getActiveConsumer() {
   return activeConsumer;
-}
-function isInNotificationPhase() {
-  return inNotificationPhase;
 }
 var REACTIVE_NODE = {
   version: 0,
@@ -2966,17 +3399,17 @@ var Observable = class _Observable {
       this._subscribe = subscribe;
     }
   }
-  lift(operator2) {
+  lift(operator3) {
     const observable2 = new _Observable();
     observable2.source = this;
-    observable2.operator = operator2;
+    observable2.operator = operator3;
     return observable2;
   }
   subscribe(observerOrNext, error, complete) {
     const subscriber = isSubscriber(observerOrNext) ? observerOrNext : new SafeSubscriber(observerOrNext, error, complete);
     errorContext(() => {
-      const { operator: operator2, source } = this;
-      subscriber.add(operator2 ? operator2.call(subscriber, source) : source ? this._subscribe(subscriber) : this._trySubscribe(subscriber));
+      const { operator: operator3, source } = this;
+      subscriber.add(operator3 ? operator3.call(subscriber, source) : source ? this._subscribe(subscriber) : this._trySubscribe(subscriber));
     });
     return subscriber;
   }
@@ -3119,9 +3552,9 @@ var Subject = class extends Observable {
     this.hasError = false;
     this.thrownError = null;
   }
-  lift(operator2) {
+  lift(operator3) {
     const subject = new AnonymousSubject(this, this);
-    subject.operator = operator2;
+    subject.operator = operator3;
     return subject;
   }
   _throwIfClosed() {
@@ -3312,10 +3745,10 @@ var AsyncAction = class extends Action {
       return this;
     }
     this.state = state;
-    const id = this.id;
+    const id3 = this.id;
     const scheduler = this.scheduler;
-    if (id != null) {
-      this.id = this.recycleAsyncId(scheduler, id, delay2);
+    if (id3 != null) {
+      this.id = this.recycleAsyncId(scheduler, id3, delay2);
     }
     this.pending = true;
     this.delay = delay2;
@@ -3325,12 +3758,12 @@ var AsyncAction = class extends Action {
   requestAsyncId(scheduler, _id, delay2 = 0) {
     return intervalProvider.setInterval(scheduler.flush.bind(scheduler, this), delay2);
   }
-  recycleAsyncId(_scheduler, id, delay2 = 0) {
+  recycleAsyncId(_scheduler, id3, delay2 = 0) {
     if (delay2 != null && this.delay === delay2 && this.pending === false) {
-      return id;
+      return id3;
     }
-    if (id != null) {
-      intervalProvider.clearInterval(id);
+    if (id3 != null) {
+      intervalProvider.clearInterval(id3);
     }
     return void 0;
   }
@@ -3362,13 +3795,13 @@ var AsyncAction = class extends Action {
   }
   unsubscribe() {
     if (!this.closed) {
-      const { id, scheduler } = this;
+      const { id: id3, scheduler } = this;
       const { actions } = scheduler;
       this.work = this.state = this.scheduler = null;
       this.pending = false;
       arrRemove(actions, this);
-      if (id != null) {
-        this.id = this.recycleAsyncId(scheduler, id, null);
+      if (id3 != null) {
+        this.id = this.recycleAsyncId(scheduler, id3, null);
       }
       this.delay = null;
       super.unsubscribe();
@@ -3882,10 +4315,10 @@ function argsArgArrayOrObject(args) {
       return { args: first, keys: null };
     }
     if (isPOJO(first)) {
-      const keys2 = getKeys(first);
+      const keys = getKeys(first);
       return {
-        args: keys2.map((key) => first[key]),
-        keys: keys2
+        args: keys.map((key) => first[key]),
+        keys
       };
     }
   }
@@ -3896,19 +4329,19 @@ function isPOJO(obj) {
 }
 
 // node_modules/rxjs/dist/esm/internal/util/createObject.js
-function createObject(keys2, values) {
-  return keys2.reduce((result, key, i) => (result[key] = values[i], result), {});
+function createObject(keys, values) {
+  return keys.reduce((result, key, i) => (result[key] = values[i], result), {});
 }
 
 // node_modules/rxjs/dist/esm/internal/observable/combineLatest.js
 function combineLatest(...args) {
   const scheduler = popScheduler(args);
   const resultSelector = popResultSelector(args);
-  const { args: observables, keys: keys2 } = argsArgArrayOrObject(args);
+  const { args: observables, keys } = argsArgArrayOrObject(args);
   if (observables.length === 0) {
     return from([], scheduler);
   }
-  const result = new Observable(combineLatestInit(observables, scheduler, keys2 ? (values) => createObject(keys2, values) : identity));
+  const result = new Observable(combineLatestInit(observables, scheduler, keys ? (values) => createObject(keys, values) : identity));
   return resultSelector ? result.pipe(mapOneOrManyArgs(resultSelector)) : result;
 }
 function combineLatestInit(observables, scheduler, valueTransform = identity) {
@@ -4030,7 +4463,7 @@ function concat(...args) {
 // node_modules/rxjs/dist/esm/internal/observable/forkJoin.js
 function forkJoin(...args) {
   const resultSelector = popResultSelector(args);
-  const { args: sources, keys: keys2 } = argsArgArrayOrObject(args);
+  const { args: sources, keys } = argsArgArrayOrObject(args);
   const result = new Observable((subscriber) => {
     const { length } = sources;
     if (!length) {
@@ -4051,7 +4484,7 @@ function forkJoin(...args) {
       }, () => remainingCompletions--, void 0, () => {
         if (!remainingCompletions || !hasValue) {
           if (!remainingEmissions) {
-            subscriber.next(keys2 ? createObject(keys2, values) : values);
+            subscriber.next(keys ? createObject(keys, values) : values);
           }
           subscriber.complete();
         }
@@ -4073,18 +4506,18 @@ function fromEvent(target, eventName, options, resultSelector) {
   if (resultSelector) {
     return fromEvent(target, eventName, options).pipe(mapOneOrManyArgs(resultSelector));
   }
-  const [add2, remove3] = isEventTarget(target) ? eventTargetMethods.map((methodName) => (handler) => target[methodName](eventName, handler, options)) : isNodeStyleEventEmitter(target) ? nodeEventEmitterMethods.map(toCommonHandlerRegistry(target, eventName)) : isJQueryStyleEventEmitter(target) ? jqueryMethods.map(toCommonHandlerRegistry(target, eventName)) : [];
-  if (!add2) {
+  const [add, remove3] = isEventTarget(target) ? eventTargetMethods.map((methodName) => (handler) => target[methodName](eventName, handler, options)) : isNodeStyleEventEmitter(target) ? nodeEventEmitterMethods.map(toCommonHandlerRegistry(target, eventName)) : isJQueryStyleEventEmitter(target) ? jqueryMethods.map(toCommonHandlerRegistry(target, eventName)) : [];
+  if (!add) {
     if (isArrayLike(target)) {
       return mergeMap((subTarget) => fromEvent(subTarget, eventName, options))(innerFrom(target));
     }
   }
-  if (!add2) {
+  if (!add) {
     throw new TypeError("Invalid event target");
   }
   return new Observable((subscriber) => {
     const handler = (...args) => subscriber.next(1 < args.length ? args : args[0]);
-    add2(handler);
+    add(handler);
     return () => remove3(handler);
   });
 }
@@ -4751,14 +5184,6 @@ function emitInjectEvent(token, value, flags) {
     service: { token, value, flags }
   });
 }
-function emitEffectCreatedEvent(effect5) {
-  !ngDevMode && throwError("Injector profiler should never be called in production mode");
-  injectorProfiler({
-    type: 3,
-    context: getInjectorProfilerContext(),
-    effect: effect5
-  });
-}
 function runInInjectorProfilerContext(injector, token, callback) {
   !ngDevMode && throwError("runInInjectorProfilerContext should never be called in production mode");
   const prevInjectContext = setInjectorProfilerContext({ injector, token });
@@ -4859,13 +5284,13 @@ function createRuntimeError(message, code, path) {
 function getRuntimeErrorCode(error) {
   return error[NG_RUNTIME_ERROR_CODE];
 }
-function formatErrorMessage(text, code, path = [], source = null) {
+function formatErrorMessage(text2, code, path = [], source = null) {
   let pathDetails = "";
   if (path && path.length > 1) {
     pathDetails = ` Path: ${path.join(" -> ")}.`;
   }
   const sourceDetails = source ? ` Source: ${source}.` : "";
-  return formatRuntimeError(code, `${text}${sourceDetails}${pathDetails}`);
+  return formatRuntimeError(code, `${text2}${sourceDetails}${pathDetails}`);
 }
 var _injectImplementation;
 function getInjectImplementation() {
@@ -7408,16 +7833,16 @@ var NodeInjectorFactory = class {
   }
 };
 function toTNodeTypeAsString(tNodeType) {
-  let text = "";
-  tNodeType & 1 && (text += "|Text");
-  tNodeType & 2 && (text += "|Element");
-  tNodeType & 4 && (text += "|Container");
-  tNodeType & 8 && (text += "|ElementContainer");
-  tNodeType & 16 && (text += "|Projection");
-  tNodeType & 32 && (text += "|IcuContainer");
-  tNodeType & 64 && (text += "|Placeholder");
-  tNodeType & 128 && (text += "|LetDeclaration");
-  return text.length > 0 ? text.substring(1) : text;
+  let text2 = "";
+  tNodeType & 1 && (text2 += "|Text");
+  tNodeType & 2 && (text2 += "|Element");
+  tNodeType & 4 && (text2 += "|Container");
+  tNodeType & 8 && (text2 += "|ElementContainer");
+  tNodeType & 16 && (text2 += "|Projection");
+  tNodeType & 32 && (text2 += "|IcuContainer");
+  tNodeType & 64 && (text2 += "|Placeholder");
+  tNodeType & 128 && (text2 += "|LetDeclaration");
+  return text2.length > 0 ? text2.substring(1) : text2;
 }
 function isTNodeShape(value) {
   return value != null && typeof value === "object" && (value.insertBeforeIndex === null || typeof value.insertBeforeIndex === "number" || Array.isArray(value.insertBeforeIndex));
@@ -7449,16 +7874,16 @@ function setUpAttributes(renderer, native, attrs) {
       }
       i++;
       const namespaceURI = attrs[i++];
-      const attrName = attrs[i++];
+      const attrName2 = attrs[i++];
       const attrVal = attrs[i++];
-      renderer.setAttribute(native, attrName, attrVal, namespaceURI);
+      renderer.setAttribute(native, attrName2, attrVal, namespaceURI);
     } else {
-      const attrName = value;
+      const attrName2 = value;
       const attrVal = attrs[++i];
-      if (isAnimationProp(attrName)) {
-        renderer.setProperty(native, attrName, attrVal);
+      if (isAnimationProp(attrName2)) {
+        renderer.setProperty(native, attrName2, attrVal);
       } else {
-        renderer.setAttribute(native, attrName, attrVal);
+        renderer.setAttribute(native, attrName2, attrVal);
       }
       i++;
     }
@@ -7574,16 +7999,16 @@ var nextNgElementId = 0;
 var NOT_FOUND2 = {};
 function bloomAdd(injectorIndex, tView, type) {
   ngDevMode && assertEqual(tView.firstCreatePass, true, "expected firstCreatePass to be true");
-  let id;
+  let id3;
   if (typeof type === "string") {
-    id = type.charCodeAt(0) || 0;
+    id3 = type.charCodeAt(0) || 0;
   } else if (type.hasOwnProperty(NG_ELEMENT_ID)) {
-    id = type[NG_ELEMENT_ID];
+    id3 = type[NG_ELEMENT_ID];
   }
-  if (id == null) {
-    id = type[NG_ELEMENT_ID] = nextNgElementId++;
+  if (id3 == null) {
+    id3 = type[NG_ELEMENT_ID] = nextNgElementId++;
   }
-  const bloomHash = id & BLOOM_MASK;
+  const bloomHash = id3 & BLOOM_MASK;
   const mask = 1 << bloomHash;
   tView.data[injectorIndex + (bloomHash >> BLOOM_BUCKET_BITS)] |= mask;
 }
@@ -8351,9 +8776,9 @@ function registerLView(lView) {
   ngDevMode && assertNumber(lView[ID], "LView must have an ID in order to be registered");
   TRACKED_LVIEWS.set(lView[ID], lView);
 }
-function getLViewById(id) {
-  ngDevMode && assertNumber(id, "ID used for LView lookup must be a number");
-  return TRACKED_LVIEWS.get(id) || null;
+function getLViewById(id3) {
+  ngDevMode && assertNumber(id3, "ID used for LView lookup must be a number");
+  return TRACKED_LVIEWS.get(id3) || null;
 }
 function unregisterLView(lView) {
   ngDevMode && assertNumber(lView[ID], "Cannot stop tracking an LView that does not have an ID");
@@ -8602,9 +9027,9 @@ function getNearestLContainer(viewOrContainer) {
   }
   return viewOrContainer;
 }
-function getComponent(element) {
-  ngDevMode && assertDomElement(element);
-  const context2 = getLContext(element);
+function getComponent(element2) {
+  ngDevMode && assertDomElement(element2);
+  const context2 = getLContext(element2);
   if (context2 === null)
     return null;
   if (context2.component === void 0) {
@@ -8616,9 +9041,9 @@ function getComponent(element) {
   }
   return context2.component;
 }
-function getContext(element) {
-  assertDomElement(element);
-  const context2 = getLContext(element);
+function getContext(element2) {
+  assertDomElement(element2);
+  const context2 = getLContext(element2);
   const lView = context2 ? context2.lView : null;
   return lView === null ? null : lView[CONTEXT];
 }
@@ -8705,9 +9130,9 @@ function getDirectiveMetadata$1(directiveOrComponentInstance) {
 function getHostElement(componentOrDirective) {
   return getLContext(componentOrDirective).native;
 }
-function getListeners(element) {
-  ngDevMode && assertDomElement(element);
-  const lContext = getLContext(element);
+function getListeners(element2) {
+  ngDevMode && assertDomElement(element2);
+  const lContext = getLContext(element2);
   const lView = lContext === null ? null : lContext.lView;
   if (lView === null)
     return [];
@@ -8726,8 +9151,8 @@ function getListeners(element) {
         const useCaptureOrIndx = tCleanup[i++];
         const type = typeof useCaptureOrIndx === "boolean" || useCaptureOrIndx >= 0 ? "dom" : "output";
         const useCapture = typeof useCaptureOrIndx === "boolean" ? useCaptureOrIndx : false;
-        if (element == listenerElement) {
-          listeners.push({ element, name: name2, callback, useCapture, type });
+        if (element2 == listenerElement) {
+          listeners.push({ element: element2, name: name2, callback, useCapture, type });
         }
       }
     }
@@ -9384,19 +9809,19 @@ var SanitizingHtmlSerializer = class {
    * @param element The element to sanitize.
    * @return True if the element's contents should be traversed.
    */
-  startElement(element) {
-    const tagName = getNodeName(element).toLowerCase();
-    if (!VALID_ELEMENTS.hasOwnProperty(tagName)) {
+  startElement(element2) {
+    const tagName2 = getNodeName(element2).toLowerCase();
+    if (!VALID_ELEMENTS.hasOwnProperty(tagName2)) {
       this.sanitizedSomething = true;
-      return !SKIP_TRAVERSING_CONTENT_IF_INVALID_ELEMENTS.hasOwnProperty(tagName);
+      return !SKIP_TRAVERSING_CONTENT_IF_INVALID_ELEMENTS.hasOwnProperty(tagName2);
     }
     this.buf.push("<");
-    this.buf.push(tagName);
-    const elAttrs = element.attributes;
+    this.buf.push(tagName2);
+    const elAttrs = element2.attributes;
     for (let i = 0; i < elAttrs.length; i++) {
       const elAttr = elAttrs.item(i);
-      const attrName = elAttr.name;
-      const lower = attrName.toLowerCase();
+      const attrName2 = elAttr.name;
+      const lower = attrName2.toLowerCase();
       if (!VALID_ATTRS.hasOwnProperty(lower)) {
         this.sanitizedSomething = true;
         continue;
@@ -9404,16 +9829,16 @@ var SanitizingHtmlSerializer = class {
       let value = elAttr.value;
       if (URI_ATTRS[lower])
         value = _sanitizeUrl(value);
-      this.buf.push(" ", attrName, '="', encodeEntities(value), '"');
+      this.buf.push(" ", attrName2, '="', encodeEntities(value), '"');
     }
     this.buf.push(">");
     return true;
   }
   endElement(current) {
-    const tagName = getNodeName(current).toLowerCase();
-    if (VALID_ELEMENTS.hasOwnProperty(tagName) && !VOID_ELEMENTS.hasOwnProperty(tagName)) {
+    const tagName2 = getNodeName(current).toLowerCase();
+    if (VALID_ELEMENTS.hasOwnProperty(tagName2) && !VOID_ELEMENTS.hasOwnProperty(tagName2)) {
       this.buf.push("</");
-      this.buf.push(tagName);
+      this.buf.push(tagName2);
       this.buf.push(">");
     }
   }
@@ -9448,12 +9873,12 @@ function clobberedElementError(node) {
 var SURROGATE_PAIR_REGEXP = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
 var NON_ALPHANUMERIC_REGEXP = /([^\#-~ |!])/g;
 function encodeEntities(value) {
-  return value.replace(/&/g, "&amp;").replace(SURROGATE_PAIR_REGEXP, function(match) {
-    const hi = match.charCodeAt(0);
-    const low = match.charCodeAt(1);
+  return value.replace(/&/g, "&amp;").replace(SURROGATE_PAIR_REGEXP, function(match2) {
+    const hi = match2.charCodeAt(0);
+    const low = match2.charCodeAt(1);
     return "&#" + ((hi - 55296) * 1024 + (low - 56320) + 65536) + ";";
-  }).replace(NON_ALPHANUMERIC_REGEXP, function(match) {
-    return "&#" + match.charCodeAt(0) + ";";
+  }).replace(NON_ALPHANUMERIC_REGEXP, function(match2) {
+    return "&#" + match2.charCodeAt(0) + ";";
   }).replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 var inertBodyHelper;
@@ -9616,7 +10041,7 @@ var COMMENT_DISALLOWED = /^>|^->|<!--|-->|--!>|<!-$/g;
 var COMMENT_DELIMITER = /(<|>)/g;
 var COMMENT_DELIMITER_ESCAPED = "\u200B$1\u200B";
 function escapeCommentText(value) {
-  return value.replace(COMMENT_DISALLOWED, (text) => text.replace(COMMENT_DELIMITER, COMMENT_DELIMITER_ESCAPED));
+  return value.replace(COMMENT_DISALLOWED, (text2) => text2.replace(COMMENT_DELIMITER, COMMENT_DELIMITER_ESCAPED));
 }
 var NG_REFLECT_ATTRS_FLAG_DEFAULT = false;
 var NG_REFLECT_ATTRS_FLAG = new InjectionToken(typeof ngDevMode === "undefined" || ngDevMode ? "NG_REFLECT_FLAG" : "", {
@@ -9650,23 +10075,23 @@ function validateElementIsKnown(lView, tNode) {
   const tView = lView[TVIEW];
   if (tView.schemas === null)
     return;
-  const tagName = tNode.value;
-  if (!isDirectiveHost(tNode) && tagName !== null) {
+  const tagName2 = tNode.value;
+  if (!isDirectiveHost(tNode) && tagName2 !== null) {
     const isUnknown = (
       // Note that we can't check for `typeof HTMLUnknownElement === 'function'` because
       // Domino doesn't expose HTMLUnknownElement globally.
-      typeof HTMLUnknownElement !== "undefined" && HTMLUnknownElement && getNativeByTNode(tNode, lView) instanceof HTMLUnknownElement || typeof customElements !== "undefined" && tagName.indexOf("-") > -1 && !customElements.get(tagName)
+      typeof HTMLUnknownElement !== "undefined" && HTMLUnknownElement && getNativeByTNode(tNode, lView) instanceof HTMLUnknownElement || typeof customElements !== "undefined" && tagName2.indexOf("-") > -1 && !customElements.get(tagName2)
     );
-    if (isUnknown && !matchingSchemas(tView.schemas, tagName)) {
+    if (isUnknown && !matchingSchemas(tView.schemas, tagName2)) {
       const isHostStandalone = isHostComponentStandalone(lView);
       const templateLocation = getTemplateLocationDetails(lView);
       const schemas = `'${isHostStandalone ? "@Component" : "@NgModule"}.schemas'`;
-      let message = `'${tagName}' is not a known element${templateLocation}:
+      let message = `'${tagName2}' is not a known element${templateLocation}:
 `;
-      message += `1. If '${tagName}' is an Angular component, then verify that it is ${isHostStandalone ? "included in the '@Component.imports' of this component" : "a part of an @NgModule where this component is declared"}.
+      message += `1. If '${tagName2}' is an Angular component, then verify that it is ${isHostStandalone ? "included in the '@Component.imports' of this component" : "a part of an @NgModule where this component is declared"}.
 `;
-      if (tagName && tagName.indexOf("-") > -1) {
-        message += `2. If '${tagName}' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the ${schemas} of this component to suppress this message.`;
+      if (tagName2 && tagName2.indexOf("-") > -1) {
+        message += `2. If '${tagName2}' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the ${schemas} of this component to suppress this message.`;
       } else {
         message += `2. To allow any element add 'NO_ERRORS_SCHEMA' to the ${schemas} of this component.`;
       }
@@ -9678,21 +10103,21 @@ function validateElementIsKnown(lView, tNode) {
     }
   }
 }
-function isPropertyValid(element, propName, tagName, schemas) {
+function isPropertyValid(element2, propName, tagName2, schemas) {
   if (schemas === null)
     return true;
-  if (matchingSchemas(schemas, tagName) || propName in element || isAnimationProp(propName)) {
+  if (matchingSchemas(schemas, tagName2) || propName in element2 || isAnimationProp(propName)) {
     return true;
   }
-  return typeof Node === "undefined" || Node === null || !(element instanceof Node);
+  return typeof Node === "undefined" || Node === null || !(element2 instanceof Node);
 }
-function handleUnknownPropertyError(propName, tagName, nodeType, lView) {
-  if (!tagName && nodeType === 4) {
-    tagName = "ng-template";
+function handleUnknownPropertyError(propName, tagName2, nodeType, lView) {
+  if (!tagName2 && nodeType === 4) {
+    tagName2 = "ng-template";
   }
   const isHostStandalone = isHostComponentStandalone(lView);
   const templateLocation = getTemplateLocationDetails(lView);
-  let message = `Can't bind to '${propName}' since it isn't a known property of '${tagName}'${templateLocation}.`;
+  let message = `Can't bind to '${propName}' since it isn't a known property of '${tagName2}'${templateLocation}.`;
   const schemas = `'${isHostStandalone ? "@Component" : "@NgModule"}.schemas'`;
   const importLocation = isHostStandalone ? "included in the '@Component.imports' of this component" : "a part of an @NgModule where this component is declared";
   if (KNOWN_CONTROL_FLOW_DIRECTIVES.has(propName)) {
@@ -9701,10 +10126,10 @@ function handleUnknownPropertyError(propName, tagName, nodeType, lView) {
 If the '${propName}' is an Angular control flow directive, please make sure that either the '${correspondingImport}' directive or the 'CommonModule' is ${importLocation}.`;
   } else {
     message += `
-1. If '${tagName}' is an Angular component and it has the '${propName}' input, then verify that it is ${importLocation}.`;
-    if (tagName && tagName.indexOf("-") > -1) {
+1. If '${tagName2}' is an Angular component and it has the '${propName}' input, then verify that it is ${importLocation}.`;
+    if (tagName2 && tagName2.indexOf("-") > -1) {
       message += `
-2. If '${tagName}' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the ${schemas} of this component to suppress this message.`;
+2. If '${tagName2}' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the ${schemas} of this component to suppress this message.`;
       message += `
 3. To allow any property add 'NO_ERRORS_SCHEMA' to the ${schemas} of this component.`;
     } else {
@@ -9746,25 +10171,25 @@ var KNOWN_CONTROL_FLOW_DIRECTIVES = /* @__PURE__ */ new Map([
   ["ngSwitchCase", "NgSwitchCase"],
   ["ngSwitchDefault", "NgSwitchDefault"]
 ]);
-function matchingSchemas(schemas, tagName) {
+function matchingSchemas(schemas, tagName2) {
   if (schemas !== null) {
     for (let i = 0; i < schemas.length; i++) {
       const schema = schemas[i];
-      if (schema === NO_ERRORS_SCHEMA || schema === CUSTOM_ELEMENTS_SCHEMA && tagName && tagName.indexOf("-") > -1) {
+      if (schema === NO_ERRORS_SCHEMA || schema === CUSTOM_ELEMENTS_SCHEMA && tagName2 && tagName2.indexOf("-") > -1) {
         return true;
       }
     }
   }
   return false;
 }
-function \u0275\u0275resolveWindow(element) {
-  return element.ownerDocument.defaultView;
+function \u0275\u0275resolveWindow(element2) {
+  return element2.ownerDocument.defaultView;
 }
-function \u0275\u0275resolveDocument(element) {
-  return element.ownerDocument;
+function \u0275\u0275resolveDocument(element2) {
+  return element2.ownerDocument;
 }
-function \u0275\u0275resolveBody(element) {
-  return element.ownerDocument.body;
+function \u0275\u0275resolveBody(element2) {
+  return element2.ownerDocument.body;
 }
 var INTERPOLATION_DELIMITER = `\uFFFD`;
 function maybeUnwrapFn(value) {
@@ -10143,28 +10568,28 @@ function nativeAppendOrInsertBefore(renderer, parent, child, beforeNode, isMove)
 function nativeRemoveNode(renderer, rNode, isHostElement) {
   renderer.removeChild(null, rNode, isHostElement);
 }
-function writeDirectStyle(renderer, element, newValue) {
+function writeDirectStyle(renderer, element2, newValue) {
   ngDevMode && assertString(newValue, "'newValue' should be a string");
-  renderer.setAttribute(element, "style", newValue);
+  renderer.setAttribute(element2, "style", newValue);
 }
-function writeDirectClass(renderer, element, newValue) {
+function writeDirectClass(renderer, element2, newValue) {
   ngDevMode && assertString(newValue, "'newValue' should be a string");
   if (newValue === "") {
-    renderer.removeAttribute(element, "class");
+    renderer.removeAttribute(element2, "class");
   } else {
-    renderer.setAttribute(element, "class", newValue);
+    renderer.setAttribute(element2, "class", newValue);
   }
 }
-function setupStaticAttributes(renderer, element, tNode) {
+function setupStaticAttributes(renderer, element2, tNode) {
   const { mergedAttrs, classes, styles } = tNode;
   if (mergedAttrs !== null) {
-    setUpAttributes(renderer, element, mergedAttrs);
+    setUpAttributes(renderer, element2, mergedAttrs);
   }
   if (classes !== null) {
-    writeDirectClass(renderer, element, classes);
+    writeDirectClass(renderer, element2, classes);
   }
   if (styles !== null) {
-    writeDirectStyle(renderer, element, styles);
+    writeDirectStyle(renderer, element2, styles);
   }
 }
 function createTView(type, declTNode, templateFn, decls, vars, directives, pipes, viewQuery, schemas, constsOrFactory, ssrId) {
@@ -10870,15 +11295,15 @@ function setPropertyAndInputs(tNode, lView, propName, value, renderer, sanitizer
 }
 function setDomProperty(tNode, lView, propName, value, renderer, sanitizer) {
   if (tNode.type & 3) {
-    const element = getNativeByTNode(tNode, lView);
+    const element2 = getNativeByTNode(tNode, lView);
     if (ngDevMode) {
       validateAgainstEventProperties(propName);
-      if (!isPropertyValid(element, propName, tNode.value, lView[TVIEW].schemas)) {
+      if (!isPropertyValid(element2, propName, tNode.value, lView[TVIEW].schemas)) {
         handleUnknownPropertyError(propName, tNode.value, tNode.type, lView);
       }
     }
     value = sanitizer != null ? sanitizer(value, tNode.value || "", propName) : value;
-    renderer.setProperty(element, propName, value);
+    renderer.setProperty(element2, propName, value);
   } else if (tNode.type & 12) {
     if (ngDevMode && !matchingSchemas(lView[TVIEW].schemas, tNode.value)) {
       handleUnknownPropertyError(propName, tNode.value, tNode.type, lView);
@@ -10892,24 +11317,24 @@ function markDirtyIfOnPush(lView, viewIndex) {
     childComponentLView[FLAGS] |= 64;
   }
 }
-function setNgReflectProperty(lView, tNode, attrName, value) {
+function setNgReflectProperty(lView, tNode, attrName2, value) {
   const environment2 = lView[ENVIRONMENT];
   if (!environment2.ngReflect) {
     return;
   }
-  const element = getNativeByTNode(tNode, lView);
+  const element2 = getNativeByTNode(tNode, lView);
   const renderer = lView[RENDERER];
-  attrName = normalizeDebugBindingName(attrName);
+  attrName2 = normalizeDebugBindingName(attrName2);
   const debugValue = normalizeDebugBindingValue(value);
   if (tNode.type & 3) {
     if (value == null) {
-      renderer.removeAttribute(element, attrName);
+      renderer.removeAttribute(element2, attrName2);
     } else {
-      renderer.setAttribute(element, attrName, debugValue);
+      renderer.setAttribute(element2, attrName2, debugValue);
     }
   } else {
-    const textContent = escapeCommentText(`bindings=${JSON.stringify({ [attrName]: debugValue }, null, 2)}`);
-    renderer.setValue(element, textContent);
+    const textContent = escapeCommentText(`bindings=${JSON.stringify({ [attrName2]: debugValue }, null, 2)}`);
+    renderer.setValue(element2, textContent);
   }
 }
 function setNgReflectProperties(lView, tView, tNode, publicName, value) {
@@ -11028,15 +11453,15 @@ function elementAttributeInternal(tNode, lView, name2, value, sanitizer, namespa
     validateAgainstEventAttributes(name2);
     assertTNodeType(tNode, 2, `Attempted to set attribute \`${name2}\` on a container node. Host bindings are not valid on ng-container or ng-template.`);
   }
-  const element = getNativeByTNode(tNode, lView);
-  setElementAttribute(lView[RENDERER], element, namespace, tNode.value, name2, value, sanitizer);
+  const element2 = getNativeByTNode(tNode, lView);
+  setElementAttribute(lView[RENDERER], element2, namespace, tNode.value, name2, value, sanitizer);
 }
-function setElementAttribute(renderer, element, namespace, tagName, name2, value, sanitizer) {
+function setElementAttribute(renderer, element2, namespace, tagName2, name2, value, sanitizer) {
   if (value == null) {
-    renderer.removeAttribute(element, name2, namespace);
+    renderer.removeAttribute(element2, name2, namespace);
   } else {
-    const strValue = sanitizer == null ? renderStringify(value) : sanitizer(value, tagName || "", name2);
-    renderer.setAttribute(element, name2, strValue, namespace);
+    const strValue = sanitizer == null ? renderStringify(value) : sanitizer(value, tagName2 || "", name2);
+    renderer.setAttribute(element2, name2, strValue, namespace);
   }
 }
 function setInputsFromAttrs(lView, directiveIndex, instance, def, tNode, initialInputData) {
@@ -12230,12 +12655,12 @@ function stringifyTNodeAttrs(tNode) {
   const results = [];
   if (tNode.attrs) {
     for (let i = 0; i < tNode.attrs.length; ) {
-      const attrName = tNode.attrs[i++];
-      if (typeof attrName == "number") {
+      const attrName2 = tNode.attrs[i++];
+      if (typeof attrName2 == "number") {
         break;
       }
       const attrValue = tNode.attrs[i++];
-      results.push(`${attrName}="${shorten(attrValue)}"`);
+      results.push(`${attrName2}="${shorten(attrValue)}"`);
     }
   }
   return results.join(" ");
@@ -13251,27 +13676,27 @@ function setupInitialInputs(tNode, directiveIndex, isHostDirective) {
   let inputsToStore = null;
   let i = 0;
   while (i < attrs.length) {
-    const attrName = attrs[i];
-    if (attrName === 0) {
+    const attrName2 = attrs[i];
+    if (attrName2 === 0) {
       i += 4;
       continue;
-    } else if (attrName === 5) {
+    } else if (attrName2 === 5) {
       i += 2;
       continue;
-    } else if (typeof attrName === "number") {
+    } else if (typeof attrName2 === "number") {
       break;
     }
-    if (!isHostDirective && inputs.hasOwnProperty(attrName)) {
-      const inputConfig = inputs[attrName];
+    if (!isHostDirective && inputs.hasOwnProperty(attrName2)) {
+      const inputConfig = inputs[attrName2];
       for (const index of inputConfig) {
         if (index === directiveIndex) {
           inputsToStore ??= [];
-          inputsToStore.push(attrName, attrs[i + 1]);
+          inputsToStore.push(attrName2, attrs[i + 1]);
           break;
         }
       }
-    } else if (isHostDirective && hostDirectiveInputs.hasOwnProperty(attrName)) {
-      const config3 = hostDirectiveInputs[attrName];
+    } else if (isHostDirective && hostDirectiveInputs.hasOwnProperty(attrName2)) {
+      const config3 = hostDirectiveInputs[attrName2];
       for (let j = 0; j < config3.length; j += 2) {
         if (config3[j] === directiveIndex) {
           inputsToStore ??= [];
@@ -13654,9 +14079,9 @@ function createRootLViewEnvironment(rootLViewInjector) {
   };
 }
 function createHostElement(componentDef, render) {
-  const tagName = (componentDef.selectors[0][0] || "div").toLowerCase();
-  const namespace = tagName === "svg" ? SVG_NAMESPACE : tagName === "math" ? MATH_ML_NAMESPACE : null;
-  return createElementNode(render, tagName, namespace);
+  const tagName2 = (componentDef.selectors[0][0] || "div").toLowerCase();
+  const namespace = tagName2 === "svg" ? SVG_NAMESPACE : tagName2 === "math" ? MATH_ML_NAMESPACE : null;
+  return createElementNode(render, tagName2, namespace);
 }
 var ComponentFactory2 = class extends ComponentFactory$1 {
   componentDef;
@@ -14617,27 +15042,27 @@ function componentDefResolved(type) {
 }
 var modules = /* @__PURE__ */ new Map();
 var checkForDuplicateNgModules = true;
-function assertSameOrNotExisting(id, type, incoming) {
+function assertSameOrNotExisting(id3, type, incoming) {
   if (type && type !== incoming && checkForDuplicateNgModules) {
-    throw new Error(`Duplicate module registered for ${id} - ${stringify(type)} vs ${stringify(type.name)}`);
+    throw new Error(`Duplicate module registered for ${id3} - ${stringify(type)} vs ${stringify(type.name)}`);
   }
 }
-function registerNgModuleType(ngModuleType, id) {
-  const existing = modules.get(id) || null;
-  assertSameOrNotExisting(id, existing, ngModuleType);
-  modules.set(id, ngModuleType);
+function registerNgModuleType(ngModuleType, id3) {
+  const existing = modules.get(id3) || null;
+  assertSameOrNotExisting(id3, existing, ngModuleType);
+  modules.set(id3, ngModuleType);
 }
-function \u0275\u0275validateIframeAttribute(attrValue, tagName, attrName) {
+function \u0275\u0275validateIframeAttribute(attrValue, tagName2, attrName2) {
   const lView = getLView();
   const tNode = getSelectedTNode();
-  const element = getNativeByTNode(tNode, lView);
-  if (tNode.type === 2 && tagName.toLowerCase() === "iframe") {
-    const iframe = element;
+  const element2 = getNativeByTNode(tNode, lView);
+  if (tNode.type === 2 && tagName2.toLowerCase() === "iframe") {
+    const iframe = element2;
     iframe.src = "";
     iframe.srcdoc = trustedHTMLFromString("");
     nativeRemoveNode(lView[RENDERER], iframe);
-    const errorMessage = ngDevMode && `Angular has detected that the \`${attrName}\` was applied as a binding to an <iframe>${getTemplateLocationDetails(lView)}. For security reasons, the \`${attrName}\` can be set on an <iframe> as a static attribute only. 
-To fix this, switch the \`${attrName}\` binding to a static attribute in a template or in host bindings section.`;
+    const errorMessage = ngDevMode && `Angular has detected that the \`${attrName2}\` was applied as a binding to an <iframe>${getTemplateLocationDetails(lView)}. For security reasons, the \`${attrName2}\` can be set on an <iframe> as a static attribute only. 
+To fix this, switch the \`${attrName2}\` binding to a static attribute in a template or in host bindings section.`;
     throw new RuntimeError(-910, errorMessage);
   }
   return attrValue;
@@ -15304,21 +15729,21 @@ function templateCreate(tNode, declarationLView, declarationTView, index, templa
     tNode.flags |= flags;
   }
   setCurrentTNode(tNode, false);
-  const comment2 = _locateOrCreateContainerAnchor(declarationTView, declarationLView, tNode, index);
+  const comment3 = _locateOrCreateContainerAnchor(declarationTView, declarationLView, tNode, index);
   if (wasLastNodeCreated()) {
-    appendChild(declarationTView, declarationLView, comment2, tNode);
+    appendChild(declarationTView, declarationLView, comment3, tNode);
   }
-  attachPatchData(comment2, declarationLView);
-  const lContainer = createLContainer(comment2, declarationLView, comment2, tNode);
+  attachPatchData(comment3, declarationLView);
+  const lContainer = createLContainer(comment3, declarationLView, comment3, tNode);
   declarationLView[index + HEADER_OFFSET] = lContainer;
   addToEndOfViewTree(declarationLView, lContainer);
   populateDehydratedViewsInLContainer(lContainer, tNode, declarationLView);
 }
-function declareDirectiveHostTemplate(declarationLView, declarationTView, index, templateFn, decls, vars, tagName, attrs, flags, localRefsIndex, localRefExtractor) {
+function declareDirectiveHostTemplate(declarationLView, declarationTView, index, templateFn, decls, vars, tagName2, attrs, flags, localRefsIndex, localRefExtractor) {
   const adjustedIndex = index + HEADER_OFFSET;
   let tNode;
   if (declarationTView.firstCreatePass) {
-    tNode = getOrCreateTNode(declarationTView, adjustedIndex, 4, tagName || null, attrs || null);
+    tNode = getOrCreateTNode(declarationTView, adjustedIndex, 4, tagName2 || null, attrs || null);
     if (getBindingsEnabled()) {
       resolveDirectives(declarationTView, declarationLView, tNode, getConstant(declarationTView.consts, localRefsIndex), findDirectiveDefMatches);
     }
@@ -15335,11 +15760,11 @@ function declareDirectiveHostTemplate(declarationLView, declarationTView, index,
   }
   return tNode;
 }
-function declareNoDirectiveHostTemplate(declarationLView, declarationTView, index, templateFn, decls, vars, tagName, attrs, flags, localRefsIndex, localRefExtractor) {
+function declareNoDirectiveHostTemplate(declarationLView, declarationTView, index, templateFn, decls, vars, tagName2, attrs, flags, localRefsIndex, localRefExtractor) {
   const adjustedIndex = index + HEADER_OFFSET;
   let tNode;
   if (declarationTView.firstCreatePass) {
-    tNode = getOrCreateTNode(declarationTView, adjustedIndex, 4, tagName || null, attrs || null);
+    tNode = getOrCreateTNode(declarationTView, adjustedIndex, 4, tagName2 || null, attrs || null);
     if (localRefsIndex != null) {
       const refs = getConstant(declarationTView.consts, localRefsIndex);
       tNode.localNames = [];
@@ -15356,18 +15781,18 @@ function declareNoDirectiveHostTemplate(declarationLView, declarationTView, inde
   }
   return tNode;
 }
-function \u0275\u0275template(index, templateFn, decls, vars, tagName, attrsIndex, localRefsIndex, localRefExtractor) {
+function \u0275\u0275template(index, templateFn, decls, vars, tagName2, attrsIndex, localRefsIndex, localRefExtractor) {
   const lView = getLView();
   const tView = getTView();
   const attrs = getConstant(tView.consts, attrsIndex);
-  declareDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName, attrs, void 0, localRefsIndex, localRefExtractor);
+  declareDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName2, attrs, void 0, localRefsIndex, localRefExtractor);
   return \u0275\u0275template;
 }
-function \u0275\u0275domTemplate(index, templateFn, decls, vars, tagName, attrsIndex, localRefsIndex, localRefExtractor) {
+function \u0275\u0275domTemplate(index, templateFn, decls, vars, tagName2, attrsIndex, localRefsIndex, localRefExtractor) {
   const lView = getLView();
   const tView = getTView();
   const attrs = getConstant(tView.consts, attrsIndex);
-  declareNoDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName, attrs, void 0, localRefsIndex, localRefExtractor);
+  declareNoDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName2, attrs, void 0, localRefsIndex, localRefExtractor);
   return \u0275\u0275domTemplate;
 }
 var _locateOrCreateContainerAnchor = createContainerAnchorImpl;
@@ -16208,9 +16633,9 @@ function getTriggerLView(deferredHostLView, deferredTNode, walkUpTimes) {
   return triggerLView;
 }
 function getTriggerElement(triggerLView, triggerIndex) {
-  const element = getNativeByIndex(HEADER_OFFSET + triggerIndex, triggerLView);
-  ngDevMode && assertElement(element);
-  return element;
+  const element2 = getNativeByIndex(HEADER_OFFSET + triggerIndex, triggerLView);
+  ngDevMode && assertElement(element2);
+  return element2;
 }
 function registerDomTrigger(initialLView, tNode, triggerIndex, walkUpTimes, registerFn, callback, type) {
   const injector = initialLView[INJECTOR];
@@ -16235,8 +16660,8 @@ function registerDomTrigger(initialLView, tNode, triggerIndex, walkUpTimes, regi
     if (isDestroyed(triggerLView)) {
       return;
     }
-    const element = getTriggerElement(triggerLView, triggerIndex);
-    const cleanup = registerFn(element, () => {
+    const element2 = getTriggerElement(triggerLView, triggerIndex);
+    const cleanup = registerFn(element2, () => {
       zone.run(() => {
         if (initialLView !== triggerLView) {
           removeLViewOnDestroy(triggerLView, cleanup);
@@ -17273,11 +17698,11 @@ function getNodesAndEdgesFromSignalMap(signalMap) {
   const edges = [];
   for (const [consumer, producers] of signalMap.entries()) {
     const consumerIndex = nodes.indexOf(consumer);
-    let id = signalDebugMap.get(consumer);
-    if (!id) {
+    let id3 = signalDebugMap.get(consumer);
+    if (!id3) {
       counter$1++;
-      id = counter$1.toString();
-      signalDebugMap.set(consumer, id);
+      id3 = counter$1.toString();
+      signalDebugMap.set(consumer, id3);
     }
     if (isComputedNode(consumer)) {
       debugSignalGraphNodes.push({
@@ -17286,7 +17711,7 @@ function getNodesAndEdgesFromSignalMap(signalMap) {
         kind: consumer.kind,
         epoch: consumer.version,
         debuggableFn: consumer.computation,
-        id
+        id: id3
       });
     } else if (isSignalNode(consumer)) {
       debugSignalGraphNodes.push({
@@ -17294,21 +17719,21 @@ function getNodesAndEdgesFromSignalMap(signalMap) {
         value: consumer.value,
         kind: consumer.kind,
         epoch: consumer.version,
-        id
+        id: id3
       });
     } else if (isTemplateEffectNode(consumer)) {
       debugSignalGraphNodes.push({
         label: consumer.debugName ?? consumer.lView?.[HOST]?.tagName?.toLowerCase?.(),
         kind: consumer.kind,
         epoch: consumer.version,
-        id
+        id: id3
       });
     } else {
       debugSignalGraphNodes.push({
         label: consumer.debugName,
         kind: consumer.kind,
         epoch: consumer.version,
-        id
+        id: id3
       });
     }
     for (const producer of producers) {
@@ -19237,11 +19662,11 @@ function createOrAttach(liveCollection, detachedItems, trackByFn, index, value) 
   }
 }
 function initLiveItemsInTheFuture(liveCollection, start2, end2, trackByFn) {
-  const keys2 = /* @__PURE__ */ new Set();
+  const keys = /* @__PURE__ */ new Set();
   for (let i = start2; i <= end2; i++) {
-    keys2.add(trackByFn(i, liveCollection.at(i)));
+    keys.add(trackByFn(i, liveCollection.at(i)));
   }
-  return keys2;
+  return keys;
 }
 var UniqueValueMultiKeyMap = class {
   // A map from a key to the first value corresponding to this key.
@@ -19299,20 +19724,20 @@ var UniqueValueMultiKeyMap = class {
     }
   }
 };
-function \u0275\u0275conditionalCreate(index, templateFn, decls, vars, tagName, attrsIndex, localRefsIndex, localRefExtractor) {
+function \u0275\u0275conditionalCreate(index, templateFn, decls, vars, tagName2, attrsIndex, localRefsIndex, localRefExtractor) {
   performanceMarkFeature("NgControlFlow");
   const lView = getLView();
   const tView = getTView();
   const attrs = getConstant(tView.consts, attrsIndex);
-  declareNoDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName, attrs, 256, localRefsIndex, localRefExtractor);
+  declareNoDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName2, attrs, 256, localRefsIndex, localRefExtractor);
   return \u0275\u0275conditionalBranchCreate;
 }
-function \u0275\u0275conditionalBranchCreate(index, templateFn, decls, vars, tagName, attrsIndex, localRefsIndex, localRefExtractor) {
+function \u0275\u0275conditionalBranchCreate(index, templateFn, decls, vars, tagName2, attrsIndex, localRefsIndex, localRefExtractor) {
   performanceMarkFeature("NgControlFlow");
   const lView = getLView();
   const tView = getTView();
   const attrs = getConstant(tView.consts, attrsIndex);
-  declareNoDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName, attrs, 512, localRefsIndex, localRefExtractor);
+  declareNoDirectiveHostTemplate(lView, tView, index, templateFn, decls, vars, tagName2, attrs, 512, localRefsIndex, localRefExtractor);
   return \u0275\u0275conditionalBranchCreate;
 }
 function \u0275\u0275conditional(matchingTemplateIndex, contextValue) {
@@ -19377,7 +19802,7 @@ var RepeaterMetadata = class {
     this.liveCollection = liveCollection;
   }
 };
-function \u0275\u0275repeaterCreate(index, templateFn, decls, vars, tagName, attrsIndex, trackByFn, trackByUsesComponentInstance, emptyTemplateFn, emptyDecls, emptyVars, emptyTagName, emptyAttrsIndex) {
+function \u0275\u0275repeaterCreate(index, templateFn, decls, vars, tagName2, attrsIndex, trackByFn, trackByUsesComponentInstance, emptyTemplateFn, emptyDecls, emptyVars, emptyTagName, emptyAttrsIndex) {
   performanceMarkFeature("NgControlFlow");
   ngDevMode && assertFunction(trackByFn, `A track expression must be a function, was ${typeof trackByFn} instead.`);
   const lView = getLView();
@@ -19398,7 +19823,7 @@ function \u0275\u0275repeaterCreate(index, templateFn, decls, vars, tagName, att
     templateFn,
     decls,
     vars,
-    tagName,
+    tagName2,
     getConstant(tView.consts, attrsIndex),
     256
     /* TNodeFlags.isControlFlowStart */
@@ -19782,14 +20207,14 @@ var localeEn = ["en", [["a", "p"], ["AM", "PM"], u], [["AM", "PM"], u, u], [["S"
 var LOCALE_DATA = {};
 function findLocaleData(locale) {
   const normalizedLocale = normalizeLocale(locale);
-  let match = getLocaleData(normalizedLocale);
-  if (match) {
-    return match;
+  let match2 = getLocaleData(normalizedLocale);
+  if (match2) {
+    return match2;
   }
   const parentLocale = normalizedLocale.split("-")[0];
-  match = getLocaleData(parentLocale);
-  if (match) {
-    return match;
+  match2 = getLocaleData(parentLocale);
+  if (match2) {
+    return match2;
   }
   if (parentLocale === "en") {
     return localeEn;
@@ -19902,14 +20327,14 @@ function applyCreateOpCodes(lView, createOpCodes, parentRNode, insertInFrontOf) 
   const renderer = lView[RENDERER];
   for (let i = 0; i < createOpCodes.length; i++) {
     const opCode = createOpCodes[i++];
-    const text = createOpCodes[i];
-    const isComment = (opCode & I18nCreateOpCode.COMMENT) === I18nCreateOpCode.COMMENT;
+    const text2 = createOpCodes[i];
+    const isComment2 = (opCode & I18nCreateOpCode.COMMENT) === I18nCreateOpCode.COMMENT;
     const appendNow = (opCode & I18nCreateOpCode.APPEND_EAGERLY) === I18nCreateOpCode.APPEND_EAGERLY;
     const index = opCode >>> I18nCreateOpCode.SHIFT;
     let rNode = lView[index];
     let lastNodeWasCreated2 = false;
     if (rNode === null) {
-      rNode = lView[index] = _locateOrCreateNode(lView, index, text, isComment ? Node.COMMENT_NODE : Node.TEXT_NODE);
+      rNode = lView[index] = _locateOrCreateNode(lView, index, text2, isComment2 ? Node.COMMENT_NODE : Node.TEXT_NODE);
       lastNodeWasCreated2 = wasLastNodeCreated();
     }
     if (appendNow && parentRNode !== null && lastNodeWasCreated2) {
@@ -19966,9 +20391,9 @@ function applyMutableOpCodes(tView, mutableOpCodes, lView, anchorRNode) {
           break;
         case 1:
           const elementNodeIndex = opCode >>> 1;
-          const attrName = mutableOpCodes[++i];
+          const attrName2 = mutableOpCodes[++i];
           const attrValue = mutableOpCodes[++i];
-          setElementAttribute(renderer, getNativeByIndex(elementNodeIndex, lView), null, null, attrName, attrValue, null);
+          setElementAttribute(renderer, getNativeByIndex(elementNodeIndex, lView), null, null, attrName2, attrValue, null);
           break;
         default:
           if (ngDevMode) {
@@ -19988,12 +20413,12 @@ function applyMutableOpCodes(tView, mutableOpCodes, lView, anchorRNode) {
           }
           break;
         case ELEMENT_MARKER:
-          const tagName = mutableOpCodes[++i];
+          const tagName2 = mutableOpCodes[++i];
           const elementNodeIndex = mutableOpCodes[++i];
           if (lView[elementNodeIndex] === null) {
-            ngDevMode && assertEqual(typeof tagName, "string", `Expected "${tagName}" to be an element node tag name`);
+            ngDevMode && assertEqual(typeof tagName2, "string", `Expected "${tagName2}" to be an element node tag name`);
             ngDevMode && assertIndexInExpandoRange(lView, elementNodeIndex);
-            const elementRNode = lView[elementNodeIndex] = _locateOrCreateNode(lView, elementNodeIndex, tagName, Node.ELEMENT_NODE);
+            const elementRNode = lView[elementNodeIndex] = _locateOrCreateNode(lView, elementNodeIndex, tagName2, Node.ELEMENT_NODE);
             attachPatchData(elementRNode, lView);
           }
           break;
@@ -20126,11 +20551,11 @@ function i18nCreateOpCodesToString(opcodes) {
   let lines = [];
   for (let i = 0; i < createOpCodes.length; i++) {
     const opCode = createOpCodes[i++];
-    const text = createOpCodes[i];
-    const isComment = (opCode & I18nCreateOpCode.COMMENT) === I18nCreateOpCode.COMMENT;
+    const text2 = createOpCodes[i];
+    const isComment2 = (opCode & I18nCreateOpCode.COMMENT) === I18nCreateOpCode.COMMENT;
     const appendNow = (opCode & I18nCreateOpCode.APPEND_EAGERLY) === I18nCreateOpCode.APPEND_EAGERLY;
     const index = opCode >>> I18nCreateOpCode.SHIFT;
-    lines.push(`lView[${index}] = document.${isComment ? "createComment" : "createText"}(${JSON.stringify(text)});`);
+    lines.push(`lView[${index}] = document.${isComment2 ? "createComment" : "createText"}(${JSON.stringify(text2)});`);
     if (appendNow) {
       lines.push(`parent.appendChild(lView[${index}]);`);
     }
@@ -20138,7 +20563,7 @@ function i18nCreateOpCodesToString(opcodes) {
   return lines;
 }
 function i18nUpdateOpCodesToString(opcodes) {
-  const parser2 = new OpCodeParser(opcodes || (Array.isArray(this) ? this : []));
+  const parser3 = new OpCodeParser(opcodes || (Array.isArray(this) ? this : []));
   let lines = [];
   function consumeOpCode(value) {
     const ref = value >>> 2;
@@ -20147,10 +20572,10 @@ function i18nUpdateOpCodesToString(opcodes) {
       case 0:
         return `(lView[${ref}] as Text).textContent = $$$`;
       case 1:
-        const attrName = parser2.consumeString();
-        const sanitizationFn = parser2.consumeFunction();
+        const attrName2 = parser3.consumeString();
+        const sanitizationFn = parser3.consumeFunction();
         const value2 = sanitizationFn ? `(${sanitizationFn})($$$)` : "$$$";
-        return `(lView[${ref}] as Element).setAttribute('${attrName}', ${value2})`;
+        return `(lView[${ref}] as Element).setAttribute('${attrName2}', ${value2})`;
       case 2:
         return `icuSwitchCase(${ref}, $$$)`;
       case 3:
@@ -20158,14 +20583,14 @@ function i18nUpdateOpCodesToString(opcodes) {
     }
     throw new Error("unexpected OpCode");
   }
-  while (parser2.hasMore()) {
-    let mask = parser2.consumeNumber();
-    let size = parser2.consumeNumber();
-    const end2 = parser2.i + size;
+  while (parser3.hasMore()) {
+    let mask = parser3.consumeNumber();
+    let size = parser3.consumeNumber();
+    const end2 = parser3.i + size;
     const statements = [];
     let statement = "";
-    while (parser2.i < end2) {
-      let value = parser2.consumeNumberOrString();
+    while (parser3.i < end2) {
+      let value = parser3.consumeNumberOrString();
       if (typeof value === "string") {
         statement += value;
       } else if (value < 0) {
@@ -20181,7 +20606,7 @@ function i18nUpdateOpCodesToString(opcodes) {
   return lines;
 }
 function icuCreateOpCodesToString(opcodes) {
-  const parser2 = new OpCodeParser(opcodes || (Array.isArray(this) ? this : []));
+  const parser3 = new OpCodeParser(opcodes || (Array.isArray(this) ? this : []));
   let lines = [];
   function consumeOpCode(opCode) {
     const parent = getParentFromIcuCreateOpCode(opCode);
@@ -20190,23 +20615,23 @@ function icuCreateOpCodesToString(opcodes) {
       case 0:
         return `(lView[${parent}] as Element).appendChild(lView[${lastRef}])`;
       case 1:
-        return `(lView[${ref}] as Element).setAttribute("${parser2.consumeString()}", "${parser2.consumeString()}")`;
+        return `(lView[${ref}] as Element).setAttribute("${parser3.consumeString()}", "${parser3.consumeString()}")`;
     }
     throw new Error("Unexpected OpCode: " + getInstructionFromIcuCreateOpCode(opCode));
   }
   let lastRef = -1;
-  while (parser2.hasMore()) {
-    let value = parser2.consumeNumberStringOrMarker();
+  while (parser3.hasMore()) {
+    let value = parser3.consumeNumberStringOrMarker();
     if (value === ICU_MARKER) {
-      const text = parser2.consumeString();
-      lastRef = parser2.consumeNumber();
-      lines.push(`lView[${lastRef}] = document.createComment("${text}")`);
+      const text2 = parser3.consumeString();
+      lastRef = parser3.consumeNumber();
+      lines.push(`lView[${lastRef}] = document.createComment("${text2}")`);
     } else if (value === ELEMENT_MARKER) {
-      const text = parser2.consumeString();
-      lastRef = parser2.consumeNumber();
-      lines.push(`lView[${lastRef}] = document.createElement("${text}")`);
+      const text2 = parser3.consumeString();
+      lastRef = parser3.consumeNumber();
+      lines.push(`lView[${lastRef}] = document.createElement("${text2}")`);
     } else if (typeof value === "string") {
-      lastRef = parser2.consumeNumber();
+      lastRef = parser3.consumeNumber();
       lines.push(`lView[${lastRef}] = document.createTextNode("${value}")`);
     } else if (typeof value === "number") {
       const line = consumeOpCode(value);
@@ -20310,10 +20735,10 @@ function i18nStartFirstCreatePass(tView, parentTNodeIndex, lView, index, message
       for (let j = 0; j < parts.length; j++) {
         let part = parts[j];
         if ((j & 1) === 0) {
-          const text = part;
-          ngDevMode && assertString(text, "Parsed ICU part should be string");
-          if (text !== "") {
-            i18nStartFirstCreatePassProcessTextNode(astStack[0], tView, rootTNode, existingTNodeStack[0], createOpCodes, updateOpCodes, lView, text);
+          const text2 = part;
+          ngDevMode && assertString(text2, "Parsed ICU part should be string");
+          if (text2 !== "") {
+            i18nStartFirstCreatePassProcessTextNode(astStack[0], tView, rootTNode, existingTNodeStack[0], createOpCodes, updateOpCodes, lView, text2);
           }
         } else {
           const icuExpression = part;
@@ -20362,7 +20787,7 @@ function i18nStartFirstCreatePass(tView, parentTNodeIndex, lView, index, message
     parentTNodeIndex
   };
 }
-function createTNodeAndAddOpCode(tView, rootTNode, existingTNodes, lView, createOpCodes, text, isICU) {
+function createTNodeAndAddOpCode(tView, rootTNode, existingTNodes, lView, createOpCodes, text2, isICU) {
   const i18nNodeIdx = allocExpando(tView, lView, 1, null);
   let opCode = i18nNodeIdx << I18nCreateOpCode.SHIFT;
   let parentTNode = getCurrentParentTNode();
@@ -20376,8 +20801,8 @@ function createTNodeAndAddOpCode(tView, rootTNode, existingTNodes, lView, create
     opCode |= I18nCreateOpCode.COMMENT;
     ensureIcuContainerVisitorLoaded(loadIcuContainerVisitor);
   }
-  createOpCodes.push(opCode, text === null ? "" : text);
-  const tNode = createTNodeAtIndex(tView, i18nNodeIdx, isICU ? 32 : 1, text === null ? ngDevMode ? "{{?}}" : "" : text, null);
+  createOpCodes.push(opCode, text2 === null ? "" : text2);
+  const tNode = createTNodeAtIndex(tView, i18nNodeIdx, isICU ? 32 : 1, text2 === null ? ngDevMode ? "{{?}}" : "" : text2, null);
   addTNodeAndUpdateInsertBeforeIndex(existingTNodes, tNode);
   const tNodeIdx = tNode.index;
   setCurrentTNode(
@@ -20390,12 +20815,12 @@ function createTNodeAndAddOpCode(tView, rootTNode, existingTNodes, lView, create
   }
   return tNode;
 }
-function i18nStartFirstCreatePassProcessTextNode(ast, tView, rootTNode, existingTNodes, createOpCodes, updateOpCodes, lView, text) {
-  const hasBinding = text.match(BINDING_REGEXP);
-  const tNode = createTNodeAndAddOpCode(tView, rootTNode, existingTNodes, lView, createOpCodes, hasBinding ? null : text, false);
+function i18nStartFirstCreatePassProcessTextNode(ast, tView, rootTNode, existingTNodes, createOpCodes, updateOpCodes, lView, text2) {
+  const hasBinding = text2.match(BINDING_REGEXP);
+  const tNode = createTNodeAndAddOpCode(tView, rootTNode, existingTNodes, lView, createOpCodes, hasBinding ? null : text2, false);
   const index = tNode.index;
   if (hasBinding) {
-    generateBindingUpdateOpCodes(updateOpCodes, text, index, null, 0, null);
+    generateBindingUpdateOpCodes(updateOpCodes, text2, index, null, 0, null);
   }
   ast.push({ kind: 0, index });
 }
@@ -20408,19 +20833,19 @@ function i18nAttributesFirstPass(tView, index, values) {
   }
   if (tView.firstCreatePass && tView.data[index] === null) {
     for (let i = 0; i < values.length; i += 2) {
-      const attrName = values[i];
+      const attrName2 = values[i];
       const message = values[i + 1];
       if (message !== "") {
         if (ICU_REGEXP.test(message)) {
           throw new Error(`ICU expressions are not supported in attributes. Message: "${message}".`);
         }
-        generateBindingUpdateOpCodes(updateOpCodes, message, previousElementIndex, attrName, countBindings(updateOpCodes), null);
+        generateBindingUpdateOpCodes(updateOpCodes, message, previousElementIndex, attrName2, countBindings(updateOpCodes), null);
       }
     }
     tView.data[index] = updateOpCodes;
   }
 }
-function generateBindingUpdateOpCodes(updateOpCodes, str, destinationNode, attrName, bindingStart, sanitizeFn) {
+function generateBindingUpdateOpCodes(updateOpCodes, str, destinationNode, attrName2, bindingStart, sanitizeFn) {
   ngDevMode && assertGreaterThanOrEqual(destinationNode, HEADER_OFFSET, "Index must be in absolute LView offset");
   const maskIndex = updateOpCodes.length;
   const sizeIndex = maskIndex + 1;
@@ -20441,9 +20866,9 @@ function generateBindingUpdateOpCodes(updateOpCodes, str, destinationNode, attrN
       updateOpCodes.push(textValue);
     }
   }
-  updateOpCodes.push(destinationNode << 2 | (attrName ? 1 : 0));
-  if (attrName) {
-    updateOpCodes.push(attrName, sanitizeFn);
+  updateOpCodes.push(destinationNode << 2 | (attrName2 ? 1 : 0));
+  if (attrName2) {
+    updateOpCodes.push(attrName2, sanitizeFn);
   }
   updateOpCodes[maskIndex] = mask;
   updateOpCodes[sizeIndex] = updateOpCodes.length - startIndex;
@@ -20463,19 +20888,19 @@ function toMaskBit(bindingIndex) {
   return 1 << Math.min(bindingIndex, 31);
 }
 function removeInnerTemplateTranslation(message) {
-  let match;
+  let match2;
   let res = "";
   let index = 0;
   let inTemplate = false;
   let tagMatched;
-  while ((match = SUBTEMPLATE_REGEXP.exec(message)) !== null) {
+  while ((match2 = SUBTEMPLATE_REGEXP.exec(message)) !== null) {
     if (!inTemplate) {
-      res += message.substring(index, match.index + match[0].length);
-      tagMatched = match[1];
+      res += message.substring(index, match2.index + match2[0].length);
+      tagMatched = match2[1];
       inTemplate = true;
     } else {
-      if (match[0] === `${MARKER}/*${tagMatched}${MARKER}`) {
-        index = match.index;
+      if (match2[0] === `${MARKER}/*${tagMatched}${MARKER}`) {
+        index = match2.index;
         inTemplate = false;
       }
     }
@@ -20572,10 +20997,10 @@ function i18nParseTextIntoPartsAndICU(pattern) {
   const results = [];
   const braces = /[{}]/g;
   braces.lastIndex = 0;
-  let match;
-  while (match = braces.exec(pattern)) {
-    const pos = match.index;
-    if (match[0] == "}") {
+  let match2;
+  while (match2 = braces.exec(pattern)) {
+    const pos = match2.index;
+    if (match2[0] == "}") {
       braceStack.pop();
       if (braceStack.length == 0) {
         const block = pattern.substring(prevPos, pos);
@@ -20629,12 +21054,12 @@ function walkIcuTree(ast, tView, tIcu, lView, sharedUpdateOpCodes, create, remov
     const newIndex = allocExpando(tView, lView, 1, null);
     switch (currentNode.nodeType) {
       case Node.ELEMENT_NODE:
-        const element = currentNode;
-        const tagName = element.tagName.toLowerCase();
-        if (VALID_ELEMENTS.hasOwnProperty(tagName)) {
-          addCreateNodeAndAppend(create, ELEMENT_MARKER, tagName, parentIdx, newIndex);
-          tView.data[newIndex] = tagName;
-          const elAttrs = element.attributes;
+        const element2 = currentNode;
+        const tagName2 = element2.tagName.toLowerCase();
+        if (VALID_ELEMENTS.hasOwnProperty(tagName2)) {
+          addCreateNodeAndAppend(create, ELEMENT_MARKER, tagName2, parentIdx, newIndex);
+          tView.data[newIndex] = tagName2;
+          const elAttrs = element2.attributes;
           for (let i = 0; i < elAttrs.length; i++) {
             const attr = elAttrs.item(i);
             const lowerAttrName = attr.name.toLowerCase();
@@ -20647,7 +21072,7 @@ function walkIcuTree(ast, tView, tIcu, lView, sharedUpdateOpCodes, create, remov
                   generateBindingUpdateOpCodes(update, attr.value, newIndex, attr.name, 0, null);
                 }
               } else {
-                ngDevMode && console.warn(`WARNING: ignoring unsafe attribute value ${lowerAttrName} on element ${tagName} (see ${XSS_SECURITY_URL})`);
+                ngDevMode && console.warn(`WARNING: ignoring unsafe attribute value ${lowerAttrName} on element ${tagName2} (see ${XSS_SECURITY_URL})`);
               }
             } else {
               addCreateAttribute(create, newIndex, attr);
@@ -20719,11 +21144,11 @@ function addUpdateIcuUpdate(update, bindingMask, index) {
     /* I18nUpdateOpCode.IcuUpdate */
   );
 }
-function addCreateNodeAndAppend(create, marker, text, appendToParentIdx, createAtIdx) {
+function addCreateNodeAndAppend(create, marker, text2, appendToParentIdx, createAtIdx) {
   if (marker !== null) {
     create.push(marker);
   }
-  create.push(text, createAtIdx, icuCreateOpCode(0, appendToParentIdx, createAtIdx));
+  create.push(text2, createAtIdx, icuCreateOpCode(0, appendToParentIdx, createAtIdx));
 }
 function addCreateAttribute(create, newIndex, attr) {
   create.push(newIndex << 1 | 1, attr.name, attr.value);
@@ -20746,8 +21171,8 @@ function i18nPostprocess(message, replacements = {}) {
       const placeholders = matches[content2] || [];
       if (!placeholders.length) {
         content2.split("|").forEach((placeholder2) => {
-          const match = placeholder2.match(PP_TEMPLATE_ID_REGEXP);
-          const templateId2 = match ? parseInt(match[1], 10) : ROOT_TEMPLATE_ID;
+          const match2 = placeholder2.match(PP_TEMPLATE_ID_REGEXP);
+          const templateId2 = match2 ? parseInt(match2[1], 10) : ROOT_TEMPLATE_ID;
           const isCloseTemplateTag2 = PP_CLOSE_TEMPLATE_REGEXP.test(placeholder2);
           placeholders.push([templateId2, isCloseTemplateTag2, placeholder2]);
         });
@@ -20777,21 +21202,21 @@ function i18nPostprocess(message, replacements = {}) {
   if (!Object.keys(replacements).length) {
     return result;
   }
-  result = result.replace(PP_ICU_VARS_REGEXP, (match, start2, key, _type, _idx, end2) => {
-    return replacements.hasOwnProperty(key) ? `${start2}${replacements[key]}${end2}` : match;
+  result = result.replace(PP_ICU_VARS_REGEXP, (match2, start2, key, _type, _idx, end2) => {
+    return replacements.hasOwnProperty(key) ? `${start2}${replacements[key]}${end2}` : match2;
   });
-  result = result.replace(PP_ICU_PLACEHOLDERS_REGEXP, (match, key) => {
-    return replacements.hasOwnProperty(key) ? replacements[key] : match;
+  result = result.replace(PP_ICU_PLACEHOLDERS_REGEXP, (match2, key) => {
+    return replacements.hasOwnProperty(key) ? replacements[key] : match2;
   });
-  result = result.replace(PP_ICUS_REGEXP, (match, key) => {
+  result = result.replace(PP_ICUS_REGEXP, (match2, key) => {
     if (replacements.hasOwnProperty(key)) {
       const list = replacements[key];
       if (!list.length) {
-        throw new Error(`i18n postprocess: unmatched ICU - ${match} with key: ${key}`);
+        throw new Error(`i18n postprocess: unmatched ICU - ${match2} with key: ${key}`);
       }
       return list.shift();
     }
-    return match;
+    return match2;
   });
   return result;
 }
@@ -21183,103 +21608,103 @@ var parserState = {
   value: 0,
   valueEnd: 0
 };
-function getLastParsedKey(text) {
-  return text.substring(parserState.key, parserState.keyEnd);
+function getLastParsedKey(text2) {
+  return text2.substring(parserState.key, parserState.keyEnd);
 }
-function getLastParsedValue(text) {
-  return text.substring(parserState.value, parserState.valueEnd);
+function getLastParsedValue(text2) {
+  return text2.substring(parserState.value, parserState.valueEnd);
 }
-function parseClassName(text) {
-  resetParserState(text);
-  return parseClassNameNext(text, consumeWhitespace(text, 0, parserState.textEnd));
+function parseClassName(text2) {
+  resetParserState(text2);
+  return parseClassNameNext(text2, consumeWhitespace(text2, 0, parserState.textEnd));
 }
-function parseClassNameNext(text, index) {
+function parseClassNameNext(text2, index) {
   const end2 = parserState.textEnd;
   if (end2 === index) {
     return -1;
   }
-  index = parserState.keyEnd = consumeClassToken(text, parserState.key = index, end2);
-  return consumeWhitespace(text, index, end2);
+  index = parserState.keyEnd = consumeClassToken(text2, parserState.key = index, end2);
+  return consumeWhitespace(text2, index, end2);
 }
-function parseStyle(text) {
-  resetParserState(text);
-  return parseStyleNext(text, consumeWhitespace(text, 0, parserState.textEnd));
+function parseStyle(text2) {
+  resetParserState(text2);
+  return parseStyleNext(text2, consumeWhitespace(text2, 0, parserState.textEnd));
 }
-function parseStyleNext(text, startIndex) {
+function parseStyleNext(text2, startIndex) {
   const end2 = parserState.textEnd;
-  let index = parserState.key = consumeWhitespace(text, startIndex, end2);
+  let index = parserState.key = consumeWhitespace(text2, startIndex, end2);
   if (end2 === index) {
     return -1;
   }
-  index = parserState.keyEnd = consumeStyleKey(text, index, end2);
+  index = parserState.keyEnd = consumeStyleKey(text2, index, end2);
   index = consumeSeparator(
-    text,
+    text2,
     index,
     end2,
     58
     /* CharCode.COLON */
   );
-  index = parserState.value = consumeWhitespace(text, index, end2);
-  index = parserState.valueEnd = consumeStyleValue(text, index, end2);
+  index = parserState.value = consumeWhitespace(text2, index, end2);
+  index = parserState.valueEnd = consumeStyleValue(text2, index, end2);
   return consumeSeparator(
-    text,
+    text2,
     index,
     end2,
     59
     /* CharCode.SEMI_COLON */
   );
 }
-function resetParserState(text) {
+function resetParserState(text2) {
   parserState.key = 0;
   parserState.keyEnd = 0;
   parserState.value = 0;
   parserState.valueEnd = 0;
-  parserState.textEnd = text.length;
+  parserState.textEnd = text2.length;
 }
-function consumeWhitespace(text, startIndex, endIndex) {
-  while (startIndex < endIndex && text.charCodeAt(startIndex) <= 32) {
+function consumeWhitespace(text2, startIndex, endIndex) {
+  while (startIndex < endIndex && text2.charCodeAt(startIndex) <= 32) {
     startIndex++;
   }
   return startIndex;
 }
-function consumeClassToken(text, startIndex, endIndex) {
-  while (startIndex < endIndex && text.charCodeAt(startIndex) > 32) {
+function consumeClassToken(text2, startIndex, endIndex) {
+  while (startIndex < endIndex && text2.charCodeAt(startIndex) > 32) {
     startIndex++;
   }
   return startIndex;
 }
-function consumeStyleKey(text, startIndex, endIndex) {
+function consumeStyleKey(text2, startIndex, endIndex) {
   let ch;
-  while (startIndex < endIndex && ((ch = text.charCodeAt(startIndex)) === 45 || ch === 95 || (ch & -33) >= 65 && (ch & -33) <= 90 || ch >= 48 && ch <= 57)) {
+  while (startIndex < endIndex && ((ch = text2.charCodeAt(startIndex)) === 45 || ch === 95 || (ch & -33) >= 65 && (ch & -33) <= 90 || ch >= 48 && ch <= 57)) {
     startIndex++;
   }
   return startIndex;
 }
-function consumeSeparator(text, startIndex, endIndex, separator) {
-  startIndex = consumeWhitespace(text, startIndex, endIndex);
+function consumeSeparator(text2, startIndex, endIndex, separator) {
+  startIndex = consumeWhitespace(text2, startIndex, endIndex);
   if (startIndex < endIndex) {
-    if (ngDevMode && text.charCodeAt(startIndex) !== separator) {
-      malformedStyleError(text, String.fromCharCode(separator), startIndex);
+    if (ngDevMode && text2.charCodeAt(startIndex) !== separator) {
+      malformedStyleError(text2, String.fromCharCode(separator), startIndex);
     }
     startIndex++;
   }
   return startIndex;
 }
-function consumeStyleValue(text, startIndex, endIndex) {
+function consumeStyleValue(text2, startIndex, endIndex) {
   let ch1 = -1;
   let ch2 = -1;
   let ch3 = -1;
   let i = startIndex;
   let lastChIndex = i;
   while (i < endIndex) {
-    const ch = text.charCodeAt(i++);
+    const ch = text2.charCodeAt(i++);
     if (ch === 59) {
       return lastChIndex;
     } else if (ch === 34 || ch === 39) {
-      lastChIndex = i = consumeQuotedText(text, ch, i, endIndex);
+      lastChIndex = i = consumeQuotedText(text2, ch, i, endIndex);
     } else if (startIndex === i - 4 && // We have seen only 4 characters so far "URL(" (Ignore "foo_URL()")
     ch3 === 85 && ch2 === 82 && ch1 === 76 && ch === 40) {
-      lastChIndex = i = consumeQuotedText(text, 41, i, endIndex);
+      lastChIndex = i = consumeQuotedText(text2, 41, i, endIndex);
     } else if (ch > 32) {
       lastChIndex = i;
     }
@@ -21289,11 +21714,11 @@ function consumeStyleValue(text, startIndex, endIndex) {
   }
   return lastChIndex;
 }
-function consumeQuotedText(text, quoteCharCode, startIndex, endIndex) {
+function consumeQuotedText(text2, quoteCharCode, startIndex, endIndex) {
   let ch1 = -1;
   let index = startIndex;
   while (index < endIndex) {
-    const ch = text.charCodeAt(index++);
+    const ch = text2.charCodeAt(index++);
     if (ch == quoteCharCode && ch1 !== 92) {
       return index;
     }
@@ -21303,11 +21728,11 @@ function consumeQuotedText(text, quoteCharCode, startIndex, endIndex) {
       ch1 = ch;
     }
   }
-  throw ngDevMode ? malformedStyleError(text, String.fromCharCode(quoteCharCode), endIndex) : new Error();
+  throw ngDevMode ? malformedStyleError(text2, String.fromCharCode(quoteCharCode), endIndex) : new Error();
 }
-function malformedStyleError(text, expecting, index) {
-  ngDevMode && assertEqual(typeof text === "string", true, "String expected here");
-  throw throwError(`Malformed style at location ${index} in string '` + text.substring(0, index) + "[>>" + text.substring(index, index + 1) + "<<]" + text.slice(index + 1) + `'. Expecting '${expecting}'.`);
+function malformedStyleError(text2, expecting, index) {
+  ngDevMode && assertEqual(typeof text2 === "string", true, "String expected here");
+  throw throwError(`Malformed style at location ${index} in string '` + text2.substring(0, index) + "[>>" + text2.substring(index, index + 1) + "<<]" + text2.slice(index + 1) + `'. Expecting '${expecting}'.`);
 }
 function \u0275\u0275styleProp(prop, value, suffix) {
   checkStylingProperty(prop, value, suffix, false);
@@ -21320,17 +21745,17 @@ function \u0275\u0275classProp(className, value) {
 function \u0275\u0275styleMap(styles) {
   checkStylingMap(styleKeyValueArraySet, styleStringParser, styles, false);
 }
-function styleStringParser(keyValueArray, text) {
-  for (let i = parseStyle(text); i >= 0; i = parseStyleNext(text, i)) {
-    styleKeyValueArraySet(keyValueArray, getLastParsedKey(text), getLastParsedValue(text));
+function styleStringParser(keyValueArray, text2) {
+  for (let i = parseStyle(text2); i >= 0; i = parseStyleNext(text2, i)) {
+    styleKeyValueArraySet(keyValueArray, getLastParsedKey(text2), getLastParsedValue(text2));
   }
 }
 function \u0275\u0275classMap(classes) {
   checkStylingMap(classKeyValueArraySet, classStringParser, classes, true);
 }
-function classStringParser(keyValueArray, text) {
-  for (let i = parseClassName(text); i >= 0; i = parseClassNameNext(text, i)) {
-    keyValueArraySet(keyValueArray, getLastParsedKey(text), true);
+function classStringParser(keyValueArray, text2) {
+  for (let i = parseClassName(text2); i >= 0; i = parseClassNameNext(text2, i)) {
+    keyValueArraySet(keyValueArray, getLastParsedKey(text2), true);
   }
 }
 function checkStylingProperty(prop, value, suffix, isClassBased) {
@@ -21781,9 +22206,9 @@ function textBindingInternal(lView, index, value) {
   ngDevMode && assertString(value, "Value should be a string");
   ngDevMode && assertNotSame(value, NO_CHANGE, "value should not be NO_CHANGE");
   ngDevMode && assertIndexInRange(lView, index);
-  const element = getNativeByIndex(index, lView);
-  ngDevMode && assertDefined(element, "native element should exist");
-  updateTextNode(lView[RENDERER], element, value);
+  const element2 = getNativeByIndex(index, lView);
+  ngDevMode && assertDefined(element2, "native element should exist");
+  updateTextNode(lView[RENDERER], element2, value);
 }
 function \u0275\u0275twoWayProperty(propName, value, sanitizer) {
   if (isWritableSignal(value)) {
@@ -22306,11 +22731,11 @@ function \u0275setClassDebugInfo(type, debugInfo) {
     def.debugInfo = debugInfo;
   }
 }
-function \u0275\u0275getReplaceMetadataURL(id, timestamp, base2) {
-  const url = `./@ng/component?c=${id}&t=${encodeURIComponent(timestamp)}`;
+function \u0275\u0275getReplaceMetadataURL(id3, timestamp, base2) {
+  const url = `./@ng/component?c=${id3}&t=${encodeURIComponent(timestamp)}`;
   return new URL(url, base2).href;
 }
-function \u0275\u0275replaceMetadata(type, applyMetadata, namespaces, locals, importMeta = null, id = null) {
+function \u0275\u0275replaceMetadata(type, applyMetadata, namespaces, locals, importMeta = null, id3 = null) {
   ngDevMode && assertComponentDef(type);
   const currentDef = getComponentDef(type);
   applyMetadata.apply(null, [type, namespaces, ...locals]);
@@ -22320,7 +22745,7 @@ function \u0275\u0275replaceMetadata(type, applyMetadata, namespaces, locals, im
     const trackedViews = getTrackedLViews().values();
     for (const root of trackedViews) {
       if (isRootView(root) && root[PARENT] === null) {
-        recreateMatchingLViews(importMeta, id, newDef, oldDef, root);
+        recreateMatchingLViews(importMeta, id3, newDef, oldDef, root);
       }
     }
   }
@@ -22344,32 +22769,32 @@ function mergeWithExistingDefinition(currentDef, newDef) {
   ngDevMode && assertEqual(replacement, currentDef, "Expected definition to be merged in place");
   return { newDef: replacement, oldDef: clone };
 }
-function recreateMatchingLViews(importMeta, id, newDef, oldDef, rootLView) {
+function recreateMatchingLViews(importMeta, id3, newDef, oldDef, rootLView) {
   ngDevMode && assertDefined(oldDef.tView, "Expected a component definition that has been instantiated at least once");
   const tView = rootLView[TVIEW];
   if (tView === oldDef.tView) {
     ngDevMode && assertComponentDef(oldDef.type);
-    recreateLView(importMeta, id, newDef, oldDef, rootLView);
+    recreateLView(importMeta, id3, newDef, oldDef, rootLView);
     return;
   }
   for (let i = HEADER_OFFSET; i < tView.bindingStartIndex; i++) {
     const current = rootLView[i];
     if (isLContainer(current)) {
       if (isLView(current[HOST])) {
-        recreateMatchingLViews(importMeta, id, newDef, oldDef, current[HOST]);
+        recreateMatchingLViews(importMeta, id3, newDef, oldDef, current[HOST]);
       }
       for (let j = CONTAINER_HEADER_OFFSET; j < current.length; j++) {
-        recreateMatchingLViews(importMeta, id, newDef, oldDef, current[j]);
+        recreateMatchingLViews(importMeta, id3, newDef, oldDef, current[j]);
       }
     } else if (isLView(current)) {
-      recreateMatchingLViews(importMeta, id, newDef, oldDef, current);
+      recreateMatchingLViews(importMeta, id3, newDef, oldDef, current);
     }
   }
 }
 function clearRendererCache(factory, def) {
   factory.componentReplaced?.(def.id);
 }
-function recreateLView(importMeta, id, newDef, oldDef, lView) {
+function recreateLView(importMeta, id3, newDef, oldDef, lView) {
   const instance = lView[CONTEXT];
   let host = lView[HOST];
   const parentLView = lView[PARENT];
@@ -22414,19 +22839,19 @@ function recreateLView(importMeta, id, newDef, oldDef, lView) {
     refreshView(newTView, newLView, newTView.template, instance);
   };
   if (zone === null) {
-    executeWithInvalidateFallback(importMeta, id, recreate);
+    executeWithInvalidateFallback(importMeta, id3, recreate);
   } else {
-    zone.run(() => executeWithInvalidateFallback(importMeta, id, recreate));
+    zone.run(() => executeWithInvalidateFallback(importMeta, id3, recreate));
   }
 }
-function executeWithInvalidateFallback(importMeta, id, callback) {
+function executeWithInvalidateFallback(importMeta, id3, callback) {
   try {
     callback();
   } catch (e) {
     const error = e;
-    if (id !== null && error.message) {
+    if (id3 !== null && error.message) {
       const toLog = error.message + (error.stack ? "\n" + error.stack : "");
-      importMeta?.hot?.send?.("angular:invalidate", { id, message: toLog, error: true });
+      importMeta?.hot?.send?.("angular:invalidate", { id: id3, message: toLog, error: true });
     }
     throw e;
   }
@@ -22791,7 +23216,7 @@ function verifySemanticsOfNgModuleDef(moduleType, allowDuplicateDeclarationsInRo
     verifySemanticsOfNgModuleImport(modOrStandaloneCmpt, moduleType);
     verifySemanticsOfNgModuleDef(modOrStandaloneCmpt, false, moduleType);
   });
-  const exports = maybeUnwrapFn(ngModuleDef.exports);
+  const exports2 = maybeUnwrapFn(ngModuleDef.exports);
   declarations.forEach(verifyDeclarationsHaveDefinitions);
   declarations.forEach(verifyDirectivesHaveSelector);
   declarations.forEach((declarationType) => verifyNotStandalone(declarationType, moduleType));
@@ -22799,7 +23224,7 @@ function verifySemanticsOfNgModuleDef(moduleType, allowDuplicateDeclarationsInRo
     ...declarations.map(resolveForwardRef),
     ...flatten(imports.map(computeCombinedExports)).map(resolveForwardRef)
   ];
-  exports.forEach(verifyExportsAreDeclaredOrReExported);
+  exports2.forEach(verifyExportsAreDeclaredOrReExported);
   declarations.forEach((decl) => verifyDeclarationIsUnique(decl, allowDuplicateDeclarationsInRoot));
   const ngModule = getAnnotation(moduleType, "NgModule");
   if (ngModule) {
@@ -23910,142 +24335,6 @@ var EffectRefImpl = class {
     this[SIGNAL].destroy();
   }
 };
-function effect(effectFn, options) {
-  ngDevMode && assertNotInReactiveContext(effect, "Call `effect` outside of a reactive context. For example, schedule the effect inside the component constructor.");
-  if (ngDevMode && !options?.injector) {
-    assertInInjectionContext(effect);
-  }
-  if (ngDevMode && options?.allowSignalWrites !== void 0) {
-    console.warn(`The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)`);
-  }
-  const injector = options?.injector ?? inject2(Injector);
-  let destroyRef = options?.manualCleanup !== true ? injector.get(DestroyRef) : null;
-  let node;
-  const viewContext = injector.get(ViewContext, null, { optional: true });
-  const notifier = injector.get(ChangeDetectionScheduler);
-  if (viewContext !== null) {
-    node = createViewEffect(viewContext.view, notifier, effectFn);
-    if (destroyRef instanceof NodeInjectorDestroyRef && destroyRef._lView === viewContext.view) {
-      destroyRef = null;
-    }
-  } else {
-    node = createRootEffect(effectFn, injector.get(EffectScheduler), notifier);
-  }
-  node.injector = injector;
-  if (destroyRef !== null) {
-    node.onDestroyFn = destroyRef.onDestroy(() => node.destroy());
-  }
-  const effectRef = new EffectRefImpl(node);
-  if (ngDevMode) {
-    node.debugName = options?.debugName ?? "";
-    const prevInjectorProfilerContext = setInjectorProfilerContext({ injector, token: null });
-    try {
-      emitEffectCreatedEvent(effectRef);
-    } finally {
-      setInjectorProfilerContext(prevInjectorProfilerContext);
-    }
-  }
-  return effectRef;
-}
-var BASE_EFFECT_NODE = /* @__PURE__ */ (() => __spreadProps(__spreadValues({}, REACTIVE_NODE), {
-  consumerIsAlwaysLive: true,
-  consumerAllowSignalWrites: true,
-  dirty: true,
-  hasRun: false,
-  cleanupFns: void 0,
-  zone: null,
-  kind: "effect",
-  onDestroyFn: noop2,
-  run() {
-    this.dirty = false;
-    if (ngDevMode && isInNotificationPhase()) {
-      throw new Error(`Schedulers cannot synchronously execute watches while scheduling.`);
-    }
-    if (this.hasRun && !consumerPollProducersForChange(this)) {
-      return;
-    }
-    this.hasRun = true;
-    const registerCleanupFn = (cleanupFn) => (this.cleanupFns ??= []).push(cleanupFn);
-    const prevNode = consumerBeforeComputation(this);
-    const prevRefreshingViews = setIsRefreshingViews(false);
-    try {
-      this.maybeCleanup();
-      this.fn(registerCleanupFn);
-    } finally {
-      setIsRefreshingViews(prevRefreshingViews);
-      consumerAfterComputation(this, prevNode);
-    }
-  },
-  maybeCleanup() {
-    if (!this.cleanupFns?.length) {
-      return;
-    }
-    const prevConsumer = setActiveConsumer(null);
-    try {
-      while (this.cleanupFns.length) {
-        this.cleanupFns.pop()();
-      }
-    } finally {
-      this.cleanupFns = [];
-      setActiveConsumer(prevConsumer);
-    }
-  }
-}))();
-var ROOT_EFFECT_NODE = /* @__PURE__ */ (() => __spreadProps(__spreadValues({}, BASE_EFFECT_NODE), {
-  consumerMarkedDirty() {
-    this.scheduler.schedule(this);
-    this.notifier.notify(
-      12
-      /* NotificationSource.RootEffect */
-    );
-  },
-  destroy() {
-    consumerDestroy(this);
-    this.onDestroyFn();
-    this.maybeCleanup();
-    this.scheduler.remove(this);
-  }
-}))();
-var VIEW_EFFECT_NODE = /* @__PURE__ */ (() => __spreadProps(__spreadValues({}, BASE_EFFECT_NODE), {
-  consumerMarkedDirty() {
-    this.view[FLAGS] |= 8192;
-    markAncestorsForTraversal(this.view);
-    this.notifier.notify(
-      13
-      /* NotificationSource.ViewEffect */
-    );
-  },
-  destroy() {
-    consumerDestroy(this);
-    this.onDestroyFn();
-    this.maybeCleanup();
-    this.view[EFFECTS]?.delete(this);
-  }
-}))();
-function createViewEffect(view, notifier, fn2) {
-  const node = Object.create(VIEW_EFFECT_NODE);
-  node.view = view;
-  node.zone = typeof Zone !== "undefined" ? Zone.current : null;
-  node.notifier = notifier;
-  node.fn = fn2;
-  view[EFFECTS] ??= /* @__PURE__ */ new Set();
-  view[EFFECTS].add(node);
-  node.consumerMarkedDirty(node);
-  return node;
-}
-function createRootEffect(fn2, scheduler, notifier) {
-  const node = Object.create(ROOT_EFFECT_NODE);
-  node.fn = fn2;
-  node.scheduler = scheduler;
-  node.notifier = notifier;
-  node.zone = typeof Zone !== "undefined" ? Zone.current : null;
-  node.scheduler.add(node);
-  node.notifier.notify(
-    12
-    /* NotificationSource.RootEffect */
-  );
-  return node;
-}
 
 // node_modules/@angular/core/fesm2022/core.mjs
 var REQUIRED_UNSET_VALUE = /* @__PURE__ */ Symbol("InputSignalNode#UNSET");
@@ -24616,7 +24905,7 @@ var PlatformRef = class _PlatformRef {
     if (this._destroyed) {
       throw new RuntimeError(404, ngDevMode && "The platform has already been destroyed!");
     }
-    this._modules.slice().forEach((module) => module.destroy());
+    this._modules.slice().forEach((module2) => module2.destroy());
     this._destroyListeners.forEach((listener) => listener());
     const destroyListeners = this._injector.get(PLATFORM_DESTROY_LISTENERS, null);
     if (destroyListeners) {
@@ -26681,13 +26970,13 @@ function extractTime(time) {
     minutes: +m
   };
 }
-function getCurrencySymbol(code, format, locale = "en") {
+function getCurrencySymbol(code, format2, locale = "en") {
   const currency = getLocaleCurrencies(locale)[code] || CURRENCIES_EN[code] || [];
   const symbolNarrow = currency[
     1
     /* ɵCurrencyIndex.SymbolNarrow */
   ];
-  if (format === "narrow" && typeof symbolNarrow === "string") {
+  if (format2 === "narrow" && typeof symbolNarrow === "string") {
     return symbolNarrow;
   }
   return currency[
@@ -26710,23 +26999,23 @@ function getNumberOfCurrencyDigits(code) {
 var ISO8601_DATE_REGEX = /^(\d{4,})-?(\d\d)-?(\d\d)(?:T(\d\d)(?::?(\d\d)(?::?(\d\d)(?:\.(\d+))?)?)?(Z|([+-])(\d\d):?(\d\d))?)?$/;
 var NAMED_FORMATS = {};
 var DATE_FORMATS_SPLIT = /((?:[^BEGHLMOSWYZabcdhmswyz']+)|(?:'(?:[^']|'')*')|(?:G{1,5}|y{1,4}|Y{1,4}|M{1,5}|L{1,5}|w{1,2}|W{1}|d{1,2}|E{1,6}|c{1,6}|a{1,5}|b{1,5}|B{1,5}|h{1,2}|H{1,2}|m{1,2}|s{1,2}|S{1,3}|z{1,4}|Z{1,5}|O{1,4}))([\s\S]*)/;
-function formatDate(value, format, locale, timezone) {
+function formatDate(value, format2, locale, timezone) {
   let date = toDate(value);
-  const namedFormat = getNamedFormat(locale, format);
-  format = namedFormat || format;
+  const namedFormat = getNamedFormat(locale, format2);
+  format2 = namedFormat || format2;
   let parts = [];
-  let match;
-  while (format) {
-    match = DATE_FORMATS_SPLIT.exec(format);
-    if (match) {
-      parts = parts.concat(match.slice(1));
+  let match2;
+  while (format2) {
+    match2 = DATE_FORMATS_SPLIT.exec(format2);
+    if (match2) {
+      parts = parts.concat(match2.slice(1));
       const part = parts.pop();
       if (!part) {
         break;
       }
-      format = part;
+      format2 = part;
     } else {
-      parts.push(format);
+      parts.push(format2);
       break;
     }
   }
@@ -26738,12 +27027,12 @@ function formatDate(value, format, locale, timezone) {
     dateTimezoneOffset = timezoneToOffset(timezone, dateTimezoneOffset);
     date = convertTimezoneToLocal(date, timezone);
   }
-  let text = "";
+  let text2 = "";
   parts.forEach((value2) => {
     const dateFormatter = getDateFormatter(value2);
-    text += dateFormatter ? dateFormatter(date, locale, dateTimezoneOffset) : value2 === "''" ? "'" : value2.replace(/(^'|'$)/g, "").replace(/''/g, "'");
+    text2 += dateFormatter ? dateFormatter(date, locale, dateTimezoneOffset) : value2 === "''" ? "'" : value2.replace(/(^'|'$)/g, "").replace(/''/g, "'");
   });
-  return text;
+  return text2;
 }
 function assertValidDateFormat(parts) {
   if (parts.some((part) => /^Y+$/.test(part)) && !parts.some((part) => /^w+$/.test(part))) {
@@ -26761,14 +27050,14 @@ function createDate(year, month, date) {
   newDate.setHours(0, 0, 0);
   return newDate;
 }
-function getNamedFormat(locale, format) {
+function getNamedFormat(locale, format2) {
   const localeId = getLocaleId2(locale);
   NAMED_FORMATS[localeId] ??= {};
-  if (NAMED_FORMATS[localeId][format]) {
-    return NAMED_FORMATS[localeId][format];
+  if (NAMED_FORMATS[localeId][format2]) {
+    return NAMED_FORMATS[localeId][format2];
   }
   let formatValue2 = "";
-  switch (format) {
+  switch (format2) {
     case "shortDate":
       formatValue2 = getLocaleDateFormat(locale, FormatWidth.Short);
       break;
@@ -26815,14 +27104,14 @@ function getNamedFormat(locale, format) {
       break;
   }
   if (formatValue2) {
-    NAMED_FORMATS[localeId][format] = formatValue2;
+    NAMED_FORMATS[localeId][format2] = formatValue2;
   }
   return formatValue2;
 }
 function formatDateTime(str, opt_values) {
   if (opt_values) {
-    str = str.replace(/\{([^}]+)}/g, function(match, key) {
-      return opt_values != null && key in opt_values ? opt_values[key] : match;
+    str = str.replace(/\{([^}]+)}/g, function(match2, key) {
+      return opt_values != null && key in opt_values ? opt_values[key] : match2;
     });
   }
   return str;
@@ -26995,12 +27284,12 @@ function weekNumberingYearGetter(size, trim = false) {
   };
 }
 var DATE_FORMATS = {};
-function getDateFormatter(format) {
-  if (DATE_FORMATS[format]) {
-    return DATE_FORMATS[format];
+function getDateFormatter(format2) {
+  if (DATE_FORMATS[format2]) {
+    return DATE_FORMATS[format2];
   }
   let formatter;
-  switch (format) {
+  switch (format2) {
     // Era name (AD/BC)
     case "G":
     case "GG":
@@ -27243,7 +27532,7 @@ function getDateFormatter(format) {
     default:
       return null;
   }
-  DATE_FORMATS[format] = formatter;
+  DATE_FORMATS[format2] = formatter;
   return formatter;
 }
 function timezoneToOffset(timezone, fallback) {
@@ -27279,9 +27568,9 @@ function toDate(value) {
     if (!isNaN(value - parsedNb)) {
       return new Date(parsedNb);
     }
-    let match;
-    if (match = value.match(ISO8601_DATE_REGEX)) {
-      return isoStringToDate(match);
+    let match2;
+    if (match2 = value.match(ISO8601_DATE_REGEX)) {
+      return isoStringToDate(match2);
     }
   }
   const date = new Date(value);
@@ -27290,21 +27579,21 @@ function toDate(value) {
   }
   return date;
 }
-function isoStringToDate(match) {
+function isoStringToDate(match2) {
   const date = /* @__PURE__ */ new Date(0);
   let tzHour = 0;
   let tzMin = 0;
-  const dateSetter = match[8] ? date.setUTCFullYear : date.setFullYear;
-  const timeSetter = match[8] ? date.setUTCHours : date.setHours;
-  if (match[9]) {
-    tzHour = Number(match[9] + match[10]);
-    tzMin = Number(match[9] + match[11]);
+  const dateSetter = match2[8] ? date.setUTCFullYear : date.setFullYear;
+  const timeSetter = match2[8] ? date.setUTCHours : date.setHours;
+  if (match2[9]) {
+    tzHour = Number(match2[9] + match2[10]);
+    tzMin = Number(match2[9] + match2[11]);
   }
-  dateSetter.call(date, Number(match[1]), Number(match[2]) - 1, Number(match[3]));
-  const h = Number(match[4] || 0) - tzHour;
-  const m = Number(match[5] || 0) - tzMin;
-  const s = Number(match[6] || 0);
-  const ms = Math.floor(parseFloat("0." + (match[7] || 0)) * 1e3);
+  dateSetter.call(date, Number(match2[1]), Number(match2[2]) - 1, Number(match2[3]));
+  const h = Number(match2[4] || 0) - tzHour;
+  const m = Number(match2[5] || 0) - tzMin;
+  const s = Number(match2[6] || 0);
+  const ms = Math.floor(parseFloat("0." + (match2[7] || 0)) * 1e3);
   timeSetter.call(date, h, m, s, ms);
   return date;
 }
@@ -27397,25 +27686,25 @@ function formatNumberToLocaleString(value, pattern, locale, groupSymbol, decimal
   return formattedText;
 }
 function formatCurrency(value, locale, currency, currencyCode, digitsInfo) {
-  const format = getLocaleNumberFormat(locale, NumberFormatStyle.Currency);
-  const pattern = parseNumberFormat(format, getLocaleNumberSymbol(locale, NumberSymbol.MinusSign));
+  const format2 = getLocaleNumberFormat(locale, NumberFormatStyle.Currency);
+  const pattern = parseNumberFormat(format2, getLocaleNumberSymbol(locale, NumberSymbol.MinusSign));
   pattern.minFrac = getNumberOfCurrencyDigits(currencyCode);
   pattern.maxFrac = pattern.minFrac;
   const res = formatNumberToLocaleString(value, pattern, locale, NumberSymbol.CurrencyGroup, NumberSymbol.CurrencyDecimal, digitsInfo);
   return res.replace(CURRENCY_CHAR, currency).replace(CURRENCY_CHAR, "").trim();
 }
 function formatPercent(value, locale, digitsInfo) {
-  const format = getLocaleNumberFormat(locale, NumberFormatStyle.Percent);
-  const pattern = parseNumberFormat(format, getLocaleNumberSymbol(locale, NumberSymbol.MinusSign));
+  const format2 = getLocaleNumberFormat(locale, NumberFormatStyle.Percent);
+  const pattern = parseNumberFormat(format2, getLocaleNumberSymbol(locale, NumberSymbol.MinusSign));
   const res = formatNumberToLocaleString(value, pattern, locale, NumberSymbol.Group, NumberSymbol.Decimal, digitsInfo, true);
   return res.replace(new RegExp(PERCENT_CHAR, "g"), getLocaleNumberSymbol(locale, NumberSymbol.PercentSign));
 }
 function formatNumber(value, locale, digitsInfo) {
-  const format = getLocaleNumberFormat(locale, NumberFormatStyle.Decimal);
-  const pattern = parseNumberFormat(format, getLocaleNumberSymbol(locale, NumberSymbol.MinusSign));
+  const format2 = getLocaleNumberFormat(locale, NumberFormatStyle.Decimal);
+  const pattern = parseNumberFormat(format2, getLocaleNumberSymbol(locale, NumberSymbol.MinusSign));
   return formatNumberToLocaleString(value, pattern, locale, NumberSymbol.Group, NumberSymbol.Decimal, digitsInfo);
 }
-function parseNumberFormat(format, minusSign = "-") {
+function parseNumberFormat(format2, minusSign = "-") {
   const p = {
     minInt: 1,
     minFrac: 0,
@@ -27427,7 +27716,7 @@ function parseNumberFormat(format, minusSign = "-") {
     gSize: 0,
     lgSize: 0
   };
-  const patternParts = format.split(PATTERN_SEP);
+  const patternParts = format2.split(PATTERN_SEP);
   const positive = patternParts[0];
   const negative = patternParts[1];
   const positiveParts = positive.indexOf(DECIMAL_SEP) !== -1 ? positive.split(DECIMAL_SEP) : [positive.substring(0, positive.lastIndexOf(ZERO_CHAR) + 1), positive.substring(positive.lastIndexOf(ZERO_CHAR) + 1)], integer = positiveParts[0], fraction = positiveParts[1] || "";
@@ -27564,10 +27853,10 @@ function roundNumber(parsedNumber, minFrac, maxFrac) {
     parsedNumber.integerLen++;
   }
 }
-function parseIntAutoRadix(text) {
-  const result = parseInt(text);
+function parseIntAutoRadix(text2) {
+  const result = parseInt(text2);
   if (isNaN(result)) {
-    throw new RuntimeError(2305, ngDevMode && "Invalid integer literal when parsing " + text);
+    throw new RuntimeError(2305, ngDevMode && "Invalid integer literal when parsing " + text2);
   }
   return result;
 }
@@ -28439,8 +28728,8 @@ var NgSwitchDefault = class _NgSwitchDefault {
     }]
   }], null);
 })();
-function throwNgSwitchProviderNotFoundError(attrName, directiveName) {
-  throw new RuntimeError(2e3, `An element with the "${attrName}" attribute (matching the "${directiveName}" directive) must be located inside an element with the "ngSwitch" attribute (matching "NgSwitch" directive)`);
+function throwNgSwitchProviderNotFoundError(attrName2, directiveName) {
+  throw new RuntimeError(2e3, `An element with the "${attrName2}" attribute (matching the "${directiveName}" directive) must be located inside an element with the "ngSwitch" attribute (matching "NgSwitch" directive)`);
 }
 var NgPlural = class _NgPlural {
   _localization;
@@ -28902,15 +29191,15 @@ var DatePipe = class _DatePipe {
   locale;
   defaultTimezone;
   defaultOptions;
-  constructor(locale, defaultTimezone, defaultOptions) {
+  constructor(locale, defaultTimezone, defaultOptions2) {
     this.locale = locale;
     this.defaultTimezone = defaultTimezone;
-    this.defaultOptions = defaultOptions;
+    this.defaultOptions = defaultOptions2;
   }
-  transform(value, format, timezone, locale) {
+  transform(value, format2, timezone, locale) {
     if (value == null || value === "" || value !== value) return null;
     try {
-      const _format = format ?? this.defaultOptions?.dateFormat ?? DEFAULT_DATE_FORMAT;
+      const _format = format2 ?? this.defaultOptions?.dateFormat ?? DEFAULT_DATE_FORMAT;
       const _timezone = timezone ?? this.defaultOptions?.timezone ?? this.defaultTimezone ?? void 0;
       return formatDate(value, _format, locale || this.locale, _timezone);
     } catch (error) {
@@ -30571,9 +30860,9 @@ var EventManager = class _EventManager {
    * @param options Options that configure how the event listener is bound.
    * @returns  A callback function that can be used to remove the handler.
    */
-  addEventListener(element, eventName, handler, options) {
+  addEventListener(element2, eventName, handler, options) {
     const plugin = this._findPluginFor(eventName);
-    return plugin.addEventListener(element, eventName, handler, options);
+    return plugin.addEventListener(element2, eventName, handler, options);
   }
   /**
    * Retrieves the compilation zone in which event listeners are registered.
@@ -30627,8 +30916,8 @@ var EventManagerPlugin = class {
 };
 var APP_ID_ATTRIBUTE_NAME = "ng-app-id";
 function removeElements(elements) {
-  for (const element of elements) {
-    element.remove();
+  for (const element2 of elements) {
+    element2.remove();
   }
 }
 function createStyleElement(style, doc2) {
@@ -30710,7 +30999,7 @@ var SharedStylesHost = class _SharedStylesHost {
     const record = usages.get(value);
     if (record) {
       if ((typeof ngDevMode === "undefined" || ngDevMode) && record.usage === 0) {
-        record.elements.forEach((element) => element.setAttribute("ng-style-reused", ""));
+        record.elements.forEach((element2) => element2.setAttribute("ng-style-reused", ""));
       }
       record.usage++;
     } else {
@@ -30760,14 +31049,14 @@ var SharedStylesHost = class _SharedStylesHost {
   removeHost(hostNode) {
     this.hosts.delete(hostNode);
   }
-  addElement(host, element) {
+  addElement(host, element2) {
     if (this.nonce) {
-      element.setAttribute("nonce", this.nonce);
+      element2.setAttribute("nonce", this.nonce);
     }
     if (false) {
-      element.setAttribute(APP_ID_ATTRIBUTE_NAME, this.appId);
+      element2.setAttribute(APP_ID_ATTRIBUTE_NAME, this.appId);
     }
-    return host.appendChild(element);
+    return host.appendChild(element2);
   }
   static \u0275fac = function SharedStylesHost_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _SharedStylesHost)(\u0275\u0275inject(DOCUMENT), \u0275\u0275inject(APP_ID), \u0275\u0275inject(CSP_NONCE, 8), \u0275\u0275inject(PLATFORM_ID));
@@ -30882,8 +31171,8 @@ var DomRendererFactory2 = class _DomRendererFactory2 {
     this.platformIsServer = false;
     this.defaultRenderer = new DefaultDomRenderer2(eventManager, doc2, ngZone, this.platformIsServer, this.tracingService);
   }
-  createRenderer(element, type) {
-    if (!element || !type) {
+  createRenderer(element2, type) {
+    if (!element2 || !type) {
       return this.defaultRenderer;
     }
     if (false) {
@@ -30891,15 +31180,15 @@ var DomRendererFactory2 = class _DomRendererFactory2 {
         encapsulation: ViewEncapsulation.Emulated
       });
     }
-    const renderer = this.getOrCreateRenderer(element, type);
+    const renderer = this.getOrCreateRenderer(element2, type);
     if (renderer instanceof EmulatedEncapsulationDomRenderer2) {
-      renderer.applyToHost(element);
+      renderer.applyToHost(element2);
     } else if (renderer instanceof NoneEncapsulationDomRenderer) {
       renderer.applyStyles();
     }
     return renderer;
   }
-  getOrCreateRenderer(element, type) {
+  getOrCreateRenderer(element2, type) {
     const rendererByCompId = this.rendererByCompId;
     let renderer = rendererByCompId.get(type.id);
     if (!renderer) {
@@ -30915,7 +31204,7 @@ var DomRendererFactory2 = class _DomRendererFactory2 {
           renderer = new EmulatedEncapsulationDomRenderer2(eventManager, sharedStylesHost, type, this.appId, removeStylesOnCompDestroy, doc2, ngZone, platformIsServer, tracingService);
           break;
         case ViewEncapsulation.ShadowDom:
-          return new ShadowDomRenderer(eventManager, sharedStylesHost, element, type, doc2, ngZone, this.nonce, platformIsServer, tracingService);
+          return new ShadowDomRenderer(eventManager, sharedStylesHost, element2, type, doc2, ngZone, this.nonce, platformIsServer, tracingService);
         default:
           renderer = new NoneEncapsulationDomRenderer(eventManager, sharedStylesHost, type, removeStylesOnCompDestroy, doc2, ngZone, platformIsServer, tracingService);
           break;
@@ -31239,9 +31528,9 @@ var EmulatedEncapsulationDomRenderer2 = class extends NoneEncapsulationDomRender
     this.contentAttr = shimContentAttribute(compId);
     this.hostAttr = shimHostAttribute(compId);
   }
-  applyToHost(element) {
+  applyToHost(element2) {
     this.applyStyles();
-    this.setAttribute(element, this.hostAttr, "");
+    this.setAttribute(element2, this.hostAttr, "");
   }
   createElement(parent, name2) {
     const el = super.createElement(parent, name2);
@@ -31268,9 +31557,9 @@ var BrowserDomAdapter = class _BrowserDomAdapter extends DomAdapter {
   remove(node) {
     node.remove();
   }
-  createElement(tagName, doc2) {
+  createElement(tagName2, doc2) {
     doc2 = doc2 || this.getDefaultDocument();
-    return doc2.createElement(tagName);
+    return doc2.createElement(tagName2);
   }
   createHtmlDocument() {
     return document.implementation.createHTMLDocument("fakeTitle");
@@ -31390,9 +31679,9 @@ var DomEventsPlugin = class _DomEventsPlugin extends EventManagerPlugin {
   supports(eventName) {
     return true;
   }
-  addEventListener(element, eventName, handler, options) {
-    element.addEventListener(eventName, handler, options);
-    return () => this.removeEventListener(element, eventName, handler, options);
+  addEventListener(element2, eventName, handler, options) {
+    element2.addEventListener(eventName, handler, options);
+    return () => this.removeEventListener(element2, eventName, handler, options);
   }
   removeEventListener(target, eventName, callback, options) {
     return target.removeEventListener(eventName, callback, options);
@@ -31462,11 +31751,11 @@ var KeyEventsPlugin = class _KeyEventsPlugin extends EventManagerPlugin {
    * event object as an argument.
    * @returns The key event that was registered.
    */
-  addEventListener(element, eventName, handler, options) {
+  addEventListener(element2, eventName, handler, options) {
     const parsedEvent = _KeyEventsPlugin.parseEventName(eventName);
     const outsideHandler = _KeyEventsPlugin.eventCallback(parsedEvent["fullKey"], handler, this.manager.getZone());
     return this.manager.getZone().runOutsideAngular(() => {
-      return getDOM().onAndCancel(element, parsedEvent["domEventName"], outsideHandler, options);
+      return getDOM().onAndCancel(element2, parsedEvent["domEventName"], outsideHandler, options);
     });
   }
   /**
@@ -31787,11 +32076,11 @@ var Meta = class _Meta {
       const elem = this.getTags(selector).filter((elem2) => this._containsAttributes(meta2, elem2))[0];
       if (elem !== void 0) return elem;
     }
-    const element = this._dom.createElement("meta");
-    this._setMetaElementAttributes(meta2, element);
+    const element2 = this._dom.createElement("meta");
+    this._setMetaElementAttributes(meta2, element2);
     const head = this._doc.getElementsByTagName("head")[0];
-    head.appendChild(element);
-    return element;
+    head.appendChild(element2);
+    return element2;
   }
   _setMetaElementAttributes(tag, el) {
     Object.keys(tag).forEach((prop) => el.setAttribute(this._getMetaKeyMap(prop), tag[prop]));
@@ -31952,8 +32241,8 @@ var HammerGestureConfig = class _HammerGestureConfig {
    * @param element The element that will recognize gestures.
    * @returns A HammerJS event-manager object.
    */
-  buildHammer(element) {
-    const mc = new Hammer(element, this.options);
+  buildHammer(element2) {
+    const mc = new Hammer(element2, this.options);
     mc.get("pinch").set({
       enable: true
     });
@@ -32002,7 +32291,7 @@ var HammerGesturesPlugin = class _HammerGesturesPlugin extends EventManagerPlugi
     }
     return true;
   }
-  addEventListener(element, eventName, handler) {
+  addEventListener(element2, eventName, handler) {
     const zone = this.manager.getZone();
     eventName = eventName.toLowerCase();
     if (!window.Hammer && this.loader) {
@@ -32022,7 +32311,7 @@ var HammerGesturesPlugin = class _HammerGesturesPlugin extends EventManagerPlugi
           return;
         }
         if (!cancelRegistration) {
-          deregister = this.addEventListener(element, eventName, handler);
+          deregister = this.addEventListener(element2, eventName, handler);
         }
       }).catch(() => {
         if (typeof ngDevMode === "undefined" || ngDevMode) {
@@ -32037,7 +32326,7 @@ var HammerGesturesPlugin = class _HammerGesturesPlugin extends EventManagerPlugi
       };
     }
     return zone.runOutsideAngular(() => {
-      const mc = this._config.buildHammer(element);
+      const mc = this._config.buildHammer(element2);
       const callback = function(eventObj) {
         zone.runGuarded(function() {
           handler(eventObj);
@@ -37104,10 +37393,10 @@ var SELECT_VALUE_ACCESSOR = {
   useExisting: forwardRef(() => SelectControlValueAccessor),
   multi: true
 };
-function _buildValueString$1(id, value) {
-  if (id == null) return `${value}`;
+function _buildValueString$1(id3, value) {
+  if (id3 == null) return `${value}`;
   if (value && typeof value === "object") value = "Object";
-  return `${id}: ${value}`.slice(0, 50);
+  return `${id3}: ${value}`.slice(0, 50);
 }
 function _extractId$1(valueString) {
   return valueString.split(":")[0];
@@ -37185,8 +37474,8 @@ var SelectControlValueAccessor = class _SelectControlValueAccessor extends Built
   writeValue(value) {
     this.cdr.markForCheck();
     this.value = value;
-    const id = this._getOptionId(value);
-    const valueString = _buildValueString$1(id, value);
+    const id3 = this._getOptionId(value);
+    const valueString = _buildValueString$1(id3, value);
     this.setProperty("value", valueString);
   }
   /**
@@ -37205,15 +37494,15 @@ var SelectControlValueAccessor = class _SelectControlValueAccessor extends Built
   }
   /** @internal */
   _getOptionId(value) {
-    for (const id of this._optionMap.keys()) {
-      if (this._compareWith(this._optionMap.get(id), value)) return id;
+    for (const id3 of this._optionMap.keys()) {
+      if (this._compareWith(this._optionMap.get(id3), value)) return id3;
     }
     return null;
   }
   /** @internal */
   _getOptionValue(valueString) {
-    const id = _extractId$1(valueString);
-    return this._optionMap.has(id) ? this._optionMap.get(id) : valueString;
+    const id3 = _extractId$1(valueString);
+    return this._optionMap.has(id3) ? this._optionMap.get(id3) : valueString;
   }
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275SelectControlValueAccessor_BaseFactory;
@@ -37351,11 +37640,11 @@ var SELECT_MULTIPLE_VALUE_ACCESSOR = {
   useExisting: forwardRef(() => SelectMultipleControlValueAccessor),
   multi: true
 };
-function _buildValueString(id, value) {
-  if (id == null) return `${value}`;
+function _buildValueString(id3, value) {
+  if (id3 == null) return `${value}`;
   if (typeof value === "string") value = `'${value}'`;
   if (value && typeof value === "object") value = "Object";
-  return `${id}: ${value}`.slice(0, 50);
+  return `${id3}: ${value}`.slice(0, 50);
 }
 function _extractId(valueString) {
   return valueString.split(":")[0];
@@ -37407,9 +37696,9 @@ var SelectMultipleControlValueAccessor = class _SelectMultipleControlValueAccess
    * @docs-private
    */
   registerOnChange(fn2) {
-    this.onChange = (element) => {
+    this.onChange = (element2) => {
       const selected = [];
-      const selectedOptions = element.selectedOptions;
+      const selectedOptions = element2.selectedOptions;
       if (selectedOptions !== void 0) {
         const options = selectedOptions;
         for (let i = 0; i < options.length; i++) {
@@ -37418,7 +37707,7 @@ var SelectMultipleControlValueAccessor = class _SelectMultipleControlValueAccess
           selected.push(val);
         }
       } else {
-        const options = element.options;
+        const options = element2.options;
         for (let i = 0; i < options.length; i++) {
           const opt = options[i];
           if (opt.selected) {
@@ -37433,21 +37722,21 @@ var SelectMultipleControlValueAccessor = class _SelectMultipleControlValueAccess
   }
   /** @internal */
   _registerOption(value) {
-    const id = (this._idCounter++).toString();
-    this._optionMap.set(id, value);
-    return id;
+    const id3 = (this._idCounter++).toString();
+    this._optionMap.set(id3, value);
+    return id3;
   }
   /** @internal */
   _getOptionId(value) {
-    for (const id of this._optionMap.keys()) {
-      if (this._compareWith(this._optionMap.get(id)._value, value)) return id;
+    for (const id3 of this._optionMap.keys()) {
+      if (this._compareWith(this._optionMap.get(id3)._value, value)) return id3;
     }
     return null;
   }
   /** @internal */
   _getOptionValue(valueString) {
-    const id = _extractId(valueString);
-    return this._optionMap.has(id) ? this._optionMap.get(id)._value : valueString;
+    const id3 = _extractId(valueString);
+    return this._optionMap.has(id3) ? this._optionMap.get(id3)._value : valueString;
   }
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275SelectMultipleControlValueAccessor_BaseFactory;
@@ -38935,7 +39224,7 @@ var Text2 = class _Text {
   /**
   Replace a range of the text with the given content.
   */
-  replace(from2, to, text) {
+  replace(from2, to, text2) {
     [from2, to] = clip(this, from2, to);
     let parts = [];
     this.decompose(
@@ -38945,10 +39234,10 @@ var Text2 = class _Text {
       2
       /* Open.To */
     );
-    if (text.length)
-      text.decompose(
+    if (text2.length)
+      text2.decompose(
         0,
-        text.length,
+        text2.length,
         parts,
         1 | 2
         /* Open.To */
@@ -38960,7 +39249,7 @@ var Text2 = class _Text {
       1
       /* Open.From */
     );
-    return TextNode.from(parts, this.length - (to - from2) + text.length);
+    return TextNode.from(parts, this.length - (to - from2) + text2.length);
   }
   /**
   Append another document to this one.
@@ -39056,18 +39345,18 @@ var Text2 = class _Text {
   /**
   Create a `Text` instance for the given array of lines.
   */
-  static of(text) {
-    if (text.length == 0)
+  static of(text2) {
+    if (text2.length == 0)
       throw new RangeError("A document must have at least one line");
-    if (text.length == 1 && !text[0])
+    if (text2.length == 1 && !text2[0])
       return _Text.empty;
-    return text.length <= 32 ? new TextLeaf(text) : TextNode.from(TextLeaf.split(text, []));
+    return text2.length <= 32 ? new TextLeaf(text2) : TextNode.from(TextLeaf.split(text2, []));
   }
 };
 var TextLeaf = class _TextLeaf extends Text2 {
-  constructor(text, length = textLength(text)) {
+  constructor(text2, length = textLength(text2)) {
     super();
-    this.text = text;
+    this.text = text2;
     this.length = length;
   }
   get lines() {
@@ -39078,34 +39367,34 @@ var TextLeaf = class _TextLeaf extends Text2 {
   }
   lineInner(target, isLine, line, offset2) {
     for (let i = 0; ; i++) {
-      let string2 = this.text[i], end2 = offset2 + string2.length;
+      let string3 = this.text[i], end2 = offset2 + string3.length;
       if ((isLine ? line : end2) >= target)
-        return new Line(offset2, end2, line, string2);
+        return new Line(offset2, end2, line, string3);
       offset2 = end2 + 1;
       line++;
     }
   }
   decompose(from2, to, target, open) {
-    let text = from2 <= 0 && to >= this.length ? this : new _TextLeaf(sliceText(this.text, from2, to), Math.min(to, this.length) - Math.max(0, from2));
+    let text2 = from2 <= 0 && to >= this.length ? this : new _TextLeaf(sliceText(this.text, from2, to), Math.min(to, this.length) - Math.max(0, from2));
     if (open & 1) {
       let prev = target.pop();
-      let joined = appendText(text.text, prev.text.slice(), 0, text.length);
+      let joined = appendText(text2.text, prev.text.slice(), 0, text2.length);
       if (joined.length <= 32) {
-        target.push(new _TextLeaf(joined, prev.length + text.length));
+        target.push(new _TextLeaf(joined, prev.length + text2.length));
       } else {
         let mid = joined.length >> 1;
         target.push(new _TextLeaf(joined.slice(0, mid)), new _TextLeaf(joined.slice(mid)));
       }
     } else {
-      target.push(text);
+      target.push(text2);
     }
   }
-  replace(from2, to, text) {
-    if (!(text instanceof _TextLeaf))
-      return super.replace(from2, to, text);
+  replace(from2, to, text2) {
+    if (!(text2 instanceof _TextLeaf))
+      return super.replace(from2, to, text2);
     [from2, to] = clip(this, from2, to);
-    let lines = appendText(this.text, appendText(text.text, sliceText(this.text, 0, from2)), to);
-    let newLen = this.length + text.length - (to - from2);
+    let lines = appendText(this.text, appendText(text2.text, sliceText(this.text, 0, from2)), to);
+    let newLen = this.length + text2.length - (to - from2);
     if (lines.length <= 32)
       return new _TextLeaf(lines, newLen);
     return TextNode.from(_TextLeaf.split(lines, []), newLen);
@@ -39130,9 +39419,9 @@ var TextLeaf = class _TextLeaf extends Text2 {
   scanIdentical() {
     return 0;
   }
-  static split(text, target) {
+  static split(text2, target) {
     let part = [], len = -1;
-    for (let line of text) {
+    for (let line of text2) {
       part.push(line);
       len += line.length + 1;
       if (part.length == 32) {
@@ -39177,24 +39466,24 @@ var TextNode = class _TextNode extends Text2 {
       pos = end2 + 1;
     }
   }
-  replace(from2, to, text) {
+  replace(from2, to, text2) {
     [from2, to] = clip(this, from2, to);
-    if (text.lines < this.lines)
+    if (text2.lines < this.lines)
       for (let i = 0, pos = 0; i < this.children.length; i++) {
         let child = this.children[i], end2 = pos + child.length;
         if (from2 >= pos && to <= end2) {
-          let updated = child.replace(from2 - pos, to - pos, text);
+          let updated = child.replace(from2 - pos, to - pos, text2);
           let totalLines = this.lines - child.lines + updated.lines;
           if (updated.lines < totalLines >> 5 - 1 && updated.lines > totalLines >> 5 + 1) {
             let copy = this.children.slice();
             copy[i] = updated;
-            return new _TextNode(copy, this.length - (to - from2) + text.length);
+            return new _TextNode(copy, this.length - (to - from2) + text2.length);
           }
           return super.replace(pos, end2, updated);
         }
         pos = end2 + 1;
       }
-    return super.replace(from2, to, text);
+    return super.replace(from2, to, text2);
   }
   sliceString(from2, to = this.length, lineSep = "\n") {
     [from2, to] = clip(this, from2, to);
@@ -39243,18 +39532,18 @@ var TextNode = class _TextNode extends Text2 {
       /* Tree.BranchShift */
     ), maxChunk = chunk << 1, minChunk = chunk >> 1;
     let chunked = [], currentLines = 0, currentLen = -1, currentChunk = [];
-    function add2(child) {
-      let last2;
+    function add(child) {
+      let last3;
       if (child.lines > maxChunk && child instanceof _TextNode) {
         for (let node of child.children)
-          add2(node);
+          add(node);
       } else if (child.lines > minChunk && (currentLines > minChunk || !currentLines)) {
         flush();
         chunked.push(child);
-      } else if (child instanceof TextLeaf && currentLines && (last2 = currentChunk[currentChunk.length - 1]) instanceof TextLeaf && child.lines + last2.lines <= 32) {
+      } else if (child instanceof TextLeaf && currentLines && (last3 = currentChunk[currentChunk.length - 1]) instanceof TextLeaf && child.lines + last3.lines <= 32) {
         currentLines += child.lines;
         currentLen += child.length + 1;
-        currentChunk[currentChunk.length - 1] = new TextLeaf(last2.text.concat(child.text), last2.length + 1 + child.length);
+        currentChunk[currentChunk.length - 1] = new TextLeaf(last3.text.concat(child.text), last3.length + 1 + child.length);
       } else {
         if (currentLines + child.lines > chunk)
           flush();
@@ -39271,21 +39560,21 @@ var TextNode = class _TextNode extends Text2 {
       currentLines = currentChunk.length = 0;
     }
     for (let child of children)
-      add2(child);
+      add(child);
     flush();
     return chunked.length == 1 ? chunked[0] : new _TextNode(chunked, length);
   }
 };
 Text2.empty = /* @__PURE__ */ new TextLeaf([""], 0);
-function textLength(text) {
+function textLength(text2) {
   let length = -1;
-  for (let line of text)
+  for (let line of text2)
     length += line.length + 1;
   return length;
 }
-function appendText(text, target, from2 = 0, to = 1e9) {
-  for (let pos = 0, i = 0, first = true; i < text.length && pos <= to; i++) {
-    let line = text[i], end2 = pos + line.length;
+function appendText(text2, target, from2 = 0, to = 1e9) {
+  for (let pos = 0, i = 0, first = true; i < text2.length && pos <= to; i++) {
+    let line = text2[i], end2 = pos + line.length;
     if (end2 >= from2) {
       if (end2 > to)
         line = line.slice(0, to - pos);
@@ -39301,36 +39590,36 @@ function appendText(text, target, from2 = 0, to = 1e9) {
   }
   return target;
 }
-function sliceText(text, from2, to) {
-  return appendText(text, [""], from2, to);
+function sliceText(text2, from2, to) {
+  return appendText(text2, [""], from2, to);
 }
 var RawTextCursor = class {
-  constructor(text, dir = 1) {
+  constructor(text2, dir = 1) {
     this.dir = dir;
     this.done = false;
     this.lineBreak = false;
     this.value = "";
-    this.nodes = [text];
-    this.offsets = [dir > 0 ? 1 : (text instanceof TextLeaf ? text.text.length : text.children.length) << 1];
+    this.nodes = [text2];
+    this.offsets = [dir > 0 ? 1 : (text2 instanceof TextLeaf ? text2.text.length : text2.children.length) << 1];
   }
   nextInner(skip2, dir) {
     this.done = this.lineBreak = false;
     for (; ; ) {
-      let last2 = this.nodes.length - 1;
-      let top3 = this.nodes[last2], offsetValue = this.offsets[last2], offset2 = offsetValue >> 1;
+      let last3 = this.nodes.length - 1;
+      let top3 = this.nodes[last3], offsetValue = this.offsets[last3], offset2 = offsetValue >> 1;
       let size = top3 instanceof TextLeaf ? top3.text.length : top3.children.length;
       if (offset2 == (dir > 0 ? size : 0)) {
-        if (last2 == 0) {
+        if (last3 == 0) {
           this.done = true;
           this.value = "";
           return this;
         }
         if (dir > 0)
-          this.offsets[last2 - 1]++;
+          this.offsets[last3 - 1]++;
         this.nodes.pop();
         this.offsets.pop();
       } else if ((offsetValue & 1) == (dir > 0 ? 0 : 1)) {
-        this.offsets[last2] += dir;
+        this.offsets[last3] += dir;
         if (skip2 == 0) {
           this.lineBreak = true;
           this.value = "\n";
@@ -39339,7 +39628,7 @@ var RawTextCursor = class {
         skip2--;
       } else if (top3 instanceof TextLeaf) {
         let next = top3.text[offset2 + (dir < 0 ? -1 : 0)];
-        this.offsets[last2] += dir;
+        this.offsets[last3] += dir;
         if (next.length > Math.max(0, skip2)) {
           this.value = skip2 == 0 ? next : dir > 0 ? next.slice(skip2) : next.slice(0, next.length - skip2);
           return this;
@@ -39349,10 +39638,10 @@ var RawTextCursor = class {
         let next = top3.children[offset2 + (dir < 0 ? -1 : 0)];
         if (skip2 > next.length) {
           skip2 -= next.length;
-          this.offsets[last2] += dir;
+          this.offsets[last3] += dir;
         } else {
           if (dir < 0)
-            this.offsets[last2]--;
+            this.offsets[last3]--;
           this.nodes.push(next);
           this.offsets.push(dir > 0 ? 1 : (next instanceof TextLeaf ? next.text.length : next.children.length) << 1);
         }
@@ -39368,11 +39657,11 @@ var RawTextCursor = class {
   }
 };
 var PartialTextCursor = class {
-  constructor(text, start2, end2) {
+  constructor(text2, start2, end2) {
     this.value = "";
     this.done = false;
-    this.cursor = new RawTextCursor(text, start2 > end2 ? -1 : 1);
-    this.pos = start2 > end2 ? text.length : 0;
+    this.cursor = new RawTextCursor(text2, start2 > end2 ? -1 : 1);
+    this.pos = start2 > end2 ? text2.length : 0;
     this.from = Math.min(start2, end2);
     this.to = Math.max(start2, end2);
   }
@@ -39448,11 +39737,11 @@ var Line = class {
   /**
   @internal
   */
-  constructor(from2, to, number2, text) {
+  constructor(from2, to, number2, text2) {
     this.from = from2;
     this.to = to;
     this.number = number2;
-    this.text = text;
+    this.text = text2;
   }
   /**
   The length of the line (not including any line break after it).
@@ -39461,9 +39750,9 @@ var Line = class {
     return this.to - this.from;
   }
 };
-function clip(text, from2, to) {
-  from2 = Math.max(0, Math.min(text.length, from2));
-  return [from2, Math.max(from2, Math.min(text.length, to))];
+function clip(text2, from2, to) {
+  from2 = Math.max(0, Math.min(text2.length, from2));
+  return [from2, Math.max(from2, Math.min(text2.length, to))];
 }
 function findClusterBreak2(str, pos, forward = true, includeExtending = true) {
   return findClusterBreak(str, pos, forward, includeExtending);
@@ -39681,7 +39970,7 @@ var ChangeSet = class _ChangeSet extends ChangeDesc {
   apply(doc2) {
     if (this.length != doc2.length)
       throw new RangeError("Applying change set to a document with the wrong length");
-    iterChanges(this, (fromA, toA, fromB, _toB, text) => doc2 = doc2.replace(fromB, fromB + (toA - fromA), text), false);
+    iterChanges(this, (fromA, toA, fromB, _toB, text2) => doc2 = doc2.replace(fromB, fromB + (toA - fromA), text2), false);
     return doc2;
   }
   mapDesc(other, before = false) {
@@ -39894,14 +40183,14 @@ var ChangeSet = class _ChangeSet extends ChangeDesc {
 function addSection(sections, len, ins, forceJoin = false) {
   if (len == 0 && ins <= 0)
     return;
-  let last2 = sections.length - 2;
-  if (last2 >= 0 && ins <= 0 && ins == sections[last2 + 1])
-    sections[last2] += len;
-  else if (last2 >= 0 && len == 0 && sections[last2] == 0)
-    sections[last2 + 1] += ins;
+  let last3 = sections.length - 2;
+  if (last3 >= 0 && ins <= 0 && ins == sections[last3 + 1])
+    sections[last3] += len;
+  else if (last3 >= 0 && len == 0 && sections[last3] == 0)
+    sections[last3 + 1] += ins;
   else if (forceJoin) {
-    sections[last2] += len;
-    sections[last2 + 1] += ins;
+    sections[last3] += len;
+    sections[last3 + 1] += ins;
   } else
     sections.push(len, ins);
 }
@@ -39925,18 +40214,18 @@ function iterChanges(desc, f, individual) {
       posA += len;
       posB += len;
     } else {
-      let endA = posA, endB = posB, text = Text2.empty;
+      let endA = posA, endB = posB, text2 = Text2.empty;
       for (; ; ) {
         endA += len;
         endB += ins;
         if (ins && inserted)
-          text = text.append(inserted[i - 2 >> 1]);
+          text2 = text2.append(inserted[i - 2 >> 1]);
         if (individual || i == desc.sections.length || desc.sections[i + 1] < 0)
           break;
         len = desc.sections[i++];
         ins = desc.sections[i++];
       }
-      f(posA, endA, posB, endB, text);
+      f(posA, endA, posB, endB, text2);
       posA = endA;
       posB = endB;
     }
@@ -40394,7 +40683,7 @@ var FacetProvider = class {
     var _a2;
     let getter = this.value;
     let compare2 = this.facet.compareInput;
-    let id = this.id, idx = addresses[id] >> 1, multi = this.type == 2;
+    let id3 = this.id, idx = addresses[id3] >> 1, multi = this.type == 2;
     let depDoc = false, depSel = false, depAddrs = [];
     for (let dep of this.dependencies) {
       if (dep == "doc")
@@ -40420,7 +40709,7 @@ var FacetProvider = class {
         return 0;
       },
       reconfigure: (state, oldState) => {
-        let newVal, oldAddr = oldState.config.address[id];
+        let newVal, oldAddr = oldState.config.address[id3];
         if (oldAddr != null) {
           let oldVal = getAddr(oldState, oldAddr);
           if (this.dependencies.every((dep) => {
@@ -40505,8 +40794,8 @@ function dynamicFacetSlot(addresses, facet, providers) {
 }
 var initField = /* @__PURE__ */ Facet.define({ static: true });
 var StateField = class _StateField {
-  constructor(id, createF, updateF, compareF, spec) {
-    this.id = id;
+  constructor(id3, createF, updateF, compareF, spec) {
+    this.id = id3;
     this.createF = createF;
     this.updateF = updateF;
     this.compareF = compareF;
@@ -40678,9 +40967,9 @@ var Configuration = class _Configuration {
       dynamicSlots.push((a) => field.slot(a));
     }
     let oldFacets = oldState === null || oldState === void 0 ? void 0 : oldState.config.facets;
-    for (let id in facets) {
-      let providers = facets[id], facet = providers[0].facet;
-      let oldProviders = oldFacets && oldFacets[id] || [];
+    for (let id3 in facets) {
+      let providers = facets[id3], facet = providers[0].facet;
+      let oldProviders = oldFacets && oldFacets[id3] || [];
       if (providers.every(
         (p) => p.type == 0
         /* Provider.Static */
@@ -41189,12 +41478,12 @@ var EditorState = class _EditorState {
   Create a [transaction spec](https://codemirror.net/6/docs/ref/#state.TransactionSpec) that
   replaces every selection range with the given content.
   */
-  replaceSelection(text) {
-    if (typeof text == "string")
-      text = this.toText(text);
+  replaceSelection(text2) {
+    if (typeof text2 == "string")
+      text2 = this.toText(text2);
     return this.changeByRange((range) => ({
-      changes: { from: range.from, to: range.to, insert: text },
-      range: EditorSelection.cursor(range.from + text.length)
+      changes: { from: range.from, to: range.to, insert: text2 },
+      range: EditorSelection.cursor(range.from + text2.length)
     }));
   }
   /**
@@ -41244,8 +41533,8 @@ var EditorState = class _EditorState {
   separator](https://codemirror.net/6/docs/ref/#state.EditorState^lineSeparator), create a
   [`Text`](https://codemirror.net/6/docs/ref/#state.Text) instance from the given string.
   */
-  toText(string2) {
-    return Text2.of(string2.split(this.facet(_EditorState.lineSeparator) || DefaultSplit));
+  toText(string3) {
+    return Text2.of(string3.split(this.facet(_EditorState.lineSeparator) || DefaultSplit));
   }
   /**
   Return the given range of the document as a string.
@@ -41350,20 +41639,20 @@ var EditorState = class _EditorState {
   A single `$` is equivalent to `$1`, and `$$` will produce a
   literal dollar sign.
   */
-  phrase(phrase2, ...insert2) {
+  phrase(phrase, ...insert2) {
     for (let map2 of this.facet(_EditorState.phrases))
-      if (Object.prototype.hasOwnProperty.call(map2, phrase2)) {
-        phrase2 = map2[phrase2];
+      if (Object.prototype.hasOwnProperty.call(map2, phrase)) {
+        phrase = map2[phrase];
         break;
       }
     if (insert2.length)
-      phrase2 = phrase2.replace(/\$(\$|\d*)/g, (m, i) => {
+      phrase = phrase.replace(/\$(\$|\d*)/g, (m, i) => {
         if (i == "$")
           return "$";
         let n = +(i || 1);
         return !n || n > insert2.length ? m : insert2[n - 1];
       });
-    return phrase2;
+    return phrase;
   }
   /**
   Find the values for a given language data field, provided by the
@@ -41412,18 +41701,18 @@ var EditorState = class _EditorState {
   this returns null.
   */
   wordAt(pos) {
-    let { text, from: from2, length } = this.doc.lineAt(pos);
+    let { text: text2, from: from2, length } = this.doc.lineAt(pos);
     let cat = this.charCategorizer(pos);
     let start2 = pos - from2, end2 = pos - from2;
     while (start2 > 0) {
-      let prev = findClusterBreak2(text, start2, false);
-      if (cat(text.slice(prev, start2)) != CharCategory.Word)
+      let prev = findClusterBreak2(text2, start2, false);
+      if (cat(text2.slice(prev, start2)) != CharCategory.Word)
         break;
       start2 = prev;
     }
     while (end2 < length) {
-      let next = findClusterBreak2(text, end2);
-      if (cat(text.slice(end2, next)) != CharCategory.Word)
+      let next = findClusterBreak2(text2, end2);
+      if (cat(text2.slice(end2, next)) != CharCategory.Word)
         break;
       end2 = next;
     }
@@ -41447,7 +41736,7 @@ EditorState.changeFilter = changeFilter;
 EditorState.transactionFilter = transactionFilter;
 EditorState.transactionExtender = transactionExtender;
 Compartment.reconfigure = /* @__PURE__ */ StateEffect.define();
-function combineConfig(configs, defaults4, combine = {}) {
+function combineConfig(configs, defaults3, combine = {}) {
   let result = {};
   for (let config3 of configs)
     for (let key of Object.keys(config3)) {
@@ -41460,9 +41749,9 @@ function combineConfig(configs, defaults4, combine = {}) {
       else
         throw new Error("Config merge conflict for field " + key);
     }
-  for (let key in defaults4)
+  for (let key in defaults3)
     if (result[key] === void 0)
-      result[key] = defaults4[key];
+      result[key] = defaults3[key];
   return result;
 }
 var RangeValue = class {
@@ -41584,8 +41873,8 @@ var RangeSet = class _RangeSet {
   @internal
   */
   get length() {
-    let last2 = this.chunk.length - 1;
-    return last2 < 0 ? 0 : Math.max(this.chunkEnd(last2), this.nextLayer.length);
+    let last3 = this.chunk.length - 1;
+    return last3 < 0 ? 0 : Math.max(this.chunkEnd(last3), this.nextLayer.length);
   }
   /**
   The number of ranges in the set.
@@ -41614,22 +41903,22 @@ var RangeSet = class _RangeSet {
   `Y`.)
   */
   update(updateSpec) {
-    let { add: add2 = [], sort = false, filterFrom = 0, filterTo = this.length } = updateSpec;
+    let { add = [], sort = false, filterFrom = 0, filterTo = this.length } = updateSpec;
     let filter2 = updateSpec.filter;
-    if (add2.length == 0 && !filter2)
+    if (add.length == 0 && !filter2)
       return this;
     if (sort)
-      add2 = add2.slice().sort(cmpRange);
+      add = add.slice().sort(cmpRange);
     if (this.isEmpty)
-      return add2.length ? _RangeSet.of(add2) : this;
+      return add.length ? _RangeSet.of(add) : this;
     let cur2 = new LayerCursor(this, null, -1).goto(0), i = 0, spill = [];
     let builder = new RangeSetBuilder();
-    while (cur2.value || i < add2.length) {
-      if (i < add2.length && (cur2.from - add2[i].from || cur2.startSide - add2[i].value.startSide) >= 0) {
-        let range = add2[i++];
+    while (cur2.value || i < add.length) {
+      if (i < add.length && (cur2.from - add[i].from || cur2.startSide - add[i].value.startSide) >= 0) {
+        let range = add[i++];
         if (!builder.addInner(range.from, range.to, range.value))
           spill.push(range);
-      } else if (cur2.rangeIndex == 1 && cur2.chunkIndex < this.chunk.length && (i == add2.length || this.chunkEnd(cur2.chunkIndex) < add2[i].from) && (!filter2 || filterFrom > this.chunkEnd(cur2.chunkIndex) || filterTo < this.chunkPos[cur2.chunkIndex]) && builder.addChunk(this.chunkPos[cur2.chunkIndex], this.chunk[cur2.chunkIndex])) {
+      } else if (cur2.rangeIndex == 1 && cur2.chunkIndex < this.chunk.length && (i == add.length || this.chunkEnd(cur2.chunkIndex) < add[i].from) && (!filter2 || filterFrom > this.chunkEnd(cur2.chunkIndex) || filterTo < this.chunkPos[cur2.chunkIndex]) && builder.addChunk(this.chunkPos[cur2.chunkIndex], this.chunk[cur2.chunkIndex])) {
         cur2.nextChunk();
       } else {
         if (!filter2 || filterFrom > cur2.to || filterTo < cur2.from || filter2(cur2.from, cur2.to, cur2.value)) {
@@ -41879,10 +42168,10 @@ var RangeSetBuilder = class _RangeSetBuilder {
     this.setMaxPoint = Math.max(this.setMaxPoint, chunk.maxPoint);
     this.chunks.push(chunk);
     this.chunkPos.push(from2);
-    let last2 = chunk.value.length - 1;
-    this.last = chunk.value[last2];
-    this.lastFrom = chunk.from[last2] + from2;
-    this.lastTo = chunk.to[last2] + from2;
+    let last3 = chunk.value.length - 1;
+    this.last = chunk.value[last3];
+    this.lastFrom = chunk.from[last3] + from2;
+    this.lastTo = chunk.to[last3] + from2;
     return true;
   }
   /**
@@ -42231,29 +42520,29 @@ function findMinIndex(value, array) {
     }
   return found;
 }
-function countColumn(string2, tabSize, to = string2.length) {
+function countColumn(string3, tabSize, to = string3.length) {
   let n = 0;
-  for (let i = 0; i < to && i < string2.length; ) {
-    if (string2.charCodeAt(i) == 9) {
+  for (let i = 0; i < to && i < string3.length; ) {
+    if (string3.charCodeAt(i) == 9) {
       n += tabSize - n % tabSize;
       i++;
     } else {
       n++;
-      i = findClusterBreak2(string2, i);
+      i = findClusterBreak2(string3, i);
     }
   }
   return n;
 }
-function findColumn(string2, col, tabSize, strict) {
+function findColumn(string3, col, tabSize, strict) {
   for (let i = 0, n = 0; ; ) {
     if (n >= col)
       return i;
-    if (i == string2.length)
+    if (i == string3.length)
       break;
-    n += string2.charCodeAt(i) == 9 ? tabSize - n % tabSize : 1;
-    i = findClusterBreak2(string2, i);
+    n += string3.charCodeAt(i) == 9 ? tabSize - n % tabSize : 1;
+    i = findClusterBreak2(string3, i);
   }
-  return strict === true ? -1 : string2.length;
+  return strict === true ? -1 : string3.length;
 }
 
 // node_modules/@lezer/common/dist/index.js
@@ -42285,13 +42574,13 @@ var NodeProp = class {
   if the node type doesn't get this prop, and the prop's value if
   it does.
   */
-  add(match) {
+  add(match2) {
     if (this.perNode)
       throw new RangeError("Can't add per-node props to node types");
-    if (typeof match != "function")
-      match = NodeType.match(match);
+    if (typeof match2 != "function")
+      match2 = NodeType.match(match2);
     return (type) => {
-      let result = match(type);
+      let result = match2(type);
       return result === void 0 ? null : [this, result];
     };
   }
@@ -42308,10 +42597,10 @@ NodeProp.contextHash = new NodeProp({ perNode: true });
 NodeProp.lookAhead = new NodeProp({ perNode: true });
 NodeProp.mounted = new NodeProp({ perNode: true });
 var MountedTree = class {
-  constructor(tree, overlay, parser2) {
+  constructor(tree, overlay, parser3) {
     this.tree = tree;
     this.overlay = overlay;
-    this.parser = parser2;
+    this.parser = parser3;
   }
   /**
   @internal
@@ -42325,10 +42614,10 @@ var NodeType = class _NodeType {
   /**
   @internal
   */
-  constructor(name2, props, id, flags = 0) {
+  constructor(name2, props, id3, flags = 0) {
     this.name = name2;
     this.props = props;
-    this.id = id;
+    this.id = id3;
     this.flags = flags;
   }
   /**
@@ -42445,11 +42734,11 @@ var NodeSet = class _NodeSet {
     for (let type of this.types) {
       let newProps = null;
       for (let source of props) {
-        let add2 = source(type);
-        if (add2) {
+        let add = source(type);
+        if (add) {
           if (!newProps)
             newProps = Object.assign({}, type.props);
-          newProps[add2[0].id] = add2[1];
+          newProps[add[0].id] = add[1];
         }
       }
       newTypes.push(newProps ? new NodeType(type.name, newProps, type.id, type.flags) : type);
@@ -42608,8 +42897,8 @@ var Tree = class _Tree {
   get propValues() {
     let result = [];
     if (this.props)
-      for (let id in this.props)
-        result.push([+id, this.props[id]]);
+      for (let id3 in this.props)
+        result.push([+id3, this.props[id3]]);
     return result;
   }
   /**
@@ -42686,8 +42975,8 @@ var TreeBuffer = class _TreeBuffer {
   @internal
   */
   childString(index) {
-    let id = this.buffer[index], endIndex = this.buffer[index + 3];
-    let type = this.set.types[id], result = type.name;
+    let id3 = this.buffer[index], endIndex = this.buffer[index + 3];
+    let type = this.set.types[id3], result = type.name;
     if (/\W/.test(result) && !type.isError)
       result = JSON.stringify(result);
     index += 4;
@@ -42790,14 +43079,14 @@ var BaseNode = class {
   enterUnfinishedNodesBefore(pos) {
     let scan = this.childBefore(pos), node = this;
     while (scan) {
-      let last2 = scan.lastChild;
-      if (!last2 || last2.to != scan.to)
+      let last3 = scan.lastChild;
+      if (!last3 || last3.to != scan.to)
         break;
-      if (last2.type.isError && last2.from == last2.to) {
+      if (last3.type.isError && last3.from == last3.to) {
         node = scan;
-        scan = last2.prevSibling;
+        scan = last3.prevSibling;
       } else {
-        scan = last2;
+        scan = last3;
       }
     }
     return node;
@@ -43404,10 +43693,10 @@ var TreeCursor = class {
   get node() {
     if (!this.buffer)
       return this._tree;
-    let cache = this.bufferNode, result = null, depth = 0;
-    if (cache && cache.context == this.buffer) {
+    let cache2 = this.bufferNode, result = null, depth = 0;
+    if (cache2 && cache2.context == this.buffer) {
       scan: for (let index = this.index, d = this.stack.length; d >= 0; ) {
-        for (let c = cache; c; c = c._parent)
+        for (let c = cache2; c; c = c._parent)
           if (c.index == index) {
             if (index == this.index)
               return c;
@@ -43493,26 +43782,26 @@ function buildTree(data) {
   let types2 = nodeSet.types;
   let contextHash = 0, lookAhead = 0;
   function takeNode(parentStart, minPos, children2, positions2, inRepeat, depth) {
-    let { id, start: start2, end: end2, size } = cursor;
+    let { id: id3, start: start2, end: end2, size } = cursor;
     let lookAheadAtStart = lookAhead, contextAtStart = contextHash;
     while (size < 0) {
       cursor.next();
       if (size == -1) {
-        let node2 = reused[id];
+        let node2 = reused[id3];
         children2.push(node2);
         positions2.push(start2 - parentStart);
         return;
       } else if (size == -3) {
-        contextHash = id;
+        contextHash = id3;
         return;
       } else if (size == -4) {
-        lookAhead = id;
+        lookAhead = id3;
         return;
       } else {
         throw new RangeError(`Unrecognized record size: ${size}`);
       }
     }
-    let type = types2[id], node, buffer2;
+    let type = types2[id3], node, buffer2;
     let startPos = start2 - parentStart;
     if (end2 - start2 <= maxBufferLength && (buffer2 = findBufferSize(cursor.pos - minPos, inRepeat))) {
       let data2 = new Uint16Array(buffer2.size - buffer2.skip);
@@ -43525,7 +43814,7 @@ function buildTree(data) {
       let endPos = cursor.pos - size;
       cursor.next();
       let localChildren = [], localPositions = [];
-      let localInRepeat = id >= minRepeatType ? id : -1;
+      let localInRepeat = id3 >= minRepeatType ? id3 : -1;
       let lastGroup = 0, lastEnd = end2;
       while (cursor.pos > endPos) {
         if (localInRepeat >= 0 && cursor.id == localInRepeat && cursor.size >= 0) {
@@ -43559,7 +43848,7 @@ function buildTree(data) {
     let nodes = [];
     let nodeCount = 0, stopAt = -1;
     while (cursor.pos > minPos) {
-      let { id, start: start2, end: end2, size } = cursor;
+      let { id: id3, start: start2, end: end2, size } = cursor;
       if (size > 4) {
         cursor.next();
       } else if (stopAt > -1 && start2 < stopAt) {
@@ -43567,7 +43856,7 @@ function buildTree(data) {
       } else {
         if (stopAt < 0)
           stopAt = end2 - maxBufferLength;
-        nodes.push(id, start2, end2);
+        nodes.push(id3, start2, end2);
         nodeCount++;
         cursor.next();
       }
@@ -43587,12 +43876,12 @@ function buildTree(data) {
   }
   function makeBalanced(type, contextHash2) {
     return (children2, positions2, length2) => {
-      let lookAhead2 = 0, lastI = children2.length - 1, last2, lookAheadProp;
-      if (lastI >= 0 && (last2 = children2[lastI]) instanceof Tree) {
-        if (!lastI && last2.type == type && last2.length == length2)
-          return last2;
-        if (lookAheadProp = last2.prop(NodeProp.lookAhead))
-          lookAhead2 = positions2[lastI] + last2.length + lookAheadProp;
+      let lookAhead2 = 0, lastI = children2.length - 1, last3, lookAheadProp;
+      if (lastI >= 0 && (last3 = children2[lastI]) instanceof Tree) {
+        if (!lastI && last3.type == type && last3.length == length2)
+          return last3;
+        if (lookAheadProp = last3.prop(NodeProp.lookAhead))
+          lookAhead2 = positions2[lastI] + last3.length + lookAheadProp;
       }
       return makeTree(type, children2, positions2, length2, lookAhead2, contextHash2);
     };
@@ -43661,9 +43950,9 @@ function buildTree(data) {
     return result.size > 4 ? result : void 0;
   }
   function copyToBuffer(bufferStart, buffer2, index) {
-    let { id, start: start2, end: end2, size } = cursor;
+    let { id: id3, start: start2, end: end2, size } = cursor;
     cursor.next();
-    if (size >= 0 && id < minRepeatType) {
+    if (size >= 0 && id3 < minRepeatType) {
       let startIndex = index;
       if (size > 4) {
         let endPos = cursor.pos - (size - 4);
@@ -43673,11 +43962,11 @@ function buildTree(data) {
       buffer2[--index] = startIndex;
       buffer2[--index] = end2 - bufferStart;
       buffer2[--index] = start2 - bufferStart;
-      buffer2[--index] = id;
+      buffer2[--index] = id3;
     } else if (size == -3) {
-      contextHash = id;
+      contextHash = id3;
     } else if (size == -4) {
-      lookAhead = id;
+      lookAhead = id3;
     }
     return index;
   }
@@ -43850,8 +44139,8 @@ var Parser = class {
   }
 };
 var StringInput = class {
-  constructor(string2) {
-    this.string = string2;
+  constructor(string3) {
+    this.string = string3;
   }
   get length() {
     return this.string.length;
@@ -43917,9 +44206,9 @@ var StyleModule = class {
   // :: () → string
   // Generate a new unique CSS class name.
   static newName() {
-    let id = top[COUNT] || 1;
-    top[COUNT] = id + 1;
-    return C + id.toString(36);
+    let id3 = top[COUNT] || 1;
+    top[COUNT] = id3 + 1;
+    return C + id3.toString(36);
   }
   // :: (union<Document, ShadowRoot>, union<[StyleModule], StyleModule>, ?{nonce: ?string})
   //
@@ -43984,10 +44273,10 @@ var StyleSet = class {
       if (root.adoptedStyleSheets.indexOf(this.sheet) < 0)
         root.adoptedStyleSheets = [this.sheet, ...root.adoptedStyleSheets];
     } else {
-      let text = "";
+      let text2 = "";
       for (let i = 0; i < this.modules.length; i++)
-        text += this.modules[i].getRules() + "\n";
-      this.styleTag.textContent = text;
+        text2 += this.modules[i].getRules() + "\n";
+      this.styleTag.textContent = text2;
       let target = root.head || root;
       if (this.styleTag.parentNode != target)
         target.insertBefore(this.styleTag, target.firstChild);
@@ -44103,35 +44392,6 @@ function keyName(event) {
   if (name2 == "Right") name2 = "ArrowRight";
   if (name2 == "Down") name2 = "ArrowDown";
   return name2;
-}
-
-// node_modules/crelt/index.js
-function crelt() {
-  var elt = arguments[0];
-  if (typeof elt == "string") elt = document.createElement(elt);
-  var i = 1, next = arguments[1];
-  if (next && typeof next == "object" && next.nodeType == null && !Array.isArray(next)) {
-    for (var name2 in next) if (Object.prototype.hasOwnProperty.call(next, name2)) {
-      var value = next[name2];
-      if (typeof value == "string") elt.setAttribute(name2, value);
-      else if (value != null) elt[name2] = value;
-    }
-    i++;
-  }
-  for (; i < arguments.length; i++) add(elt, arguments[i]);
-  return elt;
-}
-function add(elt, child) {
-  if (typeof child == "string") {
-    elt.appendChild(document.createTextNode(child));
-  } else if (child == null) {
-  } else if (child.nodeType != null) {
-    elt.appendChild(child);
-  } else if (Array.isArray(child)) {
-    for (var i = 0; i < child.length; i++) add(elt, child[i]);
-  } else {
-    throw new RangeError("Unsupported child node: " + child);
-  }
 }
 
 // node_modules/@codemirror/view/dist/index.js
@@ -44760,18 +45020,18 @@ var ChildCursor = class {
 function replaceRange(parent, fromI, fromOff, toI, toOff, insert2, breakAtStart, openStart, openEnd) {
   let { children } = parent;
   let before = children.length ? children[fromI] : null;
-  let last2 = insert2.length ? insert2[insert2.length - 1] : null;
-  let breakAtEnd = last2 ? last2.breakAfter : breakAtStart;
-  if (fromI == toI && before && !breakAtStart && !breakAtEnd && insert2.length < 2 && before.merge(fromOff, toOff, insert2.length ? last2 : null, fromOff == 0, openStart, openEnd))
+  let last3 = insert2.length ? insert2[insert2.length - 1] : null;
+  let breakAtEnd = last3 ? last3.breakAfter : breakAtStart;
+  if (fromI == toI && before && !breakAtStart && !breakAtEnd && insert2.length < 2 && before.merge(fromOff, toOff, insert2.length ? last3 : null, fromOff == 0, openStart, openEnd))
     return;
   if (toI < children.length) {
     let after = children[toI];
-    if (after && (toOff < after.length || after.breakAfter && (last2 === null || last2 === void 0 ? void 0 : last2.breakAfter))) {
+    if (after && (toOff < after.length || after.breakAfter && (last3 === null || last3 === void 0 ? void 0 : last3.breakAfter))) {
       if (fromI == toI) {
         after = after.split(toOff);
         toOff = 0;
       }
-      if (!breakAtEnd && last2 && after.merge(0, toOff, last2, true, 0, openEnd)) {
+      if (!breakAtEnd && last3 && after.merge(0, toOff, last3, true, 0, openEnd)) {
         insert2[insert2.length - 1] = after;
       } else {
         if (toOff || after.children.length && !after.children[0].length)
@@ -44779,8 +45039,8 @@ function replaceRange(parent, fromI, fromOff, toI, toOff, insert2, breakAtStart,
         insert2.push(after);
       }
     } else if (after === null || after === void 0 ? void 0 : after.breakAfter) {
-      if (last2)
-        last2.breakAfter = 1;
+      if (last3)
+        last3.breakAfter = 1;
       else
         breakAtStart = 1;
     }
@@ -44855,9 +45115,9 @@ var browser = {
 };
 var MaxJoinLen = 256;
 var TextView = class _TextView extends ContentView {
-  constructor(text) {
+  constructor(text2) {
     super();
-    this.text = text;
+    this.text = text2;
   }
   get length() {
     return this.text.length;
@@ -44972,8 +45232,8 @@ var MarkView = class _MarkView extends ContentView {
     return coordsInChildren(this, pos, side);
   }
 };
-function textCoords(text, pos, side) {
-  let length = text.nodeValue.length;
+function textCoords(text2, pos, side) {
+  let length = text2.nodeValue.length;
   if (pos > length)
     pos = length;
   let from2 = pos, to = pos, flatten3 = 0;
@@ -44993,7 +45253,7 @@ function textCoords(text, pos, side) {
     else if (to < length)
       to++;
   }
-  let rects = textRange(text, from2, to).getClientRects();
+  let rects = textRange(text2, from2, to).getClientRects();
   if (!rects.length)
     return null;
   let rect = rects[(flatten3 ? flatten3 < 0 : side >= 0) ? 0 : rects.length - 1];
@@ -45060,8 +45320,8 @@ var WidgetView = class _WidgetView extends ContentView {
     let top3 = this;
     while (top3.parent)
       top3 = top3.parent;
-    let { view } = top3, text = view && view.state.doc, start2 = this.posAtStart;
-    return text ? text.slice(start2, start2 + this.length) : Text2.empty;
+    let { view } = top3, text2 = view && view.state.doc, start2 = this.posAtStart;
+    return text2 ? text2.slice(start2, start2 + this.length) : Text2.empty;
   }
   domAtPos(pos) {
     return (this.length ? pos == 0 : this.side > 0) ? DOMPos.before(this.dom) : DOMPos.after(this.dom, pos == this.length);
@@ -45172,9 +45432,9 @@ function inlineDOMAtPos(parent, pos) {
   return new DOMPos(dom, 0);
 }
 function joinInlineInto(parent, view, open) {
-  let last2, { children } = parent;
-  if (open > 0 && view instanceof MarkView && children.length && (last2 = children[children.length - 1]) instanceof MarkView && last2.mark.eq(view.mark)) {
-    joinInlineInto(last2, view.children[0], open - 1);
+  let last3, { children } = parent;
+  if (open > 0 && view instanceof MarkView && children.length && (last3 = children[children.length - 1]) instanceof MarkView && last3.mark.eq(view.mark)) {
+    joinInlineInto(last3, view.children[0], open - 1);
   } else {
     children.push(view);
     view.setParent(parent);
@@ -45207,10 +45467,10 @@ function coordsInChildren(view, pos, side) {
   return fallbackRect(view);
 }
 function fallbackRect(view) {
-  let last2 = view.dom.lastChild;
-  if (!last2)
+  let last3 = view.dom.lastChild;
+  if (!last3)
     return view.dom.getBoundingClientRect();
-  let rects = clientRectsFor(last2);
+  let rects = clientRectsFor(last3);
   return rects[rects.length - 1] || null;
 }
 function onSameLine(a, b) {
@@ -45514,9 +45774,9 @@ function widgetsEq(a, b) {
   return a == b || !!(a && b && a.compare(b));
 }
 function addRange(from2, to, ranges, margin = 0) {
-  let last2 = ranges.length - 1;
-  if (last2 >= 0 && ranges[last2] + margin >= from2)
-    ranges[last2] = Math.max(ranges[last2], to);
+  let last3 = ranges.length - 1;
+  if (last3 >= 0 && ranges[last3] + margin >= from2)
+    ranges[last3] = Math.max(ranges[last3], to);
   else
     ranges.push(from2, to);
 }
@@ -45617,10 +45877,10 @@ var LineView = class _LineView extends ContentView {
       this.prevAttrs = void 0;
     }
     super.sync(view, track);
-    let last2 = this.dom.lastChild;
-    while (last2 && ContentView.get(last2) instanceof MarkView)
-      last2 = last2.lastChild;
-    if (!last2 || !this.length || last2.nodeName != "BR" && ((_a2 = ContentView.get(last2)) === null || _a2 === void 0 ? void 0 : _a2.isEditable) == false && (!browser.ios || !this.children.some((ch) => ch instanceof TextView))) {
+    let last3 = this.dom.lastChild;
+    while (last3 && ContentView.get(last3) instanceof MarkView)
+      last3 = last3.lastChild;
+    if (!last3 || !this.length || last3.nodeName != "BR" && ((_a2 = ContentView.get(last3)) === null || _a2 === void 0 ? void 0 : _a2.isEditable) == false && (!browser.ios || !this.children.some((ch) => ch instanceof TextView))) {
       let hack = document.createElement("BR");
       hack.cmIgnore = true;
       this.dom.appendChild(hack);
@@ -45814,8 +46074,8 @@ var ContentBuilder = class _ContentBuilder {
   posCovered() {
     if (this.content.length == 0)
       return !this.breakAtStart && this.doc.lineAt(this.pos).from != this.pos;
-    let last2 = this.content[this.content.length - 1];
-    return !(last2.breakAfter || last2 instanceof BlockWidgetView && last2.deco.endSide < 0);
+    let last3 = this.content[this.content.length - 1];
+    return !(last3.breakAfter || last3 instanceof BlockWidgetView && last3.deco.endSide < 0);
   }
   getLine() {
     if (!this.curLine) {
@@ -45934,8 +46194,8 @@ var ContentBuilder = class _ContentBuilder {
     if (this.openStart < 0)
       this.openStart = openStart;
   }
-  static build(text, from2, to, decorations2, dynamicDecorationMap) {
-    let builder = new _ContentBuilder(text, from2, to, dynamicDecorationMap);
+  static build(text2, from2, to, decorations2, dynamicDecorationMap) {
+    let builder = new _ContentBuilder(text2, from2, to, dynamicDecorationMap);
     builder.openEnd = RangeSet.spans(decorations2, from2, to, builder);
     if (builder.openStart < 0)
       builder.openStart = builder.openEnd;
@@ -46322,9 +46582,9 @@ function moveVisually(line, order2, dir, start2, forward) {
     return EditorSelection.cursor(nextSpan.side(!forward, dir) + line.from, nextSpan.forward(forward, dir) ? 1 : -1, nextSpan.level);
   return EditorSelection.cursor(nextIndex + line.from, span.forward(forward, dir) ? -1 : 1, span.level);
 }
-function autoDirection(text, from2, to) {
+function autoDirection(text2, from2, to) {
   for (let i = from2; i < to; i++) {
-    let type = charType(text.charCodeAt(i));
+    let type = charType(text2.charCodeAt(i));
     if (type == 1)
       return LTR;
     if (type == 2 || type == 4)
@@ -46389,8 +46649,8 @@ var viewPlugin = /* @__PURE__ */ Facet.define({
   }
 });
 var ViewPlugin = class _ViewPlugin {
-  constructor(id, create, domEventHandlers, domEventObservers, buildExtensions) {
-    this.id = id;
+  constructor(id3, create, domEventHandlers, domEventObservers, buildExtensions) {
+    this.id = id3;
     this.create = create;
     this.domEventHandlers = domEventHandlers;
     this.domEventObservers = domEventObservers;
@@ -46507,9 +46767,9 @@ function getIsolatedRanges(view, line) {
           update.to = to;
           level = update.inner;
         } else {
-          let add2 = { from: from2, to, direction, inner: [] };
-          level.push(add2);
-          level = add2.inner;
+          let add = { from: from2, to, direction, inner: [] };
+          level.push(add);
+          level = add.inner;
         }
       }
     }
@@ -46862,9 +47122,9 @@ var DocView = class extends ContentView {
           if (browser.gecko) {
             let nextTo = nextToUneditable(anchor.node, anchor.offset);
             if (nextTo && nextTo != (1 | 2)) {
-              let text = (nextTo == 1 ? textNodeBefore : textNodeAfter)(anchor.node, anchor.offset);
-              if (text)
-                anchor = new DOMPos(text.node, text.offset);
+              let text2 = (nextTo == 1 ? textNodeBefore : textNodeAfter)(anchor.node, anchor.offset);
+              if (text2)
+                anchor = new DOMPos(text2.node, text2.offset);
             }
           }
           rawSel.collapse(anchor.node, anchor.offset);
@@ -47030,8 +47290,8 @@ var DocView = class extends ContentView {
         let childRect = child.dom.getBoundingClientRect();
         result.push(childRect.height);
         if (isWider) {
-          let last2 = child.dom.lastChild;
-          let rects = last2 ? clientRectsFor(last2) : [];
+          let last3 = child.dom.lastChild;
+          let rects = last3 ? clientRectsFor(last3) : [];
           if (rects.length) {
             let rect = rects[rects.length - 1];
             let width = ltr ? rect.right - childRect.left : childRect.right - rect.left;
@@ -47194,10 +47454,10 @@ function findCompositionRange(view, changes, headPos) {
   let found = findCompositionNode(view, headPos);
   if (!found)
     return null;
-  let { node: textNode, from: from2, to } = found, text = textNode.nodeValue;
-  if (/[\n\r]/.test(text))
+  let { node: textNode, from: from2, to } = found, text2 = textNode.nodeValue;
+  if (/[\n\r]/.test(text2))
     return null;
-  if (view.state.doc.sliceString(found.from, found.to) != text)
+  if (view.state.doc.sliceString(found.from, found.to) != text2)
     return null;
   let inv = changes.invertedDesc;
   let range = new ChangedRange(inv.mapPos(from2), inv.mapPos(to), from2, to);
@@ -47413,17 +47673,17 @@ function posAtCoords(view, coords, precise, bias = -1) {
     return view.viewport.to == view.state.doc.length ? view.state.doc.length : precise ? null : posAtCoordsImprecise(view, content2, block, x, y);
   let doc2 = view.dom.ownerDocument;
   let root = view.root.elementFromPoint ? view.root : doc2;
-  let element = root.elementFromPoint(x, y);
-  if (element && !view.contentDOM.contains(element))
-    element = null;
-  if (!element) {
+  let element2 = root.elementFromPoint(x, y);
+  if (element2 && !view.contentDOM.contains(element2))
+    element2 = null;
+  if (!element2) {
     x = Math.max(content2.left + 1, Math.min(content2.right - 1, x));
-    element = root.elementFromPoint(x, y);
-    if (element && !view.contentDOM.contains(element))
-      element = null;
+    element2 = root.elementFromPoint(x, y);
+    if (element2 && !view.contentDOM.contains(element2))
+      element2 = null;
   }
   let node, offset2 = -1;
-  if (element && ((_a2 = view.docView.nearest(element)) === null || _a2 === void 0 ? void 0 : _a2.isEditable) != false) {
+  if (element2 && ((_a2 = view.docView.nearest(element2)) === null || _a2 === void 0 ? void 0 : _a2.isEditable) != false) {
     if (doc2.caretPositionFromPoint) {
       let pos = doc2.caretPositionFromPoint(x, y);
       if (pos)
@@ -47620,8 +47880,8 @@ var DOMReader = class {
     this.text = "";
     this.lineSeparator = state.facet(EditorState.lineSeparator);
   }
-  append(text) {
-    this.text += text;
+  append(text2) {
+    this.text += text2;
   }
   lineBreak() {
     this.text += LineBreakPlaceholder;
@@ -47646,20 +47906,20 @@ var DOMReader = class {
     return this;
   }
   readTextNode(node) {
-    let text = node.nodeValue;
+    let text2 = node.nodeValue;
     for (let point of this.points)
       if (point.node == node)
-        point.pos = this.text.length + Math.min(point.offset, text.length);
+        point.pos = this.text.length + Math.min(point.offset, text2.length);
     for (let off = 0, re = this.lineSeparator ? null : /\r\n?|\n/g; ; ) {
       let nextBreak = -1, breakSize = 1, m;
       if (this.lineSeparator) {
-        nextBreak = text.indexOf(this.lineSeparator, off);
+        nextBreak = text2.indexOf(this.lineSeparator, off);
         breakSize = this.lineSeparator.length;
-      } else if (m = re.exec(text)) {
+      } else if (m = re.exec(text2)) {
         nextBreak = m.index;
         breakSize = m[0].length;
       }
-      this.append(text.slice(off, nextBreak < 0 ? text.length : nextBreak));
+      this.append(text2.slice(off, nextBreak < 0 ? text2.length : nextBreak));
       if (nextBreak < 0)
         break;
       this.lineBreak();
@@ -47819,12 +48079,12 @@ function applyDOMChangeInner(view, change, newSel, lastKey = -1) {
   // after a completion when you press enter
   (change.from == sel.from || change.from == sel.from - 1 && view.state.sliceDoc(change.from, sel.from) == " ") && change.insert.length == 1 && change.insert.lines == 2 && dispatchKey(view.contentDOM, "Enter", 13) || (change.from == sel.from - 1 && change.to == sel.to && change.insert.length == 0 || lastKey == 8 && change.insert.length < change.to - change.from && change.to > sel.head) && dispatchKey(view.contentDOM, "Backspace", 8) || change.from == sel.from && change.to == sel.to + 1 && change.insert.length == 0 && dispatchKey(view.contentDOM, "Delete", 46)))
     return true;
-  let text = change.insert.toString();
+  let text2 = change.insert.toString();
   if (view.inputState.composing >= 0)
     view.inputState.composing++;
   let defaultTr;
   let defaultInsert = () => defaultTr || (defaultTr = applyDefaultInsert(view, change, newSel));
-  if (!view.state.facet(inputHandler).some((h) => h(view, change.from, change.to, text, defaultInsert)))
+  if (!view.state.facet(inputHandler).some((h) => h(view, change.from, change.to, text2, defaultInsert)))
     view.dispatch(defaultInsert());
   return true;
 }
@@ -48286,16 +48546,16 @@ function capturePaste(view) {
     doPaste(view, target.value);
   }, 50);
 }
-function textFilter(state, facet, text) {
+function textFilter(state, facet, text2) {
   for (let filter2 of state.facet(facet))
-    text = filter2(text, state);
-  return text;
+    text2 = filter2(text2, state);
+  return text2;
 }
 function doPaste(view, input2) {
   input2 = textFilter(view.state, clipboardInputFilter, input2);
-  let { state } = view, changes, i = 1, text = state.toText(input2);
-  let byLine = text.lines == state.selection.ranges.length;
-  let linewise = lastLinewiseCopy != null && state.selection.ranges.every((r) => r.empty) && lastLinewiseCopy == text.toString();
+  let { state } = view, changes, i = 1, text2 = state.toText(input2);
+  let byLine = text2.lines == state.selection.ranges.length;
+  let linewise = lastLinewiseCopy != null && state.selection.ranges.every((r) => r.empty) && lastLinewiseCopy == text2.toString();
   if (linewise) {
     let lastLine = -1;
     changes = state.changeByRange((range) => {
@@ -48303,7 +48563,7 @@ function doPaste(view, input2) {
       if (line.from == lastLine)
         return { range };
       lastLine = line.from;
-      let insert2 = state.toText((byLine ? text.line(i++).text : input2) + state.lineBreak);
+      let insert2 = state.toText((byLine ? text2.line(i++).text : input2) + state.lineBreak);
       return {
         changes: { from: line.from, insert: insert2 },
         range: EditorSelection.cursor(range.from + insert2.length)
@@ -48311,14 +48571,14 @@ function doPaste(view, input2) {
     });
   } else if (byLine) {
     changes = state.changeByRange((range) => {
-      let line = text.line(i++);
+      let line = text2.line(i++);
       return {
         changes: { from: range.from, to: range.to, insert: line.text },
         range: EditorSelection.cursor(range.from + line.length)
       };
     });
   } else {
-    changes = state.replaceSelection(text);
+    changes = state.replaceSelection(text2);
   }
   view.dispatch(changes, {
     userEvent: "input.paste",
@@ -48414,10 +48674,10 @@ var lastMouseDownTime = 0;
 function getClickType(event) {
   if (!BadMouseDetail)
     return event.detail;
-  let last2 = lastMouseDown, lastTime = lastMouseDownTime;
+  let last3 = lastMouseDown, lastTime = lastMouseDownTime;
   lastMouseDown = event;
   lastMouseDownTime = Date.now();
-  return lastMouseDownCount = !last2 || lastTime > Date.now() - 400 && Math.abs(last2.clientX - event.clientX) < 2 && Math.abs(last2.clientY - event.clientY) < 2 ? (lastMouseDownCount + 1) % 3 : 1;
+  return lastMouseDownCount = !last3 || lastTime > Date.now() - 400 && Math.abs(last3.clientX - event.clientX) < 2 && Math.abs(last3.clientY - event.clientY) < 2 ? (lastMouseDownCount + 1) % 3 : 1;
 }
 function basicMouseSelection(view, event) {
   let start2 = queryPos(view, event), type = getClickType(event);
@@ -48480,14 +48740,14 @@ handlers.dragend = (view) => {
   view.inputState.draggedContent = null;
   return false;
 };
-function dropText(view, event, text, direct) {
-  text = textFilter(view.state, clipboardInputFilter, text);
-  if (!text)
+function dropText(view, event, text2, direct) {
+  text2 = textFilter(view.state, clipboardInputFilter, text2);
+  if (!text2)
     return;
   let dropPos = view.posAtCoords({ x: event.clientX, y: event.clientY }, false);
   let { draggedContent } = view.inputState;
   let del = direct && draggedContent && dragMovesSelection(view, event) ? { from: draggedContent.from, to: draggedContent.to } : null;
-  let ins = { from: dropPos, insert: text };
+  let ins = { from: dropPos, insert: text2 };
   let changes = view.state.changes(del ? [del, ins] : ins);
   view.focus();
   view.dispatch({
@@ -48504,26 +48764,26 @@ handlers.drop = (view, event) => {
     return true;
   let files = event.dataTransfer.files;
   if (files && files.length) {
-    let text = Array(files.length), read2 = 0;
+    let text2 = Array(files.length), read2 = 0;
     let finishFile = () => {
       if (++read2 == files.length)
-        dropText(view, event, text.filter((s) => s != null).join(view.state.lineBreak), false);
+        dropText(view, event, text2.filter((s) => s != null).join(view.state.lineBreak), false);
     };
     for (let i = 0; i < files.length; i++) {
       let reader = new FileReader();
       reader.onerror = finishFile;
       reader.onload = () => {
         if (!/[\x00-\x08\x0e-\x1f]{2}/.test(reader.result))
-          text[i] = reader.result;
+          text2[i] = reader.result;
         finishFile();
       };
       reader.readAsText(files[i]);
     }
     return true;
   } else {
-    let text = event.dataTransfer.getData("Text");
-    if (text) {
-      dropText(view, event, text, true);
+    let text2 = event.dataTransfer.getData("Text");
+    if (text2) {
+      dropText(view, event, text2, true);
       return true;
     }
   }
@@ -48542,15 +48802,15 @@ handlers.paste = (view, event) => {
     return false;
   }
 };
-function captureCopy(view, text) {
+function captureCopy(view, text2) {
   let parent = view.dom.parentNode;
   if (!parent)
     return;
   let target = parent.appendChild(document.createElement("textarea"));
   target.style.cssText = "position: fixed; left: -10000px; top: 10px";
-  target.value = text;
+  target.value = text2;
   target.focus();
-  target.selectionEnd = text.length;
+  target.selectionEnd = text2.length;
   target.selectionStart = 0;
   setTimeout(() => {
     target.remove();
@@ -48580,10 +48840,10 @@ function copiedRange(state) {
 }
 var lastLinewiseCopy = null;
 handlers.copy = handlers.cut = (view, event) => {
-  let { text, ranges, linewise } = copiedRange(view.state);
-  if (!text && !linewise)
+  let { text: text2, ranges, linewise } = copiedRange(view.state);
+  if (!text2 && !linewise)
     return false;
-  lastLinewiseCopy = linewise ? text : null;
+  lastLinewiseCopy = linewise ? text2 : null;
   if (event.type == "cut" && !view.state.readOnly)
     view.dispatch({
       changes: ranges,
@@ -48593,10 +48853,10 @@ handlers.copy = handlers.cut = (view, event) => {
   let data = brokenClipboardAPI ? null : event.clipboardData;
   if (data) {
     data.clearData();
-    data.setData("text/plain", text);
+    data.setData("text/plain", text2);
     return true;
   } else {
-    captureCopy(view, text);
+    captureCopy(view, text2);
     return false;
   }
 };
@@ -48668,11 +48928,11 @@ observers.contextmenu = (view) => {
 handlers.beforeinput = (view, event) => {
   var _a2, _b;
   if (event.inputType == "insertReplacementText" && view.observer.editContext) {
-    let text = (_a2 = event.dataTransfer) === null || _a2 === void 0 ? void 0 : _a2.getData("text/plain"), ranges = event.getTargetRanges();
-    if (text && ranges.length) {
+    let text2 = (_a2 = event.dataTransfer) === null || _a2 === void 0 ? void 0 : _a2.getData("text/plain"), ranges = event.getTargetRanges();
+    if (text2 && ranges.length) {
       let r = ranges[0];
       let from2 = view.posAtDOM(r.startContainer, r.startOffset), to = view.posAtDOM(r.endContainer, r.endOffset);
-      applyDOMChangeInner(view, { from: from2, to, insert: view.state.toText(text) }, null);
+      applyDOMChangeInner(view, { from: from2, to, insert: view.state.toText(text2) }, null);
       return true;
     }
   }
@@ -48838,11 +49098,11 @@ var BlockInfo = class _BlockInfo {
     return new _BlockInfo(this.from, this.length + other.length, this.top, this.height + other.height, content2);
   }
 };
-var QueryType = /* @__PURE__ */ function(QueryType3) {
-  QueryType3[QueryType3["ByPos"] = 0] = "ByPos";
-  QueryType3[QueryType3["ByHeight"] = 1] = "ByHeight";
-  QueryType3[QueryType3["ByPosNoHeight"] = 2] = "ByPosNoHeight";
-  return QueryType3;
+var QueryType = /* @__PURE__ */ function(QueryType2) {
+  QueryType2[QueryType2["ByPos"] = 0] = "ByPos";
+  QueryType2[QueryType2["ByHeight"] = 1] = "ByHeight";
+  QueryType2[QueryType2["ByPosNoHeight"] = 2] = "ByPosNoHeight";
+  return QueryType2;
 }(QueryType || (QueryType = {}));
 var Epsilon = 1e-3;
 var HeightMap = class _HeightMap {
@@ -49084,9 +49344,9 @@ var HeightMapGap = class _HeightMapGap extends HeightMap {
   replace(from2, to, nodes) {
     let after = this.length - to;
     if (after > 0) {
-      let last2 = nodes[nodes.length - 1];
-      if (last2 instanceof _HeightMapGap)
-        nodes[nodes.length - 1] = new _HeightMapGap(last2.length + after);
+      let last3 = nodes[nodes.length - 1];
+      if (last3 instanceof _HeightMapGap)
+        nodes[nodes.length - 1] = new _HeightMapGap(last3.length + after);
       else
         nodes.push(null, new _HeightMapGap(after - 1));
     }
@@ -49280,9 +49540,9 @@ var NodeBuilder = class _NodeBuilder {
   }
   span(_from, to) {
     if (this.lineStart > -1) {
-      let end2 = Math.min(to, this.lineEnd), last2 = this.nodes[this.nodes.length - 1];
-      if (last2 instanceof HeightMapText)
-        last2.length += end2 - this.pos;
+      let end2 = Math.min(to, this.lineEnd), last3 = this.nodes[this.nodes.length - 1];
+      if (last3 instanceof HeightMapText)
+        last3.length += end2 - this.pos;
       else if (end2 > this.pos || !this.isCovered)
         this.nodes.push(new HeightMapText(end2 - this.pos, -1));
       this.writtenTo = end2;
@@ -49335,9 +49595,9 @@ var NodeBuilder = class _NodeBuilder {
   }
   ensureLine() {
     this.enterLine();
-    let last2 = this.nodes.length ? this.nodes[this.nodes.length - 1] : null;
-    if (last2 instanceof HeightMapText)
-      return last2;
+    let last3 = this.nodes.length ? this.nodes[this.nodes.length - 1] : null;
+    if (last3 instanceof HeightMapText)
+      return last3;
     let line = new HeightMapText(0, -1);
     this.nodes.push(line);
     return line;
@@ -49361,10 +49621,10 @@ var NodeBuilder = class _NodeBuilder {
     this.writtenTo = this.pos = this.pos + length;
   }
   finish(from2) {
-    let last2 = this.nodes.length == 0 ? null : this.nodes[this.nodes.length - 1];
-    if (this.lineStart > -1 && !(last2 instanceof HeightMapText) && !this.isCovered)
+    let last3 = this.nodes.length == 0 ? null : this.nodes[this.nodes.length - 1];
+    if (this.lineStart > -1 && !(last3 instanceof HeightMapText) && !this.isCovered)
       this.nodes.push(new HeightMapText(0, -1));
-    else if (this.writtenTo < this.pos || last2 == null)
+    else if (this.writtenTo < this.pos || last3 == null)
       this.nodes.push(this.blankContent(this.writtenTo, this.pos));
     let pos = from2;
     for (let node of this.nodes) {
@@ -50811,10 +51071,10 @@ var EditContextManager = class {
     };
     this.handlers.textformatupdate = (e) => {
       let deco = [];
-      for (let format of e.getTextFormats()) {
-        let lineStyle = format.underlineStyle, thickness = format.underlineThickness;
+      for (let format2 of e.getTextFormats()) {
+        let lineStyle = format2.underlineStyle, thickness = format2.underlineThickness;
         if (lineStyle != "None" && thickness != "None") {
-          let from2 = this.toEditorPos(format.rangeStart), to = this.toEditorPos(format.rangeEnd);
+          let from2 = this.toEditorPos(format2.rangeStart), to = this.toEditorPos(format2.rangeEnd);
           if (from2 < to) {
             let style = `text-decoration: underline ${lineStyle == "Dashed" ? "dashed " : lineStyle == "Squiggle" ? "wavy " : ""}${thickness == "Thin" ? 1 : 2}px`;
             deco.push(Decoration.mark({ attributes: { style } }).range(from2, to));
@@ -51898,12 +52158,12 @@ var CachedOrder = class _CachedOrder {
     this.fresh = fresh;
     this.order = order2;
   }
-  static update(cache, changes) {
-    if (changes.empty && !cache.some((c) => c.fresh))
-      return cache;
-    let result = [], lastDir = cache.length ? cache[cache.length - 1].dir : Direction.LTR;
-    for (let i = Math.max(0, cache.length - 10); i < cache.length; i++) {
-      let entry = cache[i];
+  static update(cache2, changes) {
+    if (changes.empty && !cache2.some((c) => c.fresh))
+      return cache2;
+    let result = [], lastDir = cache2.length ? cache2[cache2.length - 1].dir : Direction.LTR;
+    for (let i = Math.max(0, cache2.length - 10); i < cache2.length; i++) {
+      let entry = cache2[i];
       if (entry.dir == lastDir && !changes.touchesRange(entry.from, entry.to))
         result.push(new _CachedOrder(changes.mapPos(entry.from, 1), changes.mapPos(entry.to, -1), entry.dir, entry.isolates, false, entry.order));
     }
@@ -51978,22 +52238,19 @@ function getKeymap(state) {
     Keymaps.set(bindings, map2 = buildKeymap(bindings.reduce((a, b) => a.concat(b), [])));
   return map2;
 }
-function runScopeHandlers(view, event, scope) {
-  return runHandlers(getKeymap(view.state), event, view, scope);
-}
 var storedPrefix = null;
 var PrefixTimeout = 4e3;
 function buildKeymap(bindings, platform = currentPlatform) {
   let bound = /* @__PURE__ */ Object.create(null);
   let isPrefix = /* @__PURE__ */ Object.create(null);
-  let checkPrefix = (name2, is) => {
+  let checkPrefix = (name2, is2) => {
     let current = isPrefix[name2];
     if (current == null)
-      isPrefix[name2] = is;
-    else if (current != is)
+      isPrefix[name2] = is2;
+    else if (current != is2)
       throw new Error("Key binding " + name2 + " is used both as a regular binding and as a multi-stroke prefix");
   };
-  let add2 = (scope, key, command2, preventDefault, stopPropagation) => {
+  let add = (scope, key, command2, preventDefault, stopPropagation) => {
     var _a2, _b;
     let scopeObj = bound[scope] || (bound[scope] = /* @__PURE__ */ Object.create(null));
     let parts = key.split(/ (?!$)/).map((k) => normalizeKeyName(k, platform));
@@ -52043,9 +52300,9 @@ function buildKeymap(bindings, platform = currentPlatform) {
     if (!name2)
       continue;
     for (let scope of scopes) {
-      add2(scope, name2, b.run, b.preventDefault, b.stopPropagation);
+      add(scope, name2, b.run, b.preventDefault, b.stopPropagation);
       if (b.shift)
-        add2(scope, "Shift-" + name2, b.shift, b.preventDefault, b.stopPropagation);
+        add(scope, "Shift-" + name2, b.shift, b.preventDefault, b.stopPropagation);
     }
   }
   return bound;
@@ -52420,97 +52677,6 @@ var hideNativeSelection = /* @__PURE__ */ Prec.highest(/* @__PURE__ */ EditorVie
     }
   }
 }));
-var setDropCursorPos = /* @__PURE__ */ StateEffect.define({
-  map(pos, mapping) {
-    return pos == null ? null : mapping.mapPos(pos);
-  }
-});
-var dropCursorPos = /* @__PURE__ */ StateField.define({
-  create() {
-    return null;
-  },
-  update(pos, tr) {
-    if (pos != null)
-      pos = tr.changes.mapPos(pos);
-    return tr.effects.reduce((pos2, e) => e.is(setDropCursorPos) ? e.value : pos2, pos);
-  }
-});
-var drawDropCursor = /* @__PURE__ */ ViewPlugin.fromClass(class {
-  constructor(view) {
-    this.view = view;
-    this.cursor = null;
-    this.measureReq = { read: this.readPos.bind(this), write: this.drawCursor.bind(this) };
-  }
-  update(update) {
-    var _a2;
-    let cursorPos = update.state.field(dropCursorPos);
-    if (cursorPos == null) {
-      if (this.cursor != null) {
-        (_a2 = this.cursor) === null || _a2 === void 0 ? void 0 : _a2.remove();
-        this.cursor = null;
-      }
-    } else {
-      if (!this.cursor) {
-        this.cursor = this.view.scrollDOM.appendChild(document.createElement("div"));
-        this.cursor.className = "cm-dropCursor";
-      }
-      if (update.startState.field(dropCursorPos) != cursorPos || update.docChanged || update.geometryChanged)
-        this.view.requestMeasure(this.measureReq);
-    }
-  }
-  readPos() {
-    let { view } = this;
-    let pos = view.state.field(dropCursorPos);
-    let rect = pos != null && view.coordsAtPos(pos);
-    if (!rect)
-      return null;
-    let outer = view.scrollDOM.getBoundingClientRect();
-    return {
-      left: rect.left - outer.left + view.scrollDOM.scrollLeft * view.scaleX,
-      top: rect.top - outer.top + view.scrollDOM.scrollTop * view.scaleY,
-      height: rect.bottom - rect.top
-    };
-  }
-  drawCursor(pos) {
-    if (this.cursor) {
-      let { scaleX, scaleY } = this.view;
-      if (pos) {
-        this.cursor.style.left = pos.left / scaleX + "px";
-        this.cursor.style.top = pos.top / scaleY + "px";
-        this.cursor.style.height = pos.height / scaleY + "px";
-      } else {
-        this.cursor.style.left = "-100000px";
-      }
-    }
-  }
-  destroy() {
-    if (this.cursor)
-      this.cursor.remove();
-  }
-  setDropPos(pos) {
-    if (this.view.state.field(dropCursorPos) != pos)
-      this.view.dispatch({ effects: setDropCursorPos.of(pos) });
-  }
-}, {
-  eventObservers: {
-    dragover(event) {
-      this.setDropPos(this.view.posAtCoords({ x: event.clientX, y: event.clientY }));
-    },
-    dragleave(event) {
-      if (event.target == this.view.contentDOM || !this.view.contentDOM.contains(event.relatedTarget))
-        this.setDropPos(null);
-    },
-    dragend() {
-      this.setDropPos(null);
-    },
-    drop() {
-      this.setDropPos(null);
-    }
-  }
-});
-function dropCursor() {
-  return [dropCursorPos, drawDropCursor];
-}
 function iterMatches(doc2, re, from2, to, f) {
   re.lastIndex = 0;
   for (let cursor = doc2.iterRange(from2, to), pos = from2, m; !cursor.next().done; pos += cursor.value.length) {
@@ -52544,15 +52710,15 @@ var MatchDecorator = class {
       throw new RangeError("The regular expression given to MatchDecorator should have its 'g' flag set");
     this.regexp = regexp;
     if (decorate) {
-      this.addMatch = (match, view, from2, add2) => decorate(add2, from2, from2 + match[0].length, match, view);
+      this.addMatch = (match2, view, from2, add) => decorate(add, from2, from2 + match2[0].length, match2, view);
     } else if (typeof decoration == "function") {
-      this.addMatch = (match, view, from2, add2) => {
-        let deco = decoration(match, view, from2);
+      this.addMatch = (match2, view, from2, add) => {
+        let deco = decoration(match2, view, from2);
         if (deco)
-          add2(from2, from2 + match[0].length, deco);
+          add(from2, from2 + match2[0].length, deco);
       };
     } else if (decoration) {
-      this.addMatch = (match, _view, from2, add2) => add2(from2, from2 + match[0].length, decoration);
+      this.addMatch = (match2, _view, from2, add) => add(from2, from2 + match2[0].length, decoration);
     } else {
       throw new RangeError("Either 'decorate' or 'decoration' should be provided to MatchDecorator");
     }
@@ -52565,9 +52731,9 @@ var MatchDecorator = class {
   plugin.
   */
   createDeco(view) {
-    let build = new RangeSetBuilder(), add2 = build.add.bind(build);
+    let build = new RangeSetBuilder(), add = build.add.bind(build);
     for (let { from: from2, to } of matchRanges(view, this.maxLength))
-      iterMatches(view.state.doc, this.regexp, from2, to, (from3, m) => this.addMatch(m, view, from3, add2));
+      iterMatches(view.state.doc, this.regexp, from2, to, (from3, m) => this.addMatch(m, view, from3, add));
     return build.finish();
   }
   /**
@@ -52609,13 +52775,13 @@ var MatchDecorator = class {
             }
         }
         let ranges = [], m;
-        let add2 = (from3, to2, deco2) => ranges.push(deco2.range(from3, to2));
+        let add = (from3, to2, deco2) => ranges.push(deco2.range(from3, to2));
         if (fromLine == toLine) {
           this.regexp.lastIndex = start2 - fromLine.from;
           while ((m = this.regexp.exec(fromLine.text)) && m.index < end2 - fromLine.from)
-            this.addMatch(m, view, m.index + fromLine.from, add2);
+            this.addMatch(m, view, m.index + fromLine.from, add);
         } else {
-          iterMatches(view.state.doc, this.regexp, start2, end2, (from3, m2) => this.addMatch(m2, view, from3, add2));
+          iterMatches(view.state.doc, this.regexp, start2, end2, (from3, m2) => this.addMatch(m2, view, from3, add));
         }
         deco = deco.update({ filterFrom: start2, filterTo: end2, filter: (from3, to2) => from3 < start2 || to2 > end2, add: ranges });
       }
@@ -52794,115 +52960,6 @@ var activeLineHighlighter = /* @__PURE__ */ ViewPlugin.fromClass(class {
 }, {
   decorations: (v) => v.decorations
 });
-var MaxOff = 2e3;
-function rectangleFor(state, a, b) {
-  let startLine = Math.min(a.line, b.line), endLine = Math.max(a.line, b.line);
-  let ranges = [];
-  if (a.off > MaxOff || b.off > MaxOff || a.col < 0 || b.col < 0) {
-    let startOff = Math.min(a.off, b.off), endOff = Math.max(a.off, b.off);
-    for (let i = startLine; i <= endLine; i++) {
-      let line = state.doc.line(i);
-      if (line.length <= endOff)
-        ranges.push(EditorSelection.range(line.from + startOff, line.to + endOff));
-    }
-  } else {
-    let startCol = Math.min(a.col, b.col), endCol = Math.max(a.col, b.col);
-    for (let i = startLine; i <= endLine; i++) {
-      let line = state.doc.line(i);
-      let start2 = findColumn(line.text, startCol, state.tabSize, true);
-      if (start2 < 0) {
-        ranges.push(EditorSelection.cursor(line.to));
-      } else {
-        let end2 = findColumn(line.text, endCol, state.tabSize);
-        ranges.push(EditorSelection.range(line.from + start2, line.from + end2));
-      }
-    }
-  }
-  return ranges;
-}
-function absoluteColumn(view, x) {
-  let ref = view.coordsAtPos(view.viewport.from);
-  return ref ? Math.round(Math.abs((ref.left - x) / view.defaultCharacterWidth)) : -1;
-}
-function getPos(view, event) {
-  let offset2 = view.posAtCoords({ x: event.clientX, y: event.clientY }, false);
-  let line = view.state.doc.lineAt(offset2), off = offset2 - line.from;
-  let col = off > MaxOff ? -1 : off == line.length ? absoluteColumn(view, event.clientX) : countColumn(line.text, view.state.tabSize, offset2 - line.from);
-  return { line: line.number, col, off };
-}
-function rectangleSelectionStyle(view, event) {
-  let start2 = getPos(view, event), startSel = view.state.selection;
-  if (!start2)
-    return null;
-  return {
-    update(update) {
-      if (update.docChanged) {
-        let newStart = update.changes.mapPos(update.startState.doc.line(start2.line).from);
-        let newLine = update.state.doc.lineAt(newStart);
-        start2 = { line: newLine.number, col: start2.col, off: Math.min(start2.off, newLine.length) };
-        startSel = startSel.map(update.changes);
-      }
-    },
-    get(event2, _extend, multiple) {
-      let cur2 = getPos(view, event2);
-      if (!cur2)
-        return startSel;
-      let ranges = rectangleFor(view.state, start2, cur2);
-      if (!ranges.length)
-        return startSel;
-      if (multiple)
-        return EditorSelection.create(ranges.concat(startSel.ranges));
-      else
-        return EditorSelection.create(ranges);
-    }
-  };
-}
-function rectangularSelection(options) {
-  let filter2 = (options === null || options === void 0 ? void 0 : options.eventFilter) || ((e) => e.altKey && e.button == 0);
-  return EditorView.mouseSelectionStyle.of((view, event) => filter2(event) ? rectangleSelectionStyle(view, event) : null);
-}
-var keys = {
-  Alt: [18, (e) => !!e.altKey],
-  Control: [17, (e) => !!e.ctrlKey],
-  Shift: [16, (e) => !!e.shiftKey],
-  Meta: [91, (e) => !!e.metaKey]
-};
-var showCrosshair = { style: "cursor: crosshair" };
-function crosshairCursor(options = {}) {
-  let [code, getter] = keys[options.key || "Alt"];
-  let plugin = ViewPlugin.fromClass(class {
-    constructor(view) {
-      this.view = view;
-      this.isDown = false;
-    }
-    set(isDown) {
-      if (this.isDown != isDown) {
-        this.isDown = isDown;
-        this.view.update([]);
-      }
-    }
-  }, {
-    eventObservers: {
-      keydown(e) {
-        this.set(e.keyCode == code || getter(e));
-      },
-      keyup(e) {
-        if (e.keyCode == code || !getter(e))
-          this.set(false);
-      },
-      mousemove(e) {
-        this.set(getter(e));
-      }
-    }
-  });
-  return [
-    plugin,
-    EditorView.contentAttributes.of((view) => {
-      var _a2;
-      return ((_a2 = view.plugin(plugin)) === null || _a2 === void 0 ? void 0 : _a2.isDown) ? showCrosshair : null;
-    })
-  ];
-}
 var Outside = "-10000px";
 var TooltipViewManager = class {
   constructor(view, facet, createTooltipView, removeTooltipView) {
@@ -53283,277 +53340,6 @@ var noOffset = { x: 0, y: 0 };
 var showTooltip = /* @__PURE__ */ Facet.define({
   enables: [tooltipPlugin, baseTheme]
 });
-var showHoverTooltip = /* @__PURE__ */ Facet.define({
-  combine: (inputs) => inputs.reduce((a, i) => a.concat(i), [])
-});
-var HoverTooltipHost = class _HoverTooltipHost {
-  // Needs to be static so that host tooltip instances always match
-  static create(view) {
-    return new _HoverTooltipHost(view);
-  }
-  constructor(view) {
-    this.view = view;
-    this.mounted = false;
-    this.dom = document.createElement("div");
-    this.dom.classList.add("cm-tooltip-hover");
-    this.manager = new TooltipViewManager(view, showHoverTooltip, (t2, p) => this.createHostedView(t2, p), (t2) => t2.dom.remove());
-  }
-  createHostedView(tooltip, prev) {
-    let hostedView = tooltip.create(this.view);
-    hostedView.dom.classList.add("cm-tooltip-section");
-    this.dom.insertBefore(hostedView.dom, prev ? prev.dom.nextSibling : this.dom.firstChild);
-    if (this.mounted && hostedView.mount)
-      hostedView.mount(this.view);
-    return hostedView;
-  }
-  mount(view) {
-    for (let hostedView of this.manager.tooltipViews) {
-      if (hostedView.mount)
-        hostedView.mount(view);
-    }
-    this.mounted = true;
-  }
-  positioned(space) {
-    for (let hostedView of this.manager.tooltipViews) {
-      if (hostedView.positioned)
-        hostedView.positioned(space);
-    }
-  }
-  update(update) {
-    this.manager.update(update);
-  }
-  destroy() {
-    var _a2;
-    for (let t2 of this.manager.tooltipViews)
-      (_a2 = t2.destroy) === null || _a2 === void 0 ? void 0 : _a2.call(t2);
-  }
-  passProp(name2) {
-    let value = void 0;
-    for (let view of this.manager.tooltipViews) {
-      let given = view[name2];
-      if (given !== void 0) {
-        if (value === void 0)
-          value = given;
-        else if (value !== given)
-          return void 0;
-      }
-    }
-    return value;
-  }
-  get offset() {
-    return this.passProp("offset");
-  }
-  get getCoords() {
-    return this.passProp("getCoords");
-  }
-  get overlap() {
-    return this.passProp("overlap");
-  }
-  get resize() {
-    return this.passProp("resize");
-  }
-};
-var showHoverTooltipHost = /* @__PURE__ */ showTooltip.compute([showHoverTooltip], (state) => {
-  let tooltips = state.facet(showHoverTooltip);
-  if (tooltips.length === 0)
-    return null;
-  return {
-    pos: Math.min(...tooltips.map((t2) => t2.pos)),
-    end: Math.max(...tooltips.map((t2) => {
-      var _a2;
-      return (_a2 = t2.end) !== null && _a2 !== void 0 ? _a2 : t2.pos;
-    })),
-    create: HoverTooltipHost.create,
-    above: tooltips[0].above,
-    arrow: tooltips.some((t2) => t2.arrow)
-  };
-});
-var HoverPlugin = class {
-  constructor(view, source, field, setHover, hoverTime) {
-    this.view = view;
-    this.source = source;
-    this.field = field;
-    this.setHover = setHover;
-    this.hoverTime = hoverTime;
-    this.hoverTimeout = -1;
-    this.restartTimeout = -1;
-    this.pending = null;
-    this.lastMove = { x: 0, y: 0, target: view.dom, time: 0 };
-    this.checkHover = this.checkHover.bind(this);
-    view.dom.addEventListener("mouseleave", this.mouseleave = this.mouseleave.bind(this));
-    view.dom.addEventListener("mousemove", this.mousemove = this.mousemove.bind(this));
-  }
-  update() {
-    if (this.pending) {
-      this.pending = null;
-      clearTimeout(this.restartTimeout);
-      this.restartTimeout = setTimeout(() => this.startHover(), 20);
-    }
-  }
-  get active() {
-    return this.view.state.field(this.field);
-  }
-  checkHover() {
-    this.hoverTimeout = -1;
-    if (this.active.length)
-      return;
-    let hovered = Date.now() - this.lastMove.time;
-    if (hovered < this.hoverTime)
-      this.hoverTimeout = setTimeout(this.checkHover, this.hoverTime - hovered);
-    else
-      this.startHover();
-  }
-  startHover() {
-    clearTimeout(this.restartTimeout);
-    let { view, lastMove } = this;
-    let desc = view.docView.nearest(lastMove.target);
-    if (!desc)
-      return;
-    let pos, side = 1;
-    if (desc instanceof WidgetView) {
-      pos = desc.posAtStart;
-    } else {
-      pos = view.posAtCoords(lastMove);
-      if (pos == null)
-        return;
-      let posCoords = view.coordsAtPos(pos);
-      if (!posCoords || lastMove.y < posCoords.top || lastMove.y > posCoords.bottom || lastMove.x < posCoords.left - view.defaultCharacterWidth || lastMove.x > posCoords.right + view.defaultCharacterWidth)
-        return;
-      let bidi = view.bidiSpans(view.state.doc.lineAt(pos)).find((s) => s.from <= pos && s.to >= pos);
-      let rtl = bidi && bidi.dir == Direction.RTL ? -1 : 1;
-      side = lastMove.x < posCoords.left ? -rtl : rtl;
-    }
-    let open = this.source(view, pos, side);
-    if (open === null || open === void 0 ? void 0 : open.then) {
-      let pending = this.pending = { pos };
-      open.then((result) => {
-        if (this.pending == pending) {
-          this.pending = null;
-          if (result && !(Array.isArray(result) && !result.length))
-            view.dispatch({ effects: this.setHover.of(Array.isArray(result) ? result : [result]) });
-        }
-      }, (e) => logException(view.state, e, "hover tooltip"));
-    } else if (open && !(Array.isArray(open) && !open.length)) {
-      view.dispatch({ effects: this.setHover.of(Array.isArray(open) ? open : [open]) });
-    }
-  }
-  get tooltip() {
-    let plugin = this.view.plugin(tooltipPlugin);
-    let index = plugin ? plugin.manager.tooltips.findIndex((t2) => t2.create == HoverTooltipHost.create) : -1;
-    return index > -1 ? plugin.manager.tooltipViews[index] : null;
-  }
-  mousemove(event) {
-    var _a2, _b;
-    this.lastMove = { x: event.clientX, y: event.clientY, target: event.target, time: Date.now() };
-    if (this.hoverTimeout < 0)
-      this.hoverTimeout = setTimeout(this.checkHover, this.hoverTime);
-    let { active, tooltip } = this;
-    if (active.length && tooltip && !isInTooltip(tooltip.dom, event) || this.pending) {
-      let { pos } = active[0] || this.pending, end2 = (_b = (_a2 = active[0]) === null || _a2 === void 0 ? void 0 : _a2.end) !== null && _b !== void 0 ? _b : pos;
-      if (pos == end2 ? this.view.posAtCoords(this.lastMove) != pos : !isOverRange(this.view, pos, end2, event.clientX, event.clientY)) {
-        this.view.dispatch({ effects: this.setHover.of([]) });
-        this.pending = null;
-      }
-    }
-  }
-  mouseleave(event) {
-    clearTimeout(this.hoverTimeout);
-    this.hoverTimeout = -1;
-    let { active } = this;
-    if (active.length) {
-      let { tooltip } = this;
-      let inTooltip = tooltip && tooltip.dom.contains(event.relatedTarget);
-      if (!inTooltip)
-        this.view.dispatch({ effects: this.setHover.of([]) });
-      else
-        this.watchTooltipLeave(tooltip.dom);
-    }
-  }
-  watchTooltipLeave(tooltip) {
-    let watch = (event) => {
-      tooltip.removeEventListener("mouseleave", watch);
-      if (this.active.length && !this.view.dom.contains(event.relatedTarget))
-        this.view.dispatch({ effects: this.setHover.of([]) });
-    };
-    tooltip.addEventListener("mouseleave", watch);
-  }
-  destroy() {
-    clearTimeout(this.hoverTimeout);
-    this.view.dom.removeEventListener("mouseleave", this.mouseleave);
-    this.view.dom.removeEventListener("mousemove", this.mousemove);
-  }
-};
-var tooltipMargin = 4;
-function isInTooltip(tooltip, event) {
-  let { left: left2, right: right2, top: top3, bottom: bottom2 } = tooltip.getBoundingClientRect(), arrow2;
-  if (arrow2 = tooltip.querySelector(".cm-tooltip-arrow")) {
-    let arrowRect = arrow2.getBoundingClientRect();
-    top3 = Math.min(arrowRect.top, top3);
-    bottom2 = Math.max(arrowRect.bottom, bottom2);
-  }
-  return event.clientX >= left2 - tooltipMargin && event.clientX <= right2 + tooltipMargin && event.clientY >= top3 - tooltipMargin && event.clientY <= bottom2 + tooltipMargin;
-}
-function isOverRange(view, from2, to, x, y, margin) {
-  let rect = view.scrollDOM.getBoundingClientRect();
-  let docBottom = view.documentTop + view.documentPadding.top + view.contentHeight;
-  if (rect.left > x || rect.right < x || rect.top > y || Math.min(rect.bottom, docBottom) < y)
-    return false;
-  let pos = view.posAtCoords({ x, y }, false);
-  return pos >= from2 && pos <= to;
-}
-function hoverTooltip(source, options = {}) {
-  let setHover = StateEffect.define();
-  let hoverState = StateField.define({
-    create() {
-      return [];
-    },
-    update(value, tr) {
-      if (value.length) {
-        if (options.hideOnChange && (tr.docChanged || tr.selection))
-          value = [];
-        else if (options.hideOn)
-          value = value.filter((v) => !options.hideOn(tr, v));
-        if (tr.docChanged) {
-          let mapped = [];
-          for (let tooltip of value) {
-            let newPos = tr.changes.mapPos(tooltip.pos, -1, MapMode.TrackDel);
-            if (newPos != null) {
-              let copy = Object.assign(/* @__PURE__ */ Object.create(null), tooltip);
-              copy.pos = newPos;
-              if (copy.end != null)
-                copy.end = tr.changes.mapPos(copy.end);
-              mapped.push(copy);
-            }
-          }
-          value = mapped;
-        }
-      }
-      for (let effect5 of tr.effects) {
-        if (effect5.is(setHover))
-          value = effect5.value;
-        if (effect5.is(closeHoverTooltipEffect))
-          value = [];
-      }
-      return value;
-    },
-    provide: (f) => showHoverTooltip.from(f)
-  });
-  return {
-    active: hoverState,
-    extension: [
-      hoverState,
-      ViewPlugin.define((view) => new HoverPlugin(
-        view,
-        source,
-        hoverState,
-        setHover,
-        options.hoverTime || 300
-        /* Hover.Time */
-      )),
-      showHoverTooltipHost
-    ]
-  };
-}
 function getTooltip(view, tooltip) {
   let plugin = view.plugin(tooltipPlugin);
   if (!plugin)
@@ -53561,159 +53347,6 @@ function getTooltip(view, tooltip) {
   let found = plugin.manager.tooltips.indexOf(tooltip);
   return found < 0 ? null : plugin.manager.tooltipViews[found];
 }
-var closeHoverTooltipEffect = /* @__PURE__ */ StateEffect.define();
-var panelConfig = /* @__PURE__ */ Facet.define({
-  combine(configs) {
-    let topContainer, bottomContainer;
-    for (let c of configs) {
-      topContainer = topContainer || c.topContainer;
-      bottomContainer = bottomContainer || c.bottomContainer;
-    }
-    return { topContainer, bottomContainer };
-  }
-});
-function getPanel(view, panel) {
-  let plugin = view.plugin(panelPlugin);
-  let index = plugin ? plugin.specs.indexOf(panel) : -1;
-  return index > -1 ? plugin.panels[index] : null;
-}
-var panelPlugin = /* @__PURE__ */ ViewPlugin.fromClass(class {
-  constructor(view) {
-    this.input = view.state.facet(showPanel);
-    this.specs = this.input.filter((s) => s);
-    this.panels = this.specs.map((spec) => spec(view));
-    let conf = view.state.facet(panelConfig);
-    this.top = new PanelGroup(view, true, conf.topContainer);
-    this.bottom = new PanelGroup(view, false, conf.bottomContainer);
-    this.top.sync(this.panels.filter((p) => p.top));
-    this.bottom.sync(this.panels.filter((p) => !p.top));
-    for (let p of this.panels) {
-      p.dom.classList.add("cm-panel");
-      if (p.mount)
-        p.mount();
-    }
-  }
-  update(update) {
-    let conf = update.state.facet(panelConfig);
-    if (this.top.container != conf.topContainer) {
-      this.top.sync([]);
-      this.top = new PanelGroup(update.view, true, conf.topContainer);
-    }
-    if (this.bottom.container != conf.bottomContainer) {
-      this.bottom.sync([]);
-      this.bottom = new PanelGroup(update.view, false, conf.bottomContainer);
-    }
-    this.top.syncClasses();
-    this.bottom.syncClasses();
-    let input2 = update.state.facet(showPanel);
-    if (input2 != this.input) {
-      let specs = input2.filter((x) => x);
-      let panels = [], top3 = [], bottom2 = [], mount = [];
-      for (let spec of specs) {
-        let known = this.specs.indexOf(spec), panel;
-        if (known < 0) {
-          panel = spec(update.view);
-          mount.push(panel);
-        } else {
-          panel = this.panels[known];
-          if (panel.update)
-            panel.update(update);
-        }
-        panels.push(panel);
-        (panel.top ? top3 : bottom2).push(panel);
-      }
-      this.specs = specs;
-      this.panels = panels;
-      this.top.sync(top3);
-      this.bottom.sync(bottom2);
-      for (let p of mount) {
-        p.dom.classList.add("cm-panel");
-        if (p.mount)
-          p.mount();
-      }
-    } else {
-      for (let p of this.panels)
-        if (p.update)
-          p.update(update);
-    }
-  }
-  destroy() {
-    this.top.sync([]);
-    this.bottom.sync([]);
-  }
-}, {
-  provide: (plugin) => EditorView.scrollMargins.of((view) => {
-    let value = view.plugin(plugin);
-    return value && { top: value.top.scrollMargin(), bottom: value.bottom.scrollMargin() };
-  })
-});
-var PanelGroup = class {
-  constructor(view, top3, container) {
-    this.view = view;
-    this.top = top3;
-    this.container = container;
-    this.dom = void 0;
-    this.classes = "";
-    this.panels = [];
-    this.syncClasses();
-  }
-  sync(panels) {
-    for (let p of this.panels)
-      if (p.destroy && panels.indexOf(p) < 0)
-        p.destroy();
-    this.panels = panels;
-    this.syncDOM();
-  }
-  syncDOM() {
-    if (this.panels.length == 0) {
-      if (this.dom) {
-        this.dom.remove();
-        this.dom = void 0;
-      }
-      return;
-    }
-    if (!this.dom) {
-      this.dom = document.createElement("div");
-      this.dom.className = this.top ? "cm-panels cm-panels-top" : "cm-panels cm-panels-bottom";
-      this.dom.style[this.top ? "top" : "bottom"] = "0";
-      let parent = this.container || this.view.dom;
-      parent.insertBefore(this.dom, this.top ? parent.firstChild : null);
-    }
-    let curDOM = this.dom.firstChild;
-    for (let panel of this.panels) {
-      if (panel.dom.parentNode == this.dom) {
-        while (curDOM != panel.dom)
-          curDOM = rm(curDOM);
-        curDOM = curDOM.nextSibling;
-      } else {
-        this.dom.insertBefore(panel.dom, curDOM);
-      }
-    }
-    while (curDOM)
-      curDOM = rm(curDOM);
-  }
-  scrollMargin() {
-    return !this.dom || this.container ? 0 : Math.max(0, this.top ? this.dom.getBoundingClientRect().bottom - Math.max(0, this.view.scrollDOM.getBoundingClientRect().top) : Math.min(innerHeight, this.view.scrollDOM.getBoundingClientRect().bottom) - this.dom.getBoundingClientRect().top);
-  }
-  syncClasses() {
-    if (!this.container || this.classes == this.view.themeClasses)
-      return;
-    for (let cls of this.classes.split(" "))
-      if (cls)
-        this.container.classList.remove(cls);
-    for (let cls of (this.classes = this.view.themeClasses).split(" "))
-      if (cls)
-        this.container.classList.add(cls);
-  }
-};
-function rm(node) {
-  let next = node.nextSibling;
-  node.remove();
-  return next;
-}
-var showPanel = /* @__PURE__ */ Facet.define({
-  enables: panelPlugin
-});
 var GutterMarker = class extends RangeValue {
   /**
   @internal
@@ -53741,23 +53374,7 @@ GutterMarker.prototype.startSide = GutterMarker.prototype.endSide = -1;
 GutterMarker.prototype.point = true;
 var gutterLineClass = /* @__PURE__ */ Facet.define();
 var gutterWidgetClass = /* @__PURE__ */ Facet.define();
-var defaults = {
-  class: "",
-  renderEmptyElements: false,
-  elementStyle: "",
-  markers: () => RangeSet.empty,
-  lineMarker: () => null,
-  widgetMarker: () => null,
-  lineMarkerChange: null,
-  initialSpacer: null,
-  updateSpacer: null,
-  domEventHandlers: {},
-  side: "before"
-};
 var activeGutters = /* @__PURE__ */ Facet.define();
-function gutter(config3) {
-  return [gutters(), activeGutters.of(__spreadValues(__spreadValues({}, defaults), config3))];
-}
 var unfixGutters = /* @__PURE__ */ Facet.define({
   combine: (values) => values.some((x) => x)
 });
@@ -53971,9 +53588,9 @@ var UpdateContext = class {
   finish() {
     let gutter2 = this.gutter;
     while (gutter2.elements.length > this.i) {
-      let last2 = gutter2.elements.pop();
-      gutter2.dom.removeChild(last2.dom);
-      last2.destroy();
+      let last3 = gutter2.elements.pop();
+      gutter2.dom.removeChild(last3.dom);
+      last3.destroy();
     }
   }
 };
@@ -54103,8 +53720,8 @@ var lineNumberConfig = /* @__PURE__ */ Facet.define({
       domEventHandlers(a, b) {
         let result = Object.assign({}, a);
         for (let event in b) {
-          let exists = result[event], add2 = b[event];
-          result[event] = exists ? (view, line, event2) => exists(view, line, event2) || add2(view, line, event2) : add2;
+          let exists = result[event], add = b[event];
+          result[event] = exists ? (view, line, event2) => exists(view, line, event2) || add(view, line, event2) : add;
         }
         return result;
       }
@@ -54164,30 +53781,10 @@ function lineNumbers(config3 = {}) {
   ];
 }
 function maxLineNumber(lines) {
-  let last2 = 9;
-  while (last2 < lines)
-    last2 = last2 * 10 + 9;
-  return last2;
-}
-var activeLineGutterMarker = /* @__PURE__ */ new class extends GutterMarker {
-  constructor() {
-    super(...arguments);
-    this.elementClass = "cm-activeLineGutter";
-  }
-}();
-var activeLineGutterHighlighter = /* @__PURE__ */ gutterLineClass.compute(["selection"], (state) => {
-  let marks2 = [], last2 = -1;
-  for (let range of state.selection.ranges) {
-    let linePos = state.doc.lineAt(range.head).from;
-    if (linePos > last2) {
-      last2 = linePos;
-      marks2.push(activeLineGutterMarker.range(linePos));
-    }
-  }
-  return RangeSet.of(marks2);
-});
-function highlightActiveLineGutter() {
-  return activeLineGutterHighlighter;
+  let last3 = 9;
+  while (last3 < lines)
+    last3 = last3 * 10 + 9;
+  return last3;
 }
 
 // node_modules/@lezer/highlight/dist/index.js
@@ -54310,10 +53907,10 @@ function styleTags(spec) {
             throw new RangeError("Invalid path: " + part);
           rest = part.slice(pos);
         }
-        let last2 = pieces.length - 1, inner = pieces[last2];
+        let last3 = pieces.length - 1, inner = pieces[last3];
         if (!inner)
           throw new RangeError("Invalid path: " + part);
-        let rule = new Rule(tags2, mode, last2 > 0 ? pieces.slice(0, last2) : null);
+        let rule = new Rule(tags2, mode, last3 > 0 ? pieces.slice(0, last3) : null);
         byName[inner] = rule.sort(byName[inner]);
       }
   }
@@ -54909,14 +54506,14 @@ var Language = class {
   configure your parser to [attach](https://codemirror.net/6/docs/ref/#language.languageDataProp) it
   to the language's outer syntax node.
   */
-  constructor(data, parser2, extraExtensions = [], name2 = "") {
+  constructor(data, parser3, extraExtensions = [], name2 = "") {
     this.data = data;
     this.name = name2;
     if (!EditorState.prototype.hasOwnProperty("tree"))
       Object.defineProperty(EditorState.prototype, "tree", { get() {
         return syntaxTree(this);
       } });
-    this.parser = parser2;
+    this.parser = parser3;
     this.extension = [
       language.of(this),
       EditorState.languageData.of((state, pos, side) => {
@@ -55003,9 +54600,9 @@ function topNodeAt(state, pos, side) {
   return tree;
 }
 var LRLanguage = class _LRLanguage extends Language {
-  constructor(data, parser2, name2) {
-    super(data, parser2, [], name2);
-    this.parser = parser2;
+  constructor(data, parser3, name2) {
+    super(data, parser3, [], name2);
+    this.parser = parser3;
   }
   /**
   Define a language from a parser.
@@ -55066,8 +54663,8 @@ var DocInput = class {
 };
 var currentContext = null;
 var ParseContext = class _ParseContext {
-  constructor(parser2, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
-    this.parser = parser2;
+  constructor(parser3, state, fragments = [], tree, treeLen, viewport2, skipped, scheduleOn) {
+    this.parser = parser3;
     this.state = state;
     this.fragments = fragments;
     this.tree = tree;
@@ -55081,8 +54678,8 @@ var ParseContext = class _ParseContext {
   /**
   @internal
   */
-  static create(parser2, state, viewport2) {
-    return new _ParseContext(parser2, state, [], Tree.empty, 0, viewport2, [], null);
+  static create(parser3, state, viewport2) {
+    return new _ParseContext(parser3, state, [], Tree.empty, 0, viewport2, [], null);
   }
   startParse() {
     return this.parser.startParse(new DocInput(this.state.doc), this.fragments);
@@ -55230,7 +54827,7 @@ var ParseContext = class _ParseContext {
     return new class extends Parser {
       createParse(input2, fragments, ranges) {
         let from2 = ranges[0].from, to = ranges[ranges.length - 1].to;
-        let parser2 = {
+        let parser3 = {
           parsedPos: from2,
           advance() {
             let cx = currentContext;
@@ -55247,7 +54844,7 @@ var ParseContext = class _ParseContext {
           stopAt() {
           }
         };
-        return parser2;
+        return parser3;
       }
     }();
   }
@@ -55501,18 +55098,18 @@ var IndentContext = class {
   textAfterPos(pos, bias = 1) {
     if (this.options.simulateDoubleBreak && pos == this.options.simulateBreak)
       return "";
-    let { text, from: from2 } = this.lineAt(pos, bias);
-    return text.slice(pos - from2, Math.min(text.length, pos + 100 - from2));
+    let { text: text2, from: from2 } = this.lineAt(pos, bias);
+    return text2.slice(pos - from2, Math.min(text2.length, pos + 100 - from2));
   }
   /**
   Find the column for the given position.
   */
   column(pos, bias = 1) {
-    let { text, from: from2 } = this.lineAt(pos, bias);
-    let result = this.countColumn(text, pos - from2);
+    let { text: text2, from: from2 } = this.lineAt(pos, bias);
+    let result = this.countColumn(text2, pos - from2);
     let override = this.options.overrideIndentation ? this.options.overrideIndentation(from2) : -1;
     if (override > -1)
-      result += override - this.countColumn(text, text.search(/\S|$/));
+      result += override - this.countColumn(text2, text2.search(/\S|$/));
     return result;
   }
   /**
@@ -55526,14 +55123,14 @@ var IndentContext = class {
   Find the indentation column of the line at the given point.
   */
   lineIndent(pos, bias = 1) {
-    let { text, from: from2 } = this.lineAt(pos, bias);
+    let { text: text2, from: from2 } = this.lineAt(pos, bias);
     let override = this.options.overrideIndentation;
     if (override) {
       let overriden = override(from2);
       if (overriden > -1)
         return overriden;
     }
-    return this.countColumn(text, text.search(/\S|$/));
+    return this.countColumn(text2, text2.search(/\S|$/));
   }
   /**
   Returns the [simulated line
@@ -55549,11 +55146,11 @@ function syntaxIndentation(cx, ast, pos) {
   let stack = ast.resolveStack(pos);
   let inner = ast.resolveInner(pos, -1).resolve(pos, 0).enterUnfinishedNodesBefore(pos);
   if (inner != stack.node) {
-    let add2 = [];
+    let add = [];
     for (let cur2 = inner; cur2 && !(cur2.from < stack.node.from || cur2.to > stack.node.to || cur2.from == stack.node.from && cur2.type == stack.node.type); cur2 = cur2.parent)
-      add2.push(cur2);
-    for (let i = add2.length - 1; i >= 0; i--)
-      stack = { node: add2[i], next: stack };
+      add.push(cur2);
+    for (let i = add.length - 1; i >= 0; i--)
+      stack = { node: add[i], next: stack };
   }
   return indentFor(stack, cx, pos);
 }
@@ -55574,8 +55171,8 @@ function indentStrategy(tree) {
     return strategy;
   let first = tree.firstChild, close;
   if (first && (close = first.type.prop(NodeProp.closedBy))) {
-    let last2 = tree.lastChild, closed = last2 && close.indexOf(last2.name) > -1;
-    return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last2.from : void 0);
+    let last3 = tree.lastChild, closed = last3 && close.indexOf(last3.name) > -1;
+    return (cx) => delimitedStrategy(cx, true, 1, void 0, closed && !ignoreClosed(cx) ? last3.from : void 0);
   }
   return tree.parent == null ? topIndent : null;
 }
@@ -55651,7 +55248,7 @@ function isParent(parent, of2) {
 }
 function bracketedAligned(context2) {
   let tree = context2.node;
-  let openToken = tree.childAfter(tree.from), last2 = tree.lastChild;
+  let openToken = tree.childAfter(tree.from), last3 = tree.lastChild;
   if (!openToken)
     return null;
   let sim = context2.options.simulateBreak;
@@ -55659,7 +55256,7 @@ function bracketedAligned(context2) {
   let lineEnd = sim == null || sim <= openLine.from ? openLine.to : Math.min(openLine.to, sim);
   for (let pos = openToken.to; ; ) {
     let next = tree.childAfter(pos);
-    if (!next || next == last2)
+    if (!next || next == last3)
       return null;
     if (!next.type.isSkipped) {
       if (next.from >= lineEnd)
@@ -55684,368 +55281,7 @@ function continuedIndent({ except, units = 1 } = {}) {
     return context2.baseIndent + (matchExcept ? 0 : units * context2.unit);
   };
 }
-var DontIndentBeyond = 200;
-function indentOnInput() {
-  return EditorState.transactionFilter.of((tr) => {
-    if (!tr.docChanged || !tr.isUserEvent("input.type") && !tr.isUserEvent("input.complete"))
-      return tr;
-    let rules = tr.startState.languageDataAt("indentOnInput", tr.startState.selection.main.head);
-    if (!rules.length)
-      return tr;
-    let doc2 = tr.newDoc, { head } = tr.newSelection.main, line = doc2.lineAt(head);
-    if (head > line.from + DontIndentBeyond)
-      return tr;
-    let lineStart = doc2.sliceString(line.from, head);
-    if (!rules.some((r) => r.test(lineStart)))
-      return tr;
-    let { state } = tr, last2 = -1, changes = [];
-    for (let { head: head2 } of state.selection.ranges) {
-      let line2 = state.doc.lineAt(head2);
-      if (line2.from == last2)
-        continue;
-      last2 = line2.from;
-      let indent = getIndentation(state, line2.from);
-      if (indent == null)
-        continue;
-      let cur2 = /^\s*/.exec(line2.text)[0];
-      let norm = indentString(state, indent);
-      if (cur2 != norm)
-        changes.push({ from: line2.from, to: line2.from + cur2.length, insert: norm });
-    }
-    return changes.length ? [tr, { changes, sequential: true }] : tr;
-  });
-}
-var foldService = /* @__PURE__ */ Facet.define();
 var foldNodeProp = /* @__PURE__ */ new NodeProp();
-function syntaxFolding(state, start2, end2) {
-  let tree = syntaxTree(state);
-  if (tree.length < end2)
-    return null;
-  let stack = tree.resolveStack(end2, 1);
-  let found = null;
-  for (let iter = stack; iter; iter = iter.next) {
-    let cur2 = iter.node;
-    if (cur2.to <= end2 || cur2.from > end2)
-      continue;
-    if (found && cur2.from < start2)
-      break;
-    let prop = cur2.type.prop(foldNodeProp);
-    if (prop && (cur2.to < tree.length - 50 || tree.length == state.doc.length || !isUnfinished(cur2))) {
-      let value = prop(cur2, state);
-      if (value && value.from <= end2 && value.from >= start2 && value.to > end2)
-        found = value;
-    }
-  }
-  return found;
-}
-function isUnfinished(node) {
-  let ch = node.lastChild;
-  return ch && ch.to == node.to && ch.type.isError;
-}
-function foldable(state, lineStart, lineEnd) {
-  for (let service of state.facet(foldService)) {
-    let result = service(state, lineStart, lineEnd);
-    if (result)
-      return result;
-  }
-  return syntaxFolding(state, lineStart, lineEnd);
-}
-function mapRange(range, mapping) {
-  let from2 = mapping.mapPos(range.from, 1), to = mapping.mapPos(range.to, -1);
-  return from2 >= to ? void 0 : { from: from2, to };
-}
-var foldEffect = /* @__PURE__ */ StateEffect.define({ map: mapRange });
-var unfoldEffect = /* @__PURE__ */ StateEffect.define({ map: mapRange });
-function selectedLines(view) {
-  let lines = [];
-  for (let { head } of view.state.selection.ranges) {
-    if (lines.some((l) => l.from <= head && l.to >= head))
-      continue;
-    lines.push(view.lineBlockAt(head));
-  }
-  return lines;
-}
-var foldState = /* @__PURE__ */ StateField.define({
-  create() {
-    return Decoration.none;
-  },
-  update(folded, tr) {
-    if (tr.isUserEvent("delete"))
-      tr.changes.iterChangedRanges((fromA, toA) => folded = clearTouchedFolds(folded, fromA, toA));
-    folded = folded.map(tr.changes);
-    for (let e of tr.effects) {
-      if (e.is(foldEffect) && !foldExists(folded, e.value.from, e.value.to)) {
-        let { preparePlaceholder } = tr.state.facet(foldConfig);
-        let widget = !preparePlaceholder ? foldWidget : Decoration.replace({ widget: new PreparedFoldWidget(preparePlaceholder(tr.state, e.value)) });
-        folded = folded.update({ add: [widget.range(e.value.from, e.value.to)] });
-      } else if (e.is(unfoldEffect)) {
-        folded = folded.update({
-          filter: (from2, to) => e.value.from != from2 || e.value.to != to,
-          filterFrom: e.value.from,
-          filterTo: e.value.to
-        });
-      }
-    }
-    if (tr.selection)
-      folded = clearTouchedFolds(folded, tr.selection.main.head);
-    return folded;
-  },
-  provide: (f) => EditorView.decorations.from(f),
-  toJSON(folded, state) {
-    let ranges = [];
-    folded.between(0, state.doc.length, (from2, to) => {
-      ranges.push(from2, to);
-    });
-    return ranges;
-  },
-  fromJSON(value) {
-    if (!Array.isArray(value) || value.length % 2)
-      throw new RangeError("Invalid JSON for fold state");
-    let ranges = [];
-    for (let i = 0; i < value.length; ) {
-      let from2 = value[i++], to = value[i++];
-      if (typeof from2 != "number" || typeof to != "number")
-        throw new RangeError("Invalid JSON for fold state");
-      ranges.push(foldWidget.range(from2, to));
-    }
-    return Decoration.set(ranges, true);
-  }
-});
-function clearTouchedFolds(folded, from2, to = from2) {
-  let touched = false;
-  folded.between(from2, to, (a, b) => {
-    if (a < to && b > from2)
-      touched = true;
-  });
-  return !touched ? folded : folded.update({
-    filterFrom: from2,
-    filterTo: to,
-    filter: (a, b) => a >= to || b <= from2
-  });
-}
-function findFold(state, from2, to) {
-  var _a2;
-  let found = null;
-  (_a2 = state.field(foldState, false)) === null || _a2 === void 0 ? void 0 : _a2.between(from2, to, (from3, to2) => {
-    if (!found || found.from > from3)
-      found = { from: from3, to: to2 };
-  });
-  return found;
-}
-function foldExists(folded, from2, to) {
-  let found = false;
-  folded.between(from2, from2, (a, b) => {
-    if (a == from2 && b == to)
-      found = true;
-  });
-  return found;
-}
-function maybeEnable(state, other) {
-  return state.field(foldState, false) ? other : other.concat(StateEffect.appendConfig.of(codeFolding()));
-}
-var foldCode = (view) => {
-  for (let line of selectedLines(view)) {
-    let range = foldable(view.state, line.from, line.to);
-    if (range) {
-      view.dispatch({ effects: maybeEnable(view.state, [foldEffect.of(range), announceFold(view, range)]) });
-      return true;
-    }
-  }
-  return false;
-};
-var unfoldCode = (view) => {
-  if (!view.state.field(foldState, false))
-    return false;
-  let effects = [];
-  for (let line of selectedLines(view)) {
-    let folded = findFold(view.state, line.from, line.to);
-    if (folded)
-      effects.push(unfoldEffect.of(folded), announceFold(view, folded, false));
-  }
-  if (effects.length)
-    view.dispatch({ effects });
-  return effects.length > 0;
-};
-function announceFold(view, range, fold = true) {
-  let lineFrom = view.state.doc.lineAt(range.from).number, lineTo = view.state.doc.lineAt(range.to).number;
-  return EditorView.announce.of(`${view.state.phrase(fold ? "Folded lines" : "Unfolded lines")} ${lineFrom} ${view.state.phrase("to")} ${lineTo}.`);
-}
-var foldAll = (view) => {
-  let { state } = view, effects = [];
-  for (let pos = 0; pos < state.doc.length; ) {
-    let line = view.lineBlockAt(pos), range = foldable(state, line.from, line.to);
-    if (range)
-      effects.push(foldEffect.of(range));
-    pos = (range ? view.lineBlockAt(range.to) : line).to + 1;
-  }
-  if (effects.length)
-    view.dispatch({ effects: maybeEnable(view.state, effects) });
-  return !!effects.length;
-};
-var unfoldAll = (view) => {
-  let field = view.state.field(foldState, false);
-  if (!field || !field.size)
-    return false;
-  let effects = [];
-  field.between(0, view.state.doc.length, (from2, to) => {
-    effects.push(unfoldEffect.of({ from: from2, to }));
-  });
-  view.dispatch({ effects });
-  return true;
-};
-var foldKeymap = [
-  { key: "Ctrl-Shift-[", mac: "Cmd-Alt-[", run: foldCode },
-  { key: "Ctrl-Shift-]", mac: "Cmd-Alt-]", run: unfoldCode },
-  { key: "Ctrl-Alt-[", run: foldAll },
-  { key: "Ctrl-Alt-]", run: unfoldAll }
-];
-var defaultConfig = {
-  placeholderDOM: null,
-  preparePlaceholder: null,
-  placeholderText: "\u2026"
-};
-var foldConfig = /* @__PURE__ */ Facet.define({
-  combine(values) {
-    return combineConfig(values, defaultConfig);
-  }
-});
-function codeFolding(config3) {
-  let result = [foldState, baseTheme$12];
-  if (config3)
-    result.push(foldConfig.of(config3));
-  return result;
-}
-function widgetToDOM(view, prepared) {
-  let { state } = view, conf = state.facet(foldConfig);
-  let onclick = (event) => {
-    let line = view.lineBlockAt(view.posAtDOM(event.target));
-    let folded = findFold(view.state, line.from, line.to);
-    if (folded)
-      view.dispatch({ effects: unfoldEffect.of(folded) });
-    event.preventDefault();
-  };
-  if (conf.placeholderDOM)
-    return conf.placeholderDOM(view, onclick, prepared);
-  let element = document.createElement("span");
-  element.textContent = conf.placeholderText;
-  element.setAttribute("aria-label", state.phrase("folded code"));
-  element.title = state.phrase("unfold");
-  element.className = "cm-foldPlaceholder";
-  element.onclick = onclick;
-  return element;
-}
-var foldWidget = /* @__PURE__ */ Decoration.replace({ widget: /* @__PURE__ */ new class extends WidgetType {
-  toDOM(view) {
-    return widgetToDOM(view, null);
-  }
-}() });
-var PreparedFoldWidget = class extends WidgetType {
-  constructor(value) {
-    super();
-    this.value = value;
-  }
-  eq(other) {
-    return this.value == other.value;
-  }
-  toDOM(view) {
-    return widgetToDOM(view, this.value);
-  }
-};
-var foldGutterDefaults = {
-  openText: "\u2304",
-  closedText: "\u203A",
-  markerDOM: null,
-  domEventHandlers: {},
-  foldingChanged: () => false
-};
-var FoldMarker = class extends GutterMarker {
-  constructor(config3, open) {
-    super();
-    this.config = config3;
-    this.open = open;
-  }
-  eq(other) {
-    return this.config == other.config && this.open == other.open;
-  }
-  toDOM(view) {
-    if (this.config.markerDOM)
-      return this.config.markerDOM(this.open);
-    let span = document.createElement("span");
-    span.textContent = this.open ? this.config.openText : this.config.closedText;
-    span.title = view.state.phrase(this.open ? "Fold line" : "Unfold line");
-    return span;
-  }
-};
-function foldGutter(config3 = {}) {
-  let fullConfig = __spreadValues(__spreadValues({}, foldGutterDefaults), config3);
-  let canFold = new FoldMarker(fullConfig, true), canUnfold = new FoldMarker(fullConfig, false);
-  let markers = ViewPlugin.fromClass(class {
-    constructor(view) {
-      this.from = view.viewport.from;
-      this.markers = this.buildMarkers(view);
-    }
-    update(update) {
-      if (update.docChanged || update.viewportChanged || update.startState.facet(language) != update.state.facet(language) || update.startState.field(foldState, false) != update.state.field(foldState, false) || syntaxTree(update.startState) != syntaxTree(update.state) || fullConfig.foldingChanged(update))
-        this.markers = this.buildMarkers(update.view);
-    }
-    buildMarkers(view) {
-      let builder = new RangeSetBuilder();
-      for (let line of view.viewportLineBlocks) {
-        let mark = findFold(view.state, line.from, line.to) ? canUnfold : foldable(view.state, line.from, line.to) ? canFold : null;
-        if (mark)
-          builder.add(line.from, line.from, mark);
-      }
-      return builder.finish();
-    }
-  });
-  let { domEventHandlers } = fullConfig;
-  return [
-    markers,
-    gutter({
-      class: "cm-foldGutter",
-      markers(view) {
-        var _a2;
-        return ((_a2 = view.plugin(markers)) === null || _a2 === void 0 ? void 0 : _a2.markers) || RangeSet.empty;
-      },
-      initialSpacer() {
-        return new FoldMarker(fullConfig, false);
-      },
-      domEventHandlers: __spreadProps(__spreadValues({}, domEventHandlers), {
-        click: (view, line, event) => {
-          if (domEventHandlers.click && domEventHandlers.click(view, line, event))
-            return true;
-          let folded = findFold(view.state, line.from, line.to);
-          if (folded) {
-            view.dispatch({ effects: unfoldEffect.of(folded) });
-            return true;
-          }
-          let range = foldable(view.state, line.from, line.to);
-          if (range) {
-            view.dispatch({ effects: foldEffect.of(range) });
-            return true;
-          }
-          return false;
-        }
-      })
-    }),
-    codeFolding()
-  ];
-}
-var baseTheme$12 = /* @__PURE__ */ EditorView.baseTheme({
-  ".cm-foldPlaceholder": {
-    backgroundColor: "#eee",
-    border: "1px solid #ddd",
-    color: "#888",
-    borderRadius: ".2em",
-    margin: "0 1px",
-    padding: "0 1px",
-    cursor: "pointer"
-  },
-  ".cm-foldGutter span": {
-    padding: "0 1px",
-    cursor: "pointer"
-  }
-});
 var HighlightStyle = class _HighlightStyle {
   constructor(specs, options) {
     this.specs = specs;
@@ -56245,12 +55481,12 @@ var bracketMatchingConfig = /* @__PURE__ */ Facet.define({
 });
 var matchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-matchingBracket" });
 var nonmatchingMark = /* @__PURE__ */ Decoration.mark({ class: "cm-nonmatchingBracket" });
-function defaultRenderMatch(match) {
+function defaultRenderMatch(match2) {
   let decorations2 = [];
-  let mark = match.matched ? matchingMark : nonmatchingMark;
-  decorations2.push(mark.range(match.start.from, match.start.to));
-  if (match.end)
-    decorations2.push(mark.range(match.end.from, match.end.to));
+  let mark = match2.matched ? matchingMark : nonmatchingMark;
+  decorations2.push(mark.range(match2.start.from, match2.start.to));
+  if (match2.end)
+    decorations2.push(mark.range(match2.end.from, match2.end.to));
   return decorations2;
 }
 var bracketMatchingState = /* @__PURE__ */ StateField.define({
@@ -56265,9 +55501,9 @@ var bracketMatchingState = /* @__PURE__ */ StateField.define({
     for (let range of tr.state.selection.ranges) {
       if (!range.empty)
         continue;
-      let match = matchBrackets(tr.state, range.head, -1, config3) || range.head > 0 && matchBrackets(tr.state, range.head - 1, 1, config3) || config3.afterCursor && (matchBrackets(tr.state, range.head, 1, config3) || range.head < tr.state.doc.length && matchBrackets(tr.state, range.head + 1, -1, config3));
-      if (match)
-        decorations2 = decorations2.concat(config3.renderMatch(match, tr.state));
+      let match2 = matchBrackets(tr.state, range.head, -1, config3) || range.head > 0 && matchBrackets(tr.state, range.head - 1, 1, config3) || config3.afterCursor && (matchBrackets(tr.state, range.head, 1, config3) || range.head < tr.state.doc.length && matchBrackets(tr.state, range.head + 1, -1, config3));
+      if (match2)
+        decorations2 = decorations2.concat(config3.renderMatch(match2, tr.state));
     }
     return Decoration.set(decorations2, true);
   },
@@ -56343,12 +55579,12 @@ function matchPlainBrackets(state, pos, dir, tree, tokenType, maxScanDistance, b
   let startToken = { from: dir < 0 ? pos - 1 : pos, to: dir > 0 ? pos + 1 : pos };
   let iter = state.doc.iterRange(pos, dir > 0 ? state.doc.length : 0), depth = 0;
   for (let distance = 0; !iter.next().done && distance <= maxScanDistance; ) {
-    let text = iter.value;
+    let text2 = iter.value;
     if (dir < 0)
-      distance += text.length;
+      distance += text2.length;
     let basePos = pos + distance * dir;
-    for (let pos2 = dir > 0 ? 0 : text.length - 1, end2 = dir > 0 ? text.length : -1; pos2 != end2; pos2 += dir) {
-      let found = brackets.indexOf(text[pos2]);
+    for (let pos2 = dir > 0 ? 0 : text2.length - 1, end2 = dir > 0 ? text2.length : -1; pos2 != end2; pos2 += dir) {
+      let found = brackets.indexOf(text2[pos2]);
       if (found < 0 || tree.resolveInner(basePos + pos2, 1).type != tokenType)
         continue;
       if (found % 2 == 0 == dir > 0) {
@@ -56360,7 +55596,7 @@ function matchPlainBrackets(state, pos, dir, tree, tokenType, maxScanDistance, b
       }
     }
     if (dir > 0)
-      distance += text.length;
+      distance += text2.length;
   }
   return iter.done ? { start: startToken, matched: false } : null;
 }
@@ -56490,16 +55726,16 @@ var Stack = class _Stack {
   reduce(action) {
     var _a2;
     let depth = action >> 19, type = action & 65535;
-    let { parser: parser2 } = this.p;
+    let { parser: parser3 } = this.p;
     let lookaheadRecord = this.reducePos < this.pos - 25;
     if (lookaheadRecord)
       this.setLookAhead(this.pos);
-    let dPrec = parser2.dynamicPrecedence(type);
+    let dPrec = parser3.dynamicPrecedence(type);
     if (dPrec)
       this.score += dPrec;
     if (depth == 0) {
-      this.pushState(parser2.getGoto(this.state, type, true), this.reducePos);
-      if (type < parser2.minRepeatTerm)
+      this.pushState(parser3.getGoto(this.state, type, true), this.reducePos);
+      if (type < parser3.minRepeatTerm)
         this.storeNode(type, this.reducePos, this.reducePos, lookaheadRecord ? 8 : 4, true);
       this.reduceContext(type, this.reducePos);
       return;
@@ -56517,8 +55753,8 @@ var Stack = class _Stack {
       }
     }
     let bufferBase = base2 ? this.stack[base2 - 1] : 0, count = this.bufferBase + this.buffer.length - bufferBase;
-    if (type < parser2.minRepeatTerm || action & 131072) {
-      let pos = parser2.stateFlag(
+    if (type < parser3.minRepeatTerm || action & 131072) {
+      let pos = parser3.stateFlag(
         this.state,
         1
         /* StateFlag.Skipped */
@@ -56529,7 +55765,7 @@ var Stack = class _Stack {
       this.state = this.stack[base2];
     } else {
       let baseStateID = this.stack[base2 - 3];
-      this.state = parser2.getGoto(baseStateID, type, true);
+      this.state = parser3.getGoto(baseStateID, type, true);
     }
     while (this.stack.length > base2)
       this.stack.pop();
@@ -56592,10 +55828,10 @@ var Stack = class _Stack {
     if (action & 131072) {
       this.pushState(action & 65535, this.pos);
     } else if ((action & 262144) == 0) {
-      let nextState = action, { parser: parser2 } = this.p;
-      if (end2 > this.pos || type <= parser2.maxNode) {
+      let nextState = action, { parser: parser3 } = this.p;
+      if (end2 > this.pos || type <= parser3.maxNode) {
         this.pos = end2;
-        if (!parser2.stateFlag(
+        if (!parser3.stateFlag(
           nextState,
           1
           /* StateFlag.Skipped */
@@ -56604,7 +55840,7 @@ var Stack = class _Stack {
       }
       this.pushState(nextState, start2);
       this.shiftContext(type, start2);
-      if (type <= parser2.maxNode)
+      if (type <= parser3.maxNode)
         this.buffer.push(type, start2, end2, 4);
     } else {
       this.pos = end2;
@@ -56738,18 +55974,18 @@ var Stack = class _Stack {
   @internal
   */
   forceReduce() {
-    let { parser: parser2 } = this.p;
-    let reduce = parser2.stateSlot(
+    let { parser: parser3 } = this.p;
+    let reduce = parser3.stateSlot(
       this.state,
       5
       /* ParseState.ForcedReduce */
     );
     if ((reduce & 65536) == 0)
       return false;
-    if (!parser2.validAction(this.state, reduce)) {
+    if (!parser3.validAction(this.state, reduce)) {
       let depth = reduce >> 19, term = reduce & 65535;
       let target = this.stack.length - depth * 3;
-      if (target < 0 || parser2.getGoto(this.stack[target], term, false) < 0) {
+      if (target < 0 || parser3.getGoto(this.stack[target], term, false) < 0) {
         let backup = this.findForcedReduction();
         if (backup == null)
           return false;
@@ -56768,18 +56004,18 @@ var Stack = class _Stack {
   isn't a valid action. @internal
   */
   findForcedReduction() {
-    let { parser: parser2 } = this.p, seen = [];
+    let { parser: parser3 } = this.p, seen = [];
     let explore = (state, depth) => {
       if (seen.includes(state))
         return;
       seen.push(state);
-      return parser2.allActions(state, (action) => {
+      return parser3.allActions(state, (action) => {
         if (action & (262144 | 131072)) ;
         else if (action & 65536) {
           let rDepth = (action >> 19) - depth;
           if (rDepth > 1) {
             let term = action & 65535, target = this.stack.length - rDepth * 3;
-            if (target >= 0 && parser2.getGoto(this.stack[target], term, false) >= 0)
+            if (target >= 0 && parser3.getGoto(this.stack[target], term, false) >= 0)
               return rDepth << 19 | 65536 | term;
           }
         } else {
@@ -56815,12 +56051,12 @@ var Stack = class _Stack {
   get deadEnd() {
     if (this.stack.length != 3)
       return false;
-    let { parser: parser2 } = this.p;
-    return parser2.data[parser2.stateSlot(
+    let { parser: parser3 } = this.p;
+    return parser3.data[parser3.stateSlot(
       this.state,
       1
       /* ParseState.Actions */
-    )] == 65535 && !parser2.stateSlot(
+    )] == 65535 && !parser3.stateSlot(
       this.state,
       4
       /* ParseState.DefaultReduce */
@@ -56872,16 +56108,16 @@ var Stack = class _Stack {
   @internal
   */
   emitContext() {
-    let last2 = this.buffer.length - 1;
-    if (last2 < 0 || this.buffer[last2] != -3)
+    let last3 = this.buffer.length - 1;
+    if (last3 < 0 || this.buffer[last3] != -3)
       this.buffer.push(this.curContext.hash, this.pos, this.pos, -3);
   }
   /**
   @internal
   */
   emitLookAhead() {
-    let last2 = this.buffer.length - 1;
-    if (last2 < 0 || this.buffer[last2] != -4)
+    let last3 = this.buffer.length - 1;
+    if (last3 < 0 || this.buffer[last3] != -4)
       this.buffer.push(this.lookAhead, this.pos, this.pos, -4);
   }
   updateContext(context2) {
@@ -57237,13 +56473,13 @@ var InputStream = class {
   }
 };
 var TokenGroup = class {
-  constructor(data, id) {
+  constructor(data, id3) {
     this.data = data;
-    this.id = id;
+    this.id = id3;
   }
   token(input2, stack) {
-    let { parser: parser2 } = stack.p;
-    readToken(this.data, input2, stack, this.id, parser2.data, parser2.tokenPrecTable);
+    let { parser: parser3 } = stack.p;
+    readToken(this.data, input2, stack, this.id, parser3.data, parser3.tokenPrecTable);
   }
 };
 TokenGroup.prototype.contextual = TokenGroup.prototype.fallback = TokenGroup.prototype.extend = false;
@@ -57401,12 +56637,12 @@ var FragmentCursor = class {
     if (!this.fragment)
       return null;
     for (; ; ) {
-      let last2 = this.trees.length - 1;
-      if (last2 < 0) {
+      let last3 = this.trees.length - 1;
+      if (last3 < 0) {
         this.nextFragment();
         return null;
       }
-      let top3 = this.trees[last2], index = this.index[last2];
+      let top3 = this.trees[last3], index = this.index[last3];
       if (index == top3.children.length) {
         this.trees.pop();
         this.start.pop();
@@ -57414,7 +56650,7 @@ var FragmentCursor = class {
         continue;
       }
       let next = top3.children[index];
-      let start2 = this.start[last2] + top3.positions[index];
+      let start2 = this.start[last3] + top3.positions[index];
       if (start2 > pos) {
         this.nextStart = start2;
         return null;
@@ -57430,32 +56666,32 @@ var FragmentCursor = class {
               return next;
           }
         }
-        this.index[last2]++;
+        this.index[last3]++;
         if (start2 + next.length >= Math.max(this.safeFrom, pos)) {
           this.trees.push(next);
           this.start.push(start2);
           this.index.push(0);
         }
       } else {
-        this.index[last2]++;
+        this.index[last3]++;
         this.nextStart = start2 + next.length;
       }
     }
   }
 };
 var TokenCache = class {
-  constructor(parser2, stream) {
+  constructor(parser3, stream) {
     this.stream = stream;
     this.tokens = [];
     this.mainToken = null;
     this.actions = [];
-    this.tokens = parser2.tokenizers.map((_) => new CachedToken());
+    this.tokens = parser3.tokenizers.map((_) => new CachedToken());
   }
   getActions(stack) {
     let actionIndex = 0;
     let main2 = null;
-    let { parser: parser2 } = stack.p, { tokenizers } = parser2;
-    let mask = parser2.stateSlot(
+    let { parser: parser3 } = stack.p, { tokenizers } = parser3;
+    let mask = parser3.stateSlot(
       stack.state,
       3
       /* ParseState.TokenizerMask */
@@ -57513,10 +56749,10 @@ var TokenCache = class {
     let start2 = this.stream.clipPos(stack.pos);
     tokenizer.token(this.stream.reset(start2, token), stack);
     if (token.value > -1) {
-      let { parser: parser2 } = stack.p;
-      for (let i = 0; i < parser2.specialized.length; i++)
-        if (parser2.specialized[i] == token.value) {
-          let result = parser2.specializers[i](this.stream.read(token.start, token.end), stack);
+      let { parser: parser3 } = stack.p;
+      for (let i = 0; i < parser3.specialized.length; i++)
+        if (parser3.specialized[i] == token.value) {
+          let result = parser3.specializers[i](this.stream.read(token.start, token.end), stack);
           if (result >= 0 && stack.p.parser.dialect.allows(result >> 1)) {
             if ((result & 1) == 0)
               token.value = result >> 1;
@@ -57540,9 +56776,9 @@ var TokenCache = class {
     return index;
   }
   addActions(stack, token, end2, index) {
-    let { state } = stack, { parser: parser2 } = stack.p, { data } = parser2;
+    let { state } = stack, { parser: parser3 } = stack.p, { data } = parser3;
     for (let set = 0; set < 2; set++) {
-      for (let i = parser2.stateSlot(
+      for (let i = parser3.stateSlot(
         state,
         set ? 2 : 1
         /* ParseState.Actions */
@@ -57564,8 +56800,8 @@ var TokenCache = class {
   }
 };
 var Parse = class {
-  constructor(parser2, input2, fragments, ranges) {
-    this.parser = parser2;
+  constructor(parser3, input2, fragments, ranges) {
+    this.parser = parser3;
     this.input = input2;
     this.ranges = ranges;
     this.recovering = 0;
@@ -57577,11 +56813,11 @@ var Parse = class {
     this.lastBigReductionSize = 0;
     this.bigReductionCount = 0;
     this.stream = new InputStream(input2, ranges);
-    this.tokens = new TokenCache(parser2, this.stream);
-    this.topTerm = parser2.top[1];
+    this.tokens = new TokenCache(parser3, this.stream);
+    this.topTerm = parser3.top[1];
     let { from: from2 } = ranges[0];
-    this.stacks = [Stack.start(this, parser2.top[0], from2)];
-    this.fragments = fragments.length && this.stream.end - from2 > parser2.bufferLength * 4 ? new FragmentCursor(fragments, parser2.nodeSet) : null;
+    this.stacks = [Stack.start(this, parser3.top[0], from2)];
+    this.fragments = fragments.length && this.stream.end - from2 > parser3.bufferLength * 4 ? new FragmentCursor(fragments, parser3.nodeSet) : null;
   }
   get parsedPos() {
     return this.minStackPos;
@@ -57692,18 +56928,18 @@ var Parse = class {
   // given, stacks split off by ambiguous operations will be pushed to
   // `split`, or added to `stacks` if they move `pos` forward.
   advanceStack(stack, stacks, split) {
-    let start2 = stack.pos, { parser: parser2 } = this;
+    let start2 = stack.pos, { parser: parser3 } = this;
     let base2 = verbose ? this.stackID(stack) + " -> " : "";
     if (this.stoppedAt != null && start2 > this.stoppedAt)
       return stack.forceReduce() ? stack : null;
     if (this.fragments) {
       let strictCx = stack.curContext && stack.curContext.tracker.strict, cxHash = strictCx ? stack.curContext.hash : 0;
       for (let cached = this.fragments.nodeAt(start2); cached; ) {
-        let match = this.parser.nodeSet.types[cached.type.id] == cached.type ? parser2.getGoto(stack.state, cached.type.id) : -1;
-        if (match > -1 && cached.length && (!strictCx || (cached.prop(NodeProp.contextHash) || 0) == cxHash)) {
-          stack.useNode(cached, match);
+        let match2 = this.parser.nodeSet.types[cached.type.id] == cached.type ? parser3.getGoto(stack.state, cached.type.id) : -1;
+        if (match2 > -1 && cached.length && (!strictCx || (cached.prop(NodeProp.contextHash) || 0) == cxHash)) {
+          stack.useNode(cached, match2);
           if (verbose)
-            console.log(base2 + this.stackID(stack) + ` (via reuse of ${parser2.getName(cached.type.id)})`);
+            console.log(base2 + this.stackID(stack) + ` (via reuse of ${parser3.getName(cached.type.id)})`);
           return true;
         }
         if (!(cached instanceof Tree) || cached.children.length == 0 || cached.positions[0] > 0)
@@ -57715,7 +56951,7 @@ var Parse = class {
           break;
       }
     }
-    let defaultReduce = parser2.stateSlot(
+    let defaultReduce = parser3.stateSlot(
       stack.state,
       4
       /* ParseState.DefaultReduce */
@@ -57723,7 +56959,7 @@ var Parse = class {
     if (defaultReduce > 0) {
       stack.reduce(defaultReduce);
       if (verbose)
-        console.log(base2 + this.stackID(stack) + ` (via always-reduce ${parser2.getName(
+        console.log(base2 + this.stackID(stack) + ` (via always-reduce ${parser3.getName(
           defaultReduce & 65535
           /* Action.ValueMask */
         )})`);
@@ -57736,16 +56972,16 @@ var Parse = class {
     let actions = this.tokens.getActions(stack);
     for (let i = 0; i < actions.length; ) {
       let action = actions[i++], term = actions[i++], end2 = actions[i++];
-      let last2 = i == actions.length || !split;
-      let localStack = last2 ? stack : stack.split();
+      let last3 = i == actions.length || !split;
+      let localStack = last3 ? stack : stack.split();
       let main2 = this.tokens.mainToken;
       localStack.apply(action, term, main2 ? main2.start : localStack.pos, end2);
       if (verbose)
-        console.log(base2 + this.stackID(localStack) + ` (via ${(action & 65536) == 0 ? "shift" : `reduce of ${parser2.getName(
+        console.log(base2 + this.stackID(localStack) + ` (via ${(action & 65536) == 0 ? "shift" : `reduce of ${parser3.getName(
           action & 65535
           /* Action.ValueMask */
-        )}`} for ${parser2.getName(term)} @ ${start2}${localStack == stack ? "" : ", split"})`);
-      if (last2)
+        )}`} for ${parser3.getName(term)} @ ${start2}${localStack == stack ? "" : ", split"})`);
+      if (last3)
         return true;
       else if (localStack.pos > start2)
         stacks.push(localStack);
@@ -57829,10 +57065,10 @@ var Parse = class {
     });
   }
   stackID(stack) {
-    let id = (stackIDs || (stackIDs = /* @__PURE__ */ new WeakMap())).get(stack);
-    if (!id)
-      stackIDs.set(stack, id = String.fromCodePoint(this.nextStackID++));
-    return id + stack;
+    let id3 = (stackIDs || (stackIDs = /* @__PURE__ */ new WeakMap())).get(stack);
+    if (!id3)
+      stackIDs.set(stack, id3 = String.fromCodePoint(this.nextStackID++));
+    return id3 + stack;
   }
 };
 function pushStackDedup(stack, newStacks) {
@@ -57854,6 +57090,20 @@ var Dialect = class {
   }
   allows(term) {
     return !this.disabled || this.disabled[term] == 0;
+  }
+};
+var id = (x) => x;
+var ContextTracker = class {
+  /**
+  Define a context tracker.
+  */
+  constructor(spec) {
+    this.start = spec.start;
+    this.shift = spec.shift || id;
+    this.reduce = spec.reduce || id;
+    this.reuse = spec.reuse || id;
+    this.hash = spec.hash || (() => 0);
+    this.strict = spec.strict !== false;
   }
 };
 var LRParser = class _LRParser extends Parser {
@@ -57940,14 +57190,14 @@ var LRParser = class _LRParser extends Parser {
     if (term >= table[0])
       return -1;
     for (let pos = table[term + 1]; ; ) {
-      let groupTag = table[pos++], last2 = groupTag & 1;
+      let groupTag = table[pos++], last3 = groupTag & 1;
       let target = table[pos++];
-      if (last2 && loose)
+      if (last3 && loose)
         return target;
       for (let end2 = pos + (groupTag >> 1); pos < end2; pos++)
         if (table[pos] == state)
           return target;
-      if (last2)
+      if (last3)
         return -1;
     }
   }
@@ -58134,15 +57384,15 @@ var LRParser = class _LRParser extends Parser {
     let values = Object.keys(this.dialects), flags = values.map(() => false);
     if (dialect2)
       for (let part of dialect2.split(" ")) {
-        let id = values.indexOf(part);
-        if (id >= 0)
-          flags[id] = true;
+        let id3 = values.indexOf(part);
+        if (id3 >= 0)
+          flags[id3] = true;
       }
     let disabled = null;
     for (let i = 0; i < values.length; i++)
       if (!flags[i]) {
-        for (let j = this.dialects[values[i]], id; (id = this.data[j++]) != 65535; )
-          (disabled || (disabled = new Uint8Array(this.maxTerm + 1)))[id] = 1;
+        for (let j = this.dialects[values[i]], id3; (id3 = this.data[j++]) != 65535; )
+          (disabled || (disabled = new Uint8Array(this.maxTerm + 1)))[id3] = 1;
       }
     return new Dialect(dialect2, flags, disabled);
   }
@@ -58266,9 +57516,9 @@ function prefixMatch(options) {
 }
 function completeFromList(list) {
   let options = list.map((o) => typeof o == "string" ? { label: o } : o);
-  let [validFor, match] = options.every((o) => /^\w+$/.test(o.label)) ? [/\w*$/, /\w+$/] : prefixMatch(options);
+  let [validFor, match2] = options.every((o) => /^\w+$/.test(o.label)) ? [/\w*$/, /\w+$/] : prefixMatch(options);
   return (context2) => {
-    let token = context2.matchBefore(match);
+    let token = context2.matchBefore(match2);
     return token || context2.explicit ? { from: token ? token.from : context2.pos, options, validFor } : null;
   };
 }
@@ -58284,10 +57534,10 @@ function ifNotIn(nodes, source) {
   };
 }
 var Option = class {
-  constructor(completion, source, match, score2) {
+  constructor(completion, source, match2, score2) {
     this.completion = completion;
     this.source = source;
-    this.match = match;
+    this.match = match2;
     this.score = score2;
   }
 };
@@ -58303,12 +57553,12 @@ function ensureAnchor(expr, start2) {
   return new RegExp(`${addStart ? "^" : ""}(?:${source})${addEnd ? "$" : ""}`, (_a2 = expr.flags) !== null && _a2 !== void 0 ? _a2 : expr.ignoreCase ? "i" : "");
 }
 var pickedCompletion = /* @__PURE__ */ Annotation.define();
-function insertCompletionText(state, text, from2, to) {
+function insertCompletionText(state, text2, from2, to) {
   let { main: main2 } = state.selection, fromOff = from2 - main2.from, toOff = to - main2.from;
   return Object.assign(Object.assign({}, state.changeByRange((range) => {
     if (range != main2 && from2 != to && state.sliceDoc(range.from + fromOff, range.from + toOff) != state.sliceDoc(from2, to))
       return { range };
-    let lines = state.toText(text);
+    let lines = state.toText(text2);
     return {
       changes: { from: range.from + fromOff, to: to == main2.from ? range.to : range.from + toOff, insert: lines },
       range: EditorSelection.cursor(range.from + fromOff + lines.length)
@@ -58454,11 +57704,11 @@ var StrictMatcher = class {
     if (word.length < this.pattern.length)
       return null;
     let start2 = word.slice(0, this.pattern.length);
-    let match = start2 == this.pattern ? 0 : start2.toLowerCase() == this.folded ? -200 : null;
-    if (match == null)
+    let match2 = start2 == this.pattern ? 0 : start2.toLowerCase() == this.folded ? -200 : null;
+    if (match2 == null)
       return null;
     this.matched = [0, start2.length];
-    this.score = match + (word.length == this.pattern.length ? 0 : -100);
+    this.score = match2 + (word.length == this.pattern.length ? 0 : -100);
     return this;
   }
 };
@@ -58546,12 +57796,12 @@ function optionContent(config3) {
       position: 20
     });
   content2.push({
-    render(completion, _s, _v, match) {
+    render(completion, _s, _v, match2) {
       let labelElt = document.createElement("span");
       labelElt.className = "cm-completionLabel";
       let label = completion.displayLabel || completion.label, off = 0;
-      for (let j = 0; j < match.length; ) {
-        let from2 = match[j++], to = match[j++];
+      for (let j = 0; j < match2.length; ) {
+        let from2 = match2[j++], to = match2[j++];
         if (from2 > off)
           labelElt.appendChild(document.createTextNode(label.slice(off, from2)));
         let span = labelElt.appendChild(document.createElement("span"));
@@ -58615,9 +57865,9 @@ var CompletionTooltip = class {
     this.updateTooltipClass(view.state);
     this.dom.addEventListener("mousedown", (e) => {
       let { options: options2 } = view.state.field(stateField).open;
-      for (let dom = e.target, match; dom && dom != this.dom; dom = dom.parentNode) {
-        if (dom.nodeName == "LI" && (match = /-(\d+)$/.exec(dom.id)) && +match[1] < options2.length) {
-          this.applyCompletion(view, options2[+match[1]]);
+      for (let dom = e.target, match2; dom && dom != this.dom; dom = dom.parentNode) {
+        if (dom.nodeName == "LI" && (match2 = /-(\d+)$/.exec(dom.id)) && +match2[1] < options2.length) {
+          this.applyCompletion(view, options2[+match2[1]]);
           e.preventDefault();
           return;
         }
@@ -58633,10 +57883,10 @@ var CompletionTooltip = class {
   mount() {
     this.updateSel();
   }
-  showOptions(options, id) {
+  showOptions(options, id3) {
     if (this.list)
       this.list.remove();
-    this.list = this.dom.appendChild(this.createListBox(options, id, this.range));
+    this.list = this.dom.appendChild(this.createListBox(options, id3, this.range));
     this.list.addEventListener("scroll", () => {
       if (this.info)
         this.view.requestMeasure(this.placeInfoReq);
@@ -58761,9 +58011,9 @@ var CompletionTooltip = class {
       }
     }
   }
-  createListBox(options, id, range) {
+  createListBox(options, id3, range) {
     const ul = document.createElement("ul");
-    ul.id = id;
+    ul.id = id3;
     ul.setAttribute("role", "listbox");
     ul.setAttribute("aria-expanded", "true");
     ul.setAttribute("aria-label", this.view.state.phrase("Completions"));
@@ -58773,7 +58023,7 @@ var CompletionTooltip = class {
     });
     let curSection = null;
     for (let i = range.from; i < range.to; i++) {
-      let { completion, match } = options[i], { section } = completion;
+      let { completion, match: match2 } = options[i], { section } = completion;
       if (section) {
         let name2 = typeof section == "string" ? section : section.name;
         if (name2 != curSection && (i > range.from || range.from == 0)) {
@@ -58787,13 +58037,13 @@ var CompletionTooltip = class {
         }
       }
       const li = ul.appendChild(document.createElement("li"));
-      li.id = id + "-" + i;
+      li.id = id3 + "-" + i;
       li.setAttribute("role", "option");
       let cls = this.optionClass(completion);
       if (cls)
         li.className = cls;
       for (let source of this.optionContent) {
-        let node = source(completion, this.view.state, this.view, match);
+        let node = source(completion, this.view.state, this.view, match2);
         if (node)
           li.appendChild(node);
       }
@@ -58819,9 +58069,9 @@ var CompletionTooltip = class {
 function completionTooltip(stateField, applyCompletion2) {
   return (view) => new CompletionTooltip(view, stateField, applyCompletion2);
 }
-function scrollIntoView2(container, element) {
+function scrollIntoView2(container, element2) {
   let parent = container.getBoundingClientRect();
-  let self2 = element.getBoundingClientRect();
+  let self2 = element2.getBoundingClientRect();
   let scaleY = parent.height / container.offsetHeight;
   if (self2.top < parent.top)
     container.scrollTop -= (parent.top - self2.top) / scaleY;
@@ -58854,12 +58104,12 @@ function sortOptions(active, state) {
           addOption(new Option(option, a.source, getMatch ? getMatch(option) : [], 1e9 - options.length));
         }
       } else {
-        let pattern = state.sliceDoc(a.from, a.to), match;
+        let pattern = state.sliceDoc(a.from, a.to), match2;
         let matcher = conf.filterStrict ? new StrictMatcher(pattern) : new FuzzyMatcher(pattern);
         for (let option of a.result.options)
-          if (match = matcher.match(option.label)) {
-            let matched = !option.displayLabel ? match.matched : getMatch ? getMatch(option, match.matched) : [];
-            addOption(new Option(option, a.source, matched, match.score + (option.boost || 0)));
+          if (match2 = matcher.match(option.label)) {
+            let matched = !option.displayLabel ? match2.matched : getMatch ? getMatch(option, match2.matched) : [];
+            addOption(new Option(option, a.source, matched, match2.score + (option.boost || 0)));
           }
       }
     }
@@ -58900,10 +58150,10 @@ var CompletionDialog = class _CompletionDialog {
     this.selected = selected;
     this.disabled = disabled;
   }
-  setSelected(selected, id) {
-    return selected == this.selected || selected >= this.options.length ? this : new _CompletionDialog(this.options, makeAttrs(id, selected), this.tooltip, this.timestamp, selected, this.disabled);
+  setSelected(selected, id3) {
+    return selected == this.selected || selected >= this.options.length ? this : new _CompletionDialog(this.options, makeAttrs(id3, selected), this.tooltip, this.timestamp, selected, this.disabled);
   }
-  static build(active, state, id, prev, conf, didSetActive) {
+  static build(active, state, id3, prev, conf, didSetActive) {
     if (prev && !didSetActive && active.some((s) => s.isPending))
       return prev.setDisabled();
     let options = sortOptions(active, state);
@@ -58918,7 +58168,7 @@ var CompletionDialog = class _CompletionDialog {
           break;
         }
     }
-    return new _CompletionDialog(options, makeAttrs(id, selected), {
+    return new _CompletionDialog(options, makeAttrs(id3, selected), {
       pos: active.reduce((a, b) => b.hasResult() ? Math.min(a, b.from) : a, 1e8),
       create: createTooltip,
       above: conf.aboveCursor
@@ -58932,9 +58182,9 @@ var CompletionDialog = class _CompletionDialog {
   }
 };
 var CompletionState = class _CompletionState {
-  constructor(active, id, open) {
+  constructor(active, id3, open) {
     this.active = active;
-    this.id = id;
+    this.id = id3;
     this.open = open;
   }
   static start() {
@@ -59000,14 +58250,14 @@ var baseAttrs = {
   "aria-autocomplete": "list"
 };
 var noAttrs2 = {};
-function makeAttrs(id, selected) {
+function makeAttrs(id3, selected) {
   let result = {
     "aria-autocomplete": "list",
     "aria-haspopup": "listbox",
-    "aria-controls": id
+    "aria-controls": id3
   };
   if (selected > -1)
-    result["aria-activedescendant"] = id + "-" + selected;
+    result["aria-activedescendant"] = id3 + "-" + selected;
   return result;
 }
 var none2 = [];
@@ -59126,8 +58376,8 @@ var ActiveResult = class _ActiveResult extends ActiveSource {
 function checkValid(validFor, state, from2, to) {
   if (!validFor)
     return false;
-  let text = state.sliceDoc(from2, to);
-  return typeof validFor == "function" ? validFor(text, from2, to, state) : ensureAnchor(validFor, true).test(text);
+  let text2 = state.sliceDoc(from2, to);
+  return typeof validFor == "function" ? validFor(text2, from2, to, state) : ensureAnchor(validFor, true).test(text2);
 }
 var setActiveEffect = /* @__PURE__ */ StateEffect.define({
   map(sources, mapping) {
@@ -59498,7 +58748,7 @@ var baseTheme3 = /* @__PURE__ */ EditorView.baseTheme({
     "&:after": { content: "'abc'", fontSize: "50%", verticalAlign: "middle" }
   }
 });
-var defaults2 = {
+var defaults = {
   brackets: ["(", "[", "{", "'", '"'],
   before: ")]}:;>",
   stringPrefixes: []
@@ -59540,7 +58790,7 @@ function closing(ch) {
   return fromCodePoint(ch < 128 ? ch : ch + 1);
 }
 function config2(state, pos) {
-  return state.languageDataAt("closeBrackets", pos)[0] || defaults2;
+  return state.languageDataAt("closeBrackets", pos)[0] || defaults;
 }
 var android = typeof navigator == "object" && /* @__PURE__ */ /Android\b/.test(navigator.userAgent);
 var inputHandler2 = /* @__PURE__ */ EditorView.inputHandler.of((view, from2, to, insert2) => {
@@ -59555,38 +58805,13 @@ var inputHandler2 = /* @__PURE__ */ EditorView.inputHandler.of((view, from2, to,
   view.dispatch(tr);
   return true;
 });
-var deleteBracketPair = ({ state, dispatch }) => {
-  if (state.readOnly)
-    return false;
-  let conf = config2(state, state.selection.main.head);
-  let tokens2 = conf.brackets || defaults2.brackets;
-  let dont = null, changes = state.changeByRange((range) => {
-    if (range.empty) {
-      let before = prevChar(state.doc, range.head);
-      for (let token of tokens2) {
-        if (token == before && nextChar(state.doc, range.head) == closing(codePointAt2(token, 0)))
-          return {
-            changes: { from: range.head - token.length, to: range.head + token.length },
-            range: EditorSelection.cursor(range.head - token.length)
-          };
-      }
-    }
-    return { range: dont = range };
-  });
-  if (!dont)
-    dispatch(state.update(changes, { scrollIntoView: true, userEvent: "delete.backward" }));
-  return !dont;
-};
-var closeBracketsKeymap = [
-  { key: "Backspace", run: deleteBracketPair }
-];
 function insertBracket(state, bracket2) {
   let conf = config2(state, state.selection.main.head);
-  let tokens2 = conf.brackets || defaults2.brackets;
+  let tokens2 = conf.brackets || defaults.brackets;
   for (let tok of tokens2) {
     let closed = closing(codePointAt2(tok, 0));
     if (bracket2 == tok)
-      return closed == tok ? handleSame(state, tok, tokens2.indexOf(tok + tok + tok) > -1, conf) : handleOpen(state, tok, closed, conf.before || defaults2.before);
+      return closed == tok ? handleSame(state, tok, tokens2.indexOf(tok + tok + tok) > -1, conf) : handleOpen(state, tok, closed, conf.before || defaults.before);
     if (bracket2 == closed && closedBracketAt(state, state.selection.main.from))
       return handleClose(state, tok, closed);
   }
@@ -59603,10 +58828,6 @@ function closedBracketAt(state, pos) {
 function nextChar(doc2, pos) {
   let next = doc2.sliceString(pos, pos + 2);
   return next.slice(0, codePointSize2(codePointAt2(next, 0)));
-}
-function prevChar(doc2, pos) {
-  let prev = doc2.sliceString(pos - 2, pos);
-  return codePointSize2(codePointAt2(prev, 0)) == prev.length ? prev : prev.slice(1);
 }
 function handleOpen(state, open, close, closeBefore) {
   let dont = null, changes = state.changeByRange((range) => {
@@ -59645,7 +58866,7 @@ function handleClose(state, _open, close) {
   });
 }
 function handleSame(state, token, allowTriple, config3) {
-  let stringPrefixes = config3.stringPrefixes || defaults2.stringPrefixes;
+  let stringPrefixes = config3.stringPrefixes || defaults.stringPrefixes;
   let dont = null, changes = state.changeByRange((range) => {
     if (!range.empty)
       return {
@@ -59881,11 +59102,11 @@ function inString(ch, str) {
   return false;
 }
 var Space = " 	\r\n";
-function keywords(keywords2, types2, builtin) {
+function keywords(keywords21, types2, builtin) {
   let result = /* @__PURE__ */ Object.create(null);
   result["true"] = result["false"] = Bool;
   result["null"] = result["unknown"] = Null;
-  for (let kw of keywords2.split(" "))
+  for (let kw of keywords21.split(" "))
     if (kw)
       result[kw] = Keyword;
   for (let tp of types2.split(" "))
@@ -59898,7 +59119,7 @@ function keywords(keywords2, types2, builtin) {
 }
 var SQLTypes = "array binary bit boolean char character clob date decimal double float int integer interval large national nchar nclob numeric object precision real smallint time timestamp varchar varying ";
 var SQLKeywords = "absolute action add after all allocate alter and any are as asc assertion at authorization before begin between both breadth by call cascade cascaded case cast catalog check close collate collation column commit condition connect connection constraint constraints constructor continue corresponding count create cross cube current current_date current_default_transform_group current_transform_group_for_type current_path current_role current_time current_timestamp current_user cursor cycle data day deallocate declare default deferrable deferred delete depth deref desc describe descriptor deterministic diagnostics disconnect distinct do domain drop dynamic each else elseif end end-exec equals escape except exception exec execute exists exit external fetch first for foreign found from free full function general get global go goto grant group grouping handle having hold hour identity if immediate in indicator initially inner inout input insert intersect into is isolation join key language last lateral leading leave left level like limit local localtime localtimestamp locator loop map match method minute modifies module month names natural nesting new next no none not of old on only open option or order ordinality out outer output overlaps pad parameter partial path prepare preserve primary prior privileges procedure public read reads recursive redo ref references referencing relative release repeat resignal restrict result return returns revoke right role rollback rollup routine row rows savepoint schema scroll search second section select session session_user set sets signal similar size some space specific specifictype sql sqlexception sqlstate sqlwarning start state static system_user table temporary then timezone_hour timezone_minute to trailing transaction translation treat trigger under undo union unique unnest until update usage user using value values view when whenever where while with without work write year zone ";
-var defaults3 = {
+var defaults2 = {
   backslashEscapes: false,
   hashComments: false,
   spaceAfterDashes: false,
@@ -59917,8 +59138,8 @@ var defaults3 = {
 };
 function dialect(spec, kws, types2, builtin) {
   let dialect2 = {};
-  for (let prop in defaults3)
-    dialect2[prop] = (spec.hasOwnProperty(prop) ? spec : defaults3)[prop];
+  for (let prop in defaults2)
+    dialect2[prop] = (spec.hasOwnProperty(prop) ? spec : defaults2)[prop];
   if (kws)
     dialect2.words = keywords(kws, types2 || "", builtin);
   return dialect2;
@@ -60055,7 +59276,7 @@ function tokensFor(d) {
     }
   });
 }
-var tokens = /* @__PURE__ */ tokensFor(defaults3);
+var tokens = /* @__PURE__ */ tokensFor(defaults2);
 var parser$1 = /* @__PURE__ */ LRParser.deserialize({
   version: 14,
   states: "%vQ]QQOOO#wQRO'#DSO$OQQO'#CwO%eQQO'#CxO%lQQO'#CyO%sQQO'#CzOOQQ'#DS'#DSOOQQ'#C}'#C}O'UQRO'#C{OOQQ'#Cv'#CvOOQQ'#C|'#C|Q]QQOOQOQQOOO'`QQO'#DOO(xQRO,59cO)PQQO,59cO)UQQO'#DSOOQQ,59d,59dO)cQQO,59dOOQQ,59e,59eO)jQQO,59eOOQQ,59f,59fO)qQQO,59fOOQQ-E6{-E6{OOQQ,59b,59bOOQQ-E6z-E6zOOQQ,59j,59jOOQQ-E6|-E6|O+VQRO1G.}O+^QQO,59cOOQQ1G/O1G/OOOQQ1G/P1G/POOQQ1G/Q1G/QP+kQQO'#C}O+rQQO1G.}O)PQQO,59cO,PQQO'#Cw",
@@ -60080,22 +59301,22 @@ function tokenBefore(tree) {
   return cursor.node;
 }
 function idName(doc2, node) {
-  let text = doc2.sliceString(node.from, node.to);
-  let quoted = /^([`'"])(.*)\1$/.exec(text);
-  return quoted ? quoted[2] : text;
+  let text2 = doc2.sliceString(node.from, node.to);
+  let quoted = /^([`'"])(.*)\1$/.exec(text2);
+  return quoted ? quoted[2] : text2;
 }
 function plainID(node) {
   return node && (node.name == "Identifier" || node.name == "QuotedIdentifier");
 }
-function pathFor(doc2, id) {
-  if (id.name == "CompositeIdentifier") {
+function pathFor(doc2, id3) {
+  if (id3.name == "CompositeIdentifier") {
     let path = [];
-    for (let ch = id.firstChild; ch; ch = ch.nextSibling)
+    for (let ch = id3.firstChild; ch; ch = ch.nextSibling)
       if (plainID(ch))
         path.push(idName(doc2, ch));
     return path;
   }
-  return [idName(doc2, id)];
+  return [idName(doc2, id3)];
 }
 function parentsFor(doc2, node) {
   for (let path = []; ; ) {
@@ -60278,8 +59499,8 @@ function completeFromSchema(schema, tables, schemas, defaultTableName, defaultSc
 function completionType(tokenType) {
   return tokenType == Type2 ? "type" : tokenType == Keyword ? "keyword" : "variable";
 }
-function completeKeywords(keywords2, upperCase, build) {
-  let completions = Object.keys(keywords2).map((keyword2) => build(upperCase ? keyword2.toUpperCase() : keyword2, completionType(keywords2[keyword2])));
+function completeKeywords(keywords21, upperCase, build) {
+  let completions = Object.keys(keywords21).map((keyword2) => build(upperCase ? keyword2.toUpperCase() : keyword2, completionType(keywords21[keyword2])));
   return ifNotIn(["QuotedIdentifier", "SpecialVar", "String", "LineComment", "BlockComment", "."], completeFromList(completions));
 }
 var parser = /* @__PURE__ */ parser$1.configure({
@@ -60523,9 +59744,9 @@ function selectedLineRanges(state) {
     let toLine = r.to <= fromLine.to ? fromLine : state.doc.lineAt(r.to);
     if (toLine.from > fromLine.from && toLine.from == r.to)
       toLine = r.to == fromLine.to + 1 ? fromLine : state.doc.lineAt(r.to - 1);
-    let last2 = ranges.length - 1;
-    if (last2 >= 0 && ranges[last2].to > fromLine.from)
-      ranges[last2].to = toLine.to;
+    let last3 = ranges.length - 1;
+    if (last3 >= 0 && ranges[last3].to > fromLine.from)
+      ranges[last3].to = toLine.to;
     else
       ranges.push({ from: fromLine.from + /^\s*/.exec(fromLine.text)[0].length, to: toLine.to });
   }
@@ -60544,9 +59765,9 @@ function changeBlockComment(option, state, ranges = state.selection.ranges) {
     })) };
   } else if (option != 1 && comments.some((c) => c)) {
     let changes = [];
-    for (let i = 0, comment2; i < comments.length; i++)
-      if (comment2 = comments[i]) {
-        let token = tokens2[i], { open, close } = comment2;
+    for (let i = 0, comment3; i < comments.length; i++)
+      if (comment3 = comments[i]) {
+        let token = tokens2[i], { open, close } = comment3;
         changes.push({ from: open.pos - token.open.length, to: open.pos + open.margin }, { from: close.pos - close.margin, to: close.pos + token.close.length });
       }
     return { changes };
@@ -60565,12 +59786,12 @@ function changeLineComment(option, state, ranges = state.selection.ranges) {
       let line = state.doc.lineAt(pos);
       if (line.from > prevLine && (from2 == to || to > line.from)) {
         prevLine = line.from;
-        let indent = /^\s*/.exec(line.text)[0].length;
-        let empty2 = indent == line.length;
-        let comment2 = line.text.slice(indent, indent + token.length) == token ? indent : -1;
-        if (indent < line.text.length && indent < minIndent)
-          minIndent = indent;
-        lines.push({ line, comment: comment2, token, indent, empty: empty2, single: false });
+        let indent2 = /^\s*/.exec(line.text)[0].length;
+        let empty2 = indent2 == line.length;
+        let comment3 = line.text.slice(indent2, indent2 + token.length) == token ? indent2 : -1;
+        if (indent2 < line.text.length && indent2 < minIndent)
+          minIndent = indent2;
+        lines.push({ line, comment: comment3, token, indent: indent2, empty: empty2, single: false });
       }
       pos = line.to + 1;
     }
@@ -60584,16 +59805,16 @@ function changeLineComment(option, state, ranges = state.selection.ranges) {
   }
   if (option != 2 && lines.some((l) => l.comment < 0 && (!l.empty || l.single))) {
     let changes = [];
-    for (let { line, token, indent, empty: empty2, single } of lines)
+    for (let { line, token, indent: indent2, empty: empty2, single } of lines)
       if (single || !empty2)
-        changes.push({ from: line.from + indent, insert: token + " " });
+        changes.push({ from: line.from + indent2, insert: token + " " });
     let changeSet = state.changes(changes);
     return { changes: changeSet, selection: state.selection.map(changeSet, 1) };
   } else if (option != 1 && lines.some((l) => l.comment >= 0)) {
     let changes = [];
-    for (let { line, comment: comment2, token } of lines)
-      if (comment2 >= 0) {
-        let from2 = line.from + comment2, to = from2 + token.length;
+    for (let { line, comment: comment3, token } of lines)
+      if (comment3 >= 0) {
+        let from2 = line.from + comment3, to = from2 + token.length;
         if (line.text[to - line.from] == " ")
           to++;
         changes.push({ from: from2, to });
@@ -60769,9 +59990,9 @@ function addSelection(branch, selection) {
   }
 }
 function popSelection(branch) {
-  let last2 = branch[branch.length - 1];
+  let last3 = branch[branch.length - 1];
   let newBranch = branch.slice();
-  newBranch[branch.length - 1] = last2.setSelAfter(last2.selectionsAfter.slice(0, last2.selectionsAfter.length - 1));
+  newBranch[branch.length - 1] = last3.setSelAfter(last3.selectionsAfter.slice(0, last3.selectionsAfter.length - 1));
   return newBranch;
 }
 function addMappingToBranch(branch, mapping) {
@@ -60822,8 +60043,8 @@ var HistoryState = class _HistoryState {
     return new _HistoryState(done, none3, time, userEvent);
   }
   addSelection(selection, time, userEvent, newGroupDelay) {
-    let last2 = this.done.length ? this.done[this.done.length - 1].selectionsAfter : none3;
-    if (last2.length > 0 && time - this.prevTime < newGroupDelay && userEvent == this.prevUserEvent && userEvent && /^select($|\.)/.test(userEvent) && eqSelectionShape(last2[last2.length - 1], selection))
+    let last3 = this.done.length ? this.done[this.done.length - 1].selectionsAfter : none3;
+    if (last3.length > 0 && time - this.prevTime < newGroupDelay && userEvent == this.prevUserEvent && userEvent && /^select($|\.)/.test(userEvent) && eqSelectionShape(last3[last3.length - 1], selection))
       return this;
     return new _HistoryState(addSelection(this.done, selection), this.undone, time, userEvent);
   }
@@ -60916,9 +60137,9 @@ function moveBySyntax(state, start2, forward) {
     else
       at = forward ? next.to : next.from;
   }
-  let bracket2 = pos.type.prop(bracketProp), match, newPos;
-  if (bracket2 && (match = forward ? matchBrackets(state, pos.from, 1) : matchBrackets(state, pos.to, -1)) && match.matched)
-    newPos = forward ? match.end.to : match.end.from;
+  let bracket2 = pos.type.prop(bracketProp), match2, newPos;
+  if (bracket2 && (match2 = forward ? matchBrackets(state, pos.from, 1) : matchBrackets(state, pos.to, -1)) && match2.matched)
+    newPos = forward ? match2.end.to : match2.end.from;
   else
     newPos = forward ? pos.to : pos.from;
   return EditorSelection.cursor(newPos, forward ? -1 : 1);
@@ -61335,16 +60556,16 @@ function newlineAndIndent(atEof) {
       if (atEof)
         from2 = to = (to <= line.to ? line : state.doc.lineAt(to)).to;
       let cx = new IndentContext(state, { simulateBreak: from2, simulateDoubleBreak: !!explode });
-      let indent = getIndentation(cx, from2);
-      if (indent == null)
-        indent = countColumn(/^\s*/.exec(state.doc.lineAt(from2).text)[0], state.tabSize);
+      let indent2 = getIndentation(cx, from2);
+      if (indent2 == null)
+        indent2 = countColumn(/^\s*/.exec(state.doc.lineAt(from2).text)[0], state.tabSize);
       while (to < line.to && /\s/.test(line.text[to - line.from]))
         to++;
       if (explode)
         ({ from: from2, to } = explode);
       else if (from2 > line.from && from2 < line.from + 100 && !/\S/.test(line.text.slice(0, from2)))
         from2 = line.from;
-      let insert2 = ["", indentString(state, indent)];
+      let insert2 = ["", indentString(state, indent2)];
       if (explode)
         insert2.push(indentString(state, cx.lineIndent(line.from, -1)));
       return {
@@ -61384,15 +60605,15 @@ var indentSelection = ({ state, dispatch }) => {
     return found == null ? -1 : found;
   } });
   let changes = changeBySelectedLine(state, (line, changes2, range) => {
-    let indent = getIndentation(context2, line.from);
-    if (indent == null)
+    let indent2 = getIndentation(context2, line.from);
+    if (indent2 == null)
       return;
     if (!/\S/.test(line.text))
-      indent = 0;
+      indent2 = 0;
     let cur2 = /^\s*/.exec(line.text)[0];
-    let norm = indentString(state, indent);
+    let norm = indentString(state, indent2);
     if (cur2 != norm || range.from < line.from + cur2.length) {
-      updated[line.from] = indent;
+      updated[line.from] = indent2;
       changes2.push({ from: line.from, to: line.from + cur2.length, insert: norm });
     }
   });
@@ -61507,14 +60728,14 @@ var SearchCursor = class {
   [`.normalize("NFKD")`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize)
   (when supported).
   */
-  constructor(text, query, from2 = 0, to = text.length, normalize, test) {
+  constructor(text2, query, from2 = 0, to = text2.length, normalize, test) {
     this.test = test;
     this.value = { from: 0, to: 0 };
     this.done = false;
     this.matches = [];
     this.buffer = "";
     this.bufferPos = 0;
-    this.iter = text.iterRange(from2, to);
+    this.iter = text2.iterRange(from2, to);
     this.bufferStart = from2;
     this.normalize = normalize ? (x) => normalize(basicNormalize(x)) : basicNormalize;
     this.query = this.normalize(query);
@@ -61559,10 +60780,10 @@ var SearchCursor = class {
       if (norm.length)
         for (let i = 0, pos = start2; ; i++) {
           let code = norm.charCodeAt(i);
-          let match = this.match(code, pos, this.bufferPos + this.bufferStart);
+          let match2 = this.match(code, pos, this.bufferPos + this.bufferStart);
           if (i == norm.length - 1) {
-            if (match) {
-              this.value = match;
+            if (match2) {
+              this.value = match2;
               return this;
             }
             break;
@@ -61573,12 +60794,12 @@ var SearchCursor = class {
     }
   }
   match(code, pos, end2) {
-    let match = null;
+    let match2 = null;
     for (let i = 0; i < this.matches.length; i += 2) {
       let index = this.matches[i], keep = false;
       if (this.query.charCodeAt(index) == code) {
         if (index == this.query.length - 1) {
-          match = { from: this.matches[i + 1], to: end2 };
+          match2 = { from: this.matches[i + 1], to: end2 };
         } else {
           this.matches[i]++;
           keep = true;
@@ -61591,13 +60812,13 @@ var SearchCursor = class {
     }
     if (this.query.charCodeAt(0) == code) {
       if (this.query.length == 1)
-        match = { from: pos, to: end2 };
+        match2 = { from: pos, to: end2 };
       else
         this.matches.push(1, pos);
     }
-    if (match && this.test && !this.test(match.from, match.to, this.buffer, this.bufferStart))
-      match = null;
-    return match;
+    if (match2 && this.test && !this.test(match2.from, match2.to, this.buffer, this.bufferStart))
+      match2 = null;
+    return match2;
   }
 };
 if (typeof Symbol != "undefined")
@@ -61612,20 +60833,20 @@ var RegExpCursor = class {
   document. `query` should be the raw pattern (as you'd pass it to
   `new RegExp`).
   */
-  constructor(text, query, options, from2 = 0, to = text.length) {
-    this.text = text;
+  constructor(text2, query, options, from2 = 0, to = text2.length) {
+    this.text = text2;
     this.to = to;
     this.curLine = "";
     this.done = false;
     this.value = empty;
     if (/\\[sWDnr]|\n|\r|\[\^/.test(query))
-      return new MultilineRegExpCursor(text, query, options, from2, to);
+      return new MultilineRegExpCursor(text2, query, options, from2, to);
     this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
     this.test = options === null || options === void 0 ? void 0 : options.test;
-    this.iter = text.iter();
-    let startLine = text.lineAt(from2);
+    this.iter = text2.iter();
+    let startLine = text2.lineAt(from2);
     this.curLineStart = startLine.from;
-    this.matchPos = toCharEnd(text, from2);
+    this.matchPos = toCharEnd(text2, from2);
     this.getLine(this.curLineStart);
   }
   getLine(skip2) {
@@ -61652,14 +60873,14 @@ var RegExpCursor = class {
   next() {
     for (let off = this.matchPos - this.curLineStart; ; ) {
       this.re.lastIndex = off;
-      let match = this.matchPos <= this.to && this.re.exec(this.curLine);
-      if (match) {
-        let from2 = this.curLineStart + match.index, to = from2 + match[0].length;
+      let match2 = this.matchPos <= this.to && this.re.exec(this.curLine);
+      if (match2) {
+        let from2 = this.curLineStart + match2.index, to = from2 + match2[0].length;
         this.matchPos = toCharEnd(this.text, to + (from2 == to ? 1 : 0));
         if (from2 == this.curLineStart + this.curLine.length)
           this.nextLine();
-        if ((from2 < to || from2 > this.value.to) && (!this.test || this.test(from2, to, match))) {
-          this.value = { from: from2, to, match };
+        if ((from2 < to || from2 > this.value.to) && (!this.test || this.test(from2, to, match2))) {
+          this.value = { from: from2, to, match: match2 };
           return this;
         }
         off = this.matchPos - this.curLineStart;
@@ -61675,9 +60896,9 @@ var RegExpCursor = class {
 };
 var flattened = /* @__PURE__ */ new WeakMap();
 var FlattenedDoc = class _FlattenedDoc {
-  constructor(from2, text) {
+  constructor(from2, text2) {
     this.from = from2;
-    this.text = text;
+    this.text = text2;
   }
   get to() {
     return this.from + this.text.length;
@@ -61691,27 +60912,27 @@ var FlattenedDoc = class _FlattenedDoc {
     }
     if (cached.from == from2 && cached.to == to)
       return cached;
-    let { text, from: cachedFrom } = cached;
+    let { text: text2, from: cachedFrom } = cached;
     if (cachedFrom > from2) {
-      text = doc2.sliceString(from2, cachedFrom) + text;
+      text2 = doc2.sliceString(from2, cachedFrom) + text2;
       cachedFrom = from2;
     }
     if (cached.to < to)
-      text += doc2.sliceString(cached.to, to);
-    flattened.set(doc2, new _FlattenedDoc(cachedFrom, text));
-    return new _FlattenedDoc(from2, text.slice(from2 - cachedFrom, to - cachedFrom));
+      text2 += doc2.sliceString(cached.to, to);
+    flattened.set(doc2, new _FlattenedDoc(cachedFrom, text2));
+    return new _FlattenedDoc(from2, text2.slice(from2 - cachedFrom, to - cachedFrom));
   }
 };
 var MultilineRegExpCursor = class {
-  constructor(text, query, options, from2, to) {
-    this.text = text;
+  constructor(text2, query, options, from2, to) {
+    this.text = text2;
     this.to = to;
     this.done = false;
     this.value = empty;
-    this.matchPos = toCharEnd(text, from2);
+    this.matchPos = toCharEnd(text2, from2);
     this.re = new RegExp(query, baseFlags + ((options === null || options === void 0 ? void 0 : options.ignoreCase) ? "i" : ""));
     this.test = options === null || options === void 0 ? void 0 : options.test;
-    this.flat = FlattenedDoc.get(text, from2, this.chunkEnd(
+    this.flat = FlattenedDoc.get(text2, from2, this.chunkEnd(
       from2 + 5e3
       /* Chunk.Base */
     ));
@@ -61722,15 +60943,15 @@ var MultilineRegExpCursor = class {
   next() {
     for (; ; ) {
       let off = this.re.lastIndex = this.matchPos - this.flat.from;
-      let match = this.re.exec(this.flat.text);
-      if (match && !match[0] && match.index == off) {
+      let match2 = this.re.exec(this.flat.text);
+      if (match2 && !match2[0] && match2.index == off) {
         this.re.lastIndex = off + 1;
-        match = this.re.exec(this.flat.text);
+        match2 = this.re.exec(this.flat.text);
       }
-      if (match) {
-        let from2 = this.flat.from + match.index, to = from2 + match[0].length;
-        if ((this.flat.to >= this.to || match.index + match[0].length <= this.flat.text.length - 10) && (!this.test || this.test(from2, to, match))) {
-          this.value = { from: from2, to, match };
+      if (match2) {
+        let from2 = this.flat.from + match2.index, to = from2 + match2[0].length;
+        if ((this.flat.to >= this.to || match2.index + match2[0].length <= this.flat.text.length - 10) && (!this.test || this.test(from2, to, match2))) {
+          this.value = { from: from2, to, match: match2 };
           this.matchPos = toCharEnd(this.text, to + (from2 == to ? 1 : 0));
           return this;
         }
@@ -61748,119 +60969,14 @@ if (typeof Symbol != "undefined") {
     return this;
   };
 }
-function validRegExp(source) {
-  try {
-    new RegExp(source, baseFlags);
-    return true;
-  } catch (_a2) {
-    return false;
-  }
-}
-function toCharEnd(text, pos) {
-  if (pos >= text.length)
+function toCharEnd(text2, pos) {
+  if (pos >= text2.length)
     return pos;
-  let line = text.lineAt(pos), next;
+  let line = text2.lineAt(pos), next;
   while (pos < line.to && (next = line.text.charCodeAt(pos - line.from)) >= 56320 && next < 57344)
     pos++;
   return pos;
 }
-function createLineDialog(view) {
-  let line = String(view.state.doc.lineAt(view.state.selection.main.head).number);
-  let input2 = crelt("input", { class: "cm-textfield", name: "line", value: line });
-  let dom = crelt("form", {
-    class: "cm-gotoLine",
-    onkeydown: (event) => {
-      if (event.keyCode == 27) {
-        event.preventDefault();
-        view.dispatch({ effects: dialogEffect.of(false) });
-        view.focus();
-      } else if (event.keyCode == 13) {
-        event.preventDefault();
-        go();
-      }
-    },
-    onsubmit: (event) => {
-      event.preventDefault();
-      go();
-    }
-  }, crelt("label", view.state.phrase("Go to line"), ": ", input2), " ", crelt("button", { class: "cm-button", type: "submit" }, view.state.phrase("go")), crelt("button", {
-    name: "close",
-    onclick: () => {
-      view.dispatch({ effects: dialogEffect.of(false) });
-      view.focus();
-    },
-    "aria-label": view.state.phrase("close"),
-    type: "button"
-  }, ["\xD7"]));
-  function go() {
-    let match = /^([+-])?(\d+)?(:\d+)?(%)?$/.exec(input2.value);
-    if (!match)
-      return;
-    let { state } = view, startLine = state.doc.lineAt(state.selection.main.head);
-    let [, sign, ln, cl, percent] = match;
-    let col = cl ? +cl.slice(1) : 0;
-    let line2 = ln ? +ln : startLine.number;
-    if (ln && percent) {
-      let pc = line2 / 100;
-      if (sign)
-        pc = pc * (sign == "-" ? -1 : 1) + startLine.number / state.doc.lines;
-      line2 = Math.round(state.doc.lines * pc);
-    } else if (ln && sign) {
-      line2 = line2 * (sign == "-" ? -1 : 1) + startLine.number;
-    }
-    let docLine = state.doc.line(Math.max(1, Math.min(state.doc.lines, line2)));
-    let selection = EditorSelection.cursor(docLine.from + Math.max(0, Math.min(col, docLine.length)));
-    view.dispatch({
-      effects: [dialogEffect.of(false), EditorView.scrollIntoView(selection.from, { y: "center" })],
-      selection
-    });
-    view.focus();
-  }
-  return { dom };
-}
-var dialogEffect = /* @__PURE__ */ StateEffect.define();
-var dialogField = /* @__PURE__ */ StateField.define({
-  create() {
-    return true;
-  },
-  update(value, tr) {
-    for (let e of tr.effects)
-      if (e.is(dialogEffect))
-        value = e.value;
-    return value;
-  },
-  provide: (f) => showPanel.from(f, (val) => val ? createLineDialog : null)
-});
-var gotoLine = (view) => {
-  let panel = getPanel(view, createLineDialog);
-  if (!panel) {
-    let effects = [dialogEffect.of(true)];
-    if (view.state.field(dialogField, false) == null)
-      effects.push(StateEffect.appendConfig.of([dialogField, baseTheme$13]));
-    view.dispatch({ effects });
-    panel = getPanel(view, createLineDialog);
-  }
-  if (panel)
-    panel.dom.querySelector("input").select();
-  return true;
-};
-var baseTheme$13 = /* @__PURE__ */ EditorView.baseTheme({
-  ".cm-panel.cm-gotoLine": {
-    padding: "2px 6px 4px",
-    position: "relative",
-    "& label": { fontSize: "80%" },
-    "& [name=close]": {
-      position: "absolute",
-      top: "0",
-      bottom: "0",
-      right: "4px",
-      backgroundColor: "inherit",
-      border: "none",
-      font: "inherit",
-      padding: "0"
-    }
-  }
-});
 var defaultHighlightOptions = {
   highlightWordAroundCursor: false,
   minSelectionLength: 1,
@@ -61951,1246 +61067,16 @@ var defaultTheme = /* @__PURE__ */ EditorView.baseTheme({
   ".cm-selectionMatch": { backgroundColor: "#99ff7780" },
   ".cm-searchMatch .cm-selectionMatch": { backgroundColor: "transparent" }
 });
-var selectWord = ({ state, dispatch }) => {
-  let { selection } = state;
-  let newSel = EditorSelection.create(selection.ranges.map((range) => state.wordAt(range.head) || EditorSelection.cursor(range.head)), selection.mainIndex);
-  if (newSel.eq(selection))
-    return false;
-  dispatch(state.update({ selection: newSel }));
-  return true;
-};
-function findNextOccurrence(state, query) {
-  let { main: main2, ranges } = state.selection;
-  let word = state.wordAt(main2.head), fullWord = word && word.from == main2.from && word.to == main2.to;
-  for (let cycled = false, cursor = new SearchCursor(state.doc, query, ranges[ranges.length - 1].to); ; ) {
-    cursor.next();
-    if (cursor.done) {
-      if (cycled)
-        return null;
-      cursor = new SearchCursor(state.doc, query, 0, Math.max(0, ranges[ranges.length - 1].from - 1));
-      cycled = true;
-    } else {
-      if (cycled && ranges.some((r) => r.from == cursor.value.from))
-        continue;
-      if (fullWord) {
-        let word2 = state.wordAt(cursor.value.from);
-        if (!word2 || word2.from != cursor.value.from || word2.to != cursor.value.to)
-          continue;
-      }
-      return cursor.value;
-    }
-  }
-}
-var selectNextOccurrence = ({ state, dispatch }) => {
-  let { ranges } = state.selection;
-  if (ranges.some((sel) => sel.from === sel.to))
-    return selectWord({ state, dispatch });
-  let searchedText = state.sliceDoc(ranges[0].from, ranges[0].to);
-  if (state.selection.ranges.some((r) => state.sliceDoc(r.from, r.to) != searchedText))
-    return false;
-  let range = findNextOccurrence(state, searchedText);
-  if (!range)
-    return false;
-  dispatch(state.update({
-    selection: state.selection.addRange(EditorSelection.range(range.from, range.to), false),
-    effects: EditorView.scrollIntoView(range.to)
-  }));
-  return true;
-};
-var searchConfigFacet = /* @__PURE__ */ Facet.define({
-  combine(configs) {
-    return combineConfig(configs, {
-      top: false,
-      caseSensitive: false,
-      literal: false,
-      regexp: false,
-      wholeWord: false,
-      createPanel: (view) => new SearchPanel(view),
-      scrollToMatch: (range) => EditorView.scrollIntoView(range)
-    });
-  }
-});
-var SearchQuery = class {
-  /**
-  Create a query object.
-  */
-  constructor(config3) {
-    this.search = config3.search;
-    this.caseSensitive = !!config3.caseSensitive;
-    this.literal = !!config3.literal;
-    this.regexp = !!config3.regexp;
-    this.replace = config3.replace || "";
-    this.valid = !!this.search && (!this.regexp || validRegExp(this.search));
-    this.unquoted = this.unquote(this.search);
-    this.wholeWord = !!config3.wholeWord;
-  }
-  /**
-  @internal
-  */
-  unquote(text) {
-    return this.literal ? text : text.replace(/\\([nrt\\])/g, (_, ch) => ch == "n" ? "\n" : ch == "r" ? "\r" : ch == "t" ? "	" : "\\");
-  }
-  /**
-  Compare this query to another query.
-  */
-  eq(other) {
-    return this.search == other.search && this.replace == other.replace && this.caseSensitive == other.caseSensitive && this.regexp == other.regexp && this.wholeWord == other.wholeWord;
-  }
-  /**
-  @internal
-  */
-  create() {
-    return this.regexp ? new RegExpQuery(this) : new StringQuery(this);
-  }
-  /**
-  Get a search cursor for this query, searching through the given
-  range in the given state.
-  */
-  getCursor(state, from2 = 0, to) {
-    let st = state.doc ? state : EditorState.create({ doc: state });
-    if (to == null)
-      to = st.doc.length;
-    return this.regexp ? regexpCursor(this, st, from2, to) : stringCursor(this, st, from2, to);
-  }
-};
-var QueryType2 = class {
-  constructor(spec) {
-    this.spec = spec;
-  }
-};
-function stringCursor(spec, state, from2, to) {
-  return new SearchCursor(state.doc, spec.unquoted, from2, to, spec.caseSensitive ? void 0 : (x) => x.toLowerCase(), spec.wholeWord ? stringWordTest(state.doc, state.charCategorizer(state.selection.main.head)) : void 0);
-}
-function stringWordTest(doc2, categorizer) {
-  return (from2, to, buf, bufPos) => {
-    if (bufPos > from2 || bufPos + buf.length < to) {
-      bufPos = Math.max(0, from2 - 2);
-      buf = doc2.sliceString(bufPos, Math.min(doc2.length, to + 2));
-    }
-    return (categorizer(charBefore(buf, from2 - bufPos)) != CharCategory.Word || categorizer(charAfter(buf, from2 - bufPos)) != CharCategory.Word) && (categorizer(charAfter(buf, to - bufPos)) != CharCategory.Word || categorizer(charBefore(buf, to - bufPos)) != CharCategory.Word);
-  };
-}
-var StringQuery = class extends QueryType2 {
-  constructor(spec) {
-    super(spec);
-  }
-  nextMatch(state, curFrom, curTo) {
-    let cursor = stringCursor(this.spec, state, curTo, state.doc.length).nextOverlapping();
-    if (cursor.done) {
-      let end2 = Math.min(state.doc.length, curFrom + this.spec.unquoted.length);
-      cursor = stringCursor(this.spec, state, 0, end2).nextOverlapping();
-    }
-    return cursor.done || cursor.value.from == curFrom && cursor.value.to == curTo ? null : cursor.value;
-  }
-  // Searching in reverse is, rather than implementing an inverted search
-  // cursor, done by scanning chunk after chunk forward.
-  prevMatchInRange(state, from2, to) {
-    for (let pos = to; ; ) {
-      let start2 = Math.max(from2, pos - 1e4 - this.spec.unquoted.length);
-      let cursor = stringCursor(this.spec, state, start2, pos), range = null;
-      while (!cursor.nextOverlapping().done)
-        range = cursor.value;
-      if (range)
-        return range;
-      if (start2 == from2)
-        return null;
-      pos -= 1e4;
-    }
-  }
-  prevMatch(state, curFrom, curTo) {
-    let found = this.prevMatchInRange(state, 0, curFrom);
-    if (!found)
-      found = this.prevMatchInRange(state, Math.max(0, curTo - this.spec.unquoted.length), state.doc.length);
-    return found && (found.from != curFrom || found.to != curTo) ? found : null;
-  }
-  getReplacement(_result) {
-    return this.spec.unquote(this.spec.replace);
-  }
-  matchAll(state, limit) {
-    let cursor = stringCursor(this.spec, state, 0, state.doc.length), ranges = [];
-    while (!cursor.next().done) {
-      if (ranges.length >= limit)
-        return null;
-      ranges.push(cursor.value);
-    }
-    return ranges;
-  }
-  highlight(state, from2, to, add2) {
-    let cursor = stringCursor(this.spec, state, Math.max(0, from2 - this.spec.unquoted.length), Math.min(to + this.spec.unquoted.length, state.doc.length));
-    while (!cursor.next().done)
-      add2(cursor.value.from, cursor.value.to);
-  }
-};
-function regexpCursor(spec, state, from2, to) {
-  return new RegExpCursor(state.doc, spec.search, {
-    ignoreCase: !spec.caseSensitive,
-    test: spec.wholeWord ? regexpWordTest(state.charCategorizer(state.selection.main.head)) : void 0
-  }, from2, to);
-}
-function charBefore(str, index) {
-  return str.slice(findClusterBreak2(str, index, false), index);
-}
-function charAfter(str, index) {
-  return str.slice(index, findClusterBreak2(str, index));
-}
-function regexpWordTest(categorizer) {
-  return (_from, _to, match) => !match[0].length || (categorizer(charBefore(match.input, match.index)) != CharCategory.Word || categorizer(charAfter(match.input, match.index)) != CharCategory.Word) && (categorizer(charAfter(match.input, match.index + match[0].length)) != CharCategory.Word || categorizer(charBefore(match.input, match.index + match[0].length)) != CharCategory.Word);
-}
-var RegExpQuery = class extends QueryType2 {
-  nextMatch(state, curFrom, curTo) {
-    let cursor = regexpCursor(this.spec, state, curTo, state.doc.length).next();
-    if (cursor.done)
-      cursor = regexpCursor(this.spec, state, 0, curFrom).next();
-    return cursor.done ? null : cursor.value;
-  }
-  prevMatchInRange(state, from2, to) {
-    for (let size = 1; ; size++) {
-      let start2 = Math.max(
-        from2,
-        to - size * 1e4
-        /* FindPrev.ChunkSize */
-      );
-      let cursor = regexpCursor(this.spec, state, start2, to), range = null;
-      while (!cursor.next().done)
-        range = cursor.value;
-      if (range && (start2 == from2 || range.from > start2 + 10))
-        return range;
-      if (start2 == from2)
-        return null;
-    }
-  }
-  prevMatch(state, curFrom, curTo) {
-    return this.prevMatchInRange(state, 0, curFrom) || this.prevMatchInRange(state, curTo, state.doc.length);
-  }
-  getReplacement(result) {
-    return this.spec.unquote(this.spec.replace).replace(/\$([$&]|\d+)/g, (m, i) => {
-      if (i == "&")
-        return result.match[0];
-      if (i == "$")
-        return "$";
-      for (let l = i.length; l > 0; l--) {
-        let n = +i.slice(0, l);
-        if (n > 0 && n < result.match.length)
-          return result.match[n] + i.slice(l);
-      }
-      return m;
-    });
-  }
-  matchAll(state, limit) {
-    let cursor = regexpCursor(this.spec, state, 0, state.doc.length), ranges = [];
-    while (!cursor.next().done) {
-      if (ranges.length >= limit)
-        return null;
-      ranges.push(cursor.value);
-    }
-    return ranges;
-  }
-  highlight(state, from2, to, add2) {
-    let cursor = regexpCursor(this.spec, state, Math.max(
-      0,
-      from2 - 250
-      /* RegExp.HighlightMargin */
-    ), Math.min(to + 250, state.doc.length));
-    while (!cursor.next().done)
-      add2(cursor.value.from, cursor.value.to);
-  }
-};
-var setSearchQuery = /* @__PURE__ */ StateEffect.define();
-var togglePanel = /* @__PURE__ */ StateEffect.define();
-var searchState = /* @__PURE__ */ StateField.define({
-  create(state) {
-    return new SearchState(defaultQuery(state).create(), null);
-  },
-  update(value, tr) {
-    for (let effect5 of tr.effects) {
-      if (effect5.is(setSearchQuery))
-        value = new SearchState(effect5.value.create(), value.panel);
-      else if (effect5.is(togglePanel))
-        value = new SearchState(value.query, effect5.value ? createSearchPanel : null);
-    }
-    return value;
-  },
-  provide: (f) => showPanel.from(f, (val) => val.panel)
-});
-var SearchState = class {
-  constructor(query, panel) {
-    this.query = query;
-    this.panel = panel;
-  }
-};
-var matchMark = /* @__PURE__ */ Decoration.mark({ class: "cm-searchMatch" });
-var selectedMatchMark = /* @__PURE__ */ Decoration.mark({ class: "cm-searchMatch cm-searchMatch-selected" });
-var searchHighlighter = /* @__PURE__ */ ViewPlugin.fromClass(class {
-  constructor(view) {
-    this.view = view;
-    this.decorations = this.highlight(view.state.field(searchState));
-  }
-  update(update) {
-    let state = update.state.field(searchState);
-    if (state != update.startState.field(searchState) || update.docChanged || update.selectionSet || update.viewportChanged)
-      this.decorations = this.highlight(state);
-  }
-  highlight({ query, panel }) {
-    if (!panel || !query.spec.valid)
-      return Decoration.none;
-    let { view } = this;
-    let builder = new RangeSetBuilder();
-    for (let i = 0, ranges = view.visibleRanges, l = ranges.length; i < l; i++) {
-      let { from: from2, to } = ranges[i];
-      while (i < l - 1 && to > ranges[i + 1].from - 2 * 250)
-        to = ranges[++i].to;
-      query.highlight(view.state, from2, to, (from3, to2) => {
-        let selected = view.state.selection.ranges.some((r) => r.from == from3 && r.to == to2);
-        builder.add(from3, to2, selected ? selectedMatchMark : matchMark);
-      });
-    }
-    return builder.finish();
-  }
-}, {
-  decorations: (v) => v.decorations
-});
-function searchCommand(f) {
-  return (view) => {
-    let state = view.state.field(searchState, false);
-    return state && state.query.spec.valid ? f(view, state) : openSearchPanel(view);
-  };
-}
-var findNext = /* @__PURE__ */ searchCommand((view, { query }) => {
-  let { to } = view.state.selection.main;
-  let next = query.nextMatch(view.state, to, to);
-  if (!next)
-    return false;
-  let selection = EditorSelection.single(next.from, next.to);
-  let config3 = view.state.facet(searchConfigFacet);
-  view.dispatch({
-    selection,
-    effects: [announceMatch(view, next), config3.scrollToMatch(selection.main, view)],
-    userEvent: "select.search"
-  });
-  selectSearchInput(view);
-  return true;
-});
-var findPrevious = /* @__PURE__ */ searchCommand((view, { query }) => {
-  let { state } = view, { from: from2 } = state.selection.main;
-  let prev = query.prevMatch(state, from2, from2);
-  if (!prev)
-    return false;
-  let selection = EditorSelection.single(prev.from, prev.to);
-  let config3 = view.state.facet(searchConfigFacet);
-  view.dispatch({
-    selection,
-    effects: [announceMatch(view, prev), config3.scrollToMatch(selection.main, view)],
-    userEvent: "select.search"
-  });
-  selectSearchInput(view);
-  return true;
-});
-var selectMatches = /* @__PURE__ */ searchCommand((view, { query }) => {
-  let ranges = query.matchAll(view.state, 1e3);
-  if (!ranges || !ranges.length)
-    return false;
-  view.dispatch({
-    selection: EditorSelection.create(ranges.map((r) => EditorSelection.range(r.from, r.to))),
-    userEvent: "select.search.matches"
-  });
-  return true;
-});
-var selectSelectionMatches = ({ state, dispatch }) => {
-  let sel = state.selection;
-  if (sel.ranges.length > 1 || sel.main.empty)
-    return false;
-  let { from: from2, to } = sel.main;
-  let ranges = [], main2 = 0;
-  for (let cur2 = new SearchCursor(state.doc, state.sliceDoc(from2, to)); !cur2.next().done; ) {
-    if (ranges.length > 1e3)
-      return false;
-    if (cur2.value.from == from2)
-      main2 = ranges.length;
-    ranges.push(EditorSelection.range(cur2.value.from, cur2.value.to));
-  }
-  dispatch(state.update({
-    selection: EditorSelection.create(ranges, main2),
-    userEvent: "select.search.matches"
-  }));
-  return true;
-};
-var replaceNext = /* @__PURE__ */ searchCommand((view, { query }) => {
-  let { state } = view, { from: from2, to } = state.selection.main;
-  if (state.readOnly)
-    return false;
-  let match = query.nextMatch(state, from2, from2);
-  if (!match)
-    return false;
-  let next = match;
-  let changes = [], selection, replacement;
-  let effects = [];
-  if (next.from == from2 && next.to == to) {
-    replacement = state.toText(query.getReplacement(next));
-    changes.push({ from: next.from, to: next.to, insert: replacement });
-    next = query.nextMatch(state, next.from, next.to);
-    effects.push(EditorView.announce.of(state.phrase("replaced match on line $", state.doc.lineAt(from2).number) + "."));
-  }
-  let changeSet = view.state.changes(changes);
-  if (next) {
-    selection = EditorSelection.single(next.from, next.to).map(changeSet);
-    effects.push(announceMatch(view, next));
-    effects.push(state.facet(searchConfigFacet).scrollToMatch(selection.main, view));
-  }
-  view.dispatch({
-    changes: changeSet,
-    selection,
-    effects,
-    userEvent: "input.replace"
-  });
-  return true;
-});
-var replaceAll = /* @__PURE__ */ searchCommand((view, { query }) => {
-  if (view.state.readOnly)
-    return false;
-  let changes = query.matchAll(view.state, 1e9).map((match) => {
-    let { from: from2, to } = match;
-    return { from: from2, to, insert: query.getReplacement(match) };
-  });
-  if (!changes.length)
-    return false;
-  let announceText = view.state.phrase("replaced $ matches", changes.length) + ".";
-  view.dispatch({
-    changes,
-    effects: EditorView.announce.of(announceText),
-    userEvent: "input.replace.all"
-  });
-  return true;
-});
-function createSearchPanel(view) {
-  return view.state.facet(searchConfigFacet).createPanel(view);
-}
-function defaultQuery(state, fallback) {
-  var _a2, _b, _c, _d, _e;
-  let sel = state.selection.main;
-  let selText = sel.empty || sel.to > sel.from + 100 ? "" : state.sliceDoc(sel.from, sel.to);
-  if (fallback && !selText)
-    return fallback;
-  let config3 = state.facet(searchConfigFacet);
-  return new SearchQuery({
-    search: ((_a2 = fallback === null || fallback === void 0 ? void 0 : fallback.literal) !== null && _a2 !== void 0 ? _a2 : config3.literal) ? selText : selText.replace(/\n/g, "\\n"),
-    caseSensitive: (_b = fallback === null || fallback === void 0 ? void 0 : fallback.caseSensitive) !== null && _b !== void 0 ? _b : config3.caseSensitive,
-    literal: (_c = fallback === null || fallback === void 0 ? void 0 : fallback.literal) !== null && _c !== void 0 ? _c : config3.literal,
-    regexp: (_d = fallback === null || fallback === void 0 ? void 0 : fallback.regexp) !== null && _d !== void 0 ? _d : config3.regexp,
-    wholeWord: (_e = fallback === null || fallback === void 0 ? void 0 : fallback.wholeWord) !== null && _e !== void 0 ? _e : config3.wholeWord
-  });
-}
-function getSearchInput(view) {
-  let panel = getPanel(view, createSearchPanel);
-  return panel && panel.dom.querySelector("[main-field]");
-}
-function selectSearchInput(view) {
-  let input2 = getSearchInput(view);
-  if (input2 && input2 == view.root.activeElement)
-    input2.select();
-}
-var openSearchPanel = (view) => {
-  let state = view.state.field(searchState, false);
-  if (state && state.panel) {
-    let searchInput = getSearchInput(view);
-    if (searchInput && searchInput != view.root.activeElement) {
-      let query = defaultQuery(view.state, state.query.spec);
-      if (query.valid)
-        view.dispatch({ effects: setSearchQuery.of(query) });
-      searchInput.focus();
-      searchInput.select();
-    }
-  } else {
-    view.dispatch({ effects: [
-      togglePanel.of(true),
-      state ? setSearchQuery.of(defaultQuery(view.state, state.query.spec)) : StateEffect.appendConfig.of(searchExtensions)
-    ] });
-  }
-  return true;
-};
-var closeSearchPanel = (view) => {
-  let state = view.state.field(searchState, false);
-  if (!state || !state.panel)
-    return false;
-  let panel = getPanel(view, createSearchPanel);
-  if (panel && panel.dom.contains(view.root.activeElement))
-    view.focus();
-  view.dispatch({ effects: togglePanel.of(false) });
-  return true;
-};
-var searchKeymap = [
-  { key: "Mod-f", run: openSearchPanel, scope: "editor search-panel" },
-  { key: "F3", run: findNext, shift: findPrevious, scope: "editor search-panel", preventDefault: true },
-  { key: "Mod-g", run: findNext, shift: findPrevious, scope: "editor search-panel", preventDefault: true },
-  { key: "Escape", run: closeSearchPanel, scope: "editor search-panel" },
-  { key: "Mod-Shift-l", run: selectSelectionMatches },
-  { key: "Mod-Alt-g", run: gotoLine },
-  { key: "Mod-d", run: selectNextOccurrence, preventDefault: true }
-];
-var SearchPanel = class {
-  constructor(view) {
-    this.view = view;
-    let query = this.query = view.state.field(searchState).query.spec;
-    this.commit = this.commit.bind(this);
-    this.searchField = crelt("input", {
-      value: query.search,
-      placeholder: phrase(view, "Find"),
-      "aria-label": phrase(view, "Find"),
-      class: "cm-textfield",
-      name: "search",
-      form: "",
-      "main-field": "true",
-      onchange: this.commit,
-      onkeyup: this.commit
-    });
-    this.replaceField = crelt("input", {
-      value: query.replace,
-      placeholder: phrase(view, "Replace"),
-      "aria-label": phrase(view, "Replace"),
-      class: "cm-textfield",
-      name: "replace",
-      form: "",
-      onchange: this.commit,
-      onkeyup: this.commit
-    });
-    this.caseField = crelt("input", {
-      type: "checkbox",
-      name: "case",
-      form: "",
-      checked: query.caseSensitive,
-      onchange: this.commit
-    });
-    this.reField = crelt("input", {
-      type: "checkbox",
-      name: "re",
-      form: "",
-      checked: query.regexp,
-      onchange: this.commit
-    });
-    this.wordField = crelt("input", {
-      type: "checkbox",
-      name: "word",
-      form: "",
-      checked: query.wholeWord,
-      onchange: this.commit
-    });
-    function button(name2, onclick, content2) {
-      return crelt("button", { class: "cm-button", name: name2, onclick, type: "button" }, content2);
-    }
-    this.dom = crelt("div", { onkeydown: (e) => this.keydown(e), class: "cm-search" }, [
-      this.searchField,
-      button("next", () => findNext(view), [phrase(view, "next")]),
-      button("prev", () => findPrevious(view), [phrase(view, "previous")]),
-      button("select", () => selectMatches(view), [phrase(view, "all")]),
-      crelt("label", null, [this.caseField, phrase(view, "match case")]),
-      crelt("label", null, [this.reField, phrase(view, "regexp")]),
-      crelt("label", null, [this.wordField, phrase(view, "by word")]),
-      ...view.state.readOnly ? [] : [
-        crelt("br"),
-        this.replaceField,
-        button("replace", () => replaceNext(view), [phrase(view, "replace")]),
-        button("replaceAll", () => replaceAll(view), [phrase(view, "replace all")])
-      ],
-      crelt("button", {
-        name: "close",
-        onclick: () => closeSearchPanel(view),
-        "aria-label": phrase(view, "close"),
-        type: "button"
-      }, ["\xD7"])
-    ]);
-  }
-  commit() {
-    let query = new SearchQuery({
-      search: this.searchField.value,
-      caseSensitive: this.caseField.checked,
-      regexp: this.reField.checked,
-      wholeWord: this.wordField.checked,
-      replace: this.replaceField.value
-    });
-    if (!query.eq(this.query)) {
-      this.query = query;
-      this.view.dispatch({ effects: setSearchQuery.of(query) });
-    }
-  }
-  keydown(e) {
-    if (runScopeHandlers(this.view, e, "search-panel")) {
-      e.preventDefault();
-    } else if (e.keyCode == 13 && e.target == this.searchField) {
-      e.preventDefault();
-      (e.shiftKey ? findPrevious : findNext)(this.view);
-    } else if (e.keyCode == 13 && e.target == this.replaceField) {
-      e.preventDefault();
-      replaceNext(this.view);
-    }
-  }
-  update(update) {
-    for (let tr of update.transactions)
-      for (let effect5 of tr.effects) {
-        if (effect5.is(setSearchQuery) && !effect5.value.eq(this.query))
-          this.setQuery(effect5.value);
-      }
-  }
-  setQuery(query) {
-    this.query = query;
-    this.searchField.value = query.search;
-    this.replaceField.value = query.replace;
-    this.caseField.checked = query.caseSensitive;
-    this.reField.checked = query.regexp;
-    this.wordField.checked = query.wholeWord;
-  }
-  mount() {
-    this.searchField.select();
-  }
-  get pos() {
-    return 80;
-  }
-  get top() {
-    return this.view.state.facet(searchConfigFacet).top;
-  }
-};
-function phrase(view, phrase2) {
-  return view.state.phrase(phrase2);
-}
-var AnnounceMargin = 30;
-var Break = /[\s\.,:;?!]/;
-function announceMatch(view, { from: from2, to }) {
-  let line = view.state.doc.lineAt(from2), lineEnd = view.state.doc.lineAt(to).to;
-  let start2 = Math.max(line.from, from2 - AnnounceMargin), end2 = Math.min(lineEnd, to + AnnounceMargin);
-  let text = view.state.sliceDoc(start2, end2);
-  if (start2 != line.from) {
-    for (let i = 0; i < AnnounceMargin; i++)
-      if (!Break.test(text[i + 1]) && Break.test(text[i])) {
-        text = text.slice(i);
-        break;
-      }
-  }
-  if (end2 != lineEnd) {
-    for (let i = text.length - 1; i > text.length - AnnounceMargin; i--)
-      if (!Break.test(text[i - 1]) && Break.test(text[i])) {
-        text = text.slice(0, i);
-        break;
-      }
-  }
-  return EditorView.announce.of(`${view.state.phrase("current match")}. ${text} ${view.state.phrase("on line")} ${line.number}.`);
-}
-var baseTheme4 = /* @__PURE__ */ EditorView.baseTheme({
-  ".cm-panel.cm-search": {
-    padding: "2px 6px 4px",
-    position: "relative",
-    "& [name=close]": {
-      position: "absolute",
-      top: "0",
-      right: "4px",
-      backgroundColor: "inherit",
-      border: "none",
-      font: "inherit",
-      padding: 0,
-      margin: 0
-    },
-    "& input, & button, & label": {
-      margin: ".2em .6em .2em 0"
-    },
-    "& input[type=checkbox]": {
-      marginRight: ".2em"
-    },
-    "& label": {
-      fontSize: "80%",
-      whiteSpace: "pre"
-    }
-  },
-  "&light .cm-searchMatch": { backgroundColor: "#ffff0054" },
-  "&dark .cm-searchMatch": { backgroundColor: "#00ffff8a" },
-  "&light .cm-searchMatch-selected": { backgroundColor: "#ff6a0054" },
-  "&dark .cm-searchMatch-selected": { backgroundColor: "#ff00ff8a" }
-});
-var searchExtensions = [
-  searchState,
-  /* @__PURE__ */ Prec.low(searchHighlighter),
-  baseTheme4
-];
-
-// node_modules/@codemirror/lint/dist/index.js
-var SelectedDiagnostic = class {
-  constructor(from2, to, diagnostic) {
-    this.from = from2;
-    this.to = to;
-    this.diagnostic = diagnostic;
-  }
-};
-var LintState = class _LintState {
-  constructor(diagnostics, panel, selected) {
-    this.diagnostics = diagnostics;
-    this.panel = panel;
-    this.selected = selected;
-  }
-  static init(diagnostics, panel, state) {
-    let diagnosticFilter = state.facet(lintConfig).markerFilter;
-    if (diagnosticFilter)
-      diagnostics = diagnosticFilter(diagnostics, state);
-    let sorted = diagnostics.slice().sort((a, b) => a.from - b.from || a.to - b.to);
-    let deco = new RangeSetBuilder(), active = [], pos = 0;
-    for (let i = 0; ; ) {
-      let next = i == sorted.length ? null : sorted[i];
-      if (!next && !active.length)
-        break;
-      let from2, to;
-      if (active.length) {
-        from2 = pos;
-        to = active.reduce((p, d) => Math.min(p, d.to), next && next.from > from2 ? next.from : 1e8);
-      } else {
-        from2 = next.from;
-        to = next.to;
-        active.push(next);
-        i++;
-      }
-      while (i < sorted.length) {
-        let next2 = sorted[i];
-        if (next2.from == from2 && (next2.to > next2.from || next2.to == from2)) {
-          active.push(next2);
-          i++;
-          to = Math.min(next2.to, to);
-        } else {
-          to = Math.min(next2.from, to);
-          break;
-        }
-      }
-      let sev = maxSeverity(active);
-      if (active.some((d) => d.from == d.to || d.from == d.to - 1 && state.doc.lineAt(d.from).to == d.from)) {
-        deco.add(from2, from2, Decoration.widget({
-          widget: new DiagnosticWidget(sev),
-          diagnostics: active.slice()
-        }));
-      } else {
-        let markClass = active.reduce((c, d) => d.markClass ? c + " " + d.markClass : c, "");
-        deco.add(from2, to, Decoration.mark({
-          class: "cm-lintRange cm-lintRange-" + sev + markClass,
-          diagnostics: active.slice(),
-          inclusiveEnd: active.some((a) => a.to > to)
-        }));
-      }
-      pos = to;
-      for (let i2 = 0; i2 < active.length; i2++)
-        if (active[i2].to <= pos)
-          active.splice(i2--, 1);
-    }
-    let set = deco.finish();
-    return new _LintState(set, panel, findDiagnostic(set));
-  }
-};
-function findDiagnostic(diagnostics, diagnostic = null, after = 0) {
-  let found = null;
-  diagnostics.between(after, 1e9, (from2, to, { spec }) => {
-    if (diagnostic && spec.diagnostics.indexOf(diagnostic) < 0)
-      return;
-    if (!found)
-      found = new SelectedDiagnostic(from2, to, diagnostic || spec.diagnostics[0]);
-    else if (spec.diagnostics.indexOf(found.diagnostic) < 0)
-      return false;
-    else
-      found = new SelectedDiagnostic(found.from, to, found.diagnostic);
-  });
-  return found;
-}
-function hideTooltip(tr, tooltip) {
-  let from2 = tooltip.pos, to = tooltip.end || from2;
-  let result = tr.state.facet(lintConfig).hideOn(tr, from2, to);
-  if (result != null)
-    return result;
-  let line = tr.startState.doc.lineAt(tooltip.pos);
-  return !!(tr.effects.some((e) => e.is(setDiagnosticsEffect)) || tr.changes.touchesRange(line.from, Math.max(line.to, to)));
-}
-function maybeEnableLint(state, effects) {
-  return state.field(lintState, false) ? effects : effects.concat(StateEffect.appendConfig.of(lintExtensions));
-}
-var setDiagnosticsEffect = /* @__PURE__ */ StateEffect.define();
-var togglePanel2 = /* @__PURE__ */ StateEffect.define();
-var movePanelSelection = /* @__PURE__ */ StateEffect.define();
-var lintState = /* @__PURE__ */ StateField.define({
-  create() {
-    return new LintState(Decoration.none, null, null);
-  },
-  update(value, tr) {
-    if (tr.docChanged && value.diagnostics.size) {
-      let mapped = value.diagnostics.map(tr.changes), selected = null, panel = value.panel;
-      if (value.selected) {
-        let selPos = tr.changes.mapPos(value.selected.from, 1);
-        selected = findDiagnostic(mapped, value.selected.diagnostic, selPos) || findDiagnostic(mapped, null, selPos);
-      }
-      if (!mapped.size && panel && tr.state.facet(lintConfig).autoPanel)
-        panel = null;
-      value = new LintState(mapped, panel, selected);
-    }
-    for (let effect5 of tr.effects) {
-      if (effect5.is(setDiagnosticsEffect)) {
-        let panel = !tr.state.facet(lintConfig).autoPanel ? value.panel : effect5.value.length ? LintPanel.open : null;
-        value = LintState.init(effect5.value, panel, tr.state);
-      } else if (effect5.is(togglePanel2)) {
-        value = new LintState(value.diagnostics, effect5.value ? LintPanel.open : null, value.selected);
-      } else if (effect5.is(movePanelSelection)) {
-        value = new LintState(value.diagnostics, value.panel, effect5.value);
-      }
-    }
-    return value;
-  },
-  provide: (f) => [
-    showPanel.from(f, (val) => val.panel),
-    EditorView.decorations.from(f, (s) => s.diagnostics)
-  ]
-});
-var activeMark = /* @__PURE__ */ Decoration.mark({ class: "cm-lintRange cm-lintRange-active" });
-function lintTooltip(view, pos, side) {
-  let { diagnostics } = view.state.field(lintState);
-  let found, start2 = -1, end2 = -1;
-  diagnostics.between(pos - (side < 0 ? 1 : 0), pos + (side > 0 ? 1 : 0), (from2, to, { spec }) => {
-    if (pos >= from2 && pos <= to && (from2 == to || (pos > from2 || side > 0) && (pos < to || side < 0))) {
-      found = spec.diagnostics;
-      start2 = from2;
-      end2 = to;
-      return false;
-    }
-  });
-  let diagnosticFilter = view.state.facet(lintConfig).tooltipFilter;
-  if (found && diagnosticFilter)
-    found = diagnosticFilter(found, view.state);
-  if (!found)
-    return null;
-  return {
-    pos: start2,
-    end: end2,
-    above: view.state.doc.lineAt(start2).to < end2,
-    create() {
-      return { dom: diagnosticsTooltip(view, found) };
-    }
-  };
-}
-function diagnosticsTooltip(view, diagnostics) {
-  return crelt("ul", { class: "cm-tooltip-lint" }, diagnostics.map((d) => renderDiagnostic(view, d, false)));
-}
-var openLintPanel = (view) => {
-  let field = view.state.field(lintState, false);
-  if (!field || !field.panel)
-    view.dispatch({ effects: maybeEnableLint(view.state, [togglePanel2.of(true)]) });
-  let panel = getPanel(view, LintPanel.open);
-  if (panel)
-    panel.dom.querySelector(".cm-panel-lint ul").focus();
-  return true;
-};
-var closeLintPanel = (view) => {
-  let field = view.state.field(lintState, false);
-  if (!field || !field.panel)
-    return false;
-  view.dispatch({ effects: togglePanel2.of(false) });
-  return true;
-};
-var nextDiagnostic = (view) => {
-  let field = view.state.field(lintState, false);
-  if (!field)
-    return false;
-  let sel = view.state.selection.main, next = field.diagnostics.iter(sel.to + 1);
-  if (!next.value) {
-    next = field.diagnostics.iter(0);
-    if (!next.value || next.from == sel.from && next.to == sel.to)
-      return false;
-  }
-  view.dispatch({ selection: { anchor: next.from, head: next.to }, scrollIntoView: true });
-  return true;
-};
-var lintKeymap = [
-  { key: "Mod-Shift-m", run: openLintPanel, preventDefault: true },
-  { key: "F8", run: nextDiagnostic }
-];
-var lintConfig = /* @__PURE__ */ Facet.define({
-  combine(input2) {
-    return Object.assign({ sources: input2.map((i) => i.source).filter((x) => x != null) }, combineConfig(input2.map((i) => i.config), {
-      delay: 750,
-      markerFilter: null,
-      tooltipFilter: null,
-      needsRefresh: null,
-      hideOn: () => null
-    }, {
-      needsRefresh: (a, b) => !a ? b : !b ? a : (u2) => a(u2) || b(u2)
-    }));
-  }
-});
-function assignKeys(actions) {
-  let assigned = [];
-  if (actions)
-    actions: for (let { name: name2 } of actions) {
-      for (let i = 0; i < name2.length; i++) {
-        let ch = name2[i];
-        if (/[a-zA-Z]/.test(ch) && !assigned.some((c) => c.toLowerCase() == ch.toLowerCase())) {
-          assigned.push(ch);
-          continue actions;
-        }
-      }
-      assigned.push("");
-    }
-  return assigned;
-}
-function renderDiagnostic(view, diagnostic, inPanel) {
-  var _a2;
-  let keys2 = inPanel ? assignKeys(diagnostic.actions) : [];
-  return crelt("li", { class: "cm-diagnostic cm-diagnostic-" + diagnostic.severity }, crelt("span", { class: "cm-diagnosticText" }, diagnostic.renderMessage ? diagnostic.renderMessage(view) : diagnostic.message), (_a2 = diagnostic.actions) === null || _a2 === void 0 ? void 0 : _a2.map((action, i) => {
-    let fired = false, click = (e) => {
-      e.preventDefault();
-      if (fired)
-        return;
-      fired = true;
-      let found = findDiagnostic(view.state.field(lintState).diagnostics, diagnostic);
-      if (found)
-        action.apply(view, found.from, found.to);
-    };
-    let { name: name2 } = action, keyIndex = keys2[i] ? name2.indexOf(keys2[i]) : -1;
-    let nameElt = keyIndex < 0 ? name2 : [
-      name2.slice(0, keyIndex),
-      crelt("u", name2.slice(keyIndex, keyIndex + 1)),
-      name2.slice(keyIndex + 1)
-    ];
-    return crelt("button", {
-      type: "button",
-      class: "cm-diagnosticAction",
-      onclick: click,
-      onmousedown: click,
-      "aria-label": ` Action: ${name2}${keyIndex < 0 ? "" : ` (access key "${keys2[i]})"`}.`
-    }, nameElt);
-  }), diagnostic.source && crelt("div", { class: "cm-diagnosticSource" }, diagnostic.source));
-}
-var DiagnosticWidget = class extends WidgetType {
-  constructor(sev) {
-    super();
-    this.sev = sev;
-  }
-  eq(other) {
-    return other.sev == this.sev;
-  }
-  toDOM() {
-    return crelt("span", { class: "cm-lintPoint cm-lintPoint-" + this.sev });
-  }
-};
-var PanelItem = class {
-  constructor(view, diagnostic) {
-    this.diagnostic = diagnostic;
-    this.id = "item_" + Math.floor(Math.random() * 4294967295).toString(16);
-    this.dom = renderDiagnostic(view, diagnostic, true);
-    this.dom.id = this.id;
-    this.dom.setAttribute("role", "option");
-  }
-};
-var LintPanel = class _LintPanel {
-  constructor(view) {
-    this.view = view;
-    this.items = [];
-    let onkeydown = (event) => {
-      if (event.keyCode == 27) {
-        closeLintPanel(this.view);
-        this.view.focus();
-      } else if (event.keyCode == 38 || event.keyCode == 33) {
-        this.moveSelection((this.selectedIndex - 1 + this.items.length) % this.items.length);
-      } else if (event.keyCode == 40 || event.keyCode == 34) {
-        this.moveSelection((this.selectedIndex + 1) % this.items.length);
-      } else if (event.keyCode == 36) {
-        this.moveSelection(0);
-      } else if (event.keyCode == 35) {
-        this.moveSelection(this.items.length - 1);
-      } else if (event.keyCode == 13) {
-        this.view.focus();
-      } else if (event.keyCode >= 65 && event.keyCode <= 90 && this.selectedIndex >= 0) {
-        let { diagnostic } = this.items[this.selectedIndex], keys2 = assignKeys(diagnostic.actions);
-        for (let i = 0; i < keys2.length; i++)
-          if (keys2[i].toUpperCase().charCodeAt(0) == event.keyCode) {
-            let found = findDiagnostic(this.view.state.field(lintState).diagnostics, diagnostic);
-            if (found)
-              diagnostic.actions[i].apply(view, found.from, found.to);
-          }
-      } else {
-        return;
-      }
-      event.preventDefault();
-    };
-    let onclick = (event) => {
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i].dom.contains(event.target))
-          this.moveSelection(i);
-      }
-    };
-    this.list = crelt("ul", {
-      tabIndex: 0,
-      role: "listbox",
-      "aria-label": this.view.state.phrase("Diagnostics"),
-      onkeydown,
-      onclick
-    });
-    this.dom = crelt("div", { class: "cm-panel-lint" }, this.list, crelt("button", {
-      type: "button",
-      name: "close",
-      "aria-label": this.view.state.phrase("close"),
-      onclick: () => closeLintPanel(this.view)
-    }, "\xD7"));
-    this.update();
-  }
-  get selectedIndex() {
-    let selected = this.view.state.field(lintState).selected;
-    if (!selected)
-      return -1;
-    for (let i = 0; i < this.items.length; i++)
-      if (this.items[i].diagnostic == selected.diagnostic)
-        return i;
-    return -1;
-  }
-  update() {
-    let { diagnostics, selected } = this.view.state.field(lintState);
-    let i = 0, needsSync = false, newSelectedItem = null;
-    let seen = /* @__PURE__ */ new Set();
-    diagnostics.between(0, this.view.state.doc.length, (_start, _end, { spec }) => {
-      for (let diagnostic of spec.diagnostics) {
-        if (seen.has(diagnostic))
-          continue;
-        seen.add(diagnostic);
-        let found = -1, item;
-        for (let j = i; j < this.items.length; j++)
-          if (this.items[j].diagnostic == diagnostic) {
-            found = j;
-            break;
-          }
-        if (found < 0) {
-          item = new PanelItem(this.view, diagnostic);
-          this.items.splice(i, 0, item);
-          needsSync = true;
-        } else {
-          item = this.items[found];
-          if (found > i) {
-            this.items.splice(i, found - i);
-            needsSync = true;
-          }
-        }
-        if (selected && item.diagnostic == selected.diagnostic) {
-          if (!item.dom.hasAttribute("aria-selected")) {
-            item.dom.setAttribute("aria-selected", "true");
-            newSelectedItem = item;
-          }
-        } else if (item.dom.hasAttribute("aria-selected")) {
-          item.dom.removeAttribute("aria-selected");
-        }
-        i++;
-      }
-    });
-    while (i < this.items.length && !(this.items.length == 1 && this.items[0].diagnostic.from < 0)) {
-      needsSync = true;
-      this.items.pop();
-    }
-    if (this.items.length == 0) {
-      this.items.push(new PanelItem(this.view, {
-        from: -1,
-        to: -1,
-        severity: "info",
-        message: this.view.state.phrase("No diagnostics")
-      }));
-      needsSync = true;
-    }
-    if (newSelectedItem) {
-      this.list.setAttribute("aria-activedescendant", newSelectedItem.id);
-      this.view.requestMeasure({
-        key: this,
-        read: () => ({ sel: newSelectedItem.dom.getBoundingClientRect(), panel: this.list.getBoundingClientRect() }),
-        write: ({ sel, panel }) => {
-          let scaleY = panel.height / this.list.offsetHeight;
-          if (sel.top < panel.top)
-            this.list.scrollTop -= (panel.top - sel.top) / scaleY;
-          else if (sel.bottom > panel.bottom)
-            this.list.scrollTop += (sel.bottom - panel.bottom) / scaleY;
-        }
-      });
-    } else if (this.selectedIndex < 0) {
-      this.list.removeAttribute("aria-activedescendant");
-    }
-    if (needsSync)
-      this.sync();
-  }
-  sync() {
-    let domPos = this.list.firstChild;
-    function rm2() {
-      let prev = domPos;
-      domPos = prev.nextSibling;
-      prev.remove();
-    }
-    for (let item of this.items) {
-      if (item.dom.parentNode == this.list) {
-        while (domPos != item.dom)
-          rm2();
-        domPos = item.dom.nextSibling;
-      } else {
-        this.list.insertBefore(item.dom, domPos);
-      }
-    }
-    while (domPos)
-      rm2();
-  }
-  moveSelection(selectedIndex) {
-    if (this.selectedIndex < 0)
-      return;
-    let field = this.view.state.field(lintState);
-    let selection = findDiagnostic(field.diagnostics, this.items[selectedIndex].diagnostic);
-    if (!selection)
-      return;
-    this.view.dispatch({
-      selection: { anchor: selection.from, head: selection.to },
-      scrollIntoView: true,
-      effects: movePanelSelection.of(selection)
-    });
-  }
-  static open(view) {
-    return new _LintPanel(view);
-  }
-};
-function svg(content2, attrs = `viewBox="0 0 40 40"`) {
-  return `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" ${attrs}>${encodeURIComponent(content2)}</svg>')`;
-}
-function underline(color) {
-  return svg(`<path d="m0 2.5 l2 -1.5 l1 0 l2 1.5 l1 0" stroke="${color}" fill="none" stroke-width=".7"/>`, `width="6" height="3"`);
-}
-var baseTheme5 = /* @__PURE__ */ EditorView.baseTheme({
-  ".cm-diagnostic": {
-    padding: "3px 6px 3px 8px",
-    marginLeft: "-1px",
-    display: "block",
-    whiteSpace: "pre-wrap"
-  },
-  ".cm-diagnostic-error": { borderLeft: "5px solid #d11" },
-  ".cm-diagnostic-warning": { borderLeft: "5px solid orange" },
-  ".cm-diagnostic-info": { borderLeft: "5px solid #999" },
-  ".cm-diagnostic-hint": { borderLeft: "5px solid #66d" },
-  ".cm-diagnosticAction": {
-    font: "inherit",
-    border: "none",
-    padding: "2px 4px",
-    backgroundColor: "#444",
-    color: "white",
-    borderRadius: "3px",
-    marginLeft: "8px",
-    cursor: "pointer"
-  },
-  ".cm-diagnosticSource": {
-    fontSize: "70%",
-    opacity: 0.7
-  },
-  ".cm-lintRange": {
-    backgroundPosition: "left bottom",
-    backgroundRepeat: "repeat-x",
-    paddingBottom: "0.7px"
-  },
-  ".cm-lintRange-error": { backgroundImage: /* @__PURE__ */ underline("#d11") },
-  ".cm-lintRange-warning": { backgroundImage: /* @__PURE__ */ underline("orange") },
-  ".cm-lintRange-info": { backgroundImage: /* @__PURE__ */ underline("#999") },
-  ".cm-lintRange-hint": { backgroundImage: /* @__PURE__ */ underline("#66d") },
-  ".cm-lintRange-active": { backgroundColor: "#ffdd9980" },
-  ".cm-tooltip-lint": {
-    padding: 0,
-    margin: 0
-  },
-  ".cm-lintPoint": {
-    position: "relative",
-    "&:after": {
-      content: '""',
-      position: "absolute",
-      bottom: 0,
-      left: "-2px",
-      borderLeft: "3px solid transparent",
-      borderRight: "3px solid transparent",
-      borderBottom: "4px solid #d11"
-    }
-  },
-  ".cm-lintPoint-warning": {
-    "&:after": { borderBottomColor: "orange" }
-  },
-  ".cm-lintPoint-info": {
-    "&:after": { borderBottomColor: "#999" }
-  },
-  ".cm-lintPoint-hint": {
-    "&:after": { borderBottomColor: "#66d" }
-  },
-  ".cm-panel.cm-panel-lint": {
-    position: "relative",
-    "& ul": {
-      maxHeight: "100px",
-      overflowY: "auto",
-      "& [aria-selected]": {
-        backgroundColor: "#ddd",
-        "& u": { textDecoration: "underline" }
-      },
-      "&:focus [aria-selected]": {
-        background_fallback: "#bdf",
-        backgroundColor: "Highlight",
-        color_fallback: "white",
-        color: "HighlightText"
-      },
-      "& u": { textDecoration: "none" },
-      padding: 0,
-      margin: 0
-    },
-    "& [name=close]": {
-      position: "absolute",
-      top: "0",
-      right: "2px",
-      background: "inherit",
-      border: "none",
-      font: "inherit",
-      padding: 0,
-      margin: 0
-    }
-  }
-});
-function severityWeight(sev) {
-  return sev == "error" ? 4 : sev == "warning" ? 3 : sev == "info" ? 2 : 1;
-}
-function maxSeverity(diagnostics) {
-  let sev = "hint", weight = 1;
-  for (let d of diagnostics) {
-    let w = severityWeight(d.severity);
-    if (w > weight) {
-      weight = w;
-      sev = d.severity;
-    }
-  }
-  return sev;
-}
-var lintExtensions = [
-  lintState,
-  /* @__PURE__ */ EditorView.decorations.compute([lintState], (state) => {
-    let { selected, panel } = state.field(lintState);
-    return !selected || !panel || selected.from == selected.to ? Decoration.none : Decoration.set([
-      activeMark.range(selected.from, selected.to)
-    ]);
-  }),
-  /* @__PURE__ */ hoverTooltip(lintTooltip, { hideOn: hideTooltip }),
-  baseTheme5
-];
 
 // node_modules/codemirror/dist/index.js
-var basicSetup = /* @__PURE__ */ (() => [
-  lineNumbers(),
-  highlightActiveLineGutter(),
+var minimalSetup = /* @__PURE__ */ (() => [
   highlightSpecialChars(),
   history(),
-  foldGutter(),
   drawSelection(),
-  dropCursor(),
-  EditorState.allowMultipleSelections.of(true),
-  indentOnInput(),
   syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-  bracketMatching(),
-  closeBrackets(),
-  autocompletion(),
-  rectangularSelection(),
-  crosshairCursor(),
-  highlightActiveLine(),
-  highlightSelectionMatches(),
   keymap.of([
-    ...closeBracketsKeymap,
     ...defaultKeymap,
-    ...searchKeymap,
-    ...historyKeymap,
-    ...foldKeymap,
-    ...completionKeymap,
-    ...lintKeymap
+    ...historyKeymap
   ])
 ])();
 
@@ -63446,9 +61332,14 @@ var vscodeDark = vscodeDarkInit();
 
 // src/app/services/ApplicationState.ts
 var ApplicationState = class _ApplicationState {
-  configuration;
-  databaseInfo;
+  configuration = signal({
+    applications: [],
+    privileges: {}
+  }, ...ngDevMode ? [{ debugName: "configuration" }] : []);
+  databaseInfo = /* @__PURE__ */ new Map();
   history = signal([], ...ngDevMode ? [{ debugName: "history" }] : []);
+  ready = signal(false, ...ngDevMode ? [{ debugName: "ready" }] : []);
+  resultsPresent = signal(false, ...ngDevMode ? [{ debugName: "resultsPresent" }] : []);
   running = signal(false, ...ngDevMode ? [{ debugName: "running" }] : []);
   static \u0275fac = function ApplicationState_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ApplicationState)();
@@ -63463,6 +61354,17 @@ var ApplicationState = class _ApplicationState {
 })();
 
 // src/app/services/API.ts
+function getCookie(name2) {
+  if (!document.cookie) {
+    return null;
+  }
+  const xsrfCookies = document.cookie.split(";").map((c) => c.trim()).filter((c) => c.startsWith(name2 + "="));
+  if (xsrfCookies.length === 0) {
+    return null;
+  }
+  let cookieValue = xsrfCookies[0].substring(name2.length + 1);
+  return decodeURIComponent(cookieValue);
+}
 var API = class _API {
   baseUrl;
   constructor() {
@@ -63473,8 +61375,9 @@ var API = class _API {
       const response = yield fetch(`${this.baseUrl}/configuration`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": PluginHelper.getCsrfToken()
+          "X-XSRF-TOKEN": getCookie("CSRF-TOKEN") || PluginHelper.getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+          // To indicate this is an AJAX request
         }
       });
       if (!response.ok) {
@@ -63483,14 +61386,19 @@ var API = class _API {
       return yield response.json();
     });
   }
-  enumerateDatabase() {
+  enumerateDatabase(input2) {
     return __async(this, null, function* () {
       const response = yield fetch(`${this.baseUrl}/enumerate/database`, {
-        method: "GET",
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": PluginHelper.getCsrfToken()
-        }
+          "X-XSRF-TOKEN": getCookie("CSRF-TOKEN") || PluginHelper.getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+          // To indicate this is an AJAX request
+        },
+        body: JSON.stringify({
+          type: input2.type,
+          application: input2.application
+        })
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -63498,14 +61406,19 @@ var API = class _API {
       return yield response.json();
     });
   }
-  enumerateTables() {
+  enumerateTables(input2) {
     return __async(this, null, function* () {
       const response = yield fetch(`${this.baseUrl}/enumerate/tables`, {
-        method: "GET",
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": PluginHelper.getCsrfToken()
-        }
+          "X-XSRF-TOKEN": getCookie("CSRF-TOKEN") || PluginHelper.getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+          // To indicate this is an AJAX request
+        },
+        body: JSON.stringify({
+          type: input2.type,
+          application: input2.application
+        })
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -63527,7 +61440,9 @@ var API = class _API {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": PluginHelper.getCsrfToken()
+          "X-XSRF-TOKEN": getCookie("CSRF-TOKEN") || PluginHelper.getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+          // To indicate this is an AJAX request
         },
         body: JSON.stringify(request)
       });
@@ -63546,19 +61461,20 @@ var API = class _API {
       let queryParams = new URLSearchParams();
       queryParams.set("query", request.query);
       let url;
-      if (request.queryType === "Filter" || request.queryType === "XMLFilter") {
+      if (request.type === "Filter" || request.type === "XMLFilter") {
         queryParams.set("queryClass", request.queryClass ?? "");
         url = `${this.baseUrl}/filter/translate?${queryParams.toString()}`;
-      } else if (request.queryType === "HQL") {
+      } else if (request.type === "HQL") {
         url = `${this.baseUrl}/hql/translate?${queryParams.toString()}`;
       } else {
-        throw new Error(`Unsupported query type for translation: ${request.queryType}`);
+        throw new Error(`Unsupported query type for translation: ${request.type}`);
       }
       const response = yield fetch(url, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": PluginHelper.getCsrfToken()
+          "X-XSRF-TOKEN": getCookie("CSRF-TOKEN") || PluginHelper.getCsrfToken(),
+          "X-Requested-With": "XMLHttpRequest"
+          // To indicate this is an AJAX request
         }
       });
       if (!response.ok) {
@@ -63626,7 +61542,8 @@ var HistoryService = class _HistoryService {
           queryType: lastState.queryType || "SQL",
           application: lastState.application,
           rowLimit: lastState.rowLimit || 100,
-          startAt: lastState.startAt || 0
+          startAt: lastState.startAt || 0,
+          queryClass: lastState.queryClass || ""
         };
       }
       return null;
@@ -63652,7 +61569,8 @@ var HistoryService = class _HistoryService {
         queryType: editorState.queryType,
         application: editorState.application,
         rowLimit: editorState.rowLimit,
-        startAt: editorState.startAt
+        startAt: editorState.startAt,
+        queryClass: editorState.queryClass || ""
       };
       yield this.historyStore.setItem(LAST_STATE_KEY, lastState);
     });
@@ -63694,34 +61612,438 @@ var HistoryService = class _HistoryService {
   }], null, null);
 })();
 
+// node_modules/@lezer/xml/dist/index.js
+var StartTag = 1;
+var StartCloseTag = 2;
+var MissingCloseTag = 3;
+var mismatchedStartCloseTag = 4;
+var incompleteStartCloseTag = 5;
+var commentContent$1 = 36;
+var piContent$1 = 37;
+var cdataContent$1 = 38;
+var Element2 = 11;
+var OpenTag = 13;
+function nameChar(ch) {
+  return ch == 45 || ch == 46 || ch == 58 || ch >= 65 && ch <= 90 || ch == 95 || ch >= 97 && ch <= 122 || ch >= 161;
+}
+function isSpace(ch) {
+  return ch == 9 || ch == 10 || ch == 13 || ch == 32;
+}
+var cachedName = null;
+var cachedInput = null;
+var cachedPos = 0;
+function tagNameAfter(input2, offset2) {
+  let pos = input2.pos + offset2;
+  if (cachedInput == input2 && cachedPos == pos) return cachedName;
+  while (isSpace(input2.peek(offset2))) offset2++;
+  let name2 = "";
+  for (; ; ) {
+    let next = input2.peek(offset2);
+    if (!nameChar(next)) break;
+    name2 += String.fromCharCode(next);
+    offset2++;
+  }
+  cachedInput = input2;
+  cachedPos = pos;
+  return cachedName = name2 || null;
+}
+function ElementContext(name2, parent) {
+  this.name = name2;
+  this.parent = parent;
+}
+var elementContext = new ContextTracker({
+  start: null,
+  shift(context2, term, stack, input2) {
+    return term == StartTag ? new ElementContext(tagNameAfter(input2, 1) || "", context2) : context2;
+  },
+  reduce(context2, term) {
+    return term == Element2 && context2 ? context2.parent : context2;
+  },
+  reuse(context2, node, _stack, input2) {
+    let type = node.type.id;
+    return type == StartTag || type == OpenTag ? new ElementContext(tagNameAfter(input2, 1) || "", context2) : context2;
+  },
+  strict: false
+});
+var startTag = new ExternalTokenizer((input2, stack) => {
+  if (input2.next != 60) return;
+  input2.advance();
+  if (input2.next == 47) {
+    input2.advance();
+    let name2 = tagNameAfter(input2, 0);
+    if (!name2) return input2.acceptToken(incompleteStartCloseTag);
+    if (stack.context && name2 == stack.context.name) return input2.acceptToken(StartCloseTag);
+    for (let cx = stack.context; cx; cx = cx.parent) if (cx.name == name2) return input2.acceptToken(MissingCloseTag, -2);
+    input2.acceptToken(mismatchedStartCloseTag);
+  } else if (input2.next != 33 && input2.next != 63) {
+    return input2.acceptToken(StartTag);
+  }
+}, { contextual: true });
+function scanTo(type, end2) {
+  return new ExternalTokenizer((input2) => {
+    let len = 0, first = end2.charCodeAt(0);
+    scan: for (; ; input2.advance(), len++) {
+      if (input2.next < 0) break;
+      if (input2.next == first) {
+        for (let i = 1; i < end2.length; i++)
+          if (input2.peek(i) != end2.charCodeAt(i)) continue scan;
+        break;
+      }
+    }
+    if (len) input2.acceptToken(type);
+  });
+}
+var commentContent = scanTo(commentContent$1, "-->");
+var piContent = scanTo(piContent$1, "?>");
+var cdataContent = scanTo(cdataContent$1, "]]>");
+var xmlHighlighting = styleTags({
+  Text: tags.content,
+  "StartTag StartCloseTag EndTag SelfCloseEndTag": tags.angleBracket,
+  TagName: tags.tagName,
+  "MismatchedCloseTag/TagName": [tags.tagName, tags.invalid],
+  AttributeName: tags.attributeName,
+  AttributeValue: tags.attributeValue,
+  Is: tags.definitionOperator,
+  "EntityReference CharacterReference": tags.character,
+  Comment: tags.blockComment,
+  ProcessingInst: tags.processingInstruction,
+  DoctypeDecl: tags.documentMeta,
+  Cdata: tags.special(tags.string)
+});
+var parser2 = LRParser.deserialize({
+  version: 14,
+  states: ",lOQOaOOOrOxO'#CfOzOpO'#CiO!tOaO'#CgOOOP'#Cg'#CgO!{OrO'#CrO#TOtO'#CsO#]OpO'#CtOOOP'#DT'#DTOOOP'#Cv'#CvQQOaOOOOOW'#Cw'#CwO#eOxO,59QOOOP,59Q,59QOOOO'#Cx'#CxO#mOpO,59TO#uO!bO,59TOOOP'#C|'#C|O$TOaO,59RO$[OpO'#CoOOOP,59R,59ROOOQ'#C}'#C}O$dOrO,59^OOOP,59^,59^OOOS'#DO'#DOO$lOtO,59_OOOP,59_,59_O$tOpO,59`O$|OpO,59`OOOP-E6t-E6tOOOW-E6u-E6uOOOP1G.l1G.lOOOO-E6v-E6vO%UO!bO1G.oO%UO!bO1G.oO%dOpO'#CkO%lO!bO'#CyO%zO!bO1G.oOOOP1G.o1G.oOOOP1G.w1G.wOOOP-E6z-E6zOOOP1G.m1G.mO&VOpO,59ZO&_OpO,59ZOOOQ-E6{-E6{OOOP1G.x1G.xOOOS-E6|-E6|OOOP1G.y1G.yO&gOpO1G.zO&gOpO1G.zOOOP1G.z1G.zO&oO!bO7+$ZO&}O!bO7+$ZOOOP7+$Z7+$ZOOOP7+$c7+$cO'YOpO,59VO'bOpO,59VO'mO!bO,59eOOOO-E6w-E6wO'{OpO1G.uO'{OpO1G.uOOOP1G.u1G.uO(TOpO7+$fOOOP7+$f7+$fO(]O!bO<<GuOOOP<<Gu<<GuOOOP<<G}<<G}O'bOpO1G.qO'bOpO1G.qO(hO#tO'#CnO(vO&jO'#CnOOOO1G.q1G.qO)UOpO7+$aOOOP7+$a7+$aOOOP<<HQ<<HQOOOPAN=aAN=aOOOPAN=iAN=iO'bOpO7+$]OOOO7+$]7+$]OOOO'#Cz'#CzO)^O#tO,59YOOOO,59Y,59YOOOO'#C{'#C{O)lO&jO,59YOOOP<<G{<<G{OOOO<<Gw<<GwOOOO-E6x-E6xOOOO1G.t1G.tOOOO-E6y-E6y",
+  stateData: ")z~OPQOSVOTWOVWOWWOXWOiXOyPO!QTO!SUO~OvZOx]O~O^`Oz^O~OPQOQcOSVOTWOVWOWWOXWOyPO!QTO!SUO~ORdO~P!SOteO!PgO~OuhO!RjO~O^lOz^O~OvZOxoO~O^qOz^O~O[vO`sOdwOz^O~ORyO~P!SO^{Oz^O~OteO!P}O~OuhO!R!PO~O^!QOz^O~O[!SOz^O~O[!VO`sOd!WOz^O~Oa!YOz^O~Oz^O[mX`mXdmX~O[!VO`sOd!WO~O^!]Oz^O~O[!_Oz^O~O[!aOz^O~O[!cO`sOd!dOz^O~O[!cO`sOd!dO~Oa!eOz^O~Oz^O{!gO}!hO~Oz^O[ma`madma~O[!kOz^O~O[!lOz^O~O[!mO`sOd!nO~OW!qOX!qO{!sO|!qO~OW!tOX!tO}!sO!O!tO~O[!vOz^O~OW!qOX!qO{!yO|!qO~OW!tOX!tO}!yO!O!tO~O",
+  goto: "%cxPPPPPPPPPPyyP!PP!VPP!`!jP!pyyyP!v!|#S$[$k$q$w$}%TPPPP%ZXWORYbXRORYb_t`qru!T!U!bQ!i!YS!p!e!fR!w!oQdRRybXSORYbQYORmYQ[PRn[Q_QQkVjp_krz!R!T!X!Z!^!`!f!j!oQr`QzcQ!RlQ!TqQ!XsQ!ZtQ!^{Q!`!QQ!f!YQ!j!]R!o!eQu`S!UqrU![u!U!bR!b!TQ!r!gR!x!rQ!u!hR!z!uQbRRxbQfTR|fQiUR!OiSXOYTaRb",
+  nodeNames: "\u26A0 StartTag StartCloseTag MissingCloseTag StartCloseTag StartCloseTag Document Text EntityReference CharacterReference Cdata Element EndTag OpenTag TagName Attribute AttributeName Is AttributeValue CloseTag SelfCloseEndTag SelfClosingTag Comment ProcessingInst MismatchedCloseTag DoctypeDecl",
+  maxTerm: 50,
+  context: elementContext,
+  nodeProps: [
+    ["closedBy", 1, "SelfCloseEndTag EndTag", 13, "CloseTag MissingCloseTag"],
+    ["openedBy", 12, "StartTag StartCloseTag", 19, "OpenTag", 20, "StartTag"],
+    ["isolate", -6, 13, 18, 19, 21, 22, 24, ""]
+  ],
+  propSources: [xmlHighlighting],
+  skippedNodes: [0],
+  repeatNodeCount: 9,
+  tokenData: "!)v~R!YOX$qXY)iYZ)iZ]$q]^)i^p$qpq)iqr$qrs*vsv$qvw+fwx/ix}$q}!O0[!O!P$q!P!Q2z!Q![$q![!]4n!]!^$q!^!_8U!_!`!#t!`!a!$l!a!b!%d!b!c$q!c!}4n!}#P$q#P#Q!'W#Q#R$q#R#S4n#S#T$q#T#o4n#o%W$q%W%o4n%o%p$q%p&a4n&a&b$q&b1p4n1p4U$q4U4d4n4d4e$q4e$IS4n$IS$I`$q$I`$Ib4n$Ib$Kh$q$Kh%#t4n%#t&/x$q&/x&Et4n&Et&FV$q&FV;'S4n;'S;:j8O;:j;=`)c<%l?&r$q?&r?Ah4n?Ah?BY$q?BY?Mn4n?MnO$qi$zXVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qa%nVVP!O`Ov%gwx&Tx!^%g!^!_&o!_;'S%g;'S;=`'W<%lO%gP&YTVPOv&Tw!^&T!_;'S&T;'S;=`&i<%lO&TP&lP;=`<%l&T`&tS!O`Ov&ox;'S&o;'S;=`'Q<%lO&o`'TP;=`<%l&oa'ZP;=`<%l%gX'eWVP|WOr'^rs&Tsv'^w!^'^!^!_'}!_;'S'^;'S;=`(i<%lO'^W(ST|WOr'}sv'}w;'S'};'S;=`(c<%lO'}W(fP;=`<%l'}X(lP;=`<%l'^h(vV|W!O`Or(ors&osv(owx'}x;'S(o;'S;=`)]<%lO(oh)`P;=`<%l(oi)fP;=`<%l$qo)t`VP|W!O`zUOX$qXY)iYZ)iZ]$q]^)i^p$qpq)iqr$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qk+PV{YVP!O`Ov%gwx&Tx!^%g!^!_&o!_;'S%g;'S;=`'W<%lO%g~+iast,n![!]-r!c!}-r#R#S-r#T#o-r%W%o-r%p&a-r&b1p-r4U4d-r4e$IS-r$I`$Ib-r$Kh%#t-r&/x&Et-r&FV;'S-r;'S;:j/c?&r?Ah-r?BY?Mn-r~,qQ!Q![,w#l#m-V~,zQ!Q![,w!]!^-Q~-VOX~~-YR!Q![-c!c!i-c#T#Z-c~-fS!Q![-c!]!^-Q!c!i-c#T#Z-c~-ug}!O-r!O!P-r!Q![-r![!]-r!]!^/^!c!}-r#R#S-r#T#o-r$}%O-r%W%o-r%p&a-r&b1p-r1p4U-r4U4d-r4e$IS-r$I`$Ib-r$Je$Jg-r$Kh%#t-r&/x&Et-r&FV;'S-r;'S;:j/c?&r?Ah-r?BY?Mn-r~/cOW~~/fP;=`<%l-rk/rW}bVP|WOr'^rs&Tsv'^w!^'^!^!_'}!_;'S'^;'S;=`(i<%lO'^k0eZVP|W!O`Or$qrs%gsv$qwx'^x}$q}!O1W!O!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qk1aZVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_!`$q!`!a2S!a;'S$q;'S;=`)c<%lO$qk2_X!PQVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qm3TZVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_!`$q!`!a3v!a;'S$q;'S;=`)c<%lO$qm4RXdSVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qo4{!P`S^QVP|W!O`Or$qrs%gsv$qwx'^x}$q}!O4n!O!P4n!P!Q$q!Q![4n![!]4n!]!^$q!^!_(o!_!c$q!c!}4n!}#R$q#R#S4n#S#T$q#T#o4n#o$}$q$}%O4n%O%W$q%W%o4n%o%p$q%p&a4n&a&b$q&b1p4n1p4U4n4U4d4n4d4e$q4e$IS4n$IS$I`$q$I`$Ib4n$Ib$Je$q$Je$Jg4n$Jg$Kh$q$Kh%#t4n%#t&/x$q&/x&Et4n&Et&FV$q&FV;'S4n;'S;:j8O;:j;=`)c<%l?&r$q?&r?Ah4n?Ah?BY$q?BY?Mn4n?MnO$qo8RP;=`<%l4ni8]Y|W!O`Oq(oqr8{rs&osv(owx'}x!a(o!a!b!#U!b;'S(o;'S;=`)]<%lO(oi9S_|W!O`Or(ors&osv(owx'}x}(o}!O:R!O!f(o!f!g;e!g!}(o!}#ODh#O#W(o#W#XLp#X;'S(o;'S;=`)]<%lO(oi:YX|W!O`Or(ors&osv(owx'}x}(o}!O:u!O;'S(o;'S;=`)]<%lO(oi;OV!QP|W!O`Or(ors&osv(owx'}x;'S(o;'S;=`)]<%lO(oi;lX|W!O`Or(ors&osv(owx'}x!q(o!q!r<X!r;'S(o;'S;=`)]<%lO(oi<`X|W!O`Or(ors&osv(owx'}x!e(o!e!f<{!f;'S(o;'S;=`)]<%lO(oi=SX|W!O`Or(ors&osv(owx'}x!v(o!v!w=o!w;'S(o;'S;=`)]<%lO(oi=vX|W!O`Or(ors&osv(owx'}x!{(o!{!|>c!|;'S(o;'S;=`)]<%lO(oi>jX|W!O`Or(ors&osv(owx'}x!r(o!r!s?V!s;'S(o;'S;=`)]<%lO(oi?^X|W!O`Or(ors&osv(owx'}x!g(o!g!h?y!h;'S(o;'S;=`)]<%lO(oi@QY|W!O`Or?yrs@psv?yvwA[wxBdx!`?y!`!aCr!a;'S?y;'S;=`Db<%lO?ya@uV!O`Ov@pvxA[x!`@p!`!aAy!a;'S@p;'S;=`B^<%lO@pPA_TO!`A[!`!aAn!a;'SA[;'S;=`As<%lOA[PAsOiPPAvP;=`<%lA[aBQSiP!O`Ov&ox;'S&o;'S;=`'Q<%lO&oaBaP;=`<%l@pXBiX|WOrBdrsA[svBdvwA[w!`Bd!`!aCU!a;'SBd;'S;=`Cl<%lOBdXC]TiP|WOr'}sv'}w;'S'};'S;=`(c<%lO'}XCoP;=`<%lBdiC{ViP|W!O`Or(ors&osv(owx'}x;'S(o;'S;=`)]<%lO(oiDeP;=`<%l?yiDoZ|W!O`Or(ors&osv(owx'}x!e(o!e!fEb!f#V(o#V#WIr#W;'S(o;'S;=`)]<%lO(oiEiX|W!O`Or(ors&osv(owx'}x!f(o!f!gFU!g;'S(o;'S;=`)]<%lO(oiF]X|W!O`Or(ors&osv(owx'}x!c(o!c!dFx!d;'S(o;'S;=`)]<%lO(oiGPX|W!O`Or(ors&osv(owx'}x!v(o!v!wGl!w;'S(o;'S;=`)]<%lO(oiGsX|W!O`Or(ors&osv(owx'}x!c(o!c!dH`!d;'S(o;'S;=`)]<%lO(oiHgX|W!O`Or(ors&osv(owx'}x!}(o!}#OIS#O;'S(o;'S;=`)]<%lO(oiI]V|W!O`yPOr(ors&osv(owx'}x;'S(o;'S;=`)]<%lO(oiIyX|W!O`Or(ors&osv(owx'}x#W(o#W#XJf#X;'S(o;'S;=`)]<%lO(oiJmX|W!O`Or(ors&osv(owx'}x#T(o#T#UKY#U;'S(o;'S;=`)]<%lO(oiKaX|W!O`Or(ors&osv(owx'}x#h(o#h#iK|#i;'S(o;'S;=`)]<%lO(oiLTX|W!O`Or(ors&osv(owx'}x#T(o#T#UH`#U;'S(o;'S;=`)]<%lO(oiLwX|W!O`Or(ors&osv(owx'}x#c(o#c#dMd#d;'S(o;'S;=`)]<%lO(oiMkX|W!O`Or(ors&osv(owx'}x#V(o#V#WNW#W;'S(o;'S;=`)]<%lO(oiN_X|W!O`Or(ors&osv(owx'}x#h(o#h#iNz#i;'S(o;'S;=`)]<%lO(oi! RX|W!O`Or(ors&osv(owx'}x#m(o#m#n! n#n;'S(o;'S;=`)]<%lO(oi! uX|W!O`Or(ors&osv(owx'}x#d(o#d#e!!b#e;'S(o;'S;=`)]<%lO(oi!!iX|W!O`Or(ors&osv(owx'}x#X(o#X#Y?y#Y;'S(o;'S;=`)]<%lO(oi!#_V!SP|W!O`Or(ors&osv(owx'}x;'S(o;'S;=`)]<%lO(ok!$PXaQVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qo!$wX[UVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qk!%mZVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_!`$q!`!a!&`!a;'S$q;'S;=`)c<%lO$qk!&kX!RQVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$qk!'aZVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_#P$q#P#Q!(S#Q;'S$q;'S;=`)c<%lO$qk!(]ZVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_!`$q!`!a!)O!a;'S$q;'S;=`)c<%lO$qk!)ZXxQVP|W!O`Or$qrs%gsv$qwx'^x!^$q!^!_(o!_;'S$q;'S;=`)c<%lO$q",
+  tokenizers: [startTag, commentContent, piContent, cdataContent, 0, 1, 2, 3, 4],
+  topRules: { "Document": [0, 6] },
+  tokenPrec: 0
+});
+
+// node_modules/@codemirror/lang-xml/dist/index.js
+function tagName(doc2, tag) {
+  let name2 = tag && tag.getChild("TagName");
+  return name2 ? doc2.sliceString(name2.from, name2.to) : "";
+}
+function elementName$1(doc2, tree) {
+  let tag = tree && tree.firstChild;
+  return !tag || tag.name != "OpenTag" ? "" : tagName(doc2, tag);
+}
+function attrName(doc2, tag, pos) {
+  let attr = tag && tag.getChildren("Attribute").find((a) => a.from <= pos && a.to >= pos);
+  let name2 = attr && attr.getChild("AttributeName");
+  return name2 ? doc2.sliceString(name2.from, name2.to) : "";
+}
+function findParentElement(tree) {
+  for (let cur2 = tree && tree.parent; cur2; cur2 = cur2.parent)
+    if (cur2.name == "Element")
+      return cur2;
+  return null;
+}
+function findLocation(state, pos) {
+  var _a2;
+  let at = syntaxTree(state).resolveInner(pos, -1), inTag = null;
+  for (let cur2 = at; !inTag && cur2.parent; cur2 = cur2.parent)
+    if (cur2.name == "OpenTag" || cur2.name == "CloseTag" || cur2.name == "SelfClosingTag" || cur2.name == "MismatchedCloseTag")
+      inTag = cur2;
+  if (inTag && (inTag.to > pos || inTag.lastChild.type.isError)) {
+    let elt = inTag.parent;
+    if (at.name == "TagName")
+      return inTag.name == "CloseTag" || inTag.name == "MismatchedCloseTag" ? { type: "closeTag", from: at.from, context: elt } : { type: "openTag", from: at.from, context: findParentElement(elt) };
+    if (at.name == "AttributeName")
+      return { type: "attrName", from: at.from, context: inTag };
+    if (at.name == "AttributeValue")
+      return { type: "attrValue", from: at.from, context: inTag };
+    let before = at == inTag || at.name == "Attribute" ? at.childBefore(pos) : at;
+    if ((before === null || before === void 0 ? void 0 : before.name) == "StartTag")
+      return { type: "openTag", from: pos, context: findParentElement(elt) };
+    if ((before === null || before === void 0 ? void 0 : before.name) == "StartCloseTag" && before.to <= pos)
+      return { type: "closeTag", from: pos, context: elt };
+    if ((before === null || before === void 0 ? void 0 : before.name) == "Is")
+      return { type: "attrValue", from: pos, context: inTag };
+    if (before)
+      return { type: "attrName", from: pos, context: inTag };
+    return null;
+  } else if (at.name == "StartCloseTag") {
+    return { type: "closeTag", from: pos, context: at.parent };
+  }
+  while (at.parent && at.to == pos && !((_a2 = at.lastChild) === null || _a2 === void 0 ? void 0 : _a2.type.isError))
+    at = at.parent;
+  if (at.name == "Element" || at.name == "Text" || at.name == "Document")
+    return { type: "tag", from: pos, context: at.name == "Element" ? at : findParentElement(at) };
+  return null;
+}
+var Element3 = class {
+  constructor(spec, attrs, attrValues) {
+    this.attrs = attrs;
+    this.attrValues = attrValues;
+    this.children = [];
+    this.name = spec.name;
+    this.completion = Object.assign(Object.assign({ type: "type" }, spec.completion || {}), { label: this.name });
+    this.openCompletion = Object.assign(Object.assign({}, this.completion), { label: "<" + this.name });
+    this.closeCompletion = Object.assign(Object.assign({}, this.completion), { label: "</" + this.name + ">", boost: 2 });
+    this.closeNameCompletion = Object.assign(Object.assign({}, this.completion), { label: this.name + ">" });
+    this.text = spec.textContent ? spec.textContent.map((s) => ({ label: s, type: "text" })) : [];
+  }
+};
+var Identifier2 = /^[:\-\.\w\u00b7-\uffff]*$/;
+function attrCompletion(spec) {
+  return Object.assign(Object.assign({ type: "property" }, spec.completion || {}), { label: spec.name });
+}
+function valueCompletion(spec) {
+  return typeof spec == "string" ? { label: `"${spec}"`, type: "constant" } : /^"/.test(spec.label) ? spec : Object.assign(Object.assign({}, spec), { label: `"${spec.label}"` });
+}
+function completeFromSchema2(eltSpecs, attrSpecs) {
+  let allAttrs = [], globalAttrs = [];
+  let attrValues = /* @__PURE__ */ Object.create(null);
+  for (let s of attrSpecs) {
+    let completion = attrCompletion(s);
+    allAttrs.push(completion);
+    if (s.global)
+      globalAttrs.push(completion);
+    if (s.values)
+      attrValues[s.name] = s.values.map(valueCompletion);
+  }
+  let allElements = [], topElements = [];
+  let byName = /* @__PURE__ */ Object.create(null);
+  for (let s of eltSpecs) {
+    let attrs = globalAttrs, attrVals = attrValues;
+    if (s.attributes)
+      attrs = attrs.concat(s.attributes.map((s2) => {
+        if (typeof s2 == "string")
+          return allAttrs.find((a) => a.label == s2) || { label: s2, type: "property" };
+        if (s2.values) {
+          if (attrVals == attrValues)
+            attrVals = Object.create(attrVals);
+          attrVals[s2.name] = s2.values.map(valueCompletion);
+        }
+        return attrCompletion(s2);
+      }));
+    let elt = new Element3(s, attrs, attrVals);
+    byName[elt.name] = elt;
+    allElements.push(elt);
+    if (s.top)
+      topElements.push(elt);
+  }
+  if (!topElements.length)
+    topElements = allElements;
+  for (let i = 0; i < allElements.length; i++) {
+    let s = eltSpecs[i], elt = allElements[i];
+    if (s.children) {
+      for (let ch of s.children)
+        if (byName[ch])
+          elt.children.push(byName[ch]);
+    } else {
+      elt.children = allElements;
+    }
+  }
+  return (cx) => {
+    var _a2;
+    let { doc: doc2 } = cx.state, loc = findLocation(cx.state, cx.pos);
+    if (!loc || loc.type == "tag" && !cx.explicit)
+      return null;
+    let { type, from: from2, context: context2 } = loc;
+    if (type == "openTag") {
+      let children = topElements;
+      let parentName = elementName$1(doc2, context2);
+      if (parentName) {
+        let parent = byName[parentName];
+        children = (parent === null || parent === void 0 ? void 0 : parent.children) || allElements;
+      }
+      return {
+        from: from2,
+        options: children.map((ch) => ch.completion),
+        validFor: Identifier2
+      };
+    } else if (type == "closeTag") {
+      let parentName = elementName$1(doc2, context2);
+      return parentName ? {
+        from: from2,
+        to: cx.pos + (doc2.sliceString(cx.pos, cx.pos + 1) == ">" ? 1 : 0),
+        options: [((_a2 = byName[parentName]) === null || _a2 === void 0 ? void 0 : _a2.closeNameCompletion) || { label: parentName + ">", type: "type" }],
+        validFor: Identifier2
+      } : null;
+    } else if (type == "attrName") {
+      let parent = byName[tagName(doc2, context2)];
+      return {
+        from: from2,
+        options: (parent === null || parent === void 0 ? void 0 : parent.attrs) || globalAttrs,
+        validFor: Identifier2
+      };
+    } else if (type == "attrValue") {
+      let attr = attrName(doc2, context2, from2);
+      if (!attr)
+        return null;
+      let parent = byName[tagName(doc2, context2)];
+      let values = ((parent === null || parent === void 0 ? void 0 : parent.attrValues) || attrValues)[attr];
+      if (!values || !values.length)
+        return null;
+      return {
+        from: from2,
+        to: cx.pos + (doc2.sliceString(cx.pos, cx.pos + 1) == '"' ? 1 : 0),
+        options: values,
+        validFor: /^"[^"]*"?$/
+      };
+    } else if (type == "tag") {
+      let parentName = elementName$1(doc2, context2), parent = byName[parentName];
+      let closing2 = [], last3 = context2 && context2.lastChild;
+      if (parentName && (!last3 || last3.name != "CloseTag" || tagName(doc2, last3) != parentName))
+        closing2.push(parent ? parent.closeCompletion : { label: "</" + parentName + ">", type: "type", boost: 2 });
+      let options = closing2.concat(((parent === null || parent === void 0 ? void 0 : parent.children) || (context2 ? allElements : topElements)).map((e) => e.openCompletion));
+      if (context2 && (parent === null || parent === void 0 ? void 0 : parent.text.length)) {
+        let openTag = context2.firstChild;
+        if (openTag.to > cx.pos - 20 && !/\S/.test(cx.state.sliceDoc(openTag.to, cx.pos)))
+          options = options.concat(parent.text);
+      }
+      return {
+        from: from2,
+        options,
+        validFor: /^<\/?[:\-\.\w\u00b7-\uffff]*$/
+      };
+    } else {
+      return null;
+    }
+  };
+}
+var xmlLanguage = /* @__PURE__ */ LRLanguage.define({
+  name: "xml",
+  parser: /* @__PURE__ */ parser2.configure({
+    props: [
+      /* @__PURE__ */ indentNodeProp.add({
+        Element(context2) {
+          let closed = /^\s*<\//.test(context2.textAfter);
+          return context2.lineIndent(context2.node.from) + (closed ? 0 : context2.unit);
+        },
+        "OpenTag CloseTag SelfClosingTag"(context2) {
+          return context2.column(context2.node.from) + context2.unit;
+        }
+      }),
+      /* @__PURE__ */ foldNodeProp.add({
+        Element(subtree) {
+          let first = subtree.firstChild, last3 = subtree.lastChild;
+          if (!first || first.name != "OpenTag")
+            return null;
+          return { from: first.to, to: last3.name == "CloseTag" ? last3.from : subtree.to };
+        }
+      }),
+      /* @__PURE__ */ bracketMatchingHandle.add({
+        "OpenTag CloseTag": (node) => node.getChild("TagName")
+      })
+    ]
+  }),
+  languageData: {
+    commentTokens: { block: { open: "<!--", close: "-->" } },
+    indentOnInput: /^\s*<\/$/
+  }
+});
+function xml(conf = {}) {
+  let support = [xmlLanguage.data.of({
+    autocomplete: completeFromSchema2(conf.elements || [], conf.attributes || [])
+  })];
+  if (conf.autoCloseTags !== false)
+    support.push(autoCloseTags);
+  return new LanguageSupport(xmlLanguage, support);
+}
+function elementName(doc2, tree, max2 = doc2.length) {
+  if (!tree)
+    return "";
+  let tag = tree.firstChild;
+  let name2 = tag && tag.getChild("TagName");
+  return name2 ? doc2.sliceString(name2.from, Math.min(name2.to, max2)) : "";
+}
+var autoCloseTags = /* @__PURE__ */ EditorView.inputHandler.of((view, from2, to, text2, insertTransaction) => {
+  if (view.composing || view.state.readOnly || from2 != to || text2 != ">" && text2 != "/" || !xmlLanguage.isActiveAt(view.state, from2, -1))
+    return false;
+  let base2 = insertTransaction(), { state } = base2;
+  let closeTags = state.changeByRange((range) => {
+    var _a2, _b, _c;
+    let { head } = range;
+    let didType = state.doc.sliceString(head - 1, head) == text2;
+    let after = syntaxTree(state).resolveInner(head, -1), name2;
+    if (didType && text2 == ">" && after.name == "EndTag") {
+      let tag = after.parent;
+      if (((_b = (_a2 = tag.parent) === null || _a2 === void 0 ? void 0 : _a2.lastChild) === null || _b === void 0 ? void 0 : _b.name) != "CloseTag" && (name2 = elementName(state.doc, tag.parent, head))) {
+        let to2 = head + (state.doc.sliceString(head, head + 1) === ">" ? 1 : 0);
+        let insert2 = `</${name2}>`;
+        return { range, changes: { from: head, to: to2, insert: insert2 } };
+      }
+    } else if (didType && text2 == "/" && after.name == "StartCloseTag") {
+      let base3 = after.parent;
+      if (after.from == head - 2 && ((_c = base3.lastChild) === null || _c === void 0 ? void 0 : _c.name) != "CloseTag" && (name2 = elementName(state.doc, base3, head))) {
+        let to2 = head + (state.doc.sliceString(head, head + 1) === ">" ? 1 : 0);
+        let insert2 = `${name2}>`;
+        return {
+          range: EditorSelection.cursor(head + insert2.length, -1),
+          changes: { from: head, to: to2, insert: insert2 }
+        };
+      }
+    }
+    return { range };
+  });
+  if (closeTags.changes.empty)
+    return false;
+  view.dispatch([
+    base2,
+    state.update(closeTags, {
+      userEvent: "input.complete",
+      scrollIntoView: true
+    })
+  ]);
+  return true;
+});
+
 // src/app/components/editor/editor/editor.ts
-var _c0 = ["div.idwQueryPluginEditorSlot"];
-function Editor_Conditional_29_Template(rf, ctx) {
+var _c0 = ["idwQueryPluginEditorSlot"];
+function Editor_Conditional_31_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "option", 16);
+    \u0275\u0275elementStart(0, "option", 19);
     \u0275\u0275text(1, "Application");
     \u0275\u0275elementEnd();
   }
 }
-function Editor_For_35_Template(rf, ctx) {
+function Editor_For_84_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "option", 19);
+    \u0275\u0275elementStart(0, "option", 44);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const app_r1 = ctx.$implicit;
-    \u0275\u0275property("value", app_r1);
+    const app_r2 = ctx.$implicit;
+    \u0275\u0275property("value", app_r2);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(app_r1);
+    \u0275\u0275textInterpolate(app_r2);
   }
 }
 var Editor = class _Editor {
   api = inject2(API);
+  applications = computed(() => {
+    return this.state?.configuration().applications || [];
+  }, ...ngDevMode ? [{ debugName: "applications" }] : []);
+  databaseInfo = signal(void 0, ...ngDevMode ? [{ debugName: "databaseInfo" }] : []);
   editorState;
-  editor = viewChild("div.idwQueryPluginEditorSlot", ...ngDevMode ? [{ debugName: "editor" }] : []);
+  editor;
   eventBus = inject2(EventBus);
   historyService = inject2(HistoryService);
+  schema = computed(() => {
+    const dbInfo = this.databaseInfo();
+    if (dbInfo) {
+      return dbInfo.schema || dbInfo.catalog || "";
+    }
+    return "";
+  }, ...ngDevMode ? [{ debugName: "schema" }] : []);
+  languageCompartment;
   state = inject2(ApplicationState);
   _view;
   constructor() {
@@ -63732,6 +62054,7 @@ var Editor = class _Editor {
       rowLimit: 100,
       startAt: 0
     };
+    this.languageCompartment = new Compartment();
   }
   ngOnInit() {
     return __async(this, null, function* () {
@@ -63742,38 +62065,102 @@ var Editor = class _Editor {
   }
   ngAfterViewInit() {
     return __async(this, null, function* () {
-      const nativeElement = this.editor.nativeElement;
-      let databaseInfo = yield this.api.enumerateDatabase();
-      let sqlConfig = {
-        schema: {}
-      };
-      const myExt = [
-        basicSetup,
-        sql(),
+      let lastState = yield this.historyService.loadLastEditorState();
+      const code = lastState?.content ?? "";
+      if (lastState) {
+        this.editorState.queryType = lastState.queryType;
+        this.editorState.application = lastState.application;
+        this.editorState.rowLimit = lastState.rowLimit;
+        this.editorState.queryClass = lastState.queryClass || "";
+      }
+      let compartmentExtension = this.languageCompartment.of([]);
+      const debouncedUpdate = debounce(1e3, (content2) => {
+        this.content = content2;
+      });
+      const extensions = [
+        minimalSetup,
+        highlightActiveLine(),
+        bracketMatching(),
+        closeBrackets(),
         vscodeLight,
         lineNumbers(),
         syntaxHighlighting(defaultHighlightStyle),
-        keymap.of(defaultKeymap)
+        highlightSelectionMatches({ minSelectionLength: 4 }),
+        keymap.of(defaultKeymap),
+        autocompletion({
+          activateOnTyping: false
+        }),
+        compartmentExtension,
+        EditorView.updateListener.of((v) => {
+          if (v.docChanged) {
+            const content2 = v.state.doc.toString();
+            debouncedUpdate(content2);
+          }
+        })
       ];
-      let state;
-      try {
-        state = EditorState.create({
-          doc: "",
-          extensions: myExt
-        });
-      } catch (e) {
-        console.error(e);
-        throw new Error("Failed to create editor state: " + e);
-      }
+      const nativeElement = this.editor.nativeElement;
       this._view = new EditorView({
-        state,
+        state: EditorState.create({
+          doc: code,
+          extensions
+        }),
         parent: nativeElement
       });
-      EditorView.updateListener.of((v) => debounce(1e3, () => {
-        if (v.docChanged) {
-          this.content = v.state.doc.toString();
+      if (code) {
+        this.content = code;
+      }
+      setTimeout(() => __async(this, null, function* () {
+        yield this.replaceSchema();
+      }), 0);
+    });
+  }
+  calculateSchema(sqlConfig) {
+    return __async(this, null, function* () {
+      try {
+        let databaseInfo = yield this.api.enumerateDatabase({
+          type: this.editorState.queryType,
+          application: this.editorState.application
+        });
+        console.info("Fetched database info:", databaseInfo);
+        if (databaseInfo?.databaseProductName) {
+          const name2 = databaseInfo.databaseProductName.toLowerCase();
+          if (name2.includes("mysql")) {
+            sqlConfig.dialect = MySQL;
+          } else if (name2.includes("microsoft")) {
+            sqlConfig.dialect = MSSQL;
+          } else if (name2.includes("oracle")) {
+            let keywordList = databaseInfo.extraKeywords.join(" ");
+            sqlConfig.dialect = SQLDialect.define({
+              builtin: StandardSQL.spec.builtin + " SYSDATE SYSTIMESTAMP",
+              keywords: StandardSQL.spec.keywords + " " + keywordList,
+              operatorChars: StandardSQL.spec.operatorChars,
+              doubleQuotedStrings: false,
+              types: StandardSQL.spec.types + " VARCHAR2"
+            });
+          } else {
+            sqlConfig.dialect = StandardSQL;
+          }
         }
-      }));
+        let tableInfo = yield this.api.enumerateTables({
+          type: this.editorState.queryType,
+          application: this.editorState.application
+        });
+        console.info("Fetched table info:", tableInfo);
+        let schemaMap = {};
+        sqlConfig.defaultSchema = databaseInfo?.schema || databaseInfo?.catalog;
+        if (sqlConfig.defaultSchema) {
+          for (let table of tableInfo) {
+            if (table.schema && table.schema === sqlConfig.defaultSchema) {
+              schemaMap[table.table] = [...table.columns];
+            }
+          }
+        }
+        sqlConfig.schema = schemaMap;
+        return databaseInfo;
+      } catch (e) {
+        console.error("Error fetching database info:", e);
+      }
+      return null;
     });
   }
   clearQuery() {
@@ -63786,13 +62173,18 @@ var Editor = class _Editor {
   }
   executeQuery() {
     return __async(this, null, function* () {
+      if (this.editorState.content.trim() === "") {
+        console.warn("Cannot execute an empty query.");
+        return;
+      }
       this.state.running.set(true);
       try {
         let response = yield this.api.query({
           query: this.editorState.content,
-          queryType: this.editorState.queryType,
+          type: this.editorState.queryType,
           application: this.editorState.application,
-          limit: this.editorState.rowLimit
+          limit: this.editorState.rowLimit,
+          queryClass: this.editorState.queryClass
         });
         this.eventBus.emit(QUERY_COMPLETED, response);
         yield this.historyService.storeHistory(this.editorState);
@@ -63810,7 +62202,8 @@ var Editor = class _Editor {
       try {
         let response = yield this.api.translateQuery({
           query: this.editorState.content,
-          queryType: this.editorState.queryType
+          type: this.editorState.queryType,
+          queryClass: this.editorState.queryClass
         });
         this.eventBus.emit(TRANSLATE_COMPLETED, response);
       } catch (error) {
@@ -63820,12 +62213,6 @@ var Editor = class _Editor {
         this.state.running.set(false);
       }
     });
-  }
-  /**
-   * Gets the available JDBC applications (IIQ apps to query) from the application state.
-   */
-  get applications() {
-    return this.state?.configuration?.applications ?? [];
   }
   /**
    * Gets the current content of the editor.
@@ -63862,6 +62249,40 @@ var Editor = class _Editor {
     }
   }
   /**
+   * Replaces the current schema in the editor with a new schema. This is
+   * invoked when the query type changes.
+   */
+  replaceSchema() {
+    return __async(this, null, function* () {
+      if (this.editorState.queryType === "SQL" || this.editorState.queryType === "SQLPlugin" || this.editorState.queryType === "Application" || this.editorState.queryType === "SQLAccessHistory") {
+        let newConfig = {
+          dialect: StandardSQL,
+          schema: {}
+        };
+        let databaseInfo = yield this.calculateSchema(newConfig);
+        if (databaseInfo) {
+          this.databaseInfo.set(databaseInfo);
+          this.state.databaseInfo.set(this.editorState.queryType, databaseInfo);
+        } else {
+          this.databaseInfo.set(void 0);
+        }
+        this._view?.dispatch({
+          effects: this.languageCompartment.reconfigure(sql(newConfig))
+        });
+      } else if (this.editorState.queryType === "XMLFilter") {
+        this._view?.dispatch({
+          effects: this.languageCompartment.reconfigure(xml({
+            autoCloseTags: true
+          }))
+        });
+      } else {
+        this._view?.dispatch({
+          effects: this.languageCompartment.reconfigure([])
+        });
+      }
+    });
+  }
+  /**
    * Handler to set the content of the editor. Sets the value in the editor state, emits an
    * event to notify any other components that might be interested, and stores the
    * editor state in the history service.
@@ -63873,107 +62294,202 @@ var Editor = class _Editor {
     this.eventBus.emit(SOURCE_UPDATED, { content: this.editorState.content });
     this.historyService.storeEditorState(this.editorState);
   }
+  stateUpdated(field) {
+    return __async(this, null, function* () {
+      console.debug("Editor state updated for field:", field, "with value:", this.editorState);
+      yield this.historyService.storeEditorState(this.editorState);
+      if (field === "queryType") {
+        yield this.replaceSchema();
+      }
+    });
+  }
   static \u0275fac = function Editor_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _Editor)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _Editor, selectors: [["qp-editor"]], viewQuery: function Editor_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuerySignal(ctx.editor, _c0, 5);
+      \u0275\u0275viewQuery(_c0, 7);
     }
     if (rf & 2) {
-      \u0275\u0275queryAdvance();
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.editor = _t.first);
     }
-  }, decls: 40, vars: 8, consts: [[1, "editor", "container-fluid"], [1, "row"], [1, "col-md-12"], [1, "idwQueryPluginEditorSlot"], [1, "col-md-6"], [1, "btn", "btn-primary", 3, "click", "disabled"], [1, "btn", "btn-secondary", 3, "click", "disabled"], [1, "form-group"], ["for", "selectQueryType"], ["id", "selectQueryType", 1, "form-control", 3, "ngModelChange", "ngModel"], ["value", "SQL"], ["value", "SQLPlugin"], ["value", "SQLAccessHistory"], ["value", "HQL"], ["value", "Filter"], ["value", "XMLFilter"], ["value", "Application"], ["for", "applicationSelect"], ["id", "applicationSelect", 1, "form-control", 3, "ngModelChange", "ngModel", "disabled"], [3, "value"], ["for", "rowLimit"], ["id", "rowLimit", "type", "number", "min", "1", "max", "10000", "placeholder", "200", 1, "form-control", 3, "ngModelChange", "ngModel"]], template: function Editor_Template(rf, ctx) {
+  }, decls: 85, vars: 10, consts: [["idwQueryPluginEditorSlot", ""], [1, "editor", "container-fluid"], [1, "row"], [1, "col-md-12"], [1, "code-editor-container"], [1, "col-md-4"], [1, "btn", "btn-primary", 3, "click", "disabled"], [1, "btn", "btn-secondary", 3, "click", "disabled"], [1, "row", "options-container"], [1, "col-md-3"], [1, "form-group"], ["for", "selectQueryType"], ["id", "selectQueryType", 1, "form-control", 3, "ngModelChange", "ngModel"], ["value", "SQL"], ["value", "SQLPlugin"], ["value", "SQLAccessHistory"], ["value", "HQL"], ["value", "Filter"], ["value", "XMLFilter"], ["value", "Application"], [1, "col-md-2"], ["for", "rowLimit"], ["id", "rowLimit", "type", "number", "min", "1", "max", "10000", "placeholder", "200", 1, "form-control", 3, "ngModelChange", "ngModel"], ["for", "selectQueryClass"], ["id", "selectQueryClass", 1, "form-control", 3, "ngModelChange", "ngModel", "disabled"], ["value", "AuditEvent"], ["value", "Bundle"], ["value", "Certification"], ["value", "CertificationEntity"], ["value", "CertificationItem"], ["value", "Identity"], ["value", "IdentityRequest"], ["value", "Link"], ["value", "ManagedAttribute"], ["value", "PolicyViolation"], ["value", "Rule"], ["value", "SyslogEvent"], ["value", "TaskDefinition"], ["value", "TaskResult"], ["value", "Workflow"], ["value", "WorkflowCase"], ["value", "WorkItem"], ["for", "applicationSelect"], ["id", "applicationSelect", 1, "form-control", 3, "ngModelChange", "ngModel", "disabled"], [3, "value"]], template: function Editor_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "div", 2);
-      \u0275\u0275element(3, "div", 3);
+      const _r1 = \u0275\u0275getCurrentView();
+      \u0275\u0275elementStart(0, "div", 1)(1, "div", 2)(2, "div", 3);
+      \u0275\u0275element(3, "div", 4, 0);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(4, "div", 1)(5, "div", 4)(6, "button", 5);
-      \u0275\u0275listener("click", function Editor_Template_button_click_6_listener() {
-        return ctx.executeQuery();
+      \u0275\u0275elementStart(5, "div", 2)(6, "div", 5)(7, "button", 6);
+      \u0275\u0275listener("click", function Editor_Template_button_click_7_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.executeQuery());
       });
-      \u0275\u0275text(7, "Execute");
+      \u0275\u0275text(8, "Run Query");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "button", 6);
-      \u0275\u0275listener("click", function Editor_Template_button_click_8_listener() {
-        return ctx.clearQuery();
+      \u0275\u0275elementStart(9, "button", 7);
+      \u0275\u0275listener("click", function Editor_Template_button_click_9_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.clearQuery());
       });
-      \u0275\u0275text(9, "Clear");
+      \u0275\u0275text(10, "Clear");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(10, "button", 6);
-      \u0275\u0275listener("click", function Editor_Template_button_click_10_listener() {
-        return ctx.executeTranslate();
+      \u0275\u0275elementStart(11, "button", 7);
+      \u0275\u0275listener("click", function Editor_Template_button_click_11_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.executeTranslate());
       });
-      \u0275\u0275text(11, "Translate");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(12, "div", 4)(13, "div", 7)(14, "label", 8);
-      \u0275\u0275text(15, "Type:");
+      \u0275\u0275text(12, "Translate");
+      \u0275\u0275elementEnd()()();
+      \u0275\u0275elementStart(13, "div", 8)(14, "div", 9)(15, "div", 10)(16, "label", 11);
+      \u0275\u0275text(17, "Type:");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(16, "select", 9);
-      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_select_ngModelChange_16_listener($event) {
+      \u0275\u0275elementStart(18, "select", 12);
+      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_select_ngModelChange_18_listener($event) {
+        \u0275\u0275restoreView(_r1);
         \u0275\u0275twoWayBindingSet(ctx.editorState.queryType, $event) || (ctx.editorState.queryType = $event);
-        return $event;
+        return \u0275\u0275resetView($event);
       });
-      \u0275\u0275elementStart(17, "option", 10);
-      \u0275\u0275text(18, "SQL (primary schema)");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(19, "option", 11);
-      \u0275\u0275text(20, "SQL (plugin schema)");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(21, "option", 12);
-      \u0275\u0275text(22, "SQL (access history)");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(23, "option", 13);
-      \u0275\u0275text(24, "HQL");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(25, "option", 14);
-      \u0275\u0275text(26, "Filter");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(27, "option", 15);
-      \u0275\u0275text(28, "XML Filter");
-      \u0275\u0275elementEnd();
-      \u0275\u0275conditionalCreate(29, Editor_Conditional_29_Template, 2, 0, "option", 16);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(30, "div", 7)(31, "label", 17);
-      \u0275\u0275text(32, "Select Application:");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(33, "select", 18);
-      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_select_ngModelChange_33_listener($event) {
-        \u0275\u0275twoWayBindingSet(ctx.editorState.application, $event) || (ctx.editorState.application = $event);
-        return $event;
+      \u0275\u0275listener("ngModelChange", function Editor_Template_select_ngModelChange_18_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.stateUpdated("queryType"));
       });
-      \u0275\u0275repeaterCreate(34, Editor_For_35_Template, 2, 2, "option", 19, \u0275\u0275repeaterTrackByIdentity);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(36, "div", 7)(37, "label", 20);
-      \u0275\u0275text(38, "Row Limit:");
+      \u0275\u0275elementStart(19, "option", 13);
+      \u0275\u0275text(20, "SQL (primary schema)");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(39, "input", 21);
-      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_input_ngModelChange_39_listener($event) {
+      \u0275\u0275elementStart(21, "option", 14);
+      \u0275\u0275text(22, "SQL (plugin schema)");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(23, "option", 15);
+      \u0275\u0275text(24, "SQL (access history)");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(25, "option", 16);
+      \u0275\u0275text(26, "HQL");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(27, "option", 17);
+      \u0275\u0275text(28, "Filter");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(29, "option", 18);
+      \u0275\u0275text(30, "XML Filter");
+      \u0275\u0275elementEnd();
+      \u0275\u0275conditionalCreate(31, Editor_Conditional_31_Template, 2, 0, "option", 19);
+      \u0275\u0275elementEnd()()();
+      \u0275\u0275elementStart(32, "div", 20)(33, "div", 10)(34, "label", 21);
+      \u0275\u0275text(35, "Row Limit:");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(36, "input", 22);
+      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_input_ngModelChange_36_listener($event) {
+        \u0275\u0275restoreView(_r1);
         \u0275\u0275twoWayBindingSet(ctx.editorState.rowLimit, $event) || (ctx.editorState.rowLimit = $event);
-        return $event;
+        return \u0275\u0275resetView($event);
       });
+      \u0275\u0275elementEnd()()();
+      \u0275\u0275elementStart(37, "div", 9)(38, "div", 10)(39, "label", 23);
+      \u0275\u0275text(40, "Filter Class:");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(41, "select", 24);
+      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_select_ngModelChange_41_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        \u0275\u0275twoWayBindingSet(ctx.editorState.queryClass, $event) || (ctx.editorState.queryClass = $event);
+        return \u0275\u0275resetView($event);
+      });
+      \u0275\u0275listener("ngModelChange", function Editor_Template_select_ngModelChange_41_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.stateUpdated("queryClass"));
+      });
+      \u0275\u0275elementStart(42, "option", 19);
+      \u0275\u0275text(43, "Application");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(44, "option", 25);
+      \u0275\u0275text(45, "AuditEvent");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(46, "option", 26);
+      \u0275\u0275text(47, "Bundle");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(48, "option", 27);
+      \u0275\u0275text(49, "Certification");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(50, "option", 28);
+      \u0275\u0275text(51, "CertificationEntity");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(52, "option", 29);
+      \u0275\u0275text(53, "CertificationItem");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(54, "option", 30);
+      \u0275\u0275text(55, "Identity");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(56, "option", 31);
+      \u0275\u0275text(57, "IdentityRequest");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(58, "option", 32);
+      \u0275\u0275text(59, "Link");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(60, "option", 33);
+      \u0275\u0275text(61, "ManagedAttribute");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(62, "option", 34);
+      \u0275\u0275text(63, "PolicyViolation");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(64, "option", 35);
+      \u0275\u0275text(65, "Rule");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(66, "option", 36);
+      \u0275\u0275text(67, "SyslogEvent");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(68, "option", 37);
+      \u0275\u0275text(69, "TaskDefinition");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(70, "option", 38);
+      \u0275\u0275text(71, "TaskResult");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(72, "option", 39);
+      \u0275\u0275text(73, "Workflow");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(74, "option", 40);
+      \u0275\u0275text(75, "WorkflowCase");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(76, "option", 41);
+      \u0275\u0275text(77, "WorkItem");
+      \u0275\u0275elementEnd()()()();
+      \u0275\u0275elementStart(78, "div", 9)(79, "div", 10)(80, "label", 42);
+      \u0275\u0275text(81, "Application:");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(82, "select", 43);
+      \u0275\u0275twoWayListener("ngModelChange", function Editor_Template_select_ngModelChange_82_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        \u0275\u0275twoWayBindingSet(ctx.editorState.application, $event) || (ctx.editorState.application = $event);
+        return \u0275\u0275resetView($event);
+      });
+      \u0275\u0275listener("ngModelChange", function Editor_Template_select_ngModelChange_82_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.stateUpdated("application"));
+      });
+      \u0275\u0275repeaterCreate(83, Editor_For_84_Template, 2, 2, "option", 44, \u0275\u0275repeaterTrackByIdentity);
       \u0275\u0275elementEnd()()()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance(6);
-      \u0275\u0275property("disabled", ctx.state.running);
+      \u0275\u0275advance(7);
+      \u0275\u0275property("disabled", !ctx.state.ready() || ctx.state.running());
       \u0275\u0275advance(2);
-      \u0275\u0275property("disabled", ctx.state.running);
+      \u0275\u0275property("disabled", ctx.state.running());
       \u0275\u0275advance(2);
-      \u0275\u0275property("disabled", ctx.state.running || ctx.type === null || ctx.type === "Application" || ctx.type.startsWith("SQL"));
-      \u0275\u0275advance(6);
+      \u0275\u0275property("disabled", ctx.state.running() || ctx.type === null || ctx.type === "Application" || ctx.type.startsWith("SQL"));
+      \u0275\u0275advance(7);
       \u0275\u0275twoWayProperty("ngModel", ctx.editorState.queryType);
       \u0275\u0275advance(13);
-      \u0275\u0275conditional(ctx.state.configuration.privileges.queryApplications ? 29 : -1);
-      \u0275\u0275advance(4);
+      \u0275\u0275conditional(ctx.state.configuration().privileges.queryApplications ? 31 : -1);
+      \u0275\u0275advance(5);
+      \u0275\u0275twoWayProperty("ngModel", ctx.editorState.rowLimit);
+      \u0275\u0275advance(5);
+      \u0275\u0275twoWayProperty("ngModel", ctx.editorState.queryClass);
+      \u0275\u0275property("disabled", ctx.editorState.queryType !== "Filter" && ctx.editorState.queryType !== "XMLFilter");
+      \u0275\u0275advance(41);
       \u0275\u0275twoWayProperty("ngModel", ctx.editorState.application);
       \u0275\u0275property("disabled", ctx.editorState.queryType !== "Application");
       \u0275\u0275advance();
-      \u0275\u0275repeater(ctx.applications);
-      \u0275\u0275advance(5);
-      \u0275\u0275twoWayProperty("ngModel", ctx.editorState.rowLimit);
+      \u0275\u0275repeater(ctx.applications());
     }
-  }, dependencies: [FormsModule, NgSelectOption, \u0275NgSelectMultipleOption, DefaultValueAccessor, NumberValueAccessor, SelectControlValueAccessor, NgControlStatus, MinValidator, MaxValidator, NgModel], encapsulation: 2 });
+  }, dependencies: [FormsModule, NgSelectOption, \u0275NgSelectMultipleOption, DefaultValueAccessor, NumberValueAccessor, SelectControlValueAccessor, NgControlStatus, MinValidator, MaxValidator, NgModel], styles: ["\n\nbutton[_ngcontent-%COMP%] {\n  margin-left: 2px;\n}\n.code-editor-container[_ngcontent-%COMP%] {\n  height: 320px;\n  border: 1px solid #bbb;\n  margin-bottom: 10px;\n}\n.options-container[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  border-top: 1px solid #ccc;\n  padding-top: 5px;\n}\n/*# sourceMappingURL=editor.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Editor, [{
@@ -63983,49 +62499,84 @@ var Editor = class _Editor {
     ], standalone: true, template: `<div class="editor container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="idwQueryPluginEditorSlot"></div>
+            <div class="code-editor-container" #idwQueryPluginEditorSlot></div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <button class="btn btn-primary" (click)="executeQuery()" [disabled]="state.running">Execute</button>
-            <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running">Clear</button>
-            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running || type === null || type === 'Application' || type.startsWith('SQL')">Translate</button>
+        <div class="col-md-4">
+            <button class="btn btn-primary" (click)="executeQuery()" [disabled]="!state.ready() || state.running()">Run Query</button>
+            <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running()">Clear</button>
+            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running() || type === null || type === 'Application' || type.startsWith('SQL')">Translate</button>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row options-container">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="selectQueryType">Type:</label>
-                <select id="selectQueryType" class="form-control" [(ngModel)]="editorState.queryType">
+                <select id="selectQueryType" class="form-control" [(ngModel)]="editorState.queryType" (ngModelChange)="stateUpdated('queryType')">
                     <option value="SQL">SQL (primary schema)</option>
                     <option value="SQLPlugin">SQL (plugin schema)</option>
                     <option value="SQLAccessHistory">SQL (access history)</option>
                     <option value="HQL">HQL</option>
                     <option value="Filter">Filter</option>
                     <option value="XMLFilter">XML Filter</option>
-                    @if (state.configuration.privileges.queryApplications) {
+                    @if (state.configuration().privileges.queryApplications) {
                         <option value="Application">Application</option>
                     }
                 </select>
             </div>
-            <div class="form-group">
-                <label for="applicationSelect">Select Application:</label>
-                <select id="applicationSelect" class="form-control" [(ngModel)]="editorState.application" [disabled]="editorState.queryType !== 'Application'">
-                    @for (app of applications; track app) {
-                        <option [value]="app">{{app}}</option>
-                    }
-                </select>
-            </div>
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="rowLimit">Row Limit:</label>
                 <input id="rowLimit" type="number" class="form-control" [(ngModel)]="editorState.rowLimit" min="1" max="10000" placeholder="200">
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="selectQueryClass">Filter Class:</label>
+                <select id="selectQueryClass" class="form-control" [(ngModel)]="editorState.queryClass" [disabled]="editorState.queryType !== 'Filter' && editorState.queryType !== 'XMLFilter'" (ngModelChange)="stateUpdated('queryClass')">
+                    <option value="Application">Application</option>
+                    <option value="AuditEvent">AuditEvent</option>
+                    <option value="Bundle">Bundle</option>
+                    <option value="Certification">Certification</option>
+                    <option value="CertificationEntity">CertificationEntity</option>
+                    <option value="CertificationItem">CertificationItem</option>
+                    <option value="Identity">Identity</option>
+                    <option value="IdentityRequest">IdentityRequest</option>
+                    <option value="Link">Link</option>
+                    <option value="ManagedAttribute">ManagedAttribute</option>
+                    <option value="PolicyViolation">PolicyViolation</option>
+                    <option value="Rule">Rule</option>
+                    <option value="SyslogEvent">SyslogEvent</option>
+                    <option value="TaskDefinition">TaskDefinition</option>
+                    <option value="TaskResult">TaskResult</option>
+                    <option value="Workflow">Workflow</option>
+                    <option value="WorkflowCase">WorkflowCase</option>
+                    <option value="WorkItem">WorkItem</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="applicationSelect">Application:</label>
+                <select id="applicationSelect" class="form-control" [(ngModel)]="editorState.application" [disabled]="editorState.queryType !== 'Application'" (ngModelChange)="stateUpdated('application')">
+                    @for (app of applications(); track app) {
+                        <option [value]="app">{{app}}</option>
+                    }
+                </select>
+            </div>
+        </div>
     </div>
-</div>` }]
-  }], () => [], null);
+</div>`, styles: ["/* src/app/components/editor/editor/editor.scss */\nbutton {\n  margin-left: 2px;\n}\n.code-editor-container {\n  height: 320px;\n  border: 1px solid #bbb;\n  margin-bottom: 10px;\n}\n.options-container {\n  margin-top: 10px;\n  border-top: 1px solid #ccc;\n  padding-top: 5px;\n}\n/*# sourceMappingURL=editor.css.map */\n"] }]
+  }], () => [], { editor: [{
+    type: ViewChild,
+    args: ["idwQueryPluginEditorSlot", { static: true }]
+  }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(Editor, { className: "Editor", filePath: "src/app/components/editor/editor/editor.ts", lineNumber: 47 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(Editor, { className: "Editor", filePath: "src/app/components/editor/editor/editor.ts", lineNumber: 72 });
 })();
 
 // node_modules/@angular/core/fesm2022/rxjs-interop.mjs
@@ -64078,8 +62629,8 @@ var afterWrite = "afterWrite";
 var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
 
 // node_modules/@popperjs/core/lib/dom-utils/getNodeName.js
-function getNodeName2(element) {
-  return element ? (element.nodeName || "").toLowerCase() : null;
+function getNodeName2(element2) {
+  return element2 ? (element2.nodeName || "").toLowerCase() : null;
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getWindow.js
@@ -64117,17 +62668,17 @@ function applyStyles(_ref) {
   Object.keys(state.elements).forEach(function(name2) {
     var style = state.styles[name2] || {};
     var attributes = state.attributes[name2] || {};
-    var element = state.elements[name2];
-    if (!isHTMLElement(element) || !getNodeName2(element)) {
+    var element2 = state.elements[name2];
+    if (!isHTMLElement(element2) || !getNodeName2(element2)) {
       return;
     }
-    Object.assign(element.style, style);
+    Object.assign(element2.style, style);
     Object.keys(attributes).forEach(function(name3) {
       var value = attributes[name3];
       if (value === false) {
-        element.removeAttribute(name3);
+        element2.removeAttribute(name3);
       } else {
-        element.setAttribute(name3, value === true ? "" : value);
+        element2.setAttribute(name3, value === true ? "" : value);
       }
     });
   });
@@ -64153,19 +62704,19 @@ function effect2(_ref2) {
   }
   return function() {
     Object.keys(state.elements).forEach(function(name2) {
-      var element = state.elements[name2];
+      var element2 = state.elements[name2];
       var attributes = state.attributes[name2] || {};
       var styleProperties = Object.keys(state.styles.hasOwnProperty(name2) ? state.styles[name2] : initialStyles[name2]);
       var style = styleProperties.reduce(function(style2, property) {
         style2[property] = "";
         return style2;
       }, {});
-      if (!isHTMLElement(element) || !getNodeName2(element)) {
+      if (!isHTMLElement(element2) || !getNodeName2(element2)) {
         return;
       }
-      Object.assign(element.style, style);
-      Object.keys(attributes).forEach(function(attribute) {
-        element.removeAttribute(attribute);
+      Object.assign(element2.style, style);
+      Object.keys(attributes).forEach(function(attribute2) {
+        element2.removeAttribute(attribute2);
       });
     });
   };
@@ -64206,21 +62757,21 @@ function isLayoutViewport() {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
-function getBoundingClientRect(element, includeScale, isFixedStrategy) {
+function getBoundingClientRect(element2, includeScale, isFixedStrategy) {
   if (includeScale === void 0) {
     includeScale = false;
   }
   if (isFixedStrategy === void 0) {
     isFixedStrategy = false;
   }
-  var clientRect = element.getBoundingClientRect();
+  var clientRect = element2.getBoundingClientRect();
   var scaleX = 1;
   var scaleY = 1;
-  if (includeScale && isHTMLElement(element)) {
-    scaleX = element.offsetWidth > 0 ? round2(clientRect.width) / element.offsetWidth || 1 : 1;
-    scaleY = element.offsetHeight > 0 ? round2(clientRect.height) / element.offsetHeight || 1 : 1;
+  if (includeScale && isHTMLElement(element2)) {
+    scaleX = element2.offsetWidth > 0 ? round2(clientRect.width) / element2.offsetWidth || 1 : 1;
+    scaleY = element2.offsetHeight > 0 ? round2(clientRect.height) / element2.offsetHeight || 1 : 1;
   }
-  var _ref = isElement(element) ? getWindow(element) : window, visualViewport = _ref.visualViewport;
+  var _ref = isElement(element2) ? getWindow(element2) : window, visualViewport = _ref.visualViewport;
   var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
   var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
   var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
@@ -64239,10 +62790,10 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
-function getLayoutRect(element) {
-  var clientRect = getBoundingClientRect(element);
-  var width = element.offsetWidth;
-  var height = element.offsetHeight;
+function getLayoutRect(element2) {
+  var clientRect = getBoundingClientRect(element2);
+  var width = element2.offsetWidth;
+  var height = element2.offsetHeight;
   if (Math.abs(clientRect.width - width) <= 1) {
     width = clientRect.width;
   }
@@ -64250,8 +62801,8 @@ function getLayoutRect(element) {
     height = clientRect.height;
   }
   return {
-    x: element.offsetLeft,
-    y: element.offsetTop,
+    x: element2.offsetLeft,
+    y: element2.offsetTop,
     width,
     height
   };
@@ -64275,58 +62826,58 @@ function contains2(parent, child) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js
-function getComputedStyle2(element) {
-  return getWindow(element).getComputedStyle(element);
+function getComputedStyle2(element2) {
+  return getWindow(element2).getComputedStyle(element2);
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/isTableElement.js
-function isTableElement(element) {
-  return ["table", "td", "th"].indexOf(getNodeName2(element)) >= 0;
+function isTableElement(element2) {
+  return ["table", "td", "th"].indexOf(getNodeName2(element2)) >= 0;
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
-function getDocumentElement(element) {
-  return ((isElement(element) ? element.ownerDocument : (
+function getDocumentElement(element2) {
+  return ((isElement(element2) ? element2.ownerDocument : (
     // $FlowFixMe[prop-missing]
-    element.document
+    element2.document
   )) || window.document).documentElement;
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
-function getParentNode(element) {
-  if (getNodeName2(element) === "html") {
-    return element;
+function getParentNode(element2) {
+  if (getNodeName2(element2) === "html") {
+    return element2;
   }
   return (
     // this is a quicker (but less type safe) way to save quite some bytes from the bundle
     // $FlowFixMe[incompatible-return]
     // $FlowFixMe[prop-missing]
-    element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
-    element.parentNode || // DOM Element detected
-    (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
+    element2.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+    element2.parentNode || // DOM Element detected
+    (isShadowRoot(element2) ? element2.host : null) || // ShadowRoot detected
     // $FlowFixMe[incompatible-call]: HTMLElement is a Node
-    getDocumentElement(element)
+    getDocumentElement(element2)
   );
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
-function getTrueOffsetParent(element) {
-  if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
-  getComputedStyle2(element).position === "fixed") {
+function getTrueOffsetParent(element2) {
+  if (!isHTMLElement(element2) || // https://github.com/popperjs/popper-core/issues/837
+  getComputedStyle2(element2).position === "fixed") {
     return null;
   }
-  return element.offsetParent;
+  return element2.offsetParent;
 }
-function getContainingBlock(element) {
+function getContainingBlock(element2) {
   var isFirefox = /firefox/i.test(getUAString());
   var isIE = /Trident/i.test(getUAString());
-  if (isIE && isHTMLElement(element)) {
-    var elementCss = getComputedStyle2(element);
+  if (isIE && isHTMLElement(element2)) {
+    var elementCss = getComputedStyle2(element2);
     if (elementCss.position === "fixed") {
       return null;
     }
   }
-  var currentNode = getParentNode(element);
+  var currentNode = getParentNode(element2);
   if (isShadowRoot(currentNode)) {
     currentNode = currentNode.host;
   }
@@ -64340,16 +62891,16 @@ function getContainingBlock(element) {
   }
   return null;
 }
-function getOffsetParent(element) {
-  var window2 = getWindow(element);
-  var offsetParent = getTrueOffsetParent(element);
+function getOffsetParent(element2) {
+  var window2 = getWindow(element2);
+  var offsetParent = getTrueOffsetParent(element2);
   while (offsetParent && isTableElement(offsetParent) && getComputedStyle2(offsetParent).position === "static") {
     offsetParent = getTrueOffsetParent(offsetParent);
   }
   if (offsetParent && (getNodeName2(offsetParent) === "html" || getNodeName2(offsetParent) === "body" && getComputedStyle2(offsetParent).position === "static")) {
     return window2;
   }
-  return offsetParent || getContainingBlock(element) || window2;
+  return offsetParent || getContainingBlock(element2) || window2;
 }
 
 // node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js
@@ -64382,8 +62933,8 @@ function mergePaddingObject(paddingObject) {
 }
 
 // node_modules/@popperjs/core/lib/utils/expandToHashMap.js
-function expandToHashMap(value, keys2) {
-  return keys2.reduce(function(hashMap, key) {
+function expandToHashMap(value, keys) {
+  return keys.reduce(function(hashMap, key) {
     hashMap[key] = value;
     return hashMap;
   }, {});
@@ -64651,14 +63202,14 @@ function getWindowScroll(node) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js
-function getWindowScrollBarX(element) {
-  return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
+function getWindowScrollBarX(element2) {
+  return getBoundingClientRect(getDocumentElement(element2)).left + getWindowScroll(element2).scrollLeft;
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getViewportRect.js
-function getViewportRect(element, strategy) {
-  var win = getWindow(element);
-  var html = getDocumentElement(element);
+function getViewportRect(element2, strategy) {
+  var win = getWindow(element2);
+  var html = getDocumentElement(element2);
   var visualViewport = win.visualViewport;
   var width = html.clientWidth;
   var height = html.clientHeight;
@@ -64676,20 +63227,20 @@ function getViewportRect(element, strategy) {
   return {
     width,
     height,
-    x: x + getWindowScrollBarX(element),
+    x: x + getWindowScrollBarX(element2),
     y
   };
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js
-function getDocumentRect(element) {
+function getDocumentRect(element2) {
   var _element$ownerDocumen;
-  var html = getDocumentElement(element);
-  var winScroll = getWindowScroll(element);
-  var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+  var html = getDocumentElement(element2);
+  var winScroll = getWindowScroll(element2);
+  var body = (_element$ownerDocumen = element2.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
   var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
   var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
-  var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
+  var x = -winScroll.scrollLeft + getWindowScrollBarX(element2);
   var y = -winScroll.scrollTop;
   if (getComputedStyle2(body || html).direction === "rtl") {
     x += max(html.clientWidth, body ? body.clientWidth : 0) - width;
@@ -64703,8 +63254,8 @@ function getDocumentRect(element) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js
-function isScrollParent(element) {
-  var _getComputedStyle = getComputedStyle2(element), overflow = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
+function isScrollParent(element2) {
+  var _getComputedStyle = getComputedStyle2(element2), overflow = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
   return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
 }
 
@@ -64720,13 +63271,13 @@ function getScrollParent(node) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js
-function listScrollParents(element, list) {
+function listScrollParents(element2, list) {
   var _element$ownerDocumen;
   if (list === void 0) {
     list = [];
   }
-  var scrollParent = getScrollParent(element);
-  var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
+  var scrollParent = getScrollParent(element2);
+  var isBody = scrollParent === ((_element$ownerDocumen = element2.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
   var win = getWindow(scrollParent);
   var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
   var updatedList = list.concat(target);
@@ -64747,25 +63298,25 @@ function rectToClientRect(rect) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
-function getInnerBoundingClientRect(element, strategy) {
-  var rect = getBoundingClientRect(element, false, strategy === "fixed");
-  rect.top = rect.top + element.clientTop;
-  rect.left = rect.left + element.clientLeft;
-  rect.bottom = rect.top + element.clientHeight;
-  rect.right = rect.left + element.clientWidth;
-  rect.width = element.clientWidth;
-  rect.height = element.clientHeight;
+function getInnerBoundingClientRect(element2, strategy) {
+  var rect = getBoundingClientRect(element2, false, strategy === "fixed");
+  rect.top = rect.top + element2.clientTop;
+  rect.left = rect.left + element2.clientLeft;
+  rect.bottom = rect.top + element2.clientHeight;
+  rect.right = rect.left + element2.clientWidth;
+  rect.width = element2.clientWidth;
+  rect.height = element2.clientHeight;
   rect.x = rect.left;
   rect.y = rect.top;
   return rect;
 }
-function getClientRectFromMixedType(element, clippingParent, strategy) {
-  return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+function getClientRectFromMixedType(element2, clippingParent, strategy) {
+  return clippingParent === viewport ? rectToClientRect(getViewportRect(element2, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element2)));
 }
-function getClippingParents(element) {
-  var clippingParents2 = listScrollParents(getParentNode(element));
-  var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle2(element).position) >= 0;
-  var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
+function getClippingParents(element2) {
+  var clippingParents2 = listScrollParents(getParentNode(element2));
+  var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle2(element2).position) >= 0;
+  var clipperElement = canEscapeClipping && isHTMLElement(element2) ? getOffsetParent(element2) : element2;
   if (!isElement(clipperElement)) {
     return [];
   }
@@ -64773,18 +63324,18 @@ function getClippingParents(element) {
     return isElement(clippingParent) && contains2(clippingParent, clipperElement) && getNodeName2(clippingParent) !== "body";
   });
 }
-function getClippingRect(element, boundary, rootBoundary, strategy) {
-  var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element) : [].concat(boundary);
+function getClippingRect(element2, boundary, rootBoundary, strategy) {
+  var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element2) : [].concat(boundary);
   var clippingParents2 = [].concat(mainClippingParents, [rootBoundary]);
   var firstClippingParent = clippingParents2[0];
   var clippingRect = clippingParents2.reduce(function(accRect, clippingParent) {
-    var rect = getClientRectFromMixedType(element, clippingParent, strategy);
+    var rect = getClientRectFromMixedType(element2, clippingParent, strategy);
     accRect.top = max(rect.top, accRect.top);
     accRect.right = min(rect.right, accRect.right);
     accRect.bottom = min(rect.bottom, accRect.bottom);
     accRect.left = max(rect.left, accRect.left);
     return accRect;
-  }, getClientRectFromMixedType(element, firstClippingParent, strategy));
+  }, getClientRectFromMixedType(element2, firstClippingParent, strategy));
   clippingRect.width = clippingRect.right - clippingRect.left;
   clippingRect.height = clippingRect.bottom - clippingRect.top;
   clippingRect.x = clippingRect.left;
@@ -64794,17 +63345,17 @@ function getClippingRect(element, boundary, rootBoundary, strategy) {
 
 // node_modules/@popperjs/core/lib/utils/computeOffsets.js
 function computeOffsets(_ref) {
-  var reference2 = _ref.reference, element = _ref.element, placement = _ref.placement;
+  var reference2 = _ref.reference, element2 = _ref.element, placement = _ref.placement;
   var basePlacement = placement ? getBasePlacement(placement) : null;
   var variation = placement ? getVariation(placement) : null;
-  var commonX = reference2.x + reference2.width / 2 - element.width / 2;
-  var commonY = reference2.y + reference2.height / 2 - element.height / 2;
+  var commonX = reference2.x + reference2.width / 2 - element2.width / 2;
+  var commonY = reference2.y + reference2.height / 2 - element2.height / 2;
   var offsets;
   switch (basePlacement) {
     case top2:
       offsets = {
         x: commonX,
-        y: reference2.y - element.height
+        y: reference2.y - element2.height
       };
       break;
     case bottom:
@@ -64821,7 +63372,7 @@ function computeOffsets(_ref) {
       break;
     case left:
       offsets = {
-        x: reference2.x - element.width,
+        x: reference2.x - element2.width,
         y: commonY
       };
       break;
@@ -64836,10 +63387,10 @@ function computeOffsets(_ref) {
     var len = mainAxis === "y" ? "height" : "width";
     switch (variation) {
       case start:
-        offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
+        offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element2[len] / 2);
         break;
       case end:
-        offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element[len] / 2);
+        offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element2[len] / 2);
         break;
       default:
     }
@@ -64852,12 +63403,12 @@ function detectOverflow(state, options) {
   if (options === void 0) {
     options = {};
   }
-  var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding = _options$padding === void 0 ? 0 : _options$padding;
+  var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext2 = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding = _options$padding === void 0 ? 0 : _options$padding;
   var paddingObject = mergePaddingObject(typeof padding !== "number" ? padding : expandToHashMap(padding, basePlacements));
-  var altContext = elementContext === popper ? reference : popper;
+  var altContext = elementContext2 === popper ? reference : popper;
   var popperRect = state.rects.popper;
-  var element = state.elements[altBoundary ? altContext : elementContext];
-  var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
+  var element2 = state.elements[altBoundary ? altContext : elementContext2];
+  var clippingClientRect = getClippingRect(isElement(element2) ? element2 : element2.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
   var referenceClientRect = getBoundingClientRect(state.elements.reference);
   var popperOffsets2 = computeOffsets({
     reference: referenceClientRect,
@@ -64866,7 +63417,7 @@ function detectOverflow(state, options) {
     placement
   });
   var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets2));
-  var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect;
+  var elementClientRect = elementContext2 === popper ? popperClientRect : referenceClientRect;
   var overflowOffsets = {
     top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
     bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
@@ -64874,7 +63425,7 @@ function detectOverflow(state, options) {
     right: elementClientRect.right - clippingClientRect.right + paddingObject.right
   };
   var offsetData = state.modifiersData.offset;
-  if (elementContext === popper && offsetData) {
+  if (elementContext2 === popper && offsetData) {
     var offset2 = offsetData[placement];
     Object.keys(overflowOffsets).forEach(function(key) {
       var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
@@ -65176,10 +63727,10 @@ var preventOverflow_default = {
 };
 
 // node_modules/@popperjs/core/lib/dom-utils/getHTMLElementScroll.js
-function getHTMLElementScroll(element) {
+function getHTMLElementScroll(element2) {
   return {
-    scrollLeft: element.scrollLeft,
-    scrollTop: element.scrollTop
+    scrollLeft: element2.scrollLeft,
+    scrollTop: element2.scrollTop
   };
 }
 
@@ -65193,10 +63744,10 @@ function getNodeScroll(node) {
 }
 
 // node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js
-function isElementScaled(element) {
-  var rect = element.getBoundingClientRect();
-  var scaleX = round2(rect.width) / element.offsetWidth || 1;
-  var scaleY = round2(rect.height) / element.offsetHeight || 1;
+function isElementScaled(element2) {
+  var rect = element2.getBoundingClientRect();
+  var scaleX = round2(rect.width) / element2.offsetWidth || 1;
+  var scaleY = round2(rect.height) / element2.offsetHeight || 1;
   return scaleX !== 1 || scaleY !== 1;
 }
 function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
@@ -65314,23 +63865,23 @@ function areValidElements() {
   for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
   }
-  return !args.some(function(element) {
-    return !(element && typeof element.getBoundingClientRect === "function");
+  return !args.some(function(element2) {
+    return !(element2 && typeof element2.getBoundingClientRect === "function");
   });
 }
 function popperGenerator(generatorOptions) {
   if (generatorOptions === void 0) {
     generatorOptions = {};
   }
-  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions2 = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
   return function createPopper2(reference2, popper2, options) {
     if (options === void 0) {
-      options = defaultOptions;
+      options = defaultOptions2;
     }
     var state = {
       placement: "bottom",
       orderedModifiers: [],
-      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
+      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions2),
       modifiersData: {},
       elements: {
         reference: reference2,
@@ -65346,7 +63897,7 @@ function popperGenerator(generatorOptions) {
       setOptions: function setOptions(setOptionsAction) {
         var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
         cleanupModifierEffects();
-        state.options = Object.assign({}, defaultOptions, state.options, options2);
+        state.options = Object.assign({}, defaultOptions2, state.options, options2);
         state.scrollParents = {
           reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
           popper: listScrollParents(popper2)
@@ -66562,11 +65113,11 @@ var NgbAccordionConfig = _NgbAccordionConfig;
     }]
   }], null, null);
 })();
-function getTransitionDurationMs(element) {
+function getTransitionDurationMs(element2) {
   const {
     transitionDelay,
     transitionDuration
-  } = window.getComputedStyle(element);
+  } = window.getComputedStyle(element2);
   const transitionDelaySec = parseFloat(transitionDelay);
   const transitionDurationSec = parseFloat(transitionDuration);
   return (transitionDelaySec + transitionDurationSec) * 1e3;
@@ -66602,20 +65153,20 @@ function padNumber2(value) {
     return "";
   }
 }
-function regExpEscape(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+function regExpEscape(text2) {
+  return text2.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
-function closest(element, selector) {
+function closest(element2, selector) {
   if (!selector) {
     return null;
   }
-  if (typeof element.closest === "undefined") {
+  if (typeof element2.closest === "undefined") {
     return null;
   }
-  return element.closest(selector);
+  return element2.closest(selector);
 }
-function reflow(element) {
-  return (element || document.body).getBoundingClientRect();
+function reflow(element2) {
+  return (element2 || document.body).getBoundingClientRect();
 }
 function runInZone(zone) {
   return (source) => {
@@ -66647,9 +65198,9 @@ var {
   transitionTimerDelayMs
 } = environment;
 var runningTransitions = /* @__PURE__ */ new Map();
-var ngbRunTransition = (zone, element, startFn, options) => {
+var ngbRunTransition = (zone, element2, startFn, options) => {
   let context2 = options.context || {};
-  const running = runningTransitions.get(element);
+  const running = runningTransitions.get(element2);
   if (running) {
     switch (options.runningTransition) {
       // If there is one running and we want for it to 'continue' to run, we have to cancel the new one.
@@ -66662,18 +65213,18 @@ var ngbRunTransition = (zone, element, startFn, options) => {
       case "stop":
         zone.run(() => running.transition$.complete());
         context2 = Object.assign(running.context, context2);
-        runningTransitions.delete(element);
+        runningTransitions.delete(element2);
     }
   }
-  const endFn = startFn(element, options.animation, context2) || noopFn;
-  if (!options.animation || window.getComputedStyle(element).transitionProperty === "none") {
+  const endFn = startFn(element2, options.animation, context2) || noopFn;
+  if (!options.animation || window.getComputedStyle(element2).transitionProperty === "none") {
     zone.run(() => endFn());
     return of(void 0).pipe(runInZone(zone));
   }
   const transition$ = new Subject();
   const finishTransition$ = new Subject();
   const stop$ = transition$.pipe(endWith(true));
-  runningTransitions.set(element, {
+  runningTransitions.set(element2, {
     transition$,
     complete: () => {
       finishTransition$.next();
@@ -66681,14 +65232,14 @@ var ngbRunTransition = (zone, element, startFn, options) => {
     },
     context: context2
   });
-  const transitionDurationMs = getTransitionDurationMs(element);
+  const transitionDurationMs = getTransitionDurationMs(element2);
   zone.runOutsideAngular(() => {
-    const transitionEnd$ = fromEvent(element, "transitionend").pipe(takeUntil(stop$), filter(({
+    const transitionEnd$ = fromEvent(element2, "transitionend").pipe(takeUntil(stop$), filter(({
       target
-    }) => target === element));
+    }) => target === element2));
     const timer$ = timer(transitionDurationMs + transitionTimerDelayMs).pipe(takeUntil(stop$));
     race(timer$, transitionEnd$, finishTransition$).pipe(takeUntil(stop$)).subscribe(() => {
-      runningTransitions.delete(element);
+      runningTransitions.delete(element2);
       zone.run(() => {
         endFn();
         transition$.next();
@@ -66698,28 +65249,28 @@ var ngbRunTransition = (zone, element, startFn, options) => {
   });
   return transition$.asObservable();
 };
-var ngbCompleteTransition = (element) => {
-  runningTransitions.get(element)?.complete();
+var ngbCompleteTransition = (element2) => {
+  runningTransitions.get(element2)?.complete();
 };
-function measureCollapsingElementDimensionPx(element, dimension) {
+function measureCollapsingElementDimensionPx(element2, dimension) {
   if (typeof navigator === "undefined") {
     return "0px";
   }
   const {
     classList
-  } = element;
+  } = element2;
   const hasShownClass = classList.contains("show");
   if (!hasShownClass) {
     classList.add("show");
   }
-  element.style[dimension] = "";
-  const dimensionSize = element.getBoundingClientRect()[dimension] + "px";
+  element2.style[dimension] = "";
+  const dimensionSize = element2.getBoundingClientRect()[dimension] + "px";
   if (!hasShownClass) {
     classList.remove("show");
   }
   return dimensionSize;
 }
-var ngbCollapsingTransition = (element, animation, context2) => {
+var ngbCollapsingTransition = (element2, animation, context2) => {
   let {
     direction,
     maxSize,
@@ -66727,7 +65278,7 @@ var ngbCollapsingTransition = (element, animation, context2) => {
   } = context2;
   const {
     classList
-  } = element;
+  } = element2;
   function setInitialClasses() {
     classList.add("collapse");
     if (direction === "show") {
@@ -66741,18 +65292,18 @@ var ngbCollapsingTransition = (element, animation, context2) => {
     return;
   }
   if (!maxSize) {
-    maxSize = measureCollapsingElementDimensionPx(element, dimension);
+    maxSize = measureCollapsingElementDimensionPx(element2, dimension);
     context2.maxSize = maxSize;
-    element.style[dimension] = direction !== "show" ? maxSize : "0px";
+    element2.style[dimension] = direction !== "show" ? maxSize : "0px";
     classList.remove("collapse", "collapsing", "show");
-    reflow(element);
+    reflow(element2);
     classList.add("collapsing");
   }
-  element.style[dimension] = direction === "show" ? maxSize : "0px";
+  element2.style[dimension] = direction === "show" ? maxSize : "0px";
   return () => {
     setInitialClasses();
     classList.remove("collapsing");
-    element.style[dimension] = "";
+    element2.style[dimension] = "";
   };
 };
 var _NgbCollapseConfig = class _NgbCollapseConfig {
@@ -67169,9 +65720,9 @@ var _NgbAccordionItem = class _NgbAccordionItem {
    *
    * @param id The ID of the accordion item, must be a non-empty string
    */
-  set id(id) {
-    if (isString(id) && id !== "") {
-      this._id = id;
+  set id(id3) {
+    if (isString(id3) && id3 !== "") {
+      this._id = id3;
     }
   }
   /**
@@ -67774,22 +66325,22 @@ var removeClasses = (classList) => {
   removeDirectionClasses(classList);
   classList.remove("carousel-item-prev", "carousel-item-next");
 };
-var ngbCarouselTransitionIn = (element, animation, {
+var ngbCarouselTransitionIn = (element2, animation, {
   direction
 }) => {
   const {
     classList
-  } = element;
+  } = element2;
   if (!animation) {
     removeClasses(classList);
     classList.add("active");
     return;
   }
-  if (isBeingAnimated(element)) {
+  if (isBeingAnimated(element2)) {
     removeDirectionClasses(classList);
   } else {
     classList.add("carousel-item-" + (direction === NgbSlideEventDirection.START ? "next" : "prev"));
-    reflow(element);
+    reflow(element2);
     classList.add("carousel-item-" + direction);
   }
   return () => {
@@ -67797,18 +66348,18 @@ var ngbCarouselTransitionIn = (element, animation, {
     classList.add("active");
   };
 };
-var ngbCarouselTransitionOut = (element, animation, {
+var ngbCarouselTransitionOut = (element2, animation, {
   direction
 }) => {
   const {
     classList
-  } = element;
+  } = element2;
   if (!animation) {
     removeClasses(classList);
     classList.remove("active");
     return;
   }
-  if (isBeingAnimated(element)) {
+  if (isBeingAnimated(element2)) {
     removeDirectionClasses(classList);
   } else {
     classList.add("carousel-item-" + direction);
@@ -67952,19 +66503,19 @@ var _NgbCarousel = class _NgbCarousel {
       });
     }
     this.slides.changes.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => {
-      this._transitionIds?.forEach((id) => ngbCompleteTransition(this._getSlideElement(id)));
+      this._transitionIds?.forEach((id3) => ngbCompleteTransition(this._getSlideElement(id3)));
       this._transitionIds = null;
       this._cd.markForCheck();
       afterNextRender({
         mixedReadWrite: () => {
           for (const {
-            id
+            id: id3
           } of this.slides) {
-            const element = this._getSlideElement(id);
-            if (id === this.activeId) {
-              element.classList.add("active");
+            const element2 = this._getSlideElement(id3);
+            if (id3 === this.activeId) {
+              element2.classList.add("active");
             } else {
-              element.classList.remove("active");
+              element2.classList.remove("active");
             }
           }
         }
@@ -67979,9 +66530,9 @@ var _NgbCarousel = class _NgbCarousel {
   }
   ngAfterViewInit() {
     if (this.activeId) {
-      const element = this._getSlideElement(this.activeId);
-      if (element) {
-        element.classList.add("active");
+      const element2 = this._getSlideElement(this.activeId);
+      if (element2) {
+        element2.classList.add("active");
       }
     }
   }
@@ -70381,8 +68932,8 @@ var NgbDatepicker = _NgbDatepicker;
     }]
   });
 })();
-var isContainedIn = (element, array) => array ? array.some((item) => item.contains(element)) : false;
-var matchesSelectorIfAny = (element, selector) => !selector || closest(element, selector) != null;
+var isContainedIn = (element2, array) => array ? array.some((item) => item.contains(element2)) : false;
+var matchesSelectorIfAny = (element2, selector) => !selector || closest(element2, selector) != null;
 var isMobile = (() => {
   const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) || /Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 2;
   const isAndroid = () => /Android/.test(navigator.userAgent);
@@ -70393,16 +68944,16 @@ function ngbAutoClose(zone, document2, type, close, closed$, insideElements, ign
   if (type) {
     zone.runOutsideAngular(wrapAsyncForMobile(() => {
       const shouldCloseOnClick = (event) => {
-        const element = event.target;
-        if (event.button === 2 || isContainedIn(element, ignoreElements2)) {
+        const element2 = event.target;
+        if (event.button === 2 || isContainedIn(element2, ignoreElements2)) {
           return false;
         }
         if (type === "inside") {
-          return isContainedIn(element, insideElements) && matchesSelectorIfAny(element, insideSelector);
+          return isContainedIn(element2, insideElements) && matchesSelectorIfAny(element2, insideSelector);
         } else if (type === "outside") {
-          return !isContainedIn(element, insideElements);
+          return !isContainedIn(element2, insideElements);
         } else {
-          return matchesSelectorIfAny(element, insideSelector) || !isContainedIn(element, insideElements);
+          return matchesSelectorIfAny(element2, insideSelector) || !isContainedIn(element2, insideElements);
         }
       };
       const escapes$ = fromEvent(document2, "keydown").pipe(takeUntil(closed$), filter((e) => e.key === "Escape"), tap((e) => e.preventDefault()));
@@ -70419,26 +68970,26 @@ function ngbAutoClose(zone, document2, type, close, closed$, insideElements, ign
   }
 }
 var FOCUSABLE_ELEMENTS_SELECTOR = ["a[href]", "button:not([disabled])", 'input:not([disabled]):not([type="hidden"])', "select:not([disabled])", "textarea:not([disabled])", "[contenteditable]", '[tabindex]:not([tabindex="-1"])'].join(", ");
-function getFocusableBoundaryElements(element) {
-  const list = Array.from(element.querySelectorAll(FOCUSABLE_ELEMENTS_SELECTOR)).filter((el) => el.tabIndex !== -1);
+function getFocusableBoundaryElements(element2) {
+  const list = Array.from(element2.querySelectorAll(FOCUSABLE_ELEMENTS_SELECTOR)).filter((el) => el.tabIndex !== -1);
   return [list[0], list[list.length - 1]];
 }
-var ngbFocusTrap = (zone, element, stopFocusTrap$, refocusOnClick = false) => {
+var ngbFocusTrap = (zone, element2, stopFocusTrap$, refocusOnClick = false) => {
   zone.runOutsideAngular(() => {
-    const lastFocusedElement$ = fromEvent(element, "focusin").pipe(takeUntil(stopFocusTrap$), map((e) => e.target));
-    fromEvent(element, "keydown").pipe(takeUntil(stopFocusTrap$), filter((e) => e.key === "Tab"), withLatestFrom(lastFocusedElement$)).subscribe(([tabEvent, focusedElement]) => {
-      const [first, last2] = getFocusableBoundaryElements(element);
-      if ((focusedElement === first || focusedElement === element) && tabEvent.shiftKey) {
-        last2.focus();
+    const lastFocusedElement$ = fromEvent(element2, "focusin").pipe(takeUntil(stopFocusTrap$), map((e) => e.target));
+    fromEvent(element2, "keydown").pipe(takeUntil(stopFocusTrap$), filter((e) => e.key === "Tab"), withLatestFrom(lastFocusedElement$)).subscribe(([tabEvent, focusedElement]) => {
+      const [first, last3] = getFocusableBoundaryElements(element2);
+      if ((focusedElement === first || focusedElement === element2) && tabEvent.shiftKey) {
+        last3.focus();
         tabEvent.preventDefault();
       }
-      if (focusedElement === last2 && !tabEvent.shiftKey) {
+      if (focusedElement === last3 && !tabEvent.shiftKey) {
         first.focus();
         tabEvent.preventDefault();
       }
     });
     if (refocusOnClick) {
-      fromEvent(element, "click").pipe(takeUntil(stopFocusTrap$), withLatestFrom(lastFocusedElement$), map((arr) => arr[1])).subscribe((lastFocusedElement) => lastFocusedElement.focus());
+      fromEvent(element2, "click").pipe(takeUntil(stopFocusTrap$), withLatestFrom(lastFocusedElement$), map((arr) => arr[1])).subscribe((lastFocusedElement) => lastFocusedElement.focus());
     }
   });
 };
@@ -73646,11 +72197,11 @@ var _NgbModalBackdrop = class _NgbModalBackdrop {
   }
   ngOnInit() {
     afterNextRender({
-      mixedReadWrite: () => ngbRunTransition(this._zone, this._nativeElement, (element, animation) => {
+      mixedReadWrite: () => ngbRunTransition(this._zone, this._nativeElement, (element2, animation) => {
         if (animation) {
-          reflow(element);
+          reflow(element2);
         }
-        element.classList.add("show");
+        element2.classList.add("show");
       }, {
         animation: this.animation,
         runningTransition: "continue"
@@ -73973,11 +72524,11 @@ var _NgbModalWindow = class _NgbModalWindow {
       animation: this.animation,
       runningTransition: "continue"
     };
-    const windowTransition$ = ngbRunTransition(this._zone, this._elRef.nativeElement, (element, animation) => {
+    const windowTransition$ = ngbRunTransition(this._zone, this._elRef.nativeElement, (element2, animation) => {
       if (animation) {
-        reflow(element);
+        reflow(element2);
       }
-      element.classList.add("show");
+      element2.classList.add("show");
     }, context2);
     const dialogTransition$ = ngbRunTransition(this._zone, this._dialogEl.nativeElement, () => {
     }, context2);
@@ -74360,11 +72911,11 @@ var _NgbModalStack = class _NgbModalStack {
     this._applicationRef.attachView(componentRef.hostView);
     return new ContentRef([[componentNativeEl]], componentRef.hostView, componentRef);
   }
-  _setAriaHidden(element) {
-    const parent = element.parentElement;
-    if (parent && element !== this._document.body) {
+  _setAriaHidden(element2) {
+    const parent = element2.parentElement;
+    if (parent && element2 !== this._document.body) {
       Array.from(parent.children).forEach((sibling) => {
-        if (sibling !== element && sibling.nodeName !== "SCRIPT") {
+        if (sibling !== element2 && sibling.nodeName !== "SCRIPT") {
           this._ariaHiddenValues.set(sibling, sibling.getAttribute("aria-hidden"));
           sibling.setAttribute("aria-hidden", "true");
         }
@@ -74373,11 +72924,11 @@ var _NgbModalStack = class _NgbModalStack {
     }
   }
   _revertAriaHidden() {
-    this._ariaHiddenValues.forEach((value, element) => {
+    this._ariaHiddenValues.forEach((value, element2) => {
       if (value) {
-        element.setAttribute("aria-hidden", value);
+        element2.setAttribute("aria-hidden", value);
       } else {
-        element.removeAttribute("aria-hidden");
+        element2.removeAttribute("aria-hidden");
       }
     });
     this._ariaHiddenValues.clear();
@@ -74536,7 +73087,7 @@ var NgbNavConfig = _NgbNavConfig;
     }]
   }], null, null);
 })();
-var isValidNavId = (id) => isDefined(id) && id !== "";
+var isValidNavId = (id3) => isDefined(id3) && id3 !== "";
 var navCounter = 0;
 var _NgbNavContent = class _NgbNavContent {
   constructor() {
@@ -74770,8 +73321,8 @@ var _NgbNav = class _NgbNav {
    * Selects the nav with the given id and shows its associated pane.
    * Any other nav that was previously selected becomes unselected and its associated pane is hidden.
    */
-  select(id) {
-    this._updateActiveId(id, false);
+  select(id3) {
+    this._updateActiveId(id3, false);
   }
   ngAfterContentInit() {
     if (!isDefined(this.activeId)) {
@@ -75085,11 +73636,11 @@ var ngbNavFadeOutTransition = ({
   classList.remove("show");
   return () => classList.remove("active");
 };
-var ngbNavFadeInTransition = (element, animation) => {
+var ngbNavFadeInTransition = (element2, animation) => {
   if (animation) {
-    reflow(element);
+    reflow(element2);
   }
-  element.classList.add("show");
+  element2.classList.add("show");
 };
 var _NgbNavPane = class _NgbNavPane {
   constructor() {
@@ -75977,7 +74528,7 @@ function parseTriggers(triggers) {
   }
   return manualTriggers.length ? [] : parsedTriggers;
 }
-function listenToTriggers(element, triggers, isOpenedFn, openFn, closeFn, openDelayMs = 0, closeDelayMs = 0, enterContent = EMPTY, leaveContent = EMPTY) {
+function listenToTriggers(element2, triggers, isOpenedFn, openFn, closeFn, openDelayMs = 0, closeDelayMs = 0, enterContent = EMPTY, leaveContent = EMPTY) {
   const parsedTriggers = parseTriggers(triggers);
   if (parsedTriggers.length === 0) {
     return () => {
@@ -75987,8 +74538,8 @@ function listenToTriggers(element, triggers, isOpenedFn, openFn, closeFn, openDe
   const cleanupFns = [];
   let timeout;
   function addEventListener(name2, listener) {
-    element.addEventListener(name2, listener);
-    cleanupFns.push(() => element.removeEventListener(name2, listener));
+    element2.addEventListener(name2, listener);
+    cleanupFns.push(() => element2.removeEventListener(name2, listener));
   }
   function withDelay(fn2, delayMs) {
     clearTimeout(timeout);
@@ -77022,16 +75573,16 @@ var NgbRatingModule = _NgbRatingModule;
     }]
   }], null, null);
 })();
-function toFragmentElement(container, id) {
-  if (!container || id == null) {
+function toFragmentElement(container, id3) {
+  if (!container || id3 == null) {
     return null;
   }
-  return isString(id) ? container.querySelector(`#${CSS.escape(id)}`) : id;
+  return isString(id3) ? container.querySelector(`#${CSS.escape(id3)}`) : id3;
 }
 function getOrderedFragments(container, fragments) {
   const selector = [...fragments].map(({
-    id
-  }) => `#${CSS.escape(id)}`).join(",");
+    id: id3
+  }) => `#${CSS.escape(id3)}`).join(",");
   return Array.from(container.querySelectorAll(selector));
 }
 var defaultProcessChanges = (state, changeActive, ctx) => {
@@ -77189,8 +75740,8 @@ var _NgbScrollSpyService = class _NgbScrollSpyService {
       }), threshold && {
         threshold
       }));
-      for (const element of [...this._preRegisteredFragments, ...fragments ?? []]) {
-        this.observe(element);
+      for (const element2 of [...this._preRegisteredFragments, ...fragments ?? []]) {
+        this.observe(element2);
       }
       this._preRegisteredFragments.clear();
     }
@@ -77450,8 +76001,8 @@ var _NgbScrollSpyMenu = class _NgbScrollSpyMenu {
   scrollTo(fragment, options) {
     this._scrollSpyRef.scrollTo(fragment, options);
   }
-  getItem(id) {
-    return this._map.get(id);
+  getItem(id3) {
+    return this._map.get(id3);
   }
   ngAfterViewInit() {
     this._items.changes.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => this._rebuildMap());
@@ -78519,17 +77070,17 @@ var NgbToastConfig = _NgbToastConfig;
     }]
   }], null, null);
 })();
-var ngbToastFadeInTransition = (element, animation) => {
+var ngbToastFadeInTransition = (element2, animation) => {
   const {
     classList
-  } = element;
+  } = element2;
   if (animation) {
     classList.add("fade");
   } else {
     classList.add("show");
     return;
   }
-  reflow(element);
+  reflow(element2);
   classList.add("show", "showing");
   return () => {
     classList.remove("showing");
@@ -79296,16 +77847,16 @@ var ARIA_LIVE_DELAY = new InjectionToken("live announcer delay", {
   factory: () => 100
 });
 function getLiveElement(document2, lazyCreate = false) {
-  let element = document2.body.querySelector("#ngb-live");
-  if (element == null && lazyCreate) {
-    element = document2.createElement("div");
-    element.setAttribute("id", "ngb-live");
-    element.setAttribute("aria-live", "polite");
-    element.setAttribute("aria-atomic", "true");
-    element.classList.add("visually-hidden");
-    document2.body.appendChild(element);
+  let element2 = document2.body.querySelector("#ngb-live");
+  if (element2 == null && lazyCreate) {
+    element2 = document2.createElement("div");
+    element2.setAttribute("id", "ngb-live");
+    element2.setAttribute("aria-live", "polite");
+    element2.setAttribute("aria-atomic", "true");
+    element2.classList.add("visually-hidden");
+    document2.body.appendChild(element2);
   }
-  return element;
+  return element2;
 }
 var _Live = class _Live {
   constructor() {
@@ -79313,17 +77864,17 @@ var _Live = class _Live {
     this._delay = inject2(ARIA_LIVE_DELAY);
   }
   ngOnDestroy() {
-    const element = getLiveElement(this._document);
-    if (element) {
-      element.parentElement.removeChild(element);
+    const element2 = getLiveElement(this._document);
+    if (element2) {
+      element2.parentElement.removeChild(element2);
     }
   }
   say(message) {
-    const element = getLiveElement(this._document, true);
+    const element2 = getLiveElement(this._document, true);
     const delay2 = this._delay;
-    if (element != null) {
-      element.textContent = "";
-      const setText = () => element.textContent = message;
+    if (element2 != null) {
+      element2.textContent = "";
+      const setText = () => element2.textContent = message;
       if (delay2 === null) {
         setText();
       } else {
@@ -80122,11 +78673,11 @@ var _NgbOffcanvasBackdrop = class _NgbOffcanvasBackdrop {
   }
   ngOnInit() {
     afterNextRender({
-      mixedReadWrite: () => ngbRunTransition(this._zone, this._nativeElement, (element, animation) => {
+      mixedReadWrite: () => ngbRunTransition(this._zone, this._nativeElement, (element2, animation) => {
         if (animation) {
-          reflow(element);
+          reflow(element2);
         }
-        element.classList.add("show");
+        element2.classList.add("show");
       }, {
         animation: this.animation,
         runningTransition: "continue"
@@ -80245,10 +78796,10 @@ var _NgbOffcanvasPanel = class _NgbOffcanvasPanel {
       animation: this.animation,
       runningTransition: "stop"
     };
-    const offcanvasTransition$ = ngbRunTransition(this._zone, this._elRef.nativeElement, (element) => {
-      element.classList.remove("showing");
-      element.classList.add("hiding");
-      return () => element.classList.remove("show", "hiding");
+    const offcanvasTransition$ = ngbRunTransition(this._zone, this._elRef.nativeElement, (element2) => {
+      element2.classList.remove("showing");
+      element2.classList.add("hiding");
+      return () => element2.classList.remove("show", "hiding");
     }, context2);
     offcanvasTransition$.subscribe(() => {
       this.hidden.next();
@@ -80263,12 +78814,12 @@ var _NgbOffcanvasPanel = class _NgbOffcanvasPanel {
       animation: this.animation,
       runningTransition: "continue"
     };
-    const offcanvasTransition$ = ngbRunTransition(this._zone, this._elRef.nativeElement, (element, animation) => {
+    const offcanvasTransition$ = ngbRunTransition(this._zone, this._elRef.nativeElement, (element2, animation) => {
       if (animation) {
-        reflow(element);
+        reflow(element2);
       }
-      element.classList.add("show", "showing");
-      return () => element.classList.remove("showing");
+      element2.classList.add("show", "showing");
+      return () => element2.classList.remove("showing");
     }, context2);
     offcanvasTransition$.subscribe(() => {
       this.shown.next();
@@ -80684,136 +79235,219 @@ var NgbModule = _NgbModule;
 
 // src/app/components/output/table/ResultsTable.ts
 var _c03 = () => ({ item: true });
-function ResultsTable_For_3_Template(rf, ctx) {
+function ResultsTable_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "th")(1, "div", 3);
-    \u0275\u0275text(2);
+    \u0275\u0275elementStart(0, "p", 1);
+    \u0275\u0275text(1, "Query is running...");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 4)(4, "input", 5);
-    \u0275\u0275listener("ngModelChange", function ResultsTable_For_3_Template_input_ngModelChange_4_listener($event) {
-      const item_r2 = \u0275\u0275restoreView(_r1).$implicit;
-      const ctx_r2 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r2.updateFilter(item_r2, $event));
+  }
+}
+function ResultsTable_Conditional_2_For_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "td", 5)(1, "div", 8);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const item_r1 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(item_r1);
+  }
+}
+function ResultsTable_Conditional_2_For_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "td", 6)(1, "div", 9)(2, "input", 10);
+    \u0275\u0275listener("ngModelChange", function ResultsTable_Conditional_2_For_7_Template_input_ngModelChange_2_listener($event) {
+      const item_r3 = \u0275\u0275restoreView(_r2).$implicit;
+      const ctx_r3 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r3.updateFilter(item_r3, $event));
     });
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    const item_r2 = ctx.$implicit;
-    const ctx_r2 = \u0275\u0275nextContext();
+    const item_r3 = ctx.$implicit;
+    const ctx_r3 = \u0275\u0275nextContext(2);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(item_r2);
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngModel", ctx_r2.filters()[item_r2]);
+    \u0275\u0275property("ngModel", ctx_r3.filters()[item_r3]);
   }
 }
-function ResultsTable_For_6_For_2_Conditional_1_Template(rf, ctx) {
+function ResultsTable_Conditional_2_For_10_For_2_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
   if (rf & 2) {
-    const item_r4 = \u0275\u0275nextContext().$implicit;
-    const row_r5 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275textInterpolate1(" ", row_r5[item_r4], " ");
+    const item_r5 = \u0275\u0275nextContext().$implicit;
+    const row_r6 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", row_r6[item_r5], " ");
   }
 }
-function ResultsTable_For_6_For_2_Template(rf, ctx) {
+function ResultsTable_Conditional_2_For_10_For_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "td", 6);
-    \u0275\u0275conditionalCreate(1, ResultsTable_For_6_For_2_Conditional_1_Template, 1, 1);
+    \u0275\u0275elementStart(0, "td", 11);
+    \u0275\u0275conditionalCreate(1, ResultsTable_Conditional_2_For_10_For_2_Conditional_1_Template, 1, 1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const item_r4 = ctx.$implicit;
-    const row_r5 = \u0275\u0275nextContext().$implicit;
+    const item_r5 = ctx.$implicit;
+    const row_r6 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275property("ngClass", \u0275\u0275pureFunction0(2, _c03));
     \u0275\u0275advance();
-    \u0275\u0275conditional(row_r5[item_r4] !== void 0 ? 1 : -1);
+    \u0275\u0275conditional(row_r6[item_r5] !== void 0 ? 1 : -1);
   }
 }
-function ResultsTable_For_6_Template(rf, ctx) {
+function ResultsTable_Conditional_2_For_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr", 1);
-    \u0275\u0275repeaterCreate(1, ResultsTable_For_6_For_2_Template, 2, 3, "td", 6, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(0, "tr", 7);
+    \u0275\u0275repeaterCreate(1, ResultsTable_Conditional_2_For_10_For_2_Template, 2, 3, "td", 11, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext();
+    const ctx_r3 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275repeater(ctx_r2.columns());
+    \u0275\u0275repeater(ctx_r3.columns());
+  }
+}
+function ResultsTable_Conditional_2_Conditional_11_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 12);
+    \u0275\u0275text(1, "No results to display.");
+    \u0275\u0275elementEnd();
+  }
+}
+function ResultsTable_Conditional_2_Conditional_11_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 13);
+    \u0275\u0275text(1, "No unfiltered results to display.");
+    \u0275\u0275elementEnd();
+  }
+}
+function ResultsTable_Conditional_2_Conditional_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275conditionalCreate(0, ResultsTable_Conditional_2_Conditional_11_Conditional_0_Template, 2, 0, "div", 12)(1, ResultsTable_Conditional_2_Conditional_11_Conditional_1_Template, 2, 0, "div", 13);
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275conditional(ctx_r3.empty() ? 0 : 1);
+  }
+}
+function ResultsTable_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "table", 4)(1, "thead")(2, "tr");
+    \u0275\u0275repeaterCreate(3, ResultsTable_Conditional_2_For_4_Template, 3, 1, "td", 5, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "tr");
+    \u0275\u0275repeaterCreate(6, ResultsTable_Conditional_2_For_7_Template, 3, 1, "td", 6, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "tbody");
+    \u0275\u0275repeaterCreate(9, ResultsTable_Conditional_2_For_10_Template, 3, 0, "tr", 7, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275conditionalCreate(11, ResultsTable_Conditional_2_Conditional_11_Template, 2, 1);
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275repeater(ctx_r3.columns());
+    \u0275\u0275advance(3);
+    \u0275\u0275repeater(ctx_r3.columns());
+    \u0275\u0275advance(3);
+    \u0275\u0275repeater(ctx_r3.rowsForPage());
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r3.rowsForPage().length === 0 ? 11 : -1);
+  }
+}
+function ResultsTable_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ngb-pagination", 14);
+    \u0275\u0275twoWayListener("pageChange", function ResultsTable_Conditional_3_Template_ngb_pagination_pageChange_0_listener($event) {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r3 = \u0275\u0275nextContext();
+      \u0275\u0275twoWayBindingSet(ctx_r3.pageIndex, $event) || (ctx_r3.pageIndex = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275twoWayProperty("page", ctx_r3.pageIndex);
+    \u0275\u0275property("pageSize", ctx_r3.pageSize)("collectionSize", ctx_r3.filteredRows().length || 0);
+  }
+}
+function ResultsTable_Conditional_4_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 15);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1("Total results: ", ctx_r3.size());
+  }
+}
+function ResultsTable_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 3);
+    \u0275\u0275conditionalCreate(1, ResultsTable_Conditional_4_Conditional_1_Template, 2, 1, "p", 15);
+    \u0275\u0275elementStart(2, "p", 15);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r3.size() ? 1 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1("Executed on: ", ctx_r3.host());
   }
 }
 var ResultsTable = class _ResultsTable {
   columns = computed(() => {
     let r = this.results();
-    return r ? r.columns : [];
+    if (r?.columns && r.columns.length > 0) {
+      return r.columns;
+    } else if (r?.data && r.data.length > 0) {
+      return Object.keys(r.data[0]);
+    }
+    return [];
   }, ...ngDevMode ? [{ debugName: "columns" }] : []);
   empty = computed(() => {
     let localResults = this.results();
-    let rows = localResults ? localResults.rows : [];
+    let rows = localResults?.data ?? [];
     return rows.length === 0;
   }, ...ngDevMode ? [{ debugName: "empty" }] : []);
-  filteredRows = signal([], ...ngDevMode ? [{ debugName: "filteredRows" }] : []);
-  filters = signal({}, ...ngDevMode ? [{ debugName: "filters" }] : []);
-  pageContents = computed(() => this.getRowsForPage(), ...ngDevMode ? [{ debugName: "pageContents" }] : []);
-  _pageIndex = signal(0, ...ngDevMode ? [{ debugName: "_pageIndex" }] : []);
-  _pageSize = signal(10, ...ngDevMode ? [{ debugName: "_pageSize" }] : []);
-  results = signal(null, ...ngDevMode ? [{ debugName: "results" }] : []);
-  eventBus = inject2(EventBus);
-  constructor() {
-    this.eventBus.on(QUERY_COMPLETED, (data) => {
-      this.pageIndex = 0;
-      this.results.set(data);
-      this.filters.set({});
-      console.log("Query completed:", data);
-    });
-    effect(() => {
-      if (!this.empty()) {
-        let needsFilter = false;
-        let filters = this.filters();
-        for (let key in Object.keys(filters)) {
-          if (filters[key]) {
-            needsFilter = true;
-            break;
-          }
-        }
-        if (needsFilter) {
-          this.filter();
-        }
-      }
-    });
-  }
-  /**
-   * Filters the results based on the current filter values.
-   * @private
-   */
-  filter() {
+  filteredRows = computed(() => {
     if (this.empty()) {
-      return;
+      return [];
     }
     let results = this.results();
-    let _filters = this.filters();
-    this.filteredRows.set(results.rows.filter((row) => {
-      return Object.keys(_filters).every((key) => {
-        const filterValue = _filters[key].toLowerCase();
+    let filters = this.filters();
+    return results.data.filter((row) => {
+      return Object.keys(filters).every((key) => {
+        const filterValue = filters[key].toLowerCase();
         if (filterValue) {
           return row[key] && row[key].toString().toLowerCase().includes(filterValue);
         } else {
           return true;
         }
       });
-    }));
-  }
-  /**
-   * Get the rows for the current page based on the page index and size.
-   * @private
-   */
-  getRowsForPage() {
+    });
+  }, ...ngDevMode ? [{ debugName: "filteredRows" }] : []);
+  filters = signal({}, ...ngDevMode ? [{ debugName: "filters" }] : []);
+  host = computed(() => {
+    return this.results()?.host ?? "";
+  }, ...ngDevMode ? [{ debugName: "host" }] : []);
+  _pageIndex = signal(0, ...ngDevMode ? [{ debugName: "_pageIndex" }] : []);
+  _pageSize = signal(25, ...ngDevMode ? [{ debugName: "_pageSize" }] : []);
+  results = signal(null, ...ngDevMode ? [{ debugName: "results" }] : []);
+  rowsForPage = computed(() => {
     if (this.empty()) {
       return [];
     }
     let rows = this.filteredRows();
-    let start2 = this._pageIndex() * this._pageSize();
+    let shiftedIndex = this._pageIndex() - 1;
+    let start2 = shiftedIndex * this._pageSize();
     let end2 = start2 + this._pageSize();
     if (start2 >= rows.length) {
       start2 = rows.length - this._pageSize();
@@ -80827,7 +79461,21 @@ var ResultsTable = class _ResultsTable {
     if (end2 < 0) {
       end2 = 0;
     }
-    return rows.slice(start2, end2);
+    let pageRows = rows.slice(start2, end2);
+    return pageRows;
+  }, ...ngDevMode ? [{ debugName: "rowsForPage" }] : []);
+  size = computed(() => {
+    return this.results()?.data.length || null;
+  }, ...ngDevMode ? [{ debugName: "size" }] : []);
+  eventBus = inject2(EventBus);
+  state = inject2(ApplicationState);
+  constructor() {
+    this.eventBus.on(QUERY_COMPLETED, (data) => {
+      this.pageIndex = 0;
+      this.results.set(data);
+      this.filters.set({});
+      console.log("Query completed:", data);
+    });
   }
   get pageIndex() {
     return this._pageIndex();
@@ -80846,36 +79494,29 @@ var ResultsTable = class _ResultsTable {
   }
   updateFilter(item, $event) {
     this.filters.update((filters) => {
-      filters[item] = $event.target.value;
-      return filters;
+      let newFilters = __spreadValues({}, filters);
+      newFilters[item] = $event;
+      return newFilters;
     });
   }
   static \u0275fac = function ResultsTable_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ResultsTable)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ResultsTable, selectors: [["results-table"]], decls: 8, vars: 3, consts: [["id", "idwQueryPluginResultsTable", 1, "table", "table-striped"], [1, "idwQueryPluginResultsTableRow"], [3, "pageChange", "page", "pageSize", "collectionSize"], [1, "header"], [1, "filter"], ["type", "text", 1, "form-control", 3, "ngModelChange", "ngModel"], [1, "idwQueryPluginResultsTableCell", 3, "ngClass"]], template: function ResultsTable_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ResultsTable, selectors: [["results-table"]], decls: 5, vars: 3, consts: [["aria-live", "polite", 1, "idwQueryPluginResultsTableContainer"], ["role", "alert", "aria-live", "polite", 1, "bg-info"], [3, "page", "pageSize", "collectionSize"], [1, "resultsMetadata"], ["id", "idwQueryPluginResultsTable", 1, "table", "table-striped", "idwQueryPluginResultsTable"], ["role", "columnheader"], [1, "filterCell"], [1, "idwQueryPluginResultsTableRow"], [1, "header"], [1, "filter"], ["type", "text", "placeholder", "Filter...", 1, "form-control", 3, "ngModelChange", "ngModel"], [1, "idwQueryPluginResultsTableCell", 3, "ngClass"], ["role", "alert", "aria-live", "polite", 1, "no-results"], ["role", "alert", "aria-live", "polite", 1, "all-results-filtered"], [3, "pageChange", "page", "pageSize", "collectionSize"], [1, "text-muted"]], template: function ResultsTable_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "table", 0)(1, "thead");
-      \u0275\u0275repeaterCreate(2, ResultsTable_For_3_Template, 5, 2, "th", null, \u0275\u0275repeaterTrackByIdentity);
+      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275conditionalCreate(1, ResultsTable_Conditional_1_Template, 2, 0, "p", 1)(2, ResultsTable_Conditional_2_Template, 12, 1);
+      \u0275\u0275conditionalCreate(3, ResultsTable_Conditional_3_Template, 1, 3, "ngb-pagination", 2);
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(4, "tbody");
-      \u0275\u0275repeaterCreate(5, ResultsTable_For_6_Template, 3, 0, "tr", 1, \u0275\u0275repeaterTrackByIdentity);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(7, "ngb-pagination", 2);
-      \u0275\u0275twoWayListener("pageChange", function ResultsTable_Template_ngb_pagination_pageChange_7_listener($event) {
-        \u0275\u0275twoWayBindingSet(ctx.pageIndex, $event) || (ctx.pageIndex = $event);
-        return $event;
-      });
-      \u0275\u0275elementEnd();
+      \u0275\u0275conditionalCreate(4, ResultsTable_Conditional_4_Template, 4, 2, "div", 3);
     }
     if (rf & 2) {
+      \u0275\u0275advance();
+      \u0275\u0275conditional(ctx.state.running() ? 1 : 2);
       \u0275\u0275advance(2);
-      \u0275\u0275repeater(ctx.columns());
-      \u0275\u0275advance(3);
-      \u0275\u0275repeater(ctx.pageContents());
-      \u0275\u0275advance(2);
-      \u0275\u0275twoWayProperty("page", ctx.pageIndex);
-      \u0275\u0275property("pageSize", ctx.pageSize)("collectionSize", ctx.filteredRows().length || 0);
+      \u0275\u0275conditional(!ctx.state.running() && !ctx.empty() ? 3 : -1);
+      \u0275\u0275advance();
+      \u0275\u0275conditional(!ctx.state.running() ? 4 : -1);
     }
   }, dependencies: [
     NgClass,
@@ -80884,7 +79525,7 @@ var ResultsTable = class _ResultsTable {
     NgControlStatus,
     NgModel,
     NgbPagination
-  ], encapsulation: 2 });
+  ], styles: ['\n\ndiv.idwQueryPluginResultsTableContainer[_ngcontent-%COMP%] {\n  overflow-x: scroll;\n  width: 100%;\n  padding-bottom: 1em;\n}\ndiv.idwQueryPluginResultsTableContainer[_ngcontent-%COMP%]   div.no-results[_ngcontent-%COMP%] {\n  font-size: 130%;\n  color: #333333;\n  background-color: #fccaca;\n  border-radius: 2px;\n  border: 1px solid #ccc;\n  margin-bottom: 5px;\n  padding: 5px;\n}\ndiv.idwQueryPluginResultsTableContainer[_ngcontent-%COMP%]   div.all-results-filtered[_ngcontent-%COMP%] {\n  font-size: 130%;\n  color: #883333;\n  padding: 5px;\n  margin-bottom: 5px;\n}\ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%] {\n  width: fit-content;\n}\ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\n  border-top: 1px solid #aaa;\n}\ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   div[_ngcontent-%COMP%] {\n  margin: 0;\n  padding-left: 0;\n  min-height: 0 !important;\n}\ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   th[_ngcontent-%COMP%], \ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\n  min-width: 100px;\n  border: 1px solid #aaa;\n}\ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   th[_ngcontent-%COMP%]   .header[_ngcontent-%COMP%], \ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   td[_ngcontent-%COMP%]   .header[_ngcontent-%COMP%] {\n  font-family:\n    Menlo,\n    Monaco,\n    Consolas,\n    "Courier New",\n    monospace !important;\n  font-weight: bold;\n  font-size: 120%;\n}\ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   th[_ngcontent-%COMP%]   .idwQueryPluginResultsTableCell[_ngcontent-%COMP%], \ntable.idwQueryPluginResultsTable[_ngcontent-%COMP%]   td[_ngcontent-%COMP%]   .idwQueryPluginResultsTableCell[_ngcontent-%COMP%] {\n  font-size: 1.1em;\n}\ntd.filterCell[_ngcontent-%COMP%] {\n  padding: 0;\n}\ntd.filterCell[_ngcontent-%COMP%]   div[_ngcontent-%COMP%] {\n  padding: 0;\n}\ntd.filterCell[_ngcontent-%COMP%]   div[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\n  border: none;\n}\n.filter[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\n  border: 1px solid #ccc;\n}\ndiv.resultsMetadata[_ngcontent-%COMP%]   p[_ngcontent-%COMP%] {\n  line-height: 1em;\n}\n/*# sourceMappingURL=ResultsTable.css.map */'] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ResultsTable, [{
@@ -80893,63 +79534,18384 @@ var ResultsTable = class _ResultsTable {
       NgClass,
       FormsModule,
       NgbPagination
-    ], template: '<table id="idwQueryPluginResultsTable" class="table table-striped">\n    <thead>\n        @for (item of columns(); track item) {\n            <th>\n                <div class="header">{{item}}</div>\n                <div class="filter">\n                    <input type="text" class="form-control" [ngModel]="filters()[item]" (ngModelChange)="updateFilter(item, $event)" />\n                </div>\n            </th>\n        }\n    </thead>\n    <tbody>\n        @for (row of pageContents(); track row) {\n            <tr class="idwQueryPluginResultsTableRow">\n                @for (item of columns(); track item) {\n                    <td class="idwQueryPluginResultsTableCell" [ngClass]="{item: true}">\n                        @if (row[item] !== undefined) {\n                            {{row[item]}}\n                        }\n                    </td>\n                }\n            </tr>\n        }\n    </tbody>\n</table>\n\n<ngb-pagination [(page)]="pageIndex"\n                [pageSize]="pageSize"\n                [collectionSize]="filteredRows().length || 0" />\n' }]
+    ], template: '<div class="idwQueryPluginResultsTableContainer" aria-live="polite">\n    @if (state.running()) {\n        <p class="bg-info" role="alert" aria-live="polite">Query is running...</p>\n    } @else {\n        <table id="idwQueryPluginResultsTable" class="table table-striped idwQueryPluginResultsTable">\n            <thead>\n                <tr>\n                    @for (item of columns(); track item) {\n                        <td role="columnheader">\n                            <div class="header">{{item}}</div>\n                        </td>\n                    }\n                </tr>\n                <tr>\n                    @for (item of columns(); track item) {\n                        <td class="filterCell">\n                            <div class="filter">\n                                <input type="text" class="form-control" placeholder="Filter..." [ngModel]="filters()[item]" (ngModelChange)="updateFilter(item, $event)" />\n                            </div>\n                        </td>\n                    }\n                </tr>\n            </thead>\n            <tbody>\n                @for (row of rowsForPage(); track row) {\n                    <tr class="idwQueryPluginResultsTableRow">\n                        @for (item of columns(); track item) {\n                            <td class="idwQueryPluginResultsTableCell" [ngClass]="{item: true}">\n                                @if (row[item] !== undefined) {\n                                    {{row[item]}}\n                                }\n                            </td>\n                        }\n                    </tr>\n                }\n            </tbody>\n        </table>\n\n        @if (rowsForPage().length === 0) {\n            @if (empty()) {\n                <div class="no-results" role="alert" aria-live="polite">No results to display.</div>\n            } @else {\n                <div class="all-results-filtered" role="alert" aria-live="polite">No unfiltered results to display.</div>\n            }\n        }\n    }\n\n    @if (!state.running() && !empty()) {\n        <ngb-pagination [(page)]="pageIndex"\n                        [pageSize]="pageSize"\n                        [collectionSize]="filteredRows().length || 0" />\n    }\n</div>\n\n@if (!state.running()) {\n    <div class="resultsMetadata">\n        @if (size()) {\n            <p class="text-muted">Total results: {{size()}}</p>\n        }\n        <p class="text-muted">Executed on: {{host()}}</p>\n    </div>\n}', styles: ['/* src/app/components/output/table/ResultsTable.scss */\ndiv.idwQueryPluginResultsTableContainer {\n  overflow-x: scroll;\n  width: 100%;\n  padding-bottom: 1em;\n}\ndiv.idwQueryPluginResultsTableContainer div.no-results {\n  font-size: 130%;\n  color: #333333;\n  background-color: #fccaca;\n  border-radius: 2px;\n  border: 1px solid #ccc;\n  margin-bottom: 5px;\n  padding: 5px;\n}\ndiv.idwQueryPluginResultsTableContainer div.all-results-filtered {\n  font-size: 130%;\n  color: #883333;\n  padding: 5px;\n  margin-bottom: 5px;\n}\ntable.idwQueryPluginResultsTable {\n  width: fit-content;\n}\ntable.idwQueryPluginResultsTable thead {\n  border-top: 1px solid #aaa;\n}\ntable.idwQueryPluginResultsTable thead div {\n  margin: 0;\n  padding-left: 0;\n  min-height: 0 !important;\n}\ntable.idwQueryPluginResultsTable th,\ntable.idwQueryPluginResultsTable td {\n  min-width: 100px;\n  border: 1px solid #aaa;\n}\ntable.idwQueryPluginResultsTable th .header,\ntable.idwQueryPluginResultsTable td .header {\n  font-family:\n    Menlo,\n    Monaco,\n    Consolas,\n    "Courier New",\n    monospace !important;\n  font-weight: bold;\n  font-size: 120%;\n}\ntable.idwQueryPluginResultsTable th .idwQueryPluginResultsTableCell,\ntable.idwQueryPluginResultsTable td .idwQueryPluginResultsTableCell {\n  font-size: 1.1em;\n}\ntd.filterCell {\n  padding: 0;\n}\ntd.filterCell div {\n  padding: 0;\n}\ntd.filterCell div input {\n  border: none;\n}\n.filter input {\n  border: 1px solid #ccc;\n}\ndiv.resultsMetadata p {\n  line-height: 1em;\n}\n/*# sourceMappingURL=ResultsTable.css.map */\n'] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ResultsTable, { className: "ResultsTable", filePath: "src/app/components/output/table/resultstable.ts", lineNumber: 24 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ResultsTable, { className: "ResultsTable", filePath: "src/app/components/output/table/resultstable.ts", lineNumber: 25 });
 })();
 
+// node_modules/sql-formatter/dist/esm/allDialects.js
+var allDialects_exports = {};
+__export(allDialects_exports, {
+  bigquery: () => bigquery,
+  db2: () => db2,
+  db2i: () => db2i,
+  duckdb: () => duckdb,
+  hive: () => hive,
+  mariadb: () => mariadb,
+  mysql: () => mysql,
+  n1ql: () => n1ql,
+  plsql: () => plsql,
+  postgresql: () => postgresql,
+  redshift: () => redshift,
+  singlestoredb: () => singlestoredb,
+  snowflake: () => snowflake,
+  spark: () => spark,
+  sql: () => sql2,
+  sqlite: () => sqlite,
+  tidb: () => tidb,
+  transactsql: () => transactsql,
+  trino: () => trino
+});
+
+// node_modules/sql-formatter/dist/esm/expandPhrases.js
+var expandPhrases = (phrases) => phrases.flatMap(expandSinglePhrase);
+var expandSinglePhrase = (phrase) => buildCombinations(parsePhrase(phrase)).map(stripExtraWhitespace);
+var stripExtraWhitespace = (text2) => text2.replace(/ +/g, " ").trim();
+var parsePhrase = (text2) => ({
+  type: "mandatory_block",
+  items: parseAlteration(text2, 0)[0]
+});
+var parseAlteration = (text2, index, expectClosing) => {
+  const alterations = [];
+  while (text2[index]) {
+    const [term, newIndex] = parseConcatenation(text2, index);
+    alterations.push(term);
+    index = newIndex;
+    if (text2[index] === "|") {
+      index++;
+    } else if (text2[index] === "}" || text2[index] === "]") {
+      if (expectClosing !== text2[index]) {
+        throw new Error(`Unbalanced parenthesis in: ${text2}`);
+      }
+      index++;
+      return [alterations, index];
+    } else if (index === text2.length) {
+      if (expectClosing) {
+        throw new Error(`Unbalanced parenthesis in: ${text2}`);
+      }
+      return [alterations, index];
+    } else {
+      throw new Error(`Unexpected "${text2[index]}"`);
+    }
+  }
+  return [alterations, index];
+};
+var parseConcatenation = (text2, index) => {
+  const items = [];
+  while (true) {
+    const [term, newIndex] = parseTerm(text2, index);
+    if (term) {
+      items.push(term);
+      index = newIndex;
+    } else {
+      break;
+    }
+  }
+  return items.length === 1 ? [items[0], index] : [{ type: "concatenation", items }, index];
+};
+var parseTerm = (text2, index) => {
+  if (text2[index] === "{") {
+    return parseMandatoryBlock(text2, index + 1);
+  } else if (text2[index] === "[") {
+    return parseOptionalBlock(text2, index + 1);
+  } else {
+    let word = "";
+    while (text2[index] && /[A-Za-z0-9_ ]/.test(text2[index])) {
+      word += text2[index];
+      index++;
+    }
+    return [word, index];
+  }
+};
+var parseMandatoryBlock = (text2, index) => {
+  const [items, newIndex] = parseAlteration(text2, index, "}");
+  return [{ type: "mandatory_block", items }, newIndex];
+};
+var parseOptionalBlock = (text2, index) => {
+  const [items, newIndex] = parseAlteration(text2, index, "]");
+  return [{ type: "optional_block", items }, newIndex];
+};
+var buildCombinations = (node) => {
+  if (typeof node === "string") {
+    return [node];
+  } else if (node.type === "concatenation") {
+    return node.items.map(buildCombinations).reduce(stringCombinations, [""]);
+  } else if (node.type === "mandatory_block") {
+    return node.items.flatMap(buildCombinations);
+  } else if (node.type === "optional_block") {
+    return ["", ...node.items.flatMap(buildCombinations)];
+  } else {
+    throw new Error(`Unknown node type: ${node}`);
+  }
+};
+var stringCombinations = (xs, ys) => {
+  const results = [];
+  for (const x of xs) {
+    for (const y of ys) {
+      results.push(x + y);
+    }
+  }
+  return results;
+};
+
+// node_modules/sql-formatter/dist/esm/lexer/token.js
+var TokenType;
+(function(TokenType2) {
+  TokenType2["QUOTED_IDENTIFIER"] = "QUOTED_IDENTIFIER";
+  TokenType2["IDENTIFIER"] = "IDENTIFIER";
+  TokenType2["STRING"] = "STRING";
+  TokenType2["VARIABLE"] = "VARIABLE";
+  TokenType2["RESERVED_DATA_TYPE"] = "RESERVED_DATA_TYPE";
+  TokenType2["RESERVED_PARAMETERIZED_DATA_TYPE"] = "RESERVED_PARAMETERIZED_DATA_TYPE";
+  TokenType2["RESERVED_KEYWORD"] = "RESERVED_KEYWORD";
+  TokenType2["RESERVED_FUNCTION_NAME"] = "RESERVED_FUNCTION_NAME";
+  TokenType2["RESERVED_PHRASE"] = "RESERVED_PHRASE";
+  TokenType2["RESERVED_SET_OPERATION"] = "RESERVED_SET_OPERATION";
+  TokenType2["RESERVED_CLAUSE"] = "RESERVED_CLAUSE";
+  TokenType2["RESERVED_SELECT"] = "RESERVED_SELECT";
+  TokenType2["RESERVED_JOIN"] = "RESERVED_JOIN";
+  TokenType2["ARRAY_IDENTIFIER"] = "ARRAY_IDENTIFIER";
+  TokenType2["ARRAY_KEYWORD"] = "ARRAY_KEYWORD";
+  TokenType2["CASE"] = "CASE";
+  TokenType2["END"] = "END";
+  TokenType2["WHEN"] = "WHEN";
+  TokenType2["ELSE"] = "ELSE";
+  TokenType2["THEN"] = "THEN";
+  TokenType2["LIMIT"] = "LIMIT";
+  TokenType2["BETWEEN"] = "BETWEEN";
+  TokenType2["AND"] = "AND";
+  TokenType2["OR"] = "OR";
+  TokenType2["XOR"] = "XOR";
+  TokenType2["OPERATOR"] = "OPERATOR";
+  TokenType2["COMMA"] = "COMMA";
+  TokenType2["ASTERISK"] = "ASTERISK";
+  TokenType2["PROPERTY_ACCESS_OPERATOR"] = "PROPERTY_ACCESS_OPERATOR";
+  TokenType2["OPEN_PAREN"] = "OPEN_PAREN";
+  TokenType2["CLOSE_PAREN"] = "CLOSE_PAREN";
+  TokenType2["LINE_COMMENT"] = "LINE_COMMENT";
+  TokenType2["BLOCK_COMMENT"] = "BLOCK_COMMENT";
+  TokenType2["DISABLE_COMMENT"] = "DISABLE_COMMENT";
+  TokenType2["NUMBER"] = "NUMBER";
+  TokenType2["NAMED_PARAMETER"] = "NAMED_PARAMETER";
+  TokenType2["QUOTED_PARAMETER"] = "QUOTED_PARAMETER";
+  TokenType2["NUMBERED_PARAMETER"] = "NUMBERED_PARAMETER";
+  TokenType2["POSITIONAL_PARAMETER"] = "POSITIONAL_PARAMETER";
+  TokenType2["CUSTOM_PARAMETER"] = "CUSTOM_PARAMETER";
+  TokenType2["DELIMITER"] = "DELIMITER";
+  TokenType2["EOF"] = "EOF";
+})(TokenType = TokenType || (TokenType = {}));
+var createEofToken = (index) => ({
+  type: TokenType.EOF,
+  raw: "\xABEOF\xBB",
+  text: "\xABEOF\xBB",
+  start: index
+});
+var EOF_TOKEN = createEofToken(Infinity);
+var testToken = (compareToken) => (token) => token.type === compareToken.type && token.text === compareToken.text;
+var isToken = {
+  ARRAY: testToken({ text: "ARRAY", type: TokenType.RESERVED_DATA_TYPE }),
+  BY: testToken({ text: "BY", type: TokenType.RESERVED_KEYWORD }),
+  SET: testToken({ text: "SET", type: TokenType.RESERVED_CLAUSE }),
+  STRUCT: testToken({ text: "STRUCT", type: TokenType.RESERVED_DATA_TYPE }),
+  WINDOW: testToken({ text: "WINDOW", type: TokenType.RESERVED_CLAUSE }),
+  VALUES: testToken({ text: "VALUES", type: TokenType.RESERVED_CLAUSE })
+};
+var isReserved = (type) => type === TokenType.RESERVED_DATA_TYPE || type === TokenType.RESERVED_KEYWORD || type === TokenType.RESERVED_FUNCTION_NAME || type === TokenType.RESERVED_PHRASE || type === TokenType.RESERVED_CLAUSE || type === TokenType.RESERVED_SELECT || type === TokenType.RESERVED_SET_OPERATION || type === TokenType.RESERVED_JOIN || type === TokenType.ARRAY_KEYWORD || type === TokenType.CASE || type === TokenType.END || type === TokenType.WHEN || type === TokenType.ELSE || type === TokenType.THEN || type === TokenType.LIMIT || type === TokenType.BETWEEN || type === TokenType.AND || type === TokenType.OR || type === TokenType.XOR;
+var isLogicalOperator = (type) => type === TokenType.AND || type === TokenType.OR || type === TokenType.XOR;
+
+// node_modules/sql-formatter/dist/esm/languages/bigquery/bigquery.functions.js
+var functions = [
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/aead_encryption_functions
+  "KEYS.NEW_KEYSET",
+  "KEYS.ADD_KEY_FROM_RAW_BYTES",
+  "AEAD.DECRYPT_BYTES",
+  "AEAD.DECRYPT_STRING",
+  "AEAD.ENCRYPT",
+  "KEYS.KEYSET_CHAIN",
+  "KEYS.KEYSET_FROM_JSON",
+  "KEYS.KEYSET_TO_JSON",
+  "KEYS.ROTATE_KEYSET",
+  "KEYS.KEYSET_LENGTH",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_analytic_functions
+  "ANY_VALUE",
+  "ARRAY_AGG",
+  "AVG",
+  "CORR",
+  "COUNT",
+  "COUNTIF",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "MAX",
+  "MIN",
+  "ST_CLUSTERDBSCAN",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STRING_AGG",
+  "SUM",
+  "VAR_POP",
+  "VAR_SAMP",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions
+  "ANY_VALUE",
+  "ARRAY_AGG",
+  "ARRAY_CONCAT_AGG",
+  "AVG",
+  "BIT_AND",
+  "BIT_OR",
+  "BIT_XOR",
+  "COUNT",
+  "COUNTIF",
+  "LOGICAL_AND",
+  "LOGICAL_OR",
+  "MAX",
+  "MIN",
+  "STRING_AGG",
+  "SUM",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions
+  "APPROX_COUNT_DISTINCT",
+  "APPROX_QUANTILES",
+  "APPROX_TOP_COUNT",
+  "APPROX_TOP_SUM",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions
+  // 'ARRAY',
+  "ARRAY_CONCAT",
+  "ARRAY_LENGTH",
+  "ARRAY_TO_STRING",
+  "GENERATE_ARRAY",
+  "GENERATE_DATE_ARRAY",
+  "GENERATE_TIMESTAMP_ARRAY",
+  "ARRAY_REVERSE",
+  "OFFSET",
+  "SAFE_OFFSET",
+  "ORDINAL",
+  "SAFE_ORDINAL",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/bit_functions
+  "BIT_COUNT",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions
+  // 'CASE',
+  "PARSE_BIGNUMERIC",
+  "PARSE_NUMERIC",
+  "SAFE_CAST",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions
+  "CURRENT_DATE",
+  "EXTRACT",
+  "DATE",
+  "DATE_ADD",
+  "DATE_SUB",
+  "DATE_DIFF",
+  "DATE_TRUNC",
+  "DATE_FROM_UNIX_DATE",
+  "FORMAT_DATE",
+  "LAST_DAY",
+  "PARSE_DATE",
+  "UNIX_DATE",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions
+  "CURRENT_DATETIME",
+  "DATETIME",
+  "EXTRACT",
+  "DATETIME_ADD",
+  "DATETIME_SUB",
+  "DATETIME_DIFF",
+  "DATETIME_TRUNC",
+  "FORMAT_DATETIME",
+  "LAST_DAY",
+  "PARSE_DATETIME",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/debugging_functions
+  "ERROR",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/federated_query_functions
+  "EXTERNAL_QUERY",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/geography_functions
+  "S2_CELLIDFROMPOINT",
+  "S2_COVERINGCELLIDS",
+  "ST_ANGLE",
+  "ST_AREA",
+  "ST_ASBINARY",
+  "ST_ASGEOJSON",
+  "ST_ASTEXT",
+  "ST_AZIMUTH",
+  "ST_BOUNDARY",
+  "ST_BOUNDINGBOX",
+  "ST_BUFFER",
+  "ST_BUFFERWITHTOLERANCE",
+  "ST_CENTROID",
+  "ST_CENTROID_AGG",
+  "ST_CLOSESTPOINT",
+  "ST_CLUSTERDBSCAN",
+  "ST_CONTAINS",
+  "ST_CONVEXHULL",
+  "ST_COVEREDBY",
+  "ST_COVERS",
+  "ST_DIFFERENCE",
+  "ST_DIMENSION",
+  "ST_DISJOINT",
+  "ST_DISTANCE",
+  "ST_DUMP",
+  "ST_DWITHIN",
+  "ST_ENDPOINT",
+  "ST_EQUALS",
+  "ST_EXTENT",
+  "ST_EXTERIORRING",
+  "ST_GEOGFROM",
+  "ST_GEOGFROMGEOJSON",
+  "ST_GEOGFROMTEXT",
+  "ST_GEOGFROMWKB",
+  "ST_GEOGPOINT",
+  "ST_GEOGPOINTFROMGEOHASH",
+  "ST_GEOHASH",
+  "ST_GEOMETRYTYPE",
+  "ST_INTERIORRINGS",
+  "ST_INTERSECTION",
+  "ST_INTERSECTS",
+  "ST_INTERSECTSBOX",
+  "ST_ISCOLLECTION",
+  "ST_ISEMPTY",
+  "ST_LENGTH",
+  "ST_MAKELINE",
+  "ST_MAKEPOLYGON",
+  "ST_MAKEPOLYGONORIENTED",
+  "ST_MAXDISTANCE",
+  "ST_NPOINTS",
+  "ST_NUMGEOMETRIES",
+  "ST_NUMPOINTS",
+  "ST_PERIMETER",
+  "ST_POINTN",
+  "ST_SIMPLIFY",
+  "ST_SNAPTOGRID",
+  "ST_STARTPOINT",
+  "ST_TOUCHES",
+  "ST_UNION",
+  "ST_UNION_AGG",
+  "ST_WITHIN",
+  "ST_X",
+  "ST_Y",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions
+  "FARM_FINGERPRINT",
+  "MD5",
+  "SHA1",
+  "SHA256",
+  "SHA512",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/hll_functions
+  "HLL_COUNT.INIT",
+  "HLL_COUNT.MERGE",
+  "HLL_COUNT.MERGE_PARTIAL",
+  "HLL_COUNT.EXTRACT",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/interval_functions
+  "MAKE_INTERVAL",
+  "EXTRACT",
+  "JUSTIFY_DAYS",
+  "JUSTIFY_HOURS",
+  "JUSTIFY_INTERVAL",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
+  "JSON_EXTRACT",
+  "JSON_QUERY",
+  "JSON_EXTRACT_SCALAR",
+  "JSON_VALUE",
+  "JSON_EXTRACT_ARRAY",
+  "JSON_QUERY_ARRAY",
+  "JSON_EXTRACT_STRING_ARRAY",
+  "JSON_VALUE_ARRAY",
+  "TO_JSON_STRING",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions
+  "ABS",
+  "SIGN",
+  "IS_INF",
+  "IS_NAN",
+  "IEEE_DIVIDE",
+  "RAND",
+  "SQRT",
+  "POW",
+  "POWER",
+  "EXP",
+  "LN",
+  "LOG",
+  "LOG10",
+  "GREATEST",
+  "LEAST",
+  "DIV",
+  "SAFE_DIVIDE",
+  "SAFE_MULTIPLY",
+  "SAFE_NEGATE",
+  "SAFE_ADD",
+  "SAFE_SUBTRACT",
+  "MOD",
+  "ROUND",
+  "TRUNC",
+  "CEIL",
+  "CEILING",
+  "FLOOR",
+  "COS",
+  "COSH",
+  "ACOS",
+  "ACOSH",
+  "SIN",
+  "SINH",
+  "ASIN",
+  "ASINH",
+  "TAN",
+  "TANH",
+  "ATAN",
+  "ATANH",
+  "ATAN2",
+  "RANGE_BUCKET",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions
+  "FIRST_VALUE",
+  "LAST_VALUE",
+  "NTH_VALUE",
+  "LEAD",
+  "LAG",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/net_functions
+  "NET.IP_FROM_STRING",
+  "NET.SAFE_IP_FROM_STRING",
+  "NET.IP_TO_STRING",
+  "NET.IP_NET_MASK",
+  "NET.IP_TRUNC",
+  "NET.IPV4_FROM_INT64",
+  "NET.IPV4_TO_INT64",
+  "NET.HOST",
+  "NET.PUBLIC_SUFFIX",
+  "NET.REG_DOMAIN",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions
+  "RANK",
+  "DENSE_RANK",
+  "PERCENT_RANK",
+  "CUME_DIST",
+  "NTILE",
+  "ROW_NUMBER",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/security_functions
+  "SESSION_USER",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/statistical_aggregate_functions
+  "CORR",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STDDEV",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
+  "ASCII",
+  "BYTE_LENGTH",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "CHR",
+  "CODE_POINTS_TO_BYTES",
+  "CODE_POINTS_TO_STRING",
+  "CONCAT",
+  "CONTAINS_SUBSTR",
+  "ENDS_WITH",
+  "FORMAT",
+  "FROM_BASE32",
+  "FROM_BASE64",
+  "FROM_HEX",
+  "INITCAP",
+  "INSTR",
+  "LEFT",
+  "LENGTH",
+  "LPAD",
+  "LOWER",
+  "LTRIM",
+  "NORMALIZE",
+  "NORMALIZE_AND_CASEFOLD",
+  "OCTET_LENGTH",
+  "REGEXP_CONTAINS",
+  "REGEXP_EXTRACT",
+  "REGEXP_EXTRACT_ALL",
+  "REGEXP_INSTR",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "REPLACE",
+  "REPEAT",
+  "REVERSE",
+  "RIGHT",
+  "RPAD",
+  "RTRIM",
+  "SAFE_CONVERT_BYTES_TO_STRING",
+  "SOUNDEX",
+  "SPLIT",
+  "STARTS_WITH",
+  "STRPOS",
+  "SUBSTR",
+  "SUBSTRING",
+  "TO_BASE32",
+  "TO_BASE64",
+  "TO_CODE_POINTS",
+  "TO_HEX",
+  "TRANSLATE",
+  "TRIM",
+  "UNICODE",
+  "UPPER",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions
+  "CURRENT_TIME",
+  "TIME",
+  "EXTRACT",
+  "TIME_ADD",
+  "TIME_SUB",
+  "TIME_DIFF",
+  "TIME_TRUNC",
+  "FORMAT_TIME",
+  "PARSE_TIME",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions
+  "CURRENT_TIMESTAMP",
+  "EXTRACT",
+  "STRING",
+  "TIMESTAMP",
+  "TIMESTAMP_ADD",
+  "TIMESTAMP_SUB",
+  "TIMESTAMP_DIFF",
+  "TIMESTAMP_TRUNC",
+  "FORMAT_TIMESTAMP",
+  "PARSE_TIMESTAMP",
+  "TIMESTAMP_SECONDS",
+  "TIMESTAMP_MILLIS",
+  "TIMESTAMP_MICROS",
+  "UNIX_SECONDS",
+  "UNIX_MILLIS",
+  "UNIX_MICROS",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/uuid_functions
+  "GENERATE_UUID",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions
+  "COALESCE",
+  "IF",
+  "IFNULL",
+  "NULLIF",
+  // https://cloud.google.com/bigquery/docs/reference/legacy-sql
+  // legacyAggregate
+  "AVG",
+  "BIT_AND",
+  "BIT_OR",
+  "BIT_XOR",
+  "CORR",
+  "COUNT",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "EXACT_COUNT_DISTINCT",
+  "FIRST",
+  "GROUP_CONCAT",
+  "GROUP_CONCAT_UNQUOTED",
+  "LAST",
+  "MAX",
+  "MIN",
+  "NEST",
+  "NTH",
+  "QUANTILES",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "SUM",
+  "TOP",
+  "UNIQUE",
+  "VARIANCE",
+  "VAR_POP",
+  "VAR_SAMP",
+  // legacyBitwise
+  "BIT_COUNT",
+  // legacyCasting
+  "BOOLEAN",
+  "BYTES",
+  "CAST",
+  "FLOAT",
+  "HEX_STRING",
+  "INTEGER",
+  "STRING",
+  // legacyComparison
+  // expr 'IN',
+  "COALESCE",
+  "GREATEST",
+  "IFNULL",
+  "IS_INF",
+  "IS_NAN",
+  "IS_EXPLICITLY_DEFINED",
+  "LEAST",
+  "NVL",
+  // legacyDatetime
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "DATE",
+  "DATE_ADD",
+  "DATEDIFF",
+  "DAY",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "FORMAT_UTC_USEC",
+  "HOUR",
+  "MINUTE",
+  "MONTH",
+  "MSEC_TO_TIMESTAMP",
+  "NOW",
+  "PARSE_UTC_USEC",
+  "QUARTER",
+  "SEC_TO_TIMESTAMP",
+  "SECOND",
+  "STRFTIME_UTC_USEC",
+  "TIME",
+  "TIMESTAMP",
+  "TIMESTAMP_TO_MSEC",
+  "TIMESTAMP_TO_SEC",
+  "TIMESTAMP_TO_USEC",
+  "USEC_TO_TIMESTAMP",
+  "UTC_USEC_TO_DAY",
+  "UTC_USEC_TO_HOUR",
+  "UTC_USEC_TO_MONTH",
+  "UTC_USEC_TO_WEEK",
+  "UTC_USEC_TO_YEAR",
+  "WEEK",
+  "YEAR",
+  // legacyIp
+  "FORMAT_IP",
+  "PARSE_IP",
+  "FORMAT_PACKED_IP",
+  "PARSE_PACKED_IP",
+  // legacyJson
+  "JSON_EXTRACT",
+  "JSON_EXTRACT_SCALAR",
+  // legacyMath
+  "ABS",
+  "ACOS",
+  "ACOSH",
+  "ASIN",
+  "ASINH",
+  "ATAN",
+  "ATANH",
+  "ATAN2",
+  "CEIL",
+  "COS",
+  "COSH",
+  "DEGREES",
+  "EXP",
+  "FLOOR",
+  "LN",
+  "LOG",
+  "LOG2",
+  "LOG10",
+  "PI",
+  "POW",
+  "RADIANS",
+  "RAND",
+  "ROUND",
+  "SIN",
+  "SINH",
+  "SQRT",
+  "TAN",
+  "TANH",
+  // legacyRegex
+  "REGEXP_MATCH",
+  "REGEXP_EXTRACT",
+  "REGEXP_REPLACE",
+  // legacyString
+  "CONCAT",
+  // expr CONTAINS 'str'
+  "INSTR",
+  "LEFT",
+  "LENGTH",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "REPLACE",
+  "RIGHT",
+  "RPAD",
+  "RTRIM",
+  "SPLIT",
+  "SUBSTR",
+  "UPPER",
+  // legacyTableWildcard
+  "TABLE_DATE_RANGE",
+  "TABLE_DATE_RANGE_STRICT",
+  "TABLE_QUERY",
+  // legacyUrl
+  "HOST",
+  "DOMAIN",
+  "TLD",
+  // legacyWindow
+  "AVG",
+  "COUNT",
+  "MAX",
+  "MIN",
+  "STDDEV",
+  "SUM",
+  "CUME_DIST",
+  "DENSE_RANK",
+  "FIRST_VALUE",
+  "LAG",
+  "LAST_VALUE",
+  "LEAD",
+  "NTH_VALUE",
+  "NTILE",
+  "PERCENT_RANK",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "RANK",
+  "RATIO_TO_REPORT",
+  "ROW_NUMBER",
+  // legacyMisc
+  "CURRENT_USER",
+  "EVERY",
+  "FROM_BASE64",
+  "HASH",
+  "FARM_FINGERPRINT",
+  "IF",
+  "POSITION",
+  "SHA1",
+  "SOME",
+  "TO_BASE64",
+  // other
+  "BQ.JOBS.CANCEL",
+  "BQ.REFRESH_MATERIALIZED_VIEW",
+  // ddl
+  "OPTIONS",
+  // pivot
+  "PIVOT",
+  "UNPIVOT"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/bigquery/bigquery.keywords.js
+var keywords2 = [
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical#reserved_keywords
+  "ALL",
+  "AND",
+  "ANY",
+  "AS",
+  "ASC",
+  "ASSERT_ROWS_MODIFIED",
+  "AT",
+  "BETWEEN",
+  "BY",
+  "CASE",
+  "CAST",
+  "COLLATE",
+  "CONTAINS",
+  "CREATE",
+  "CROSS",
+  "CUBE",
+  "CURRENT",
+  "DEFAULT",
+  "DEFINE",
+  "DESC",
+  "DISTINCT",
+  "ELSE",
+  "END",
+  "ENUM",
+  "ESCAPE",
+  "EXCEPT",
+  "EXCLUDE",
+  "EXISTS",
+  "EXTRACT",
+  "FALSE",
+  "FETCH",
+  "FOLLOWING",
+  "FOR",
+  "FROM",
+  "FULL",
+  "GROUP",
+  "GROUPING",
+  "GROUPS",
+  "HASH",
+  "HAVING",
+  "IF",
+  "IGNORE",
+  "IN",
+  "INNER",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "JOIN",
+  "LATERAL",
+  "LEFT",
+  "LIMIT",
+  "LOOKUP",
+  "MERGE",
+  "NATURAL",
+  "NEW",
+  "NO",
+  "NOT",
+  "NULL",
+  "NULLS",
+  "OF",
+  "ON",
+  "OR",
+  "ORDER",
+  "OUTER",
+  "OVER",
+  "PARTITION",
+  "PRECEDING",
+  "PROTO",
+  "RANGE",
+  "RECURSIVE",
+  "RESPECT",
+  "RIGHT",
+  "ROLLUP",
+  "ROWS",
+  "SELECT",
+  "SET",
+  "SOME",
+  "TABLE",
+  "TABLESAMPLE",
+  "THEN",
+  "TO",
+  "TREAT",
+  "TRUE",
+  "UNBOUNDED",
+  "UNION",
+  "UNNEST",
+  "USING",
+  "WHEN",
+  "WHERE",
+  "WINDOW",
+  "WITH",
+  "WITHIN",
+  // misc
+  "SAFE",
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
+  "LIKE",
+  "COPY",
+  "CLONE",
+  "IN",
+  "OUT",
+  "INOUT",
+  "RETURNS",
+  "LANGUAGE",
+  "CASCADE",
+  "RESTRICT",
+  "DETERMINISTIC"
+];
+var dataTypes = [
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types
+  "ARRAY",
+  "BOOL",
+  "BYTES",
+  "DATE",
+  "DATETIME",
+  "GEOGRAPHY",
+  "INTERVAL",
+  "INT64",
+  "INT",
+  "SMALLINT",
+  "INTEGER",
+  "BIGINT",
+  "TINYINT",
+  "BYTEINT",
+  "NUMERIC",
+  "DECIMAL",
+  "BIGNUMERIC",
+  "BIGDECIMAL",
+  "FLOAT64",
+  "STRING",
+  "STRUCT",
+  "TIME",
+  "TIMEZONE"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/bigquery/bigquery.formatter.js
+var reservedSelect = expandPhrases(["SELECT [ALL | DISTINCT] [AS STRUCT | AS VALUE]"]);
+var reservedClauses = expandPhrases([
+  // Queries: https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "QUALIFY",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  "OMIT RECORD IF",
+  // Data modification: https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
+  // - insert:
+  "INSERT [INTO]",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE [INTO]",
+  "WHEN [NOT] MATCHED [BY SOURCE | BY TARGET] [THEN]",
+  "UPDATE SET",
+  "CLUSTER BY",
+  "FOR SYSTEM_TIME AS OF",
+  "WITH CONNECTION",
+  "WITH PARTITION COLUMNS",
+  "REMOTE WITH CONNECTION"
+]);
+var standardOnelineClauses = expandPhrases([
+  "CREATE [OR REPLACE] [TEMP|TEMPORARY|SNAPSHOT|EXTERNAL] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses = expandPhrases([
+  // - create:
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
+  "CREATE [OR REPLACE] [MATERIALIZED] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE [FROM]",
+  // - drop table:
+  "DROP [SNAPSHOT | EXTERNAL] TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE [IF EXISTS]",
+  "ADD COLUMN [IF NOT EXISTS]",
+  "DROP COLUMN [IF EXISTS]",
+  "RENAME TO",
+  "ALTER COLUMN [IF EXISTS]",
+  "SET DEFAULT COLLATE",
+  "SET OPTIONS",
+  "DROP NOT NULL",
+  "SET DATA TYPE",
+  // - alter schema
+  "ALTER SCHEMA [IF EXISTS]",
+  // - alter view
+  "ALTER [MATERIALIZED] VIEW [IF EXISTS]",
+  // - alter bi_capacity
+  "ALTER BI_CAPACITY",
+  // - truncate:
+  "TRUNCATE TABLE",
+  // - create schema
+  "CREATE SCHEMA [IF NOT EXISTS]",
+  "DEFAULT COLLATE",
+  // stored procedures
+  "CREATE [OR REPLACE] [TEMP|TEMPORARY|TABLE] FUNCTION [IF NOT EXISTS]",
+  "CREATE [OR REPLACE] PROCEDURE [IF NOT EXISTS]",
+  // row access policy
+  "CREATE [OR REPLACE] ROW ACCESS POLICY [IF NOT EXISTS]",
+  "GRANT TO",
+  "FILTER USING",
+  // capacity
+  "CREATE CAPACITY",
+  "AS JSON",
+  // reservation
+  "CREATE RESERVATION",
+  // assignment
+  "CREATE ASSIGNMENT",
+  // search index
+  "CREATE SEARCH INDEX [IF NOT EXISTS]",
+  // drop
+  "DROP SCHEMA [IF EXISTS]",
+  "DROP [MATERIALIZED] VIEW [IF EXISTS]",
+  "DROP [TABLE] FUNCTION [IF EXISTS]",
+  "DROP PROCEDURE [IF EXISTS]",
+  "DROP ROW ACCESS POLICY",
+  "DROP ALL ROW ACCESS POLICIES",
+  "DROP CAPACITY [IF EXISTS]",
+  "DROP RESERVATION [IF EXISTS]",
+  "DROP ASSIGNMENT [IF EXISTS]",
+  "DROP SEARCH INDEX [IF EXISTS]",
+  "DROP [IF EXISTS]",
+  // DCL, https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language
+  "GRANT",
+  "REVOKE",
+  // Script, https://cloud.google.com/bigquery/docs/reference/standard-sql/scripting
+  "DECLARE",
+  "EXECUTE IMMEDIATE",
+  "LOOP",
+  "END LOOP",
+  "REPEAT",
+  "END REPEAT",
+  "WHILE",
+  "END WHILE",
+  "BREAK",
+  "LEAVE",
+  "CONTINUE",
+  "ITERATE",
+  "FOR",
+  "END FOR",
+  "BEGIN",
+  "BEGIN TRANSACTION",
+  "COMMIT TRANSACTION",
+  "ROLLBACK TRANSACTION",
+  "RAISE",
+  "RETURN",
+  "CALL",
+  // Debug, https://cloud.google.com/bigquery/docs/reference/standard-sql/debugging-statements
+  "ASSERT",
+  // Other, https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements
+  "EXPORT DATA"
+]);
+var reservedSetOperations = expandPhrases([
+  "UNION {ALL | DISTINCT}",
+  "EXCEPT DISTINCT",
+  "INTERSECT DISTINCT"
+]);
+var reservedJoins = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN"
+]);
+var reservedPhrases = expandPhrases([
+  // https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#tablesample_operator
+  "TABLESAMPLE SYSTEM",
+  // From DDL: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
+  "ANY TYPE",
+  "ALL COLUMNS",
+  "NOT DETERMINISTIC",
+  // inside window definitions
+  "{ROWS | RANGE} BETWEEN",
+  // comparison operator
+  "IS [NOT] DISTINCT FROM"
+]);
+var bigquery = {
+  name: "bigquery",
+  tokenizerOptions: {
+    reservedSelect,
+    reservedClauses: [...reservedClauses, ...tabularOnelineClauses, ...standardOnelineClauses],
+    reservedSetOperations,
+    reservedJoins,
+    reservedPhrases,
+    reservedKeywords: keywords2,
+    reservedDataTypes: dataTypes,
+    reservedFunctionNames: functions,
+    extraParens: ["[]"],
+    stringTypes: [
+      // The triple-quoted strings are listed first, so they get matched first.
+      // Otherwise the first two quotes of """ will get matched as an empty "" string.
+      { quote: '""".."""', prefixes: ["R", "B", "RB", "BR"] },
+      { quote: "'''..'''", prefixes: ["R", "B", "RB", "BR"] },
+      '""-bs',
+      "''-bs",
+      { quote: '""-raw', prefixes: ["R", "B", "RB", "BR"], requirePrefix: true },
+      { quote: "''-raw", prefixes: ["R", "B", "RB", "BR"], requirePrefix: true }
+    ],
+    identTypes: ["``"],
+    identChars: { dashes: true },
+    paramTypes: { positional: true, named: ["@"], quoted: ["@"] },
+    variableTypes: [{ regex: String.raw`@@\w+` }],
+    lineCommentTypes: ["--", "#"],
+    operators: ["&", "|", "^", "~", ">>", "<<", "||", "=>"],
+    postProcess
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses, ...tabularOnelineClauses],
+    tabularOnelineClauses
+  }
+};
+function postProcess(tokens2) {
+  return detectArraySubscripts(combineParameterizedTypes(tokens2));
+}
+function detectArraySubscripts(tokens2) {
+  let prevToken = EOF_TOKEN;
+  return tokens2.map((token) => {
+    if (token.text === "OFFSET" && prevToken.text === "[") {
+      prevToken = token;
+      return Object.assign(Object.assign({}, token), { type: TokenType.RESERVED_FUNCTION_NAME });
+    } else {
+      prevToken = token;
+      return token;
+    }
+  });
+}
+function combineParameterizedTypes(tokens2) {
+  var _a2;
+  const processed = [];
+  for (let i = 0; i < tokens2.length; i++) {
+    const token = tokens2[i];
+    if ((isToken.ARRAY(token) || isToken.STRUCT(token)) && ((_a2 = tokens2[i + 1]) === null || _a2 === void 0 ? void 0 : _a2.text) === "<") {
+      const endIndex = findClosingAngleBracketIndex(tokens2, i + 1);
+      const typeDefTokens = tokens2.slice(i, endIndex + 1);
+      processed.push({
+        type: TokenType.IDENTIFIER,
+        raw: typeDefTokens.map(formatTypeDefToken("raw")).join(""),
+        text: typeDefTokens.map(formatTypeDefToken("text")).join(""),
+        start: token.start
+      });
+      i = endIndex;
+    } else {
+      processed.push(token);
+    }
+  }
+  return processed;
+}
+var formatTypeDefToken = (key) => (token) => {
+  if (token.type === TokenType.IDENTIFIER || token.type === TokenType.COMMA) {
+    return token[key] + " ";
+  } else {
+    return token[key];
+  }
+};
+function findClosingAngleBracketIndex(tokens2, startIndex) {
+  let level = 0;
+  for (let i = startIndex; i < tokens2.length; i++) {
+    const token = tokens2[i];
+    if (token.text === "<") {
+      level++;
+    } else if (token.text === ">") {
+      level--;
+    } else if (token.text === ">>") {
+      level -= 2;
+    }
+    if (level === 0) {
+      return i;
+    }
+  }
+  return tokens2.length - 1;
+}
+
+// node_modules/sql-formatter/dist/esm/languages/db2/db2.functions.js
+var functions2 = [
+  // https://www.ibm.com/docs/en/db2/11.5?topic=bif-aggregate-functions
+  "ARRAY_AGG",
+  "AVG",
+  "CORRELATION",
+  "COUNT",
+  "COUNT_BIG",
+  "COVARIANCE",
+  "COVARIANCE_SAMP",
+  "CUME_DIST",
+  "GROUPING",
+  "LISTAGG",
+  "MAX",
+  "MEDIAN",
+  "MIN",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PERCENT_RANK",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_COUNT",
+  "REGR_INTERCEPT",
+  "REGR_ICPT",
+  "REGR_R2",
+  "REGR_SLOPE",
+  "REGR_SXX",
+  "REGR_SXY",
+  "REGR_SYY",
+  "STDDEV",
+  "STDDEV_SAMP",
+  "SUM",
+  "VARIANCE",
+  "VARIANCE_SAMP",
+  "XMLAGG",
+  "XMLGROUP",
+  // https://www.ibm.com/docs/en/db2/11.5?topic=bif-scalar-functions
+  "ABS",
+  "ABSVAL",
+  "ACOS",
+  "ADD_DAYS",
+  "ADD_HOURS",
+  "ADD_MINUTES",
+  "ADD_MONTHS",
+  "ADD_SECONDS",
+  "ADD_YEARS",
+  "AGE",
+  "ARRAY_DELETE",
+  "ARRAY_FIRST",
+  "ARRAY_LAST",
+  "ARRAY_NEXT",
+  "ARRAY_PRIOR",
+  "ASCII",
+  "ASCII_STR",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "ATANH",
+  "BITAND",
+  "BITANDNOT",
+  "BITOR",
+  "BITXOR",
+  "BITNOT",
+  "BPCHAR",
+  "BSON_TO_JSON",
+  "BTRIM",
+  "CARDINALITY",
+  "CEILING",
+  "CEIL",
+  "CHARACTER_LENGTH",
+  "CHR",
+  "COALESCE",
+  "COLLATION_KEY",
+  "COLLATION_KEY_BIT",
+  "COMPARE_DECFLOAT",
+  "CONCAT",
+  "COS",
+  "COSH",
+  "COT",
+  "CURSOR_ROWCOUNT",
+  "DATAPARTITIONNUM",
+  "DATE_PART",
+  "DATE_TRUNC",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFWEEK_ISO",
+  "DAYOFYEAR",
+  "DAYS",
+  "DAYS_BETWEEN",
+  "DAYS_TO_END_OF_MONTH",
+  "DBPARTITIONNUM",
+  "DECFLOAT",
+  "DECFLOAT_FORMAT",
+  "DECODE",
+  "DECRYPT_BIN",
+  "DECRYPT_CHAR",
+  "DEGREES",
+  "DEREF",
+  "DIFFERENCE",
+  "DIGITS",
+  "DOUBLE_PRECISION",
+  "EMPTY_BLOB",
+  "EMPTY_CLOB",
+  "EMPTY_DBCLOB",
+  "EMPTY_NCLOB",
+  "ENCRYPT",
+  "EVENT_MON_STATE",
+  "EXP",
+  "EXTRACT",
+  "FIRST_DAY",
+  "FLOOR",
+  "FROM_UTC_TIMESTAMP",
+  "GENERATE_UNIQUE",
+  "GETHINT",
+  "GREATEST",
+  "HASH",
+  "HASH4",
+  "HASH8",
+  "HASHEDVALUE",
+  "HEX",
+  "HEXTORAW",
+  "HOUR",
+  "HOURS_BETWEEN",
+  "IDENTITY_VAL_LOCAL",
+  "IFNULL",
+  "INITCAP",
+  "INSERT",
+  "INSTR",
+  "INSTR2",
+  "INSTR4",
+  "INSTRB",
+  "INTNAND",
+  "INTNOR",
+  "INTNXOR",
+  "INTNNOT",
+  "ISNULL",
+  "JSON_ARRAY",
+  "JSON_OBJECT",
+  "JSON_QUERY",
+  "JSON_TO_BSON",
+  "JSON_VALUE",
+  "JULIAN_DAY",
+  "LAST_DAY",
+  "LCASE",
+  "LEAST",
+  "LEFT",
+  "LENGTH",
+  "LENGTH2",
+  "LENGTH4",
+  "LENGTHB",
+  "LN",
+  "LOCATE",
+  "LOCATE_IN_STRING",
+  "LOG10",
+  "LONG_VARCHAR",
+  "LONG_VARGRAPHIC",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "MAX",
+  "MAX_CARDINALITY",
+  "MICROSECOND",
+  "MIDNIGHT_SECONDS",
+  "MIN",
+  "MINUTE",
+  "MINUTES_BETWEEN",
+  "MOD",
+  "MONTH",
+  "MONTHNAME",
+  "MONTHS_BETWEEN",
+  "MULTIPLY_ALT",
+  "NEXT_DAY",
+  "NEXT_MONTH",
+  "NEXT_QUARTER",
+  "NEXT_WEEK",
+  "NEXT_YEAR",
+  "NORMALIZE_DECFLOAT",
+  "NOW",
+  "NULLIF",
+  "NVL",
+  "NVL2",
+  "OCTET_LENGTH",
+  "OVERLAY",
+  "PARAMETER",
+  "POSITION",
+  "POSSTR",
+  "POW",
+  "POWER",
+  "QUANTIZE",
+  "QUARTER",
+  "QUOTE_IDENT",
+  "QUOTE_LITERAL",
+  "RADIANS",
+  "RAISE_ERROR",
+  "RAND",
+  "RANDOM",
+  "RAWTOHEX",
+  "REC2XML",
+  "REGEXP_COUNT",
+  "REGEXP_EXTRACT",
+  "REGEXP_INSTR",
+  "REGEXP_LIKE",
+  "REGEXP_MATCH_COUNT",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "REPEAT",
+  "REPLACE",
+  "RID",
+  "RID_BIT",
+  "RIGHT",
+  "ROUND",
+  "ROUND_TIMESTAMP",
+  "RPAD",
+  "RTRIM",
+  "SECLABEL",
+  "SECLABEL_BY_NAME",
+  "SECLABEL_TO_CHAR",
+  "SECOND",
+  "SECONDS_BETWEEN",
+  "SIGN",
+  "SIN",
+  "SINH",
+  "SOUNDEX",
+  "SPACE",
+  "SQRT",
+  "STRIP",
+  "STRLEFT",
+  "STRPOS",
+  "STRRIGHT",
+  "SUBSTR",
+  "SUBSTR2",
+  "SUBSTR4",
+  "SUBSTRB",
+  "SUBSTRING",
+  "TABLE_NAME",
+  "TABLE_SCHEMA",
+  "TAN",
+  "TANH",
+  "THIS_MONTH",
+  "THIS_QUARTER",
+  "THIS_WEEK",
+  "THIS_YEAR",
+  "TIMESTAMP_FORMAT",
+  "TIMESTAMP_ISO",
+  "TIMESTAMPDIFF",
+  "TIMEZONE",
+  "TO_CHAR",
+  "TO_CLOB",
+  "TO_DATE",
+  "TO_HEX",
+  "TO_MULTI_BYTE",
+  "TO_NCHAR",
+  "TO_NCLOB",
+  "TO_NUMBER",
+  "TO_SINGLE_BYTE",
+  "TO_TIMESTAMP",
+  "TO_UTC_TIMESTAMP",
+  "TOTALORDER",
+  "TRANSLATE",
+  "TRIM",
+  "TRIM_ARRAY",
+  "TRUNC_TIMESTAMP",
+  "TRUNCATE",
+  "TRUNC",
+  "TYPE_ID",
+  "TYPE_NAME",
+  "TYPE_SCHEMA",
+  "UCASE",
+  "UNICODE_STR",
+  "UPPER",
+  "VALUE",
+  "VARCHAR_BIT_FORMAT",
+  "VARCHAR_FORMAT",
+  "VARCHAR_FORMAT_BIT",
+  "VERIFY_GROUP_FOR_USER",
+  "VERIFY_ROLE_FOR_USER",
+  "VERIFY_TRUSTED_CONTEXT_ROLE_FOR_USER",
+  "WEEK",
+  "WEEK_ISO",
+  "WEEKS_BETWEEN",
+  "WIDTH_BUCKET",
+  "XMLATTRIBUTES",
+  "XMLCOMMENT",
+  "XMLCONCAT",
+  "XMLDOCUMENT",
+  "XMLELEMENT",
+  "XMLFOREST",
+  "XMLNAMESPACES",
+  "XMLPARSE",
+  "XMLPI",
+  "XMLQUERY",
+  "XMLROW",
+  "XMLSERIALIZE",
+  "XMLTEXT",
+  "XMLVALIDATE",
+  "XMLXSROBJECTID",
+  "XSLTRANSFORM",
+  "YEAR",
+  "YEARS_BETWEEN",
+  "YMD_BETWEEN",
+  // https://www.ibm.com/docs/en/db2/11.5?topic=bif-table-functions
+  "BASE_TABLE",
+  "JSON_TABLE",
+  "UNNEST",
+  "XMLTABLE",
+  // https://www.ibm.com/docs/en/db2/11.5?topic=expressions-olap-specification
+  // Additional function names not already present in the aggregate functions list
+  "RANK",
+  "DENSE_RANK",
+  "NTILE",
+  "LAG",
+  "LEAD",
+  "ROW_NUMBER",
+  "FIRST_VALUE",
+  "LAST_VALUE",
+  "NTH_VALUE",
+  "RATIO_TO_REPORT",
+  // Type casting
+  "CAST"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/db2/db2.keywords.js
+var keywords3 = [
+  // https://www.ibm.com/docs/en/db2/11.5?topic=sql-reserved-schema-names-reserved-words
+  "ACTIVATE",
+  "ADD",
+  "AFTER",
+  "ALIAS",
+  "ALL",
+  "ALLOCATE",
+  "ALLOW",
+  "ALTER",
+  "AND",
+  "ANY",
+  "AS",
+  "ASENSITIVE",
+  "ASSOCIATE",
+  "ASUTIME",
+  "AT",
+  "ATTRIBUTES",
+  "AUDIT",
+  "AUTHORIZATION",
+  "AUX",
+  "AUXILIARY",
+  "BEFORE",
+  "BEGIN",
+  "BETWEEN",
+  "BINARY",
+  "BUFFERPOOL",
+  "BY",
+  "CACHE",
+  "CALL",
+  "CALLED",
+  "CAPTURE",
+  "CARDINALITY",
+  "CASCADED",
+  "CASE",
+  "CAST",
+  "CHECK",
+  "CLONE",
+  "CLOSE",
+  "CLUSTER",
+  "COLLECTION",
+  "COLLID",
+  "COLUMN",
+  "COMMENT",
+  "COMMIT",
+  "CONCAT",
+  "CONDITION",
+  "CONNECT",
+  "CONNECTION",
+  "CONSTRAINT",
+  "CONTAINS",
+  "CONTINUE",
+  "COUNT",
+  "COUNT_BIG",
+  "CREATE",
+  "CROSS",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_LC_CTYPE",
+  "CURRENT_PATH",
+  "CURRENT_SCHEMA",
+  "CURRENT_SERVER",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TIMEZONE",
+  "CURRENT_USER",
+  "CURSOR",
+  "CYCLE",
+  "DATA",
+  "DATABASE",
+  "DATAPARTITIONNAME",
+  "DATAPARTITIONNUM",
+  "DAY",
+  "DAYS",
+  "DB2GENERAL",
+  "DB2GENRL",
+  "DB2SQL",
+  "DBINFO",
+  "DBPARTITIONNAME",
+  "DBPARTITIONNUM",
+  "DEALLOCATE",
+  "DECLARE",
+  "DEFAULT",
+  "DEFAULTS",
+  "DEFINITION",
+  "DELETE",
+  "DENSERANK",
+  "DENSE_RANK",
+  "DESCRIBE",
+  "DESCRIPTOR",
+  "DETERMINISTIC",
+  "DIAGNOSTICS",
+  "DISABLE",
+  "DISALLOW",
+  "DISCONNECT",
+  "DISTINCT",
+  "DO",
+  "DOCUMENT",
+  "DROP",
+  "DSSIZE",
+  "DYNAMIC",
+  "EACH",
+  "EDITPROC",
+  "ELSE",
+  "ELSEIF",
+  "ENABLE",
+  "ENCODING",
+  "ENCRYPTION",
+  "END",
+  "END-EXEC",
+  "ENDING",
+  "ERASE",
+  "ESCAPE",
+  "EVERY",
+  "EXCEPT",
+  "EXCEPTION",
+  "EXCLUDING",
+  "EXCLUSIVE",
+  "EXECUTE",
+  "EXISTS",
+  "EXIT",
+  "EXPLAIN",
+  "EXTENDED",
+  "EXTERNAL",
+  "EXTRACT",
+  "FENCED",
+  "FETCH",
+  "FIELDPROC",
+  "FILE",
+  "FINAL",
+  "FIRST1",
+  "FOR",
+  "FOREIGN",
+  "FREE",
+  "FROM",
+  "FULL",
+  "FUNCTION",
+  "GENERAL",
+  "GENERATED",
+  "GET",
+  "GLOBAL",
+  "GO",
+  "GOTO",
+  "GRANT",
+  "GRAPHIC",
+  "GROUP",
+  "HANDLER",
+  "HASH",
+  "HASHED_VALUE",
+  "HAVING",
+  "HINT",
+  "HOLD",
+  "HOUR",
+  "HOURS",
+  "IDENTITY",
+  "IF",
+  "IMMEDIATE",
+  "IMPORT",
+  "IN",
+  "INCLUDING",
+  "INCLUSIVE",
+  "INCREMENT",
+  "INDEX",
+  "INDICATOR",
+  "INDICATORS",
+  "INF",
+  "INFINITY",
+  "INHERIT",
+  "INNER",
+  "INOUT",
+  "INSENSITIVE",
+  "INSERT",
+  "INTEGRITY",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ISNULL",
+  "ISOBID",
+  "ISOLATION",
+  "ITERATE",
+  "JAR",
+  "JAVA",
+  "JOIN",
+  "KEEP",
+  "KEY",
+  "LABEL",
+  "LANGUAGE",
+  "LAST3",
+  "LATERAL",
+  "LC_CTYPE",
+  "LEAVE",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "LINKTYPE",
+  "LOCAL",
+  "LOCALDATE",
+  "LOCALE",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCATOR",
+  "LOCATORS",
+  "LOCK",
+  "LOCKMAX",
+  "LOCKSIZE",
+  "LOOP",
+  "MAINTAINED",
+  "MATERIALIZED",
+  "MAXVALUE",
+  "MICROSECOND",
+  "MICROSECONDS",
+  "MINUTE",
+  "MINUTES",
+  "MINVALUE",
+  "MODE",
+  "MODIFIES",
+  "MONTH",
+  "MONTHS",
+  "NAN",
+  "NEW",
+  "NEW_TABLE",
+  "NEXTVAL",
+  "NO",
+  "NOCACHE",
+  "NOCYCLE",
+  "NODENAME",
+  "NODENUMBER",
+  "NOMAXVALUE",
+  "NOMINVALUE",
+  "NONE",
+  "NOORDER",
+  "NORMALIZED",
+  "NOT2",
+  "NOTNULL",
+  "NULL",
+  "NULLS",
+  "NUMPARTS",
+  "OBID",
+  "OF",
+  "OFF",
+  "OFFSET",
+  "OLD",
+  "OLD_TABLE",
+  "ON",
+  "OPEN",
+  "OPTIMIZATION",
+  "OPTIMIZE",
+  "OPTION",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OVER",
+  "OVERRIDING",
+  "PACKAGE",
+  "PADDED",
+  "PAGESIZE",
+  "PARAMETER",
+  "PART",
+  "PARTITION",
+  "PARTITIONED",
+  "PARTITIONING",
+  "PARTITIONS",
+  "PASSWORD",
+  "PATH",
+  "PERCENT",
+  "PIECESIZE",
+  "PLAN",
+  "POSITION",
+  "PRECISION",
+  "PREPARE",
+  "PREVVAL",
+  "PRIMARY",
+  "PRIQTY",
+  "PRIVILEGES",
+  "PROCEDURE",
+  "PROGRAM",
+  "PSID",
+  "PUBLIC",
+  "QUERY",
+  "QUERYNO",
+  "RANGE",
+  "RANK",
+  "READ",
+  "READS",
+  "RECOVERY",
+  "REFERENCES",
+  "REFERENCING",
+  "REFRESH",
+  "RELEASE",
+  "RENAME",
+  "REPEAT",
+  "RESET",
+  "RESIGNAL",
+  "RESTART",
+  "RESTRICT",
+  "RESULT",
+  "RESULT_SET_LOCATOR",
+  "RETURN",
+  "RETURNS",
+  "REVOKE",
+  "RIGHT",
+  "ROLE",
+  "ROLLBACK",
+  "ROUND_CEILING",
+  "ROUND_DOWN",
+  "ROUND_FLOOR",
+  "ROUND_HALF_DOWN",
+  "ROUND_HALF_EVEN",
+  "ROUND_HALF_UP",
+  "ROUND_UP",
+  "ROUTINE",
+  "ROW",
+  "ROWNUMBER",
+  "ROWS",
+  "ROWSET",
+  "ROW_NUMBER",
+  "RRN",
+  "RUN",
+  "SAVEPOINT",
+  "SCHEMA",
+  "SCRATCHPAD",
+  "SCROLL",
+  "SEARCH",
+  "SECOND",
+  "SECONDS",
+  "SECQTY",
+  "SECURITY",
+  "SELECT",
+  "SENSITIVE",
+  "SEQUENCE",
+  "SESSION",
+  "SESSION_USER",
+  "SET",
+  "SIGNAL",
+  "SIMPLE",
+  "SNAN",
+  "SOME",
+  "SOURCE",
+  "SPECIFIC",
+  "SQL",
+  "SQLID",
+  "STACKED",
+  "STANDARD",
+  "START",
+  "STARTING",
+  "STATEMENT",
+  "STATIC",
+  "STATMENT",
+  "STAY",
+  "STOGROUP",
+  "STORES",
+  "STYLE",
+  "SUBSTRING",
+  "SUMMARY",
+  "SYNONYM",
+  "SYSFUN",
+  "SYSIBM",
+  "SYSPROC",
+  "SYSTEM",
+  "SYSTEM_USER",
+  "TABLE",
+  "TABLESPACE",
+  "THEN",
+  "TO",
+  "TRANSACTION",
+  "TRIGGER",
+  "TRIM",
+  "TRUNCATE",
+  "TYPE",
+  "UNDO",
+  "UNION",
+  "UNIQUE",
+  "UNTIL",
+  "UPDATE",
+  "USAGE",
+  "USER",
+  "USING",
+  "VALIDPROC",
+  "VALUE",
+  "VALUES",
+  "VARIABLE",
+  "VARIANT",
+  "VCAT",
+  "VERSION",
+  "VIEW",
+  "VOLATILE",
+  "VOLUMES",
+  "WHEN",
+  "WHENEVER",
+  "WHERE",
+  "WHILE",
+  "WITH",
+  "WITHOUT",
+  "WLM",
+  "WRITE",
+  "XMLELEMENT",
+  "XMLEXISTS",
+  "XMLNAMESPACES",
+  "YEAR",
+  "YEARS"
+];
+var dataTypes2 = [
+  // https://www.ibm.com/docs/en/db2-for-zos/12?topic=columns-data-types
+  "ARRAY",
+  "BIGINT",
+  "BINARY",
+  "BLOB",
+  "BOOLEAN",
+  "CCSID",
+  "CHAR",
+  "CHARACTER",
+  "CLOB",
+  "DATE",
+  "DATETIME",
+  "DBCLOB",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE",
+  "DOUBLE PRECISION",
+  "FLOAT",
+  "FLOAT4",
+  "FLOAT8",
+  "GRAPHIC",
+  "INT",
+  "INT2",
+  "INT4",
+  "INT8",
+  "INTEGER",
+  "INTERVAL",
+  "LONG VARCHAR",
+  "LONG VARGRAPHIC",
+  "NCHAR",
+  "NCHR",
+  "NCLOB",
+  "NVARCHAR",
+  "NUMERIC",
+  "SMALLINT",
+  "REAL",
+  "TIME",
+  "TIMESTAMP",
+  "VARBINARY",
+  "VARCHAR",
+  "VARGRAPHIC"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/db2/db2.formatter.js
+var reservedSelect2 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses2 = expandPhrases([
+  // queries
+  "WITH",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "PARTITION BY",
+  "ORDER BY [INPUT SEQUENCE]",
+  "LIMIT",
+  "OFFSET",
+  "FETCH NEXT",
+  "FOR UPDATE [OF]",
+  "FOR {READ | FETCH} ONLY",
+  "FOR {RR | CS | UR | RS} [USE AND KEEP {SHARE | UPDATE | EXCLUSIVE} LOCKS]",
+  "WAIT FOR OUTCOME",
+  "SKIP LOCKED DATA",
+  "INTO",
+  // Data modification
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE INTO",
+  "WHEN [NOT] MATCHED [THEN]",
+  "UPDATE SET",
+  "INSERT"
+]);
+var standardOnelineClauses2 = expandPhrases([
+  "CREATE [GLOBAL TEMPORARY | EXTERNAL] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses2 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] VIEW",
+  // - update:
+  "UPDATE",
+  "WHERE CURRENT OF",
+  "WITH {RR | RS | CS | UR}",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // alter table:
+  "ALTER TABLE",
+  "ADD [COLUMN]",
+  "DROP [COLUMN]",
+  "RENAME COLUMN",
+  "ALTER [COLUMN]",
+  "SET DATA TYPE",
+  "SET NOT NULL",
+  "DROP {DEFAULT | GENERATED | NOT NULL}",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // https://www.ibm.com/docs/en/db2/11.5?topic=s-statements
+  "ALLOCATE",
+  "ALTER AUDIT POLICY",
+  "ALTER BUFFERPOOL",
+  "ALTER DATABASE PARTITION GROUP",
+  "ALTER DATABASE",
+  "ALTER EVENT MONITOR",
+  "ALTER FUNCTION",
+  "ALTER HISTOGRAM TEMPLATE",
+  "ALTER INDEX",
+  "ALTER MASK",
+  "ALTER METHOD",
+  "ALTER MODULE",
+  "ALTER NICKNAME",
+  "ALTER PACKAGE",
+  "ALTER PERMISSION",
+  "ALTER PROCEDURE",
+  "ALTER SCHEMA",
+  "ALTER SECURITY LABEL COMPONENT",
+  "ALTER SECURITY POLICY",
+  "ALTER SEQUENCE",
+  "ALTER SERVER",
+  "ALTER SERVICE CLASS",
+  "ALTER STOGROUP",
+  "ALTER TABLESPACE",
+  "ALTER THRESHOLD",
+  "ALTER TRIGGER",
+  "ALTER TRUSTED CONTEXT",
+  "ALTER TYPE",
+  "ALTER USAGE LIST",
+  "ALTER USER MAPPING",
+  "ALTER VIEW",
+  "ALTER WORK ACTION SET",
+  "ALTER WORK CLASS SET",
+  "ALTER WORKLOAD",
+  "ALTER WRAPPER",
+  "ALTER XSROBJECT",
+  "ALTER STOGROUP",
+  "ALTER TABLESPACE",
+  "ALTER TRIGGER",
+  "ALTER TRUSTED CONTEXT",
+  "ALTER VIEW",
+  "ASSOCIATE [RESULT SET] {LOCATOR | LOCATORS}",
+  "AUDIT",
+  "BEGIN DECLARE SECTION",
+  "CALL",
+  "CLOSE",
+  "COMMENT ON",
+  "COMMIT [WORK]",
+  "CONNECT",
+  "CREATE [OR REPLACE] [PUBLIC] ALIAS",
+  "CREATE AUDIT POLICY",
+  "CREATE BUFFERPOOL",
+  "CREATE DATABASE PARTITION GROUP",
+  "CREATE EVENT MONITOR",
+  "CREATE [OR REPLACE] FUNCTION",
+  "CREATE FUNCTION MAPPING",
+  "CREATE HISTOGRAM TEMPLATE",
+  "CREATE [UNIQUE] INDEX",
+  "CREATE INDEX EXTENSION",
+  "CREATE [OR REPLACE] MASK",
+  "CREATE [SPECIFIC] METHOD",
+  "CREATE [OR REPLACE] MODULE",
+  "CREATE [OR REPLACE] NICKNAME",
+  "CREATE [OR REPLACE] PERMISSION",
+  "CREATE [OR REPLACE] PROCEDURE",
+  "CREATE ROLE",
+  "CREATE SCHEMA",
+  "CREATE SECURITY LABEL [COMPONENT]",
+  "CREATE SECURITY POLICY",
+  "CREATE [OR REPLACE] SEQUENCE",
+  "CREATE SERVICE CLASS",
+  "CREATE SERVER",
+  "CREATE STOGROUP",
+  "CREATE SYNONYM",
+  "CREATE [LARGE | REGULAR | {SYSTEM | USER} TEMPORARY] TABLESPACE",
+  "CREATE THRESHOLD",
+  "CREATE {TRANSFORM | TRANSFORMS} FOR",
+  "CREATE [OR REPLACE] TRIGGER",
+  "CREATE TRUSTED CONTEXT",
+  "CREATE [OR REPLACE] TYPE",
+  "CREATE TYPE MAPPING",
+  "CREATE USAGE LIST",
+  "CREATE USER MAPPING FOR",
+  "CREATE [OR REPLACE] VARIABLE",
+  "CREATE WORK ACTION SET",
+  "CREATE WORK CLASS SET",
+  "CREATE WORKLOAD",
+  "CREATE WRAPPER",
+  "DECLARE",
+  "DECLARE GLOBAL TEMPORARY TABLE",
+  "DESCRIBE [INPUT | OUTPUT]",
+  "DISCONNECT",
+  "DROP [PUBLIC] ALIAS",
+  "DROP AUDIT POLICY",
+  "DROP BUFFERPOOL",
+  "DROP DATABASE PARTITION GROUP",
+  "DROP EVENT MONITOR",
+  "DROP [SPECIFIC] FUNCTION",
+  "DROP FUNCTION MAPPING",
+  "DROP HISTOGRAM TEMPLATE",
+  "DROP INDEX [EXTENSION]",
+  "DROP MASK",
+  "DROP [SPECIFIC] METHOD",
+  "DROP MODULE",
+  "DROP NICKNAME",
+  "DROP PACKAGE",
+  "DROP PERMISSION",
+  "DROP [SPECIFIC] PROCEDURE",
+  "DROP ROLE",
+  "DROP SCHEMA",
+  "DROP SECURITY LABEL [COMPONENT]",
+  "DROP SECURITY POLICY",
+  "DROP SEQUENCE",
+  "DROP SERVER",
+  "DROP SERVICE CLASS",
+  "DROP STOGROUP",
+  "DROP TABLE HIERARCHY",
+  "DROP {TABLESPACE | TABLESPACES}",
+  "DROP {TRANSFORM | TRANSFORMS}",
+  "DROP THRESHOLD",
+  "DROP TRIGGER",
+  "DROP TRUSTED CONTEXT",
+  "DROP TYPE [MAPPING]",
+  "DROP USAGE LIST",
+  "DROP USER MAPPING FOR",
+  "DROP VARIABLE",
+  "DROP VIEW [HIERARCHY]",
+  "DROP WORK {ACTION | CLASS} SET",
+  "DROP WORKLOAD",
+  "DROP WRAPPER",
+  "DROP XSROBJECT",
+  "END DECLARE SECTION",
+  "EXECUTE [IMMEDIATE]",
+  "EXPLAIN {PLAN [SECTION] | ALL}",
+  "FETCH [FROM]",
+  "FLUSH {BUFFERPOOL | BUFFERPOOLS} ALL",
+  "FLUSH EVENT MONITOR",
+  "FLUSH FEDERATED CACHE",
+  "FLUSH OPTIMIZATION PROFILE CACHE",
+  "FLUSH PACKAGE CACHE [DYNAMIC]",
+  "FLUSH AUTHENTICATION CACHE [FOR ALL]",
+  "FREE LOCATOR",
+  "GET DIAGNOSTICS",
+  "GOTO",
+  "GRANT",
+  "INCLUDE",
+  "ITERATE",
+  "LEAVE",
+  "LOCK TABLE",
+  "LOOP",
+  "OPEN",
+  "PIPE",
+  "PREPARE",
+  "REFRESH TABLE",
+  "RELEASE",
+  "RELEASE [TO] SAVEPOINT",
+  "RENAME [TABLE | INDEX | STOGROUP | TABLESPACE]",
+  "REPEAT",
+  "RESIGNAL",
+  "RETURN",
+  "REVOKE",
+  "ROLLBACK [WORK] [TO SAVEPOINT]",
+  "SAVEPOINT",
+  "SET COMPILATION ENVIRONMENT",
+  "SET CONNECTION",
+  "SET CURRENT",
+  "SET ENCRYPTION PASSWORD",
+  "SET EVENT MONITOR STATE",
+  "SET INTEGRITY",
+  "SET PASSTHRU",
+  "SET PATH",
+  "SET ROLE",
+  "SET SCHEMA",
+  "SET SERVER OPTION",
+  "SET {SESSION AUTHORIZATION | SESSION_USER}",
+  "SET USAGE LIST",
+  "SIGNAL",
+  "TRANSFER OWNERSHIP OF",
+  "WHENEVER {NOT FOUND | SQLERROR | SQLWARNING}",
+  "WHILE"
+]);
+var reservedSetOperations2 = expandPhrases(["UNION [ALL]", "EXCEPT [ALL]", "INTERSECT [ALL]"]);
+var reservedJoins2 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN"
+]);
+var reservedPhrases2 = expandPhrases([
+  "ON DELETE",
+  "ON UPDATE",
+  "SET NULL",
+  "{ROWS | RANGE} BETWEEN"
+]);
+var db2 = {
+  name: "db2",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect2,
+    reservedClauses: [...reservedClauses2, ...standardOnelineClauses2, ...tabularOnelineClauses2],
+    reservedSetOperations: reservedSetOperations2,
+    reservedJoins: reservedJoins2,
+    reservedPhrases: reservedPhrases2,
+    reservedKeywords: keywords3,
+    reservedDataTypes: dataTypes2,
+    reservedFunctionNames: functions2,
+    extraParens: ["[]"],
+    stringTypes: [
+      { quote: "''-qq", prefixes: ["G", "N", "U&"] },
+      { quote: "''-raw", prefixes: ["X", "BX", "GX", "UX"], requirePrefix: true }
+    ],
+    identTypes: [`""-qq`],
+    identChars: { first: "@#$", rest: "@#$" },
+    paramTypes: { positional: true, named: [":"] },
+    paramChars: { first: "@#$", rest: "@#$" },
+    operators: [
+      "**",
+      "%",
+      "|",
+      "&",
+      "^",
+      "~",
+      "\xAC=",
+      "\xAC>",
+      "\xAC<",
+      "!>",
+      "!<",
+      "^=",
+      "^>",
+      "^<",
+      "||",
+      "->",
+      "=>"
+    ]
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses2, ...tabularOnelineClauses2],
+    tabularOnelineClauses: tabularOnelineClauses2
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/db2i/db2i.functions.js
+var functions3 = [
+  // https://www.ibm.com/docs/en/i/7.5?topic=functions-aggregate
+  // TODO: 'ANY', - conflicts with test for ANY predicate in 'operators.ys'!!
+  "ARRAY_AGG",
+  "AVG",
+  "CORR",
+  "CORRELATION",
+  "COUNT",
+  "COUNT_BIG",
+  "COVAR_POP",
+  "COVARIANCE",
+  "COVAR",
+  "COVAR_SAMP",
+  "COVARIANCE_SAMP",
+  "EVERY",
+  "GROUPING",
+  "JSON_ARRAYAGG",
+  "JSON_OBJECTAGG",
+  "LISTAGG",
+  "MAX",
+  "MEDIAN",
+  "MIN",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  // https://www.ibm.com/docs/en/i/7.5?topic=functions-regression'
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_COUNT",
+  "REGR_INTERCEPT",
+  "REGR_R2",
+  "REGR_SLOPE",
+  "REGR_SXX",
+  "REGR_SXY",
+  "REGR_SYY",
+  "SOME",
+  "STDDEV_POP",
+  "STDDEV",
+  "STDDEV_SAMP",
+  "SUM",
+  "VAR_POP",
+  "VARIANCE",
+  "VAR",
+  "VAR_SAMP",
+  "VARIANCE_SAMP",
+  "XMLAGG",
+  "XMLGROUP",
+  // https://www.ibm.com/docs/en/i/7.5?topic=functions-scalar
+  "ABS",
+  "ABSVAL",
+  "ACOS",
+  "ADD_DAYS",
+  "ADD_HOURS",
+  "ADD_MINUTES",
+  "ADD_MONTHS",
+  "ADD_SECONDS",
+  "ADD_YEARS",
+  "ANTILOG",
+  "ARRAY_MAX_CARDINALITY",
+  "ARRAY_TRIM",
+  "ASCII",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "ATANH",
+  "BASE64_DECODE",
+  "BASE64_ENCODE",
+  "BIT_LENGTH",
+  "BITAND",
+  "BITANDNOT",
+  "BITNOT",
+  "BITOR",
+  "BITXOR",
+  "BSON_TO_JSON",
+  "CARDINALITY",
+  "CEIL",
+  "CEILING",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "CHR",
+  "COALESCE",
+  "COMPARE_DECFLOAT",
+  "CONCAT",
+  "CONTAINS",
+  "COS",
+  "COSH",
+  "COT",
+  "CURDATE",
+  "CURTIME",
+  "DATABASE",
+  "DATAPARTITIONNAME",
+  "DATAPARTITIONNUM",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK_ISO",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "DAYS",
+  "DBPARTITIONNAME",
+  "DBPARTITIONNUM",
+  "DECFLOAT_FORMAT",
+  "DECFLOAT_SORTKEY",
+  "DECRYPT_BINARY",
+  "DECRYPT_BIT",
+  "DECRYPT_CHAR",
+  "DECRYPT_DB",
+  "DEGREES",
+  "DIFFERENCE",
+  "DIGITS",
+  "DLCOMMENT",
+  "DLLINKTYPE",
+  "DLURLCOMPLETE",
+  "DLURLPATH",
+  "DLURLPATHONLY",
+  "DLURLSCHEME",
+  "DLURLSERVER",
+  "DLVALUE",
+  "DOUBLE_PRECISION",
+  "DOUBLE",
+  "ENCRPYT",
+  "ENCRYPT_AES",
+  "ENCRYPT_AES256",
+  "ENCRYPT_RC2",
+  "ENCRYPT_TDES",
+  "EXP",
+  "EXTRACT",
+  "FIRST_DAY",
+  "FLOOR",
+  "GENERATE_UNIQUE",
+  "GET_BLOB_FROM_FILE",
+  "GET_CLOB_FROM_FILE",
+  "GET_DBCLOB_FROM_FILE",
+  "GET_XML_FILE",
+  "GETHINT",
+  "GREATEST",
+  "HASH_MD5",
+  "HASH_ROW",
+  "HASH_SHA1",
+  "HASH_SHA256",
+  "HASH_SHA512",
+  "HASH_VALUES",
+  "HASHED_VALUE",
+  "HEX",
+  "HEXTORAW",
+  "HOUR",
+  "HTML_ENTITY_DECODE",
+  "HTML_ENTITY_ENCODE",
+  "HTTP_DELETE_BLOB",
+  "HTTP_DELETE",
+  "HTTP_GET_BLOB",
+  "HTTP_GET",
+  "HTTP_PATCH_BLOB",
+  "HTTP_PATCH",
+  "HTTP_POST_BLOB",
+  "HTTP_POST",
+  "HTTP_PUT_BLOB",
+  "HTTP_PUT",
+  "IDENTITY_VAL_LOCAL",
+  "IFNULL",
+  "INSERT",
+  "INSTR",
+  "INTERPRET",
+  "ISFALSE",
+  "ISNOTFALSE",
+  "ISNOTTRUE",
+  "ISTRUE",
+  "JSON_ARRAY",
+  "JSON_OBJECT",
+  "JSON_QUERY",
+  "JSON_TO_BSON",
+  "JSON_UPDATE",
+  "JSON_VALUE",
+  "JULIAN_DAY",
+  "LAND",
+  "LAST_DAY",
+  "LCASE",
+  "LEAST",
+  "LEFT",
+  "LENGTH",
+  "LN",
+  "LNOT",
+  "LOCATE_IN_STRING",
+  "LOCATE",
+  "LOG10",
+  "LOR",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "MAX_CARDINALITY",
+  "MAX",
+  "MICROSECOND",
+  "MIDNIGHT_SECONDS",
+  "MIN",
+  "MINUTE",
+  "MOD",
+  "MONTH",
+  "MONTHNAME",
+  "MONTHS_BETWEEN",
+  "MQREAD",
+  "MQREADCLOB",
+  "MQRECEIVE",
+  "MQRECEIVECLOB",
+  "MQSEND",
+  "MULTIPLY_ALT",
+  "NEXT_DAY",
+  "NORMALIZE_DECFLOAT",
+  "NOW",
+  "NULLIF",
+  "NVL",
+  "OCTET_LENGTH",
+  "OVERLAY",
+  "PI",
+  "POSITION",
+  "POSSTR",
+  "POW",
+  "POWER",
+  "QUANTIZE",
+  "QUARTER",
+  "RADIANS",
+  "RAISE_ERROR",
+  "RANDOM",
+  "RAND",
+  "REGEXP_COUNT",
+  "REGEXP_INSTR",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "REPEAT",
+  "REPLACE",
+  "RID",
+  "RIGHT",
+  "ROUND_TIMESTAMP",
+  "ROUND",
+  "RPAD",
+  "RRN",
+  "RTRIM",
+  "SCORE",
+  "SECOND",
+  "SIGN",
+  "SIN",
+  "SINH",
+  "SOUNDEX",
+  "SPACE",
+  "SQRT",
+  "STRIP",
+  "STRLEFT",
+  "STRPOS",
+  "STRRIGHT",
+  "SUBSTR",
+  "SUBSTRING",
+  "TABLE_NAME",
+  "TABLE_SCHEMA",
+  "TAN",
+  "TANH",
+  "TIMESTAMP_FORMAT",
+  "TIMESTAMP_ISO",
+  "TIMESTAMPDIFF_BIG",
+  "TIMESTAMPDIFF",
+  "TO_CHAR",
+  "TO_CLOB",
+  "TO_DATE",
+  "TO_NUMBER",
+  "TO_TIMESTAMP",
+  "TOTALORDER",
+  "TRANSLATE",
+  "TRIM_ARRAY",
+  "TRIM",
+  "TRUNC_TIMESTAMP",
+  "TRUNC",
+  "TRUNCATE",
+  "UCASE",
+  "UPPER",
+  "URL_DECODE",
+  "URL_ENCODE",
+  "VALUE",
+  "VARBINARY_FORMAT",
+  "VARCHAR_BIT_FORMAT",
+  "VARCHAR_FORMAT_BINARY",
+  "VARCHAR_FORMAT",
+  "VERIFY_GROUP_FOR_USER",
+  "WEEK_ISO",
+  "WEEK",
+  "WRAP",
+  "XMLATTRIBUTES",
+  "XMLCOMMENT",
+  "XMLCONCAT",
+  "XMLDOCUMENT",
+  "XMLELEMENT",
+  "XMLFOREST",
+  "XMLNAMESPACES",
+  "XMLPARSE",
+  "XMLPI",
+  "XMLROW",
+  "XMLSERIALIZE",
+  "XMLTEXT",
+  "XMLVALIDATE",
+  "XOR",
+  "XSLTRANSFORM",
+  "YEAR",
+  "ZONED",
+  // https://www.ibm.com/docs/en/i/7.5?topic=functions-table
+  "BASE_TABLE",
+  "HTTP_DELETE_BLOB_VERBOSE",
+  "HTTP_DELETE_VERBOSE",
+  "HTTP_GET_BLOB_VERBOSE",
+  "HTTP_GET_VERBOSE",
+  "HTTP_PATCH_BLOB_VERBOSE",
+  "HTTP_PATCH_VERBOSE",
+  "HTTP_POST_BLOB_VERBOSE",
+  "HTTP_POST_VERBOSE",
+  "HTTP_PUT_BLOB_VERBOSE",
+  "HTTP_PUT_VERBOSE",
+  "JSON_TABLE",
+  "MQREADALL",
+  "MQREADALLCLOB",
+  "MQRECEIVEALL",
+  "MQRECEIVEALLCLOB",
+  "XMLTABLE",
+  // https://www.ibm.com/docs/en/db2-for-zos/11?topic=functions-row
+  "UNPACK",
+  // https://www.ibm.com/docs/en/i/7.5?topic=expressions-olap-specifications
+  "CUME_DIST",
+  "DENSE_RANK",
+  "FIRST_VALUE",
+  "LAG",
+  "LAST_VALUE",
+  "LEAD",
+  "NTH_VALUE",
+  "NTILE",
+  "PERCENT_RANK",
+  "RANK",
+  "RATIO_TO_REPORT",
+  "ROW_NUMBER",
+  // Type casting
+  "CAST"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/db2i/db2i.keywords.js
+var keywords4 = [
+  // https://www.ibm.com/docs/en/i/7.5?topic=words-reserved
+  // TODO: This list likely contains all keywords, not only the reserved ones,
+  // try to filter it down to just the reserved keywords.
+  "ABSENT",
+  "ACCORDING",
+  "ACCTNG",
+  "ACTION",
+  "ACTIVATE",
+  "ADD",
+  "ALIAS",
+  "ALL",
+  "ALLOCATE",
+  "ALLOW",
+  "ALTER",
+  "AND",
+  "ANY",
+  "APPEND",
+  "APPLNAME",
+  "ARRAY",
+  "ARRAY_AGG",
+  "ARRAY_TRIM",
+  "AS",
+  "ASC",
+  "ASENSITIVE",
+  "ASSOCIATE",
+  "ATOMIC",
+  "ATTACH",
+  "ATTRIBUTES",
+  "AUTHORIZATION",
+  "AUTONOMOUS",
+  "BEFORE",
+  "BEGIN",
+  "BETWEEN",
+  "BIND",
+  "BSON",
+  "BUFFERPOOL",
+  "BY",
+  "CACHE",
+  "CALL",
+  "CALLED",
+  "CARDINALITY",
+  "CASE",
+  "CAST",
+  "CHECK",
+  "CL",
+  "CLOSE",
+  "CLUSTER",
+  "COLLECT",
+  "COLLECTION",
+  "COLUMN",
+  "COMMENT",
+  "COMMIT",
+  "COMPACT",
+  "COMPARISONS",
+  "COMPRESS",
+  "CONCAT",
+  "CONCURRENT",
+  "CONDITION",
+  "CONNECT",
+  "CONNECT_BY_ROOT",
+  "CONNECTION",
+  "CONSTANT",
+  "CONSTRAINT",
+  "CONTAINS",
+  "CONTENT",
+  "CONTINUE",
+  "COPY",
+  "COUNT",
+  "COUNT_BIG",
+  "CREATE",
+  "CREATEIN",
+  "CROSS",
+  "CUBE",
+  "CUME_DIST",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_PATH",
+  "CURRENT_SCHEMA",
+  "CURRENT_SERVER",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TIMEZONE",
+  "CURRENT_USER",
+  "CURSOR",
+  "CYCLE",
+  "DATABASE",
+  "DATAPARTITIONNAME",
+  "DATAPARTITIONNUM",
+  "DAY",
+  "DAYS",
+  "DB2GENERAL",
+  "DB2GENRL",
+  "DB2SQL",
+  "DBINFO",
+  "DBPARTITIONNAME",
+  "DBPARTITIONNUM",
+  "DEACTIVATE",
+  "DEALLOCATE",
+  "DECLARE",
+  "DEFAULT",
+  "DEFAULTS",
+  "DEFER",
+  "DEFINE",
+  "DEFINITION",
+  "DELETE",
+  "DELETING",
+  "DENSE_RANK",
+  "DENSERANK",
+  "DESC",
+  "DESCRIBE",
+  "DESCRIPTOR",
+  "DETACH",
+  "DETERMINISTIC",
+  "DIAGNOSTICS",
+  "DISABLE",
+  "DISALLOW",
+  "DISCONNECT",
+  "DISTINCT",
+  "DO",
+  "DOCUMENT",
+  "DROP",
+  "DYNAMIC",
+  "EACH",
+  "ELSE",
+  "ELSEIF",
+  "EMPTY",
+  "ENABLE",
+  "ENCODING",
+  "ENCRYPTION",
+  "END",
+  "END-EXEC",
+  "ENDING",
+  "ENFORCED",
+  "ERROR",
+  "ESCAPE",
+  "EVERY",
+  "EXCEPT",
+  "EXCEPTION",
+  "EXCLUDING",
+  "EXCLUSIVE",
+  "EXECUTE",
+  "EXISTS",
+  "EXIT",
+  "EXTEND",
+  "EXTERNAL",
+  "EXTRACT",
+  "FALSE",
+  "FENCED",
+  "FETCH",
+  "FIELDPROC",
+  "FILE",
+  "FINAL",
+  "FIRST_VALUE",
+  "FOR",
+  "FOREIGN",
+  "FORMAT",
+  "FREE",
+  "FREEPAGE",
+  "FROM",
+  "FULL",
+  "FUNCTION",
+  "GBPCACHE",
+  "GENERAL",
+  "GENERATED",
+  "GET",
+  "GLOBAL",
+  "GO",
+  "GOTO",
+  "GRANT",
+  "GROUP",
+  "HANDLER",
+  "HASH",
+  "HASH_ROW",
+  "HASHED_VALUE",
+  "HAVING",
+  "HINT",
+  "HOLD",
+  "HOUR",
+  "HOURS",
+  // 'ID', Not actually a reserved keyword
+  "IDENTITY",
+  "IF",
+  "IGNORE",
+  "IMMEDIATE",
+  "IMPLICITLY",
+  "IN",
+  "INCLUDE",
+  "INCLUDING",
+  "INCLUSIVE",
+  "INCREMENT",
+  "INDEX",
+  "INDEXBP",
+  "INDICATOR",
+  "INF",
+  "INFINITY",
+  "INHERIT",
+  "INLINE",
+  "INNER",
+  "INOUT",
+  "INSENSITIVE",
+  "INSERT",
+  "INSERTING",
+  "INTEGRITY",
+  "INTERPRET",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ISNULL",
+  "ISOLATION",
+  "ITERATE",
+  "JAVA",
+  "JOIN",
+  "JSON",
+  "JSON_ARRAY",
+  "JSON_ARRAYAGG",
+  "JSON_EXISTS",
+  "JSON_OBJECT",
+  "JSON_OBJECTAGG",
+  "JSON_QUERY",
+  "JSON_TABLE",
+  "JSON_VALUE",
+  "KEEP",
+  "KEY",
+  "KEYS",
+  "LABEL",
+  "LAG",
+  "LANGUAGE",
+  "LAST_VALUE",
+  "LATERAL",
+  "LEAD",
+  "LEAVE",
+  "LEFT",
+  "LEVEL2",
+  "LIKE",
+  "LIMIT",
+  "LINKTYPE",
+  "LISTAGG",
+  "LOCAL",
+  "LOCALDATE",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCATION",
+  "LOCATOR",
+  "LOCK",
+  "LOCKSIZE",
+  "LOG",
+  "LOGGED",
+  "LOOP",
+  "MAINTAINED",
+  "MASK",
+  "MATCHED",
+  "MATERIALIZED",
+  "MAXVALUE",
+  "MERGE",
+  "MICROSECOND",
+  "MICROSECONDS",
+  "MINPCTUSED",
+  "MINUTE",
+  "MINUTES",
+  "MINVALUE",
+  "MIRROR",
+  "MIXED",
+  "MODE",
+  "MODIFIES",
+  "MONTH",
+  "MONTHS",
+  "NAMESPACE",
+  "NAN",
+  "NATIONAL",
+  "NCHAR",
+  "NCLOB",
+  "NESTED",
+  "NEW",
+  "NEW_TABLE",
+  "NEXTVAL",
+  "NO",
+  "NOCACHE",
+  "NOCYCLE",
+  "NODENAME",
+  "NODENUMBER",
+  "NOMAXVALUE",
+  "NOMINVALUE",
+  "NONE",
+  "NOORDER",
+  "NORMALIZED",
+  "NOT",
+  "NOTNULL",
+  "NTH_VALUE",
+  "NTILE",
+  "NULL",
+  "NULLS",
+  "NVARCHAR",
+  "OBID",
+  "OBJECT",
+  "OF",
+  "OFF",
+  "OFFSET",
+  "OLD",
+  "OLD_TABLE",
+  "OMIT",
+  "ON",
+  "ONLY",
+  "OPEN",
+  "OPTIMIZE",
+  "OPTION",
+  "OR",
+  "ORDER",
+  "ORDINALITY",
+  "ORGANIZE",
+  "OUT",
+  "OUTER",
+  "OVER",
+  "OVERLAY",
+  "OVERRIDING",
+  "PACKAGE",
+  "PADDED",
+  "PAGE",
+  "PAGESIZE",
+  "PARAMETER",
+  "PART",
+  "PARTITION",
+  "PARTITIONED",
+  "PARTITIONING",
+  "PARTITIONS",
+  "PASSING",
+  "PASSWORD",
+  "PATH",
+  "PCTFREE",
+  "PERCENT_RANK",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PERIOD",
+  "PERMISSION",
+  "PIECESIZE",
+  "PIPE",
+  "PLAN",
+  "POSITION",
+  "PREPARE",
+  "PREVVAL",
+  "PRIMARY",
+  "PRIOR",
+  "PRIQTY",
+  "PRIVILEGES",
+  "PROCEDURE",
+  "PROGRAM",
+  "PROGRAMID",
+  "QUERY",
+  "RANGE",
+  "RANK",
+  "RATIO_TO_REPORT",
+  "RCDFMT",
+  "READ",
+  "READS",
+  "RECOVERY",
+  "REFERENCES",
+  "REFERENCING",
+  "REFRESH",
+  "REGEXP_LIKE",
+  "RELEASE",
+  "RENAME",
+  "REPEAT",
+  "RESET",
+  "RESIGNAL",
+  "RESTART",
+  "RESULT",
+  "RESULT_SET_LOCATOR",
+  "RETURN",
+  "RETURNING",
+  "RETURNS",
+  "REVOKE",
+  "RID",
+  "RIGHT",
+  "ROLLBACK",
+  "ROLLUP",
+  "ROUTINE",
+  "ROW",
+  "ROW_NUMBER",
+  "ROWNUMBER",
+  "ROWS",
+  "RRN",
+  "RUN",
+  "SAVEPOINT",
+  "SBCS",
+  "SCALAR",
+  "SCHEMA",
+  "SCRATCHPAD",
+  "SCROLL",
+  "SEARCH",
+  "SECOND",
+  "SECONDS",
+  "SECQTY",
+  "SECURED",
+  "SELECT",
+  "SENSITIVE",
+  "SEQUENCE",
+  "SESSION",
+  "SESSION_USER",
+  "SET",
+  "SIGNAL",
+  "SIMPLE",
+  "SKIP",
+  "SNAN",
+  "SOME",
+  "SOURCE",
+  "SPECIFIC",
+  "SQL",
+  "SQLID",
+  "SQLIND_DEFAULT",
+  "SQLIND_UNASSIGNED",
+  "STACKED",
+  "START",
+  "STARTING",
+  "STATEMENT",
+  "STATIC",
+  "STOGROUP",
+  "SUBSTRING",
+  "SUMMARY",
+  "SYNONYM",
+  "SYSTEM_TIME",
+  "SYSTEM_USER",
+  "TABLE",
+  "TABLESPACE",
+  "TABLESPACES",
+  "TAG",
+  "THEN",
+  "THREADSAFE",
+  "TO",
+  "TRANSACTION",
+  "TRANSFER",
+  "TRIGGER",
+  "TRIM",
+  "TRIM_ARRAY",
+  "TRUE",
+  "TRUNCATE",
+  "TRY_CAST",
+  "TYPE",
+  "UNDO",
+  "UNION",
+  "UNIQUE",
+  "UNIT",
+  "UNKNOWN",
+  "UNNEST",
+  "UNTIL",
+  "UPDATE",
+  "UPDATING",
+  "URI",
+  "USAGE",
+  "USE",
+  "USER",
+  "USERID",
+  "USING",
+  "VALUE",
+  "VALUES",
+  "VARIABLE",
+  "VARIANT",
+  "VCAT",
+  "VERSION",
+  "VERSIONING",
+  "VIEW",
+  "VOLATILE",
+  "WAIT",
+  "WHEN",
+  "WHENEVER",
+  "WHERE",
+  "WHILE",
+  "WITH",
+  "WITHIN",
+  "WITHOUT",
+  "WRAPPED",
+  "WRAPPER",
+  "WRITE",
+  "WRKSTNNAME",
+  "XMLAGG",
+  "XMLATTRIBUTES",
+  "XMLCAST",
+  "XMLCOMMENT",
+  "XMLCONCAT",
+  "XMLDOCUMENT",
+  "XMLELEMENT",
+  "XMLFOREST",
+  "XMLGROUP",
+  "XMLNAMESPACES",
+  "XMLPARSE",
+  "XMLPI",
+  "XMLROW",
+  "XMLSERIALIZE",
+  "XMLTABLE",
+  "XMLTEXT",
+  "XMLVALIDATE",
+  "XSLTRANSFORM",
+  "XSROBJECT",
+  "YEAR",
+  "YEARS",
+  "YES",
+  "ZONE"
+];
+var dataTypes3 = [
+  // https://www.ibm.com/docs/en/i/7.2?topic=iaodsd-odbc-data-types-how-they-correspond-db2-i-database-types
+  "ARRAY",
+  "BIGINT",
+  "BINARY",
+  "BIT",
+  "BLOB",
+  "BOOLEAN",
+  "CCSID",
+  "CHAR",
+  "CHARACTER",
+  "CLOB",
+  "DATA",
+  "DATALINK",
+  "DATE",
+  "DBCLOB",
+  "DECFLOAT",
+  "DECIMAL",
+  "DEC",
+  "DOUBLE",
+  "DOUBLE PRECISION",
+  "FLOAT",
+  "GRAPHIC",
+  "INT",
+  "INTEGER",
+  "LONG",
+  "NUMERIC",
+  "REAL",
+  "ROWID",
+  "SMALLINT",
+  "TIME",
+  "TIMESTAMP",
+  "VARBINARY",
+  "VARCHAR",
+  "VARGRAPHIC",
+  "XML"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/db2i/db2i.formatter.js
+var reservedSelect3 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses3 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "INTO",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "PARTITION BY",
+  "ORDER [SIBLINGS] BY [INPUT SEQUENCE]",
+  "LIMIT",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  "FOR UPDATE [OF]",
+  "FOR READ ONLY",
+  "OPTIMIZE FOR",
+  // Data modification
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE INTO",
+  "WHEN [NOT] MATCHED [THEN]",
+  "UPDATE SET",
+  "DELETE",
+  "INSERT",
+  // Data definition - table
+  "FOR SYSTEM NAME"
+]);
+var standardOnelineClauses3 = expandPhrases(["CREATE [OR REPLACE] TABLE"]);
+var tabularOnelineClauses3 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [RECURSIVE] VIEW",
+  // - update:
+  "UPDATE",
+  "WHERE CURRENT OF",
+  "WITH {NC | RR | RS | CS | UR}",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE",
+  // alter table:
+  "ALTER TABLE",
+  "ADD [COLUMN]",
+  "ALTER [COLUMN]",
+  "DROP [COLUMN]",
+  "SET DATA TYPE",
+  "SET {GENERATED ALWAYS | GENERATED BY DEFAULT}",
+  "SET NOT NULL",
+  "SET {NOT HIDDEN | IMPLICITLY HIDDEN}",
+  "SET FIELDPROC",
+  "DROP {DEFAULT | NOT NULL | GENERATED | IDENTITY | ROW CHANGE TIMESTAMP | FIELDPROC}",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // other
+  "SET [CURRENT] SCHEMA",
+  "SET CURRENT_SCHEMA",
+  // https://www.ibm.com/docs/en/i/7.5?topic=reference-statements
+  "ALLOCATE CURSOR",
+  "ALLOCATE [SQL] DESCRIPTOR [LOCAL | GLOBAL] SQL",
+  "ALTER [SPECIFIC] {FUNCTION | PROCEDURE}",
+  "ALTER {MASK | PERMISSION | SEQUENCE | TRIGGER}",
+  "ASSOCIATE [RESULT SET] {LOCATOR | LOCATORS}",
+  "BEGIN DECLARE SECTION",
+  "CALL",
+  "CLOSE",
+  "COMMENT ON {ALIAS | COLUMN | CONSTRAINT | INDEX | MASK | PACKAGE | PARAMETER | PERMISSION | SEQUENCE | TABLE | TRIGGER | VARIABLE | XSROBJECT}",
+  "COMMENT ON [SPECIFIC] {FUNCTION | PROCEDURE | ROUTINE}",
+  "COMMENT ON PARAMETER SPECIFIC {FUNCTION | PROCEDURE | ROUTINE}",
+  "COMMENT ON [TABLE FUNCTION] RETURN COLUMN",
+  "COMMENT ON [TABLE FUNCTION] RETURN COLUMN SPECIFIC [PROCEDURE | ROUTINE]",
+  "COMMIT [WORK] [HOLD]",
+  "CONNECT [TO | RESET] USER",
+  "CREATE [OR REPLACE] {ALIAS | FUNCTION | MASK | PERMISSION | PROCEDURE | SEQUENCE | TRIGGER | VARIABLE}",
+  "CREATE [ENCODED VECTOR] INDEX",
+  "CREATE UNIQUE [WHERE NOT NULL] INDEX",
+  "CREATE SCHEMA",
+  "CREATE TYPE",
+  "DEALLOCATE [SQL] DESCRIPTOR [LOCAL | GLOBAL]",
+  "DECLARE CURSOR",
+  "DECLARE GLOBAL TEMPORARY TABLE",
+  "DECLARE",
+  "DESCRIBE CURSOR",
+  "DESCRIBE INPUT",
+  "DESCRIBE [OUTPUT]",
+  "DESCRIBE {PROCEDURE | ROUTINE}",
+  "DESCRIBE TABLE",
+  "DISCONNECT ALL [SQL]",
+  "DISCONNECT [CURRENT]",
+  "DROP {ALIAS | INDEX | MASK | PACKAGE | PERMISSION | SCHEMA | SEQUENCE | TABLE | TYPE | VARIABLE | XSROBJECT} [IF EXISTS]",
+  "DROP [SPECIFIC] {FUNCTION | PROCEDURE | ROUTINE} [IF EXISTS]",
+  "END DECLARE SECTION",
+  "EXECUTE [IMMEDIATE]",
+  // 'FETCH {NEXT | PRIOR | FIRST | LAST | BEFORE | AFTER | CURRENT} [FROM]',
+  "FREE LOCATOR",
+  "GET [SQL] DESCRIPTOR [LOCAL | GLOBAL]",
+  "GET [CURRENT | STACKED] DIAGNOSTICS",
+  "GRANT {ALL [PRIVILEGES] | ALTER | EXECUTE} ON {FUNCTION | PROCEDURE | ROUTINE | PACKAGE | SCHEMA | SEQUENCE | TABLE | TYPE | VARIABLE | XSROBJECT}",
+  "HOLD LOCATOR",
+  "INCLUDE",
+  "LABEL ON {ALIAS | COLUMN | CONSTRAINT | INDEX | MASK | PACKAGE | PERMISSION | SEQUENCE | TABLE | TRIGGER | VARIABLE | XSROBJECT}",
+  "LABEL ON [SPECIFIC] {FUNCTION | PROCEDURE | ROUTINE}",
+  "LOCK TABLE",
+  "OPEN",
+  "PREPARE",
+  "REFRESH TABLE",
+  "RELEASE",
+  "RELEASE [TO] SAVEPOINT",
+  "RENAME [TABLE | INDEX] TO",
+  "REVOKE {ALL [PRIVILEGES] | ALTER | EXECUTE} ON {FUNCTION | PROCEDURE | ROUTINE | PACKAGE | SCHEMA | SEQUENCE | TABLE | TYPE | VARIABLE | XSROBJECT}",
+  "ROLLBACK [WORK] [HOLD | TO SAVEPOINT]",
+  "SAVEPOINT",
+  "SET CONNECTION",
+  "SET CURRENT {DEBUG MODE | DECFLOAT ROUNDING MODE | DEGREE | IMPLICIT XMLPARSE OPTION | TEMPORAL SYSTEM_TIME}",
+  "SET [SQL] DESCRIPTOR [LOCAL | GLOBAL]",
+  "SET ENCRYPTION PASSWORD",
+  "SET OPTION",
+  "SET {[CURRENT [FUNCTION]] PATH | CURRENT_PATH}",
+  "SET RESULT SETS [WITH RETURN [TO CALLER | TO CLIENT]]",
+  "SET SESSION AUTHORIZATION",
+  "SET SESSION_USER",
+  "SET TRANSACTION",
+  "SIGNAL SQLSTATE [VALUE]",
+  "TAG",
+  "TRANSFER OWNERSHIP OF",
+  "WHENEVER {NOT FOUND | SQLERROR | SQLWARNING}"
+]);
+var reservedSetOperations3 = expandPhrases(["UNION [ALL]", "EXCEPT [ALL]", "INTERSECT [ALL]"]);
+var reservedJoins3 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "[LEFT | RIGHT] EXCEPTION JOIN",
+  "{INNER | CROSS} JOIN"
+]);
+var reservedPhrases3 = expandPhrases([
+  "ON DELETE",
+  "ON UPDATE",
+  "SET NULL",
+  "{ROWS | RANGE} BETWEEN"
+]);
+var db2i = {
+  name: "db2i",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect3,
+    reservedClauses: [...reservedClauses3, ...standardOnelineClauses3, ...tabularOnelineClauses3],
+    reservedSetOperations: reservedSetOperations3,
+    reservedJoins: reservedJoins3,
+    reservedPhrases: reservedPhrases3,
+    reservedKeywords: keywords4,
+    reservedDataTypes: dataTypes3,
+    reservedFunctionNames: functions3,
+    nestedBlockComments: true,
+    extraParens: ["[]"],
+    stringTypes: [
+      { quote: "''-qq", prefixes: ["G", "N"] },
+      { quote: "''-raw", prefixes: ["X", "BX", "GX", "UX"], requirePrefix: true }
+    ],
+    identTypes: [`""-qq`],
+    identChars: { first: "@#$", rest: "@#$" },
+    paramTypes: { positional: true, named: [":"] },
+    paramChars: { first: "@#$", rest: "@#$" },
+    operators: ["**", "\xAC=", "\xAC>", "\xAC<", "!>", "!<", "||", "=>"]
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses3, ...tabularOnelineClauses3],
+    tabularOnelineClauses: tabularOnelineClauses3
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/duckdb/duckdb.functions.js
+var functions4 = [
+  // Functions from DuckDB (excluding those that start with an underscore):
+  // SELECT DISTINCT upper(function_name) AS function_name
+  // FROM duckdb_functions()
+  // WHERE function_name SIMILAR TO '^[a-z].*'
+  // ORDER BY function_name
+  "ABS",
+  "ACOS",
+  "ADD",
+  "ADD_PARQUET_KEY",
+  "AGE",
+  "AGGREGATE",
+  "ALIAS",
+  "ALL_PROFILING_OUTPUT",
+  "ANY_VALUE",
+  "APPLY",
+  "APPROX_COUNT_DISTINCT",
+  "APPROX_QUANTILE",
+  "ARBITRARY",
+  "ARGMAX",
+  "ARGMIN",
+  "ARG_MAX",
+  "ARG_MAX_NULL",
+  "ARG_MIN",
+  "ARG_MIN_NULL",
+  "ARRAY_AGG",
+  "ARRAY_AGGR",
+  "ARRAY_AGGREGATE",
+  "ARRAY_APPEND",
+  "ARRAY_APPLY",
+  "ARRAY_CAT",
+  "ARRAY_CONCAT",
+  "ARRAY_CONTAINS",
+  "ARRAY_COSINE_SIMILARITY",
+  "ARRAY_CROSS_PRODUCT",
+  "ARRAY_DISTANCE",
+  "ARRAY_DISTINCT",
+  "ARRAY_DOT_PRODUCT",
+  "ARRAY_EXTRACT",
+  "ARRAY_FILTER",
+  "ARRAY_GRADE_UP",
+  "ARRAY_HAS",
+  "ARRAY_HAS_ALL",
+  "ARRAY_HAS_ANY",
+  "ARRAY_INDEXOF",
+  "ARRAY_INNER_PRODUCT",
+  "ARRAY_INTERSECT",
+  "ARRAY_LENGTH",
+  "ARRAY_POP_BACK",
+  "ARRAY_POP_FRONT",
+  "ARRAY_POSITION",
+  "ARRAY_PREPEND",
+  "ARRAY_PUSH_BACK",
+  "ARRAY_PUSH_FRONT",
+  "ARRAY_REDUCE",
+  "ARRAY_RESIZE",
+  "ARRAY_REVERSE",
+  "ARRAY_REVERSE_SORT",
+  "ARRAY_SELECT",
+  "ARRAY_SLICE",
+  "ARRAY_SORT",
+  "ARRAY_TO_JSON",
+  "ARRAY_TO_STRING",
+  "ARRAY_TRANSFORM",
+  "ARRAY_UNIQUE",
+  "ARRAY_VALUE",
+  "ARRAY_WHERE",
+  "ARRAY_ZIP",
+  "ARROW_SCAN",
+  "ARROW_SCAN_DUMB",
+  "ASCII",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "AVG",
+  "BASE64",
+  "BIN",
+  "BITSTRING",
+  "BITSTRING_AGG",
+  "BIT_AND",
+  "BIT_COUNT",
+  "BIT_LENGTH",
+  "BIT_OR",
+  "BIT_POSITION",
+  "BIT_XOR",
+  "BOOL_AND",
+  "BOOL_OR",
+  "CARDINALITY",
+  "CBRT",
+  "CEIL",
+  "CEILING",
+  "CENTURY",
+  "CHECKPOINT",
+  "CHR",
+  "COLLATIONS",
+  "COL_DESCRIPTION",
+  "COMBINE",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONSTANT_OR_NULL",
+  "CONTAINS",
+  "COPY_DATABASE",
+  "CORR",
+  "COS",
+  "COT",
+  "COUNT",
+  "COUNT_IF",
+  "COUNT_STAR",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "CREATE_SORT_KEY",
+  "CURRENT_CATALOG",
+  "CURRENT_DATABASE",
+  "CURRENT_DATE",
+  "CURRENT_LOCALTIME",
+  "CURRENT_LOCALTIMESTAMP",
+  "CURRENT_QUERY",
+  "CURRENT_ROLE",
+  "CURRENT_SCHEMA",
+  "CURRENT_SCHEMAS",
+  "CURRENT_SETTING",
+  "CURRENT_USER",
+  "CURRVAL",
+  "DAMERAU_LEVENSHTEIN",
+  "DATABASE_LIST",
+  "DATABASE_SIZE",
+  "DATEDIFF",
+  "DATEPART",
+  "DATESUB",
+  "DATETRUNC",
+  "DATE_ADD",
+  "DATE_DIFF",
+  "DATE_PART",
+  "DATE_SUB",
+  "DATE_TRUNC",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "DECADE",
+  "DECODE",
+  "DEGREES",
+  "DISABLE_CHECKPOINT_ON_SHUTDOWN",
+  "DISABLE_OBJECT_CACHE",
+  "DISABLE_OPTIMIZER",
+  "DISABLE_PRINT_PROGRESS_BAR",
+  "DISABLE_PROFILE",
+  "DISABLE_PROFILING",
+  "DISABLE_PROGRESS_BAR",
+  "DISABLE_VERIFICATION",
+  "DISABLE_VERIFY_EXTERNAL",
+  "DISABLE_VERIFY_FETCH_ROW",
+  "DISABLE_VERIFY_PARALLELISM",
+  "DISABLE_VERIFY_SERIALIZER",
+  "DIVIDE",
+  "DUCKDB_COLUMNS",
+  "DUCKDB_CONSTRAINTS",
+  "DUCKDB_DATABASES",
+  "DUCKDB_DEPENDENCIES",
+  "DUCKDB_EXTENSIONS",
+  "DUCKDB_FUNCTIONS",
+  "DUCKDB_INDEXES",
+  "DUCKDB_KEYWORDS",
+  "DUCKDB_MEMORY",
+  "DUCKDB_OPTIMIZERS",
+  "DUCKDB_SCHEMAS",
+  "DUCKDB_SECRETS",
+  "DUCKDB_SEQUENCES",
+  "DUCKDB_SETTINGS",
+  "DUCKDB_TABLES",
+  "DUCKDB_TEMPORARY_FILES",
+  "DUCKDB_TYPES",
+  "DUCKDB_VIEWS",
+  "EDIT",
+  "EDITDIST3",
+  "ELEMENT_AT",
+  "ENABLE_CHECKPOINT_ON_SHUTDOWN",
+  "ENABLE_OBJECT_CACHE",
+  "ENABLE_OPTIMIZER",
+  "ENABLE_PRINT_PROGRESS_BAR",
+  "ENABLE_PROFILE",
+  "ENABLE_PROFILING",
+  "ENABLE_PROGRESS_BAR",
+  "ENABLE_VERIFICATION",
+  "ENCODE",
+  "ENDS_WITH",
+  "ENTROPY",
+  "ENUM_CODE",
+  "ENUM_FIRST",
+  "ENUM_LAST",
+  "ENUM_RANGE",
+  "ENUM_RANGE_BOUNDARY",
+  "EPOCH",
+  "EPOCH_MS",
+  "EPOCH_NS",
+  "EPOCH_US",
+  "ERA",
+  "ERROR",
+  "EVEN",
+  "EXP",
+  "FACTORIAL",
+  "FAVG",
+  "FDIV",
+  "FILTER",
+  "FINALIZE",
+  "FIRST",
+  "FLATTEN",
+  "FLOOR",
+  "FMOD",
+  "FORCE_CHECKPOINT",
+  "FORMAT",
+  "FORMATREADABLEDECIMALSIZE",
+  "FORMATREADABLESIZE",
+  "FORMAT_BYTES",
+  "FORMAT_PG_TYPE",
+  "FORMAT_TYPE",
+  "FROM_BASE64",
+  "FROM_BINARY",
+  "FROM_HEX",
+  "FROM_JSON",
+  "FROM_JSON_STRICT",
+  "FSUM",
+  "FUNCTIONS",
+  "GAMMA",
+  "GCD",
+  "GENERATE_SERIES",
+  "GENERATE_SUBSCRIPTS",
+  "GEN_RANDOM_UUID",
+  "GEOMEAN",
+  "GEOMETRIC_MEAN",
+  "GETENV",
+  "GET_BIT",
+  "GET_BLOCK_SIZE",
+  "GET_CURRENT_TIME",
+  "GET_CURRENT_TIMESTAMP",
+  "GLOB",
+  "GRADE_UP",
+  "GREATEST",
+  "GREATEST_COMMON_DIVISOR",
+  "GROUP_CONCAT",
+  "HAMMING",
+  "HASH",
+  "HAS_ANY_COLUMN_PRIVILEGE",
+  "HAS_COLUMN_PRIVILEGE",
+  "HAS_DATABASE_PRIVILEGE",
+  "HAS_FOREIGN_DATA_WRAPPER_PRIVILEGE",
+  "HAS_FUNCTION_PRIVILEGE",
+  "HAS_LANGUAGE_PRIVILEGE",
+  "HAS_SCHEMA_PRIVILEGE",
+  "HAS_SEQUENCE_PRIVILEGE",
+  "HAS_SERVER_PRIVILEGE",
+  "HAS_TABLESPACE_PRIVILEGE",
+  "HAS_TABLE_PRIVILEGE",
+  "HEX",
+  "HISTOGRAM",
+  "HOUR",
+  "ICU_CALENDAR_NAMES",
+  "ICU_SORT_KEY",
+  "ILIKE_ESCAPE",
+  "IMPORT_DATABASE",
+  "INDEX_SCAN",
+  "INET_CLIENT_ADDR",
+  "INET_CLIENT_PORT",
+  "INET_SERVER_ADDR",
+  "INET_SERVER_PORT",
+  "INSTR",
+  "IN_SEARCH_PATH",
+  "ISFINITE",
+  "ISINF",
+  "ISNAN",
+  "ISODOW",
+  "ISOYEAR",
+  "JACCARD",
+  "JARO_SIMILARITY",
+  "JARO_WINKLER_SIMILARITY",
+  // 'JSON',
+  "JSON_ARRAY",
+  "JSON_ARRAY_LENGTH",
+  "JSON_CONTAINS",
+  "JSON_DESERIALIZE_SQL",
+  "JSON_EXECUTE_SERIALIZED_SQL",
+  "JSON_EXTRACT",
+  "JSON_EXTRACT_PATH",
+  "JSON_EXTRACT_PATH_TEXT",
+  "JSON_EXTRACT_STRING",
+  "JSON_GROUP_ARRAY",
+  "JSON_GROUP_OBJECT",
+  "JSON_GROUP_STRUCTURE",
+  "JSON_KEYS",
+  "JSON_MERGE_PATCH",
+  "JSON_OBJECT",
+  "JSON_QUOTE",
+  "JSON_SERIALIZE_PLAN",
+  "JSON_SERIALIZE_SQL",
+  "JSON_STRUCTURE",
+  "JSON_TRANSFORM",
+  "JSON_TRANSFORM_STRICT",
+  "JSON_TYPE",
+  "JSON_VALID",
+  "JULIAN",
+  "KAHAN_SUM",
+  "KURTOSIS",
+  "KURTOSIS_POP",
+  "LAST",
+  "LAST_DAY",
+  "LCASE",
+  "LCM",
+  "LEAST",
+  "LEAST_COMMON_MULTIPLE",
+  "LEFT",
+  "LEFT_GRAPHEME",
+  "LEN",
+  "LENGTH",
+  "LENGTH_GRAPHEME",
+  "LEVENSHTEIN",
+  "LGAMMA",
+  "LIKE_ESCAPE",
+  "LIST",
+  "LISTAGG",
+  "LIST_AGGR",
+  "LIST_AGGREGATE",
+  "LIST_ANY_VALUE",
+  "LIST_APPEND",
+  "LIST_APPLY",
+  "LIST_APPROX_COUNT_DISTINCT",
+  "LIST_AVG",
+  "LIST_BIT_AND",
+  "LIST_BIT_OR",
+  "LIST_BIT_XOR",
+  "LIST_BOOL_AND",
+  "LIST_BOOL_OR",
+  "LIST_CAT",
+  "LIST_CONCAT",
+  "LIST_CONTAINS",
+  "LIST_COSINE_SIMILARITY",
+  "LIST_COUNT",
+  "LIST_DISTANCE",
+  "LIST_DISTINCT",
+  "LIST_DOT_PRODUCT",
+  "LIST_ELEMENT",
+  "LIST_ENTROPY",
+  "LIST_EXTRACT",
+  "LIST_FILTER",
+  "LIST_FIRST",
+  "LIST_GRADE_UP",
+  "LIST_HAS",
+  "LIST_HAS_ALL",
+  "LIST_HAS_ANY",
+  "LIST_HISTOGRAM",
+  "LIST_INDEXOF",
+  "LIST_INNER_PRODUCT",
+  "LIST_INTERSECT",
+  "LIST_KURTOSIS",
+  "LIST_KURTOSIS_POP",
+  "LIST_LAST",
+  "LIST_MAD",
+  "LIST_MAX",
+  "LIST_MEDIAN",
+  "LIST_MIN",
+  "LIST_MODE",
+  "LIST_PACK",
+  "LIST_POSITION",
+  "LIST_PREPEND",
+  "LIST_PRODUCT",
+  "LIST_REDUCE",
+  "LIST_RESIZE",
+  "LIST_REVERSE",
+  "LIST_REVERSE_SORT",
+  "LIST_SELECT",
+  "LIST_SEM",
+  "LIST_SKEWNESS",
+  "LIST_SLICE",
+  "LIST_SORT",
+  "LIST_STDDEV_POP",
+  "LIST_STDDEV_SAMP",
+  "LIST_STRING_AGG",
+  "LIST_SUM",
+  "LIST_TRANSFORM",
+  "LIST_UNIQUE",
+  "LIST_VALUE",
+  "LIST_VAR_POP",
+  "LIST_VAR_SAMP",
+  "LIST_WHERE",
+  "LIST_ZIP",
+  "LN",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "LOWER",
+  "LPAD",
+  "LSMODE",
+  "LTRIM",
+  "MAD",
+  "MAKE_DATE",
+  "MAKE_TIME",
+  "MAKE_TIMESTAMP",
+  "MAKE_TIMESTAMPTZ",
+  "MAP",
+  "MAP_CONCAT",
+  "MAP_ENTRIES",
+  "MAP_EXTRACT",
+  "MAP_FROM_ENTRIES",
+  "MAP_KEYS",
+  "MAP_VALUES",
+  "MAX",
+  "MAX_BY",
+  "MD5",
+  "MD5_NUMBER",
+  "MD5_NUMBER_LOWER",
+  "MD5_NUMBER_UPPER",
+  "MEAN",
+  "MEDIAN",
+  "METADATA_INFO",
+  "MICROSECOND",
+  "MILLENNIUM",
+  "MILLISECOND",
+  "MIN",
+  "MINUTE",
+  "MIN_BY",
+  "MISMATCHES",
+  "MOD",
+  "MODE",
+  "MONTH",
+  "MONTHNAME",
+  "MULTIPLY",
+  "NEXTAFTER",
+  "NEXTVAL",
+  "NFC_NORMALIZE",
+  "NOT_ILIKE_ESCAPE",
+  "NOT_LIKE_ESCAPE",
+  "NOW",
+  "NULLIF",
+  "OBJ_DESCRIPTION",
+  "OCTET_LENGTH",
+  "ORD",
+  "PARQUET_FILE_METADATA",
+  "PARQUET_KV_METADATA",
+  "PARQUET_METADATA",
+  "PARQUET_SCAN",
+  "PARQUET_SCHEMA",
+  "PARSE_DIRNAME",
+  "PARSE_DIRPATH",
+  "PARSE_FILENAME",
+  "PARSE_PATH",
+  "PG_COLLATION_IS_VISIBLE",
+  "PG_CONF_LOAD_TIME",
+  "PG_CONVERSION_IS_VISIBLE",
+  "PG_FUNCTION_IS_VISIBLE",
+  "PG_GET_CONSTRAINTDEF",
+  "PG_GET_EXPR",
+  "PG_GET_VIEWDEF",
+  "PG_HAS_ROLE",
+  "PG_IS_OTHER_TEMP_SCHEMA",
+  "PG_MY_TEMP_SCHEMA",
+  "PG_OPCLASS_IS_VISIBLE",
+  "PG_OPERATOR_IS_VISIBLE",
+  "PG_OPFAMILY_IS_VISIBLE",
+  "PG_POSTMASTER_START_TIME",
+  "PG_SIZE_PRETTY",
+  "PG_TABLE_IS_VISIBLE",
+  "PG_TIMEZONE_NAMES",
+  "PG_TS_CONFIG_IS_VISIBLE",
+  "PG_TS_DICT_IS_VISIBLE",
+  "PG_TS_PARSER_IS_VISIBLE",
+  "PG_TS_TEMPLATE_IS_VISIBLE",
+  "PG_TYPEOF",
+  "PG_TYPE_IS_VISIBLE",
+  "PI",
+  "PLATFORM",
+  "POSITION",
+  "POW",
+  "POWER",
+  "PRAGMA_COLLATIONS",
+  "PRAGMA_DATABASE_SIZE",
+  "PRAGMA_METADATA_INFO",
+  "PRAGMA_PLATFORM",
+  "PRAGMA_SHOW",
+  "PRAGMA_STORAGE_INFO",
+  "PRAGMA_TABLE_INFO",
+  "PRAGMA_USER_AGENT",
+  "PRAGMA_VERSION",
+  "PREFIX",
+  "PRINTF",
+  "PRODUCT",
+  "QUANTILE",
+  "QUANTILE_CONT",
+  "QUANTILE_DISC",
+  "QUARTER",
+  "RADIANS",
+  "RANDOM",
+  "RANGE",
+  "READFILE",
+  "READ_BLOB",
+  "READ_CSV",
+  "READ_CSV_AUTO",
+  "READ_JSON",
+  "READ_JSON_AUTO",
+  "READ_JSON_OBJECTS",
+  "READ_JSON_OBJECTS_AUTO",
+  "READ_NDJSON",
+  "READ_NDJSON_AUTO",
+  "READ_NDJSON_OBJECTS",
+  "READ_PARQUET",
+  "READ_TEXT",
+  "REDUCE",
+  "REGEXP_ESCAPE",
+  "REGEXP_EXTRACT",
+  "REGEXP_EXTRACT_ALL",
+  "REGEXP_FULL_MATCH",
+  "REGEXP_MATCHES",
+  "REGEXP_REPLACE",
+  "REGEXP_SPLIT_TO_ARRAY",
+  "REGEXP_SPLIT_TO_TABLE",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_COUNT",
+  "REGR_INTERCEPT",
+  "REGR_R2",
+  "REGR_SLOPE",
+  "REGR_SXX",
+  "REGR_SXY",
+  "REGR_SYY",
+  "REPEAT",
+  "REPEAT_ROW",
+  "REPLACE",
+  "RESERVOIR_QUANTILE",
+  "REVERSE",
+  "RIGHT",
+  "RIGHT_GRAPHEME",
+  "ROUND",
+  "ROUNDBANKERS",
+  "ROUND_EVEN",
+  "ROW",
+  "ROW_TO_JSON",
+  "RPAD",
+  "RTRIM",
+  "SECOND",
+  "SEM",
+  "SEQ_SCAN",
+  "SESSION_USER",
+  "SETSEED",
+  "SET_BIT",
+  "SHA256",
+  "SHA3",
+  "SHELL_ADD_SCHEMA",
+  "SHELL_ESCAPE_CRNL",
+  "SHELL_IDQUOTE",
+  "SHELL_MODULE_SCHEMA",
+  "SHELL_PUTSNL",
+  "SHOBJ_DESCRIPTION",
+  "SHOW",
+  "SHOW_DATABASES",
+  "SHOW_TABLES",
+  "SHOW_TABLES_EXPANDED",
+  "SIGN",
+  "SIGNBIT",
+  "SIN",
+  "SKEWNESS",
+  "SNIFF_CSV",
+  "SPLIT",
+  "SPLIT_PART",
+  "SQL_AUTO_COMPLETE",
+  "SQRT",
+  "STARTS_WITH",
+  "STATS",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STORAGE_INFO",
+  "STRFTIME",
+  "STRING_AGG",
+  "STRING_SPLIT",
+  "STRING_SPLIT_REGEX",
+  "STRING_TO_ARRAY",
+  "STRIP_ACCENTS",
+  "STRLEN",
+  "STRPOS",
+  "STRPTIME",
+  "STRUCT_EXTRACT",
+  "STRUCT_INSERT",
+  "STRUCT_PACK",
+  "STR_SPLIT",
+  "STR_SPLIT_REGEX",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUBSTRING_GRAPHEME",
+  "SUBTRACT",
+  "SUFFIX",
+  "SUM",
+  "SUMKAHAN",
+  "SUMMARY",
+  "SUM_NO_OVERFLOW",
+  "TABLE_INFO",
+  "TAN",
+  "TEST_ALL_TYPES",
+  "TEST_VECTOR_TYPES",
+  "TIMEZONE",
+  "TIMEZONE_HOUR",
+  "TIMEZONE_MINUTE",
+  "TIME_BUCKET",
+  "TODAY",
+  "TO_BASE",
+  "TO_BASE64",
+  "TO_BINARY",
+  "TO_CENTURIES",
+  "TO_DAYS",
+  "TO_DECADES",
+  "TO_HEX",
+  "TO_HOURS",
+  "TO_JSON",
+  "TO_MICROSECONDS",
+  "TO_MILLENNIA",
+  "TO_MILLISECONDS",
+  "TO_MINUTES",
+  "TO_MONTHS",
+  "TO_SECONDS",
+  "TO_TIMESTAMP",
+  "TO_WEEKS",
+  "TO_YEARS",
+  "TRANSACTION_TIMESTAMP",
+  "TRANSLATE",
+  "TRIM",
+  "TRUNC",
+  "TRY_STRPTIME",
+  "TXID_CURRENT",
+  "TYPEOF",
+  "UCASE",
+  "UNBIN",
+  "UNHEX",
+  "UNICODE",
+  "UNION_EXTRACT",
+  "UNION_TAG",
+  "UNION_VALUE",
+  "UNNEST",
+  "UNPIVOT_LIST",
+  "UPPER",
+  "USER",
+  "USER_AGENT",
+  "UUID",
+  "VARIANCE",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VECTOR_TYPE",
+  "VERIFY_EXTERNAL",
+  "VERIFY_FETCH_ROW",
+  "VERIFY_PARALLELISM",
+  "VERIFY_SERIALIZER",
+  "VERSION",
+  "WEEK",
+  "WEEKDAY",
+  "WEEKOFYEAR",
+  "WHICH_SECRET",
+  "WRITEFILE",
+  "XOR",
+  "YEAR",
+  "YEARWEEK",
+  // Keywords that also need to be listed as functions
+  "CAST",
+  "COALESCE",
+  // 'NULL', we really prefer treating it as keyword
+  "RANK",
+  "ROW_NUMBER"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/duckdb/duckdb.keywords.js
+var keywords5 = [
+  // Keywords from DuckDB:
+  // SELECT upper(keyword_name)
+  // FROM duckdb_keywords()
+  // WHERE keyword_category = 'reserved'
+  // ORDER BY keyword_name
+  "ALL",
+  "ANALYSE",
+  "ANALYZE",
+  "AND",
+  "ANY",
+  "AS",
+  "ASC",
+  "ATTACH",
+  "ASYMMETRIC",
+  "BOTH",
+  "CASE",
+  "CAST",
+  "CHECK",
+  "COLLATE",
+  "COLUMN",
+  "CONSTRAINT",
+  "CREATE",
+  "DEFAULT",
+  "DEFERRABLE",
+  "DESC",
+  "DESCRIBE",
+  "DETACH",
+  "DISTINCT",
+  "DO",
+  "ELSE",
+  "END",
+  "EXCEPT",
+  "FALSE",
+  "FETCH",
+  "FOR",
+  "FOREIGN",
+  "FROM",
+  "GRANT",
+  "GROUP",
+  "HAVING",
+  "IN",
+  "INITIALLY",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "LATERAL",
+  "LEADING",
+  "LIMIT",
+  "NOT",
+  "NULL",
+  "OFFSET",
+  "ON",
+  "ONLY",
+  "OR",
+  "ORDER",
+  "PIVOT",
+  "PIVOT_LONGER",
+  "PIVOT_WIDER",
+  "PLACING",
+  "PRIMARY",
+  "REFERENCES",
+  "RETURNING",
+  "SELECT",
+  "SHOW",
+  "SOME",
+  "SUMMARIZE",
+  "SYMMETRIC",
+  "TABLE",
+  "THEN",
+  "TO",
+  "TRAILING",
+  "TRUE",
+  "UNION",
+  "UNIQUE",
+  "UNPIVOT",
+  "USING",
+  "VARIADIC",
+  "WHEN",
+  "WHERE",
+  "WINDOW",
+  "WITH"
+];
+var dataTypes4 = [
+  // Types from DuckDB:
+  // SELECT DISTINCT upper(type_name)
+  // FROM duckdb_types()
+  // ORDER BY type_name
+  "ARRAY",
+  "BIGINT",
+  "BINARY",
+  "BIT",
+  "BITSTRING",
+  "BLOB",
+  "BOOL",
+  "BOOLEAN",
+  "BPCHAR",
+  "BYTEA",
+  "CHAR",
+  "DATE",
+  "DATETIME",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE",
+  "ENUM",
+  "FLOAT",
+  "FLOAT4",
+  "FLOAT8",
+  "GUID",
+  "HUGEINT",
+  "INET",
+  "INT",
+  "INT1",
+  "INT128",
+  "INT16",
+  "INT2",
+  "INT32",
+  "INT4",
+  "INT64",
+  "INT8",
+  "INTEGER",
+  "INTEGRAL",
+  "INTERVAL",
+  "JSON",
+  "LIST",
+  "LOGICAL",
+  "LONG",
+  "MAP",
+  // 'NULL' is a keyword
+  "NUMERIC",
+  "NVARCHAR",
+  "OID",
+  "REAL",
+  "ROW",
+  "SHORT",
+  "SIGNED",
+  "SMALLINT",
+  "STRING",
+  "STRUCT",
+  "TEXT",
+  "TIME",
+  "TIMESTAMP_MS",
+  "TIMESTAMP_NS",
+  "TIMESTAMP_S",
+  "TIMESTAMP_US",
+  "TIMESTAMP",
+  "TIMESTAMPTZ",
+  "TIMETZ",
+  "TINYINT",
+  "UBIGINT",
+  "UHUGEINT",
+  "UINT128",
+  "UINT16",
+  "UINT32",
+  "UINT64",
+  "UINT8",
+  "UINTEGER",
+  "UNION",
+  "USMALLINT",
+  "UTINYINT",
+  "UUID",
+  "VARBINARY",
+  "VARCHAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/duckdb/duckdb.formatter.js
+var reservedSelect4 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses4 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY [ALL]",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY [ALL]",
+  "LIMIT",
+  "OFFSET",
+  // 'USING' (conflicts with 'USING' in JOIN)
+  "USING SAMPLE",
+  "QUALIFY",
+  // Data manipulation
+  // - insert:
+  "INSERT [OR REPLACE] INTO",
+  "VALUES",
+  "DEFAULT VALUES",
+  // - update:
+  "SET",
+  // other:
+  "RETURNING"
+]);
+var standardOnelineClauses4 = expandPhrases([
+  "CREATE [OR REPLACE] [TEMPORARY | TEMP] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses4 = expandPhrases([
+  // TABLE
+  // - update:
+  "UPDATE",
+  // - insert:
+  "ON CONFLICT",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - truncate
+  "TRUNCATE",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD [COLUMN] [IF NOT EXISTS]",
+  "ADD PRIMARY KEY",
+  "DROP [COLUMN] [IF EXISTS]",
+  "ALTER [COLUMN]",
+  "RENAME [COLUMN]",
+  "RENAME TO",
+  "SET [DATA] TYPE",
+  "{SET | DROP} DEFAULT",
+  "{SET | DROP} NOT NULL",
+  // MACRO / FUNCTION
+  "CREATE [OR REPLACE] [TEMPORARY | TEMP] {MACRO | FUNCTION}",
+  "DROP MACRO [TABLE] [IF EXISTS]",
+  "DROP FUNCTION [IF EXISTS]",
+  // INDEX
+  "CREATE [UNIQUE] INDEX [IF NOT EXISTS]",
+  "DROP INDEX [IF EXISTS]",
+  // SCHEMA
+  "CREATE [OR REPLACE] SCHEMA [IF NOT EXISTS]",
+  "DROP SCHEMA [IF EXISTS]",
+  // SECRET
+  "CREATE [OR REPLACE] [PERSISTENT | TEMPORARY] SECRET [IF NOT EXISTS]",
+  "DROP [PERSISTENT | TEMPORARY] SECRET [IF EXISTS]",
+  // SEQUENCE
+  "CREATE [OR REPLACE] [TEMPORARY | TEMP] SEQUENCE",
+  "DROP SEQUENCE [IF EXISTS]",
+  // VIEW
+  "CREATE [OR REPLACE] [TEMPORARY | TEMP] VIEW [IF NOT EXISTS]",
+  "DROP VIEW [IF EXISTS]",
+  "ALTER VIEW",
+  // TYPE
+  "CREATE TYPE",
+  "DROP TYPE [IF EXISTS]",
+  // other
+  "ANALYZE",
+  "ATTACH [DATABASE] [IF NOT EXISTS]",
+  "DETACH [DATABASE] [IF EXISTS]",
+  "CALL",
+  "[FORCE] CHECKPOINT",
+  "COMMENT ON [TABLE | COLUMN | VIEW | INDEX | SEQUENCE | TYPE | MACRO | MACRO TABLE]",
+  "COPY [FROM DATABASE]",
+  "DESCRIBE",
+  "EXPORT DATABASE",
+  "IMPORT DATABASE",
+  "INSTALL",
+  "LOAD",
+  "PIVOT",
+  "PIVOT_WIDER",
+  "UNPIVOT",
+  "EXPLAIN [ANALYZE]",
+  // plain SET conflicts with SET clause in UPDATE
+  "SET {LOCAL | SESSION | GLOBAL}",
+  "RESET [LOCAL | SESSION | GLOBAL]",
+  "{SET | RESET} VARIABLE",
+  "SUMMARIZE",
+  "BEGIN TRANSACTION",
+  "ROLLBACK",
+  "COMMIT",
+  "ABORT",
+  "USE",
+  "VACUUM [ANALYZE]",
+  // prepared statements
+  "PREPARE",
+  "EXECUTE",
+  "DEALLOCATE [PREPARE]"
+]);
+var reservedSetOperations4 = expandPhrases([
+  "UNION [ALL | BY NAME]",
+  "EXCEPT [ALL]",
+  "INTERSECT [ALL]"
+]);
+var reservedJoins4 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "{NATURAL | ASOF} [INNER] JOIN",
+  "{NATURAL | ASOF} {LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "POSITIONAL JOIN",
+  "ANTI JOIN",
+  "SEMI JOIN"
+]);
+var reservedPhrases4 = expandPhrases([
+  "{ROWS | RANGE | GROUPS} BETWEEN",
+  "SIMILAR TO",
+  "IS [NOT] DISTINCT FROM",
+  "TIMESTAMP WITH TIME ZONE"
+]);
+var duckdb = {
+  name: "duckdb",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect4,
+    reservedClauses: [...reservedClauses4, ...standardOnelineClauses4, ...tabularOnelineClauses4],
+    reservedSetOperations: reservedSetOperations4,
+    reservedJoins: reservedJoins4,
+    reservedPhrases: reservedPhrases4,
+    supportsXor: true,
+    reservedKeywords: keywords5,
+    reservedDataTypes: dataTypes4,
+    reservedFunctionNames: functions4,
+    nestedBlockComments: true,
+    extraParens: ["[]", "{}"],
+    stringTypes: [
+      "$$",
+      "''-qq",
+      { quote: "''-qq-bs", prefixes: ["E"], requirePrefix: true },
+      { quote: "''-raw", prefixes: ["B", "X"], requirePrefix: true }
+    ],
+    identTypes: [`""-qq`],
+    identChars: { rest: "$" },
+    // TODO: named params $foo currently conflict with $$-quoted strings
+    paramTypes: { positional: true, numbered: ["$"], quoted: ["$"] },
+    operators: [
+      // Arithmetic:
+      "//",
+      "%",
+      "**",
+      "^",
+      "!",
+      // Bitwise:
+      "&",
+      "|",
+      "~",
+      "<<",
+      ">>",
+      // Cast:
+      "::",
+      // Comparison:
+      "==",
+      // Lambda & JSON:
+      "->",
+      // JSON:
+      "->>",
+      // key-value separator:
+      ":",
+      // Named function params:
+      ":=",
+      "=>",
+      // Pattern matching:
+      "~~",
+      "!~~",
+      "~~*",
+      "!~~*",
+      "~~~",
+      // Regular expressions:
+      "~",
+      "!~",
+      "~*",
+      "!~*",
+      // String:
+      "^@",
+      "||",
+      // INET extension:
+      ">>=",
+      "<<="
+    ]
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["::"],
+    onelineClauses: [...standardOnelineClauses4, ...tabularOnelineClauses4],
+    tabularOnelineClauses: tabularOnelineClauses4
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/hive/hive.functions.js
+var functions5 = [
+  // https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF
+  // math
+  "ABS",
+  "ACOS",
+  "ASIN",
+  "ATAN",
+  "BIN",
+  "BROUND",
+  "CBRT",
+  "CEIL",
+  "CEILING",
+  "CONV",
+  "COS",
+  "DEGREES",
+  // 'E',
+  "EXP",
+  "FACTORIAL",
+  "FLOOR",
+  "GREATEST",
+  "HEX",
+  "LEAST",
+  "LN",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "NEGATIVE",
+  "PI",
+  "PMOD",
+  "POSITIVE",
+  "POW",
+  "POWER",
+  "RADIANS",
+  "RAND",
+  "ROUND",
+  "SHIFTLEFT",
+  "SHIFTRIGHT",
+  "SHIFTRIGHTUNSIGNED",
+  "SIGN",
+  "SIN",
+  "SQRT",
+  "TAN",
+  "UNHEX",
+  "WIDTH_BUCKET",
+  // array
+  "ARRAY_CONTAINS",
+  "MAP_KEYS",
+  "MAP_VALUES",
+  "SIZE",
+  "SORT_ARRAY",
+  // conversion
+  "BINARY",
+  "CAST",
+  // date
+  "ADD_MONTHS",
+  "DATE",
+  "DATE_ADD",
+  "DATE_FORMAT",
+  "DATE_SUB",
+  "DATEDIFF",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFYEAR",
+  "EXTRACT",
+  "FROM_UNIXTIME",
+  "FROM_UTC_TIMESTAMP",
+  "HOUR",
+  "LAST_DAY",
+  "MINUTE",
+  "MONTH",
+  "MONTHS_BETWEEN",
+  "NEXT_DAY",
+  "QUARTER",
+  "SECOND",
+  "TIMESTAMP",
+  "TO_DATE",
+  "TO_UTC_TIMESTAMP",
+  "TRUNC",
+  "UNIX_TIMESTAMP",
+  "WEEKOFYEAR",
+  "YEAR",
+  // conditional
+  "ASSERT_TRUE",
+  "COALESCE",
+  "IF",
+  "ISNOTNULL",
+  "ISNULL",
+  "NULLIF",
+  "NVL",
+  // string
+  "ASCII",
+  "BASE64",
+  "CHARACTER_LENGTH",
+  "CHR",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONTEXT_NGRAMS",
+  "DECODE",
+  "ELT",
+  "ENCODE",
+  "FIELD",
+  "FIND_IN_SET",
+  "FORMAT_NUMBER",
+  "GET_JSON_OBJECT",
+  "IN_FILE",
+  "INITCAP",
+  "INSTR",
+  "LCASE",
+  "LENGTH",
+  "LEVENSHTEIN",
+  "LOCATE",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "NGRAMS",
+  "OCTET_LENGTH",
+  "PARSE_URL",
+  "PRINTF",
+  "QUOTE",
+  "REGEXP_EXTRACT",
+  "REGEXP_REPLACE",
+  "REPEAT",
+  "REVERSE",
+  "RPAD",
+  "RTRIM",
+  "SENTENCES",
+  "SOUNDEX",
+  "SPACE",
+  "SPLIT",
+  "STR_TO_MAP",
+  "SUBSTR",
+  "SUBSTRING",
+  "TRANSLATE",
+  "TRIM",
+  "UCASE",
+  "UNBASE64",
+  "UPPER",
+  // masking
+  "MASK",
+  "MASK_FIRST_N",
+  "MASK_HASH",
+  "MASK_LAST_N",
+  "MASK_SHOW_FIRST_N",
+  "MASK_SHOW_LAST_N",
+  // misc
+  "AES_DECRYPT",
+  "AES_ENCRYPT",
+  "CRC32",
+  "CURRENT_DATABASE",
+  "CURRENT_USER",
+  "HASH",
+  "JAVA_METHOD",
+  "LOGGED_IN_USER",
+  "MD5",
+  "REFLECT",
+  "SHA",
+  "SHA1",
+  "SHA2",
+  "SURROGATE_KEY",
+  "VERSION",
+  // aggregate
+  "AVG",
+  "COLLECT_LIST",
+  "COLLECT_SET",
+  "CORR",
+  "COUNT",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "HISTOGRAM_NUMERIC",
+  "MAX",
+  "MIN",
+  "NTILE",
+  "PERCENTILE",
+  "PERCENTILE_APPROX",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_COUNT",
+  "REGR_INTERCEPT",
+  "REGR_R2",
+  "REGR_SLOPE",
+  "REGR_SXX",
+  "REGR_SXY",
+  "REGR_SYY",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "SUM",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  // table
+  "EXPLODE",
+  "INLINE",
+  "JSON_TUPLE",
+  "PARSE_URL_TUPLE",
+  "POSEXPLODE",
+  "STACK",
+  // https://cwiki.apache.org/confluence/display/Hive/LanguageManual+WindowingAndAnalytics
+  "LEAD",
+  "LAG",
+  "FIRST_VALUE",
+  "LAST_VALUE",
+  "RANK",
+  "ROW_NUMBER",
+  "DENSE_RANK",
+  "CUME_DIST",
+  "PERCENT_RANK",
+  "NTILE"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/hive/hive.keywords.js
+var keywords6 = [
+  // https://cwiki.apache.org/confluence/display/hive/languagemanual+ddl
+  // Non-reserved keywords have proscribed meanings in. HiveQL, but can still be used as table or column names
+  "ADD",
+  "ADMIN",
+  "AFTER",
+  "ANALYZE",
+  "ARCHIVE",
+  "ASC",
+  "BEFORE",
+  "BUCKET",
+  "BUCKETS",
+  "CASCADE",
+  "CHANGE",
+  "CLUSTER",
+  "CLUSTERED",
+  "CLUSTERSTATUS",
+  "COLLECTION",
+  "COLUMNS",
+  "COMMENT",
+  "COMPACT",
+  "COMPACTIONS",
+  "COMPUTE",
+  "CONCATENATE",
+  "CONTINUE",
+  "DATA",
+  "DATABASES",
+  "DATETIME",
+  "DAY",
+  "DBPROPERTIES",
+  "DEFERRED",
+  "DEFINED",
+  "DELIMITED",
+  "DEPENDENCY",
+  "DESC",
+  "DIRECTORIES",
+  "DIRECTORY",
+  "DISABLE",
+  "DISTRIBUTE",
+  "ELEM_TYPE",
+  "ENABLE",
+  "ESCAPED",
+  "EXCLUSIVE",
+  "EXPLAIN",
+  "EXPORT",
+  "FIELDS",
+  "FILE",
+  "FILEFORMAT",
+  "FIRST",
+  "FORMAT",
+  "FORMATTED",
+  "FUNCTIONS",
+  "HOLD_DDLTIME",
+  "HOUR",
+  "IDXPROPERTIES",
+  "IGNORE",
+  "INDEX",
+  "INDEXES",
+  "INPATH",
+  "INPUTDRIVER",
+  "INPUTFORMAT",
+  "ITEMS",
+  "JAR",
+  "KEYS",
+  "KEY_TYPE",
+  "LIMIT",
+  "LINES",
+  "LOAD",
+  "LOCATION",
+  "LOCK",
+  "LOCKS",
+  "LOGICAL",
+  "LONG",
+  "MAPJOIN",
+  "MATERIALIZED",
+  "METADATA",
+  "MINUS",
+  "MINUTE",
+  "MONTH",
+  "MSCK",
+  "NOSCAN",
+  "NO_DROP",
+  "OFFLINE",
+  "OPTION",
+  "OUTPUTDRIVER",
+  "OUTPUTFORMAT",
+  "OVERWRITE",
+  "OWNER",
+  "PARTITIONED",
+  "PARTITIONS",
+  "PLUS",
+  "PRETTY",
+  "PRINCIPALS",
+  "PROTECTION",
+  "PURGE",
+  "READ",
+  "READONLY",
+  "REBUILD",
+  "RECORDREADER",
+  "RECORDWRITER",
+  "RELOAD",
+  "RENAME",
+  "REPAIR",
+  "REPLACE",
+  "REPLICATION",
+  "RESTRICT",
+  "REWRITE",
+  "ROLE",
+  "ROLES",
+  "SCHEMA",
+  "SCHEMAS",
+  "SECOND",
+  "SEMI",
+  "SERDE",
+  "SERDEPROPERTIES",
+  "SERVER",
+  "SETS",
+  "SHARED",
+  "SHOW",
+  "SHOW_DATABASE",
+  "SKEWED",
+  "SORT",
+  "SORTED",
+  "SSL",
+  "STATISTICS",
+  "STORED",
+  "STREAMTABLE",
+  "STRING",
+  "TABLES",
+  "TBLPROPERTIES",
+  "TEMPORARY",
+  "TERMINATED",
+  "TINYINT",
+  "TOUCH",
+  "TRANSACTIONS",
+  "UNARCHIVE",
+  "UNDO",
+  "UNIONTYPE",
+  "UNLOCK",
+  "UNSET",
+  "UNSIGNED",
+  "URI",
+  "USE",
+  "UTC",
+  "UTCTIMESTAMP",
+  "VALUE_TYPE",
+  "VIEW",
+  "WHILE",
+  "YEAR",
+  "AUTOCOMMIT",
+  "ISOLATION",
+  "LEVEL",
+  "OFFSET",
+  "SNAPSHOT",
+  "TRANSACTION",
+  "WORK",
+  "WRITE",
+  "ABORT",
+  "KEY",
+  "LAST",
+  "NORELY",
+  "NOVALIDATE",
+  "NULLS",
+  "RELY",
+  "VALIDATE",
+  "DETAIL",
+  "DOW",
+  "EXPRESSION",
+  "OPERATOR",
+  "QUARTER",
+  "SUMMARY",
+  "VECTORIZATION",
+  "WEEK",
+  "YEARS",
+  "MONTHS",
+  "WEEKS",
+  "DAYS",
+  "HOURS",
+  "MINUTES",
+  "SECONDS",
+  "TIMESTAMPTZ",
+  "ZONE",
+  // reserved
+  "ALL",
+  "ALTER",
+  "AND",
+  "AS",
+  "AUTHORIZATION",
+  "BETWEEN",
+  "BOTH",
+  "BY",
+  "CASE",
+  "CAST",
+  "COLUMN",
+  "CONF",
+  "CREATE",
+  "CROSS",
+  "CUBE",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_TIMESTAMP",
+  "CURSOR",
+  "DATABASE",
+  "DELETE",
+  "DESCRIBE",
+  "DISTINCT",
+  "DROP",
+  "ELSE",
+  "END",
+  "EXCHANGE",
+  "EXISTS",
+  "EXTENDED",
+  "EXTERNAL",
+  "FALSE",
+  "FETCH",
+  "FOLLOWING",
+  "FOR",
+  "FROM",
+  "FULL",
+  "FUNCTION",
+  "GRANT",
+  "GROUP",
+  "GROUPING",
+  "HAVING",
+  "IF",
+  "IMPORT",
+  "IN",
+  "INNER",
+  "INSERT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "JOIN",
+  "LATERAL",
+  "LEFT",
+  "LESS",
+  "LIKE",
+  "LOCAL",
+  "MACRO",
+  "MORE",
+  "NONE",
+  "NOT",
+  "NULL",
+  "OF",
+  "ON",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OVER",
+  "PARTIALSCAN",
+  "PARTITION",
+  "PERCENT",
+  "PRECEDING",
+  "PRESERVE",
+  "PROCEDURE",
+  "RANGE",
+  "READS",
+  "REDUCE",
+  "REVOKE",
+  "RIGHT",
+  "ROLLUP",
+  "ROW",
+  "ROWS",
+  "SELECT",
+  "SET",
+  "TABLE",
+  "TABLESAMPLE",
+  "THEN",
+  "TO",
+  "TRANSFORM",
+  "TRIGGER",
+  "TRUE",
+  "TRUNCATE",
+  "UNBOUNDED",
+  "UNION",
+  "UNIQUEJOIN",
+  "UPDATE",
+  "USER",
+  "USING",
+  "UTC_TMESTAMP",
+  "VALUES",
+  "WHEN",
+  "WHERE",
+  "WINDOW",
+  "WITH",
+  "COMMIT",
+  "ONLY",
+  "REGEXP",
+  "RLIKE",
+  "ROLLBACK",
+  "START",
+  "CACHE",
+  "CONSTRAINT",
+  "FOREIGN",
+  "PRIMARY",
+  "REFERENCES",
+  "DAYOFWEEK",
+  "EXTRACT",
+  "FLOOR",
+  "VIEWS",
+  "TIME",
+  "SYNC",
+  // fileTypes
+  "TEXTFILE",
+  "SEQUENCEFILE",
+  "ORC",
+  "CSV",
+  "TSV",
+  "PARQUET",
+  "AVRO",
+  "RCFILE",
+  "JSONFILE",
+  "INPUTFORMAT",
+  "OUTPUTFORMAT"
+];
+var dataTypes5 = [
+  // https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types
+  "ARRAY",
+  "BIGINT",
+  "BINARY",
+  "BOOLEAN",
+  "CHAR",
+  "DATE",
+  "DECIMAL",
+  "DOUBLE",
+  "FLOAT",
+  "INT",
+  "INTEGER",
+  "INTERVAL",
+  "MAP",
+  "NUMERIC",
+  "PRECISION",
+  "SMALLINT",
+  "STRUCT",
+  "TIMESTAMP",
+  "VARCHAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/hive/hive.formatter.js
+var reservedSelect5 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses5 = expandPhrases([
+  // queries
+  "WITH",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "SORT BY",
+  "CLUSTER BY",
+  "DISTRIBUTE BY",
+  "LIMIT",
+  // Data manipulation
+  // - insert:
+  //   Hive does not actually support plain INSERT INTO, only INSERT INTO TABLE
+  //   but it's a nuisance to not support it, as all other dialects do.
+  "INSERT INTO [TABLE]",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE INTO",
+  "WHEN [NOT] MATCHED [THEN]",
+  "UPDATE SET",
+  "INSERT [VALUES]",
+  // - insert overwrite directory:
+  //   https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DML#LanguageManualDML-Writingdataintothefilesystemfromqueries
+  "INSERT OVERWRITE [LOCAL] DIRECTORY",
+  // - load:
+  //   https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DML#LanguageManualDML-Loadingfilesintotables
+  "LOAD DATA [LOCAL] INPATH",
+  "[OVERWRITE] INTO TABLE"
+]);
+var standardOnelineClauses5 = expandPhrases([
+  "CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses5 = expandPhrases([
+  // - create:
+  "CREATE [MATERIALIZED] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE",
+  "RENAME TO",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // other
+  "ALTER",
+  "CREATE",
+  "USE",
+  "DESCRIBE",
+  "DROP",
+  "FETCH",
+  "SHOW",
+  "STORED AS",
+  "STORED BY",
+  "ROW FORMAT"
+]);
+var reservedSetOperations5 = expandPhrases(["UNION [ALL | DISTINCT]"]);
+var reservedJoins5 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  // non-standard joins
+  "LEFT SEMI JOIN"
+]);
+var reservedPhrases5 = expandPhrases(["{ROWS | RANGE} BETWEEN"]);
+var hive = {
+  name: "hive",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect5,
+    reservedClauses: [...reservedClauses5, ...standardOnelineClauses5, ...tabularOnelineClauses5],
+    reservedSetOperations: reservedSetOperations5,
+    reservedJoins: reservedJoins5,
+    reservedPhrases: reservedPhrases5,
+    reservedKeywords: keywords6,
+    reservedDataTypes: dataTypes5,
+    reservedFunctionNames: functions5,
+    extraParens: ["[]"],
+    stringTypes: ['""-bs', "''-bs"],
+    identTypes: ["``"],
+    variableTypes: [{ quote: "{}", prefixes: ["$"], requirePrefix: true }],
+    operators: ["%", "~", "^", "|", "&", "<=>", "==", "!", "||"]
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses5, ...tabularOnelineClauses5],
+    tabularOnelineClauses: tabularOnelineClauses5
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/mariadb/likeMariaDb.js
+function postProcess2(tokens2) {
+  return tokens2.map((token, i) => {
+    const nextToken = tokens2[i + 1] || EOF_TOKEN;
+    if (isToken.SET(token) && nextToken.text === "(") {
+      return Object.assign(Object.assign({}, token), { type: TokenType.RESERVED_FUNCTION_NAME });
+    }
+    const prevToken = tokens2[i - 1] || EOF_TOKEN;
+    if (isToken.VALUES(token) && prevToken.text === "=") {
+      return Object.assign(Object.assign({}, token), { type: TokenType.RESERVED_FUNCTION_NAME });
+    }
+    return token;
+  });
+}
+
+// node_modules/sql-formatter/dist/esm/languages/mariadb/mariadb.keywords.js
+var keywords7 = [
+  // https://mariadb.com/kb/en/reserved-words/
+  "ACCESSIBLE",
+  "ADD",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "AS",
+  "ASC",
+  "ASENSITIVE",
+  "BEFORE",
+  "BETWEEN",
+  "BOTH",
+  "BY",
+  "CALL",
+  "CASCADE",
+  "CASE",
+  "CHANGE",
+  "CHECK",
+  "COLLATE",
+  "COLUMN",
+  "CONDITION",
+  "CONSTRAINT",
+  "CONTINUE",
+  "CONVERT",
+  "CREATE",
+  "CROSS",
+  "CURRENT_DATE",
+  "CURRENT_ROLE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURSOR",
+  "DATABASE",
+  "DATABASES",
+  "DAY_HOUR",
+  "DAY_MICROSECOND",
+  "DAY_MINUTE",
+  "DAY_SECOND",
+  "DECLARE",
+  "DEFAULT",
+  "DELAYED",
+  "DELETE",
+  "DELETE_DOMAIN_ID",
+  "DESC",
+  "DESCRIBE",
+  "DETERMINISTIC",
+  "DISTINCT",
+  "DISTINCTROW",
+  "DIV",
+  "DO_DOMAIN_IDS",
+  "DROP",
+  "DUAL",
+  "EACH",
+  "ELSE",
+  "ELSEIF",
+  "ENCLOSED",
+  "ESCAPED",
+  "EXCEPT",
+  "EXISTS",
+  "EXIT",
+  "EXPLAIN",
+  "FALSE",
+  "FETCH",
+  "FOR",
+  "FORCE",
+  "FOREIGN",
+  "FROM",
+  "FULLTEXT",
+  "GENERAL",
+  "GRANT",
+  "GROUP",
+  "HAVING",
+  "HIGH_PRIORITY",
+  "HOUR_MICROSECOND",
+  "HOUR_MINUTE",
+  "HOUR_SECOND",
+  "IF",
+  "IGNORE",
+  "IGNORE_DOMAIN_IDS",
+  "IGNORE_SERVER_IDS",
+  "IN",
+  "INDEX",
+  "INFILE",
+  "INNER",
+  "INOUT",
+  "INSENSITIVE",
+  "INSERT",
+  "INTERSECT",
+  "INTERVAL",
+  "INTO",
+  "IS",
+  "ITERATE",
+  "JOIN",
+  "KEY",
+  "KEYS",
+  "KILL",
+  "LEADING",
+  "LEAVE",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "LINEAR",
+  "LINES",
+  "LOAD",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCK",
+  "LOOP",
+  "LOW_PRIORITY",
+  "MASTER_HEARTBEAT_PERIOD",
+  "MASTER_SSL_VERIFY_SERVER_CERT",
+  "MATCH",
+  "MAXVALUE",
+  "MINUTE_MICROSECOND",
+  "MINUTE_SECOND",
+  "MOD",
+  "MODIFIES",
+  "NATURAL",
+  "NOT",
+  "NO_WRITE_TO_BINLOG",
+  "NULL",
+  "OFFSET",
+  "ON",
+  "OPTIMIZE",
+  "OPTION",
+  "OPTIONALLY",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OUTFILE",
+  "OVER",
+  "PAGE_CHECKSUM",
+  "PARSE_VCOL_EXPR",
+  "PARTITION",
+  "POSITION",
+  "PRIMARY",
+  "PROCEDURE",
+  "PURGE",
+  "RANGE",
+  "READ",
+  "READS",
+  "READ_WRITE",
+  "RECURSIVE",
+  "REF_SYSTEM_ID",
+  "REFERENCES",
+  "REGEXP",
+  "RELEASE",
+  "RENAME",
+  "REPEAT",
+  "REPLACE",
+  "REQUIRE",
+  "RESIGNAL",
+  "RESTRICT",
+  "RETURN",
+  "RETURNING",
+  "REVOKE",
+  "RIGHT",
+  "RLIKE",
+  "ROW_NUMBER",
+  "ROWS",
+  "SCHEMA",
+  "SCHEMAS",
+  "SECOND_MICROSECOND",
+  "SELECT",
+  "SENSITIVE",
+  "SEPARATOR",
+  "SET",
+  "SHOW",
+  "SIGNAL",
+  "SLOW",
+  "SPATIAL",
+  "SPECIFIC",
+  "SQL",
+  "SQLEXCEPTION",
+  "SQLSTATE",
+  "SQLWARNING",
+  "SQL_BIG_RESULT",
+  "SQL_CALC_FOUND_ROWS",
+  "SQL_SMALL_RESULT",
+  "SSL",
+  "STARTING",
+  "STATS_AUTO_RECALC",
+  "STATS_PERSISTENT",
+  "STATS_SAMPLE_PAGES",
+  "STRAIGHT_JOIN",
+  "TABLE",
+  "TERMINATED",
+  "THEN",
+  "TO",
+  "TRAILING",
+  "TRIGGER",
+  "TRUE",
+  "UNDO",
+  "UNION",
+  "UNIQUE",
+  "UNLOCK",
+  "UNSIGNED",
+  "UPDATE",
+  "USAGE",
+  "USE",
+  "USING",
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "VALUES",
+  "WHEN",
+  "WHERE",
+  "WHILE",
+  "WINDOW",
+  "WITH",
+  "WRITE",
+  "XOR",
+  "YEAR_MONTH",
+  "ZEROFILL"
+];
+var dataTypes6 = [
+  // https://mariadb.com/kb/en/data-types/
+  "BIGINT",
+  "BINARY",
+  "BIT",
+  "BLOB",
+  "CHAR BYTE",
+  "CHAR",
+  "CHARACTER",
+  "DATETIME",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE PRECISION",
+  "DOUBLE",
+  "ENUM",
+  "FIXED",
+  "FLOAT",
+  "FLOAT4",
+  "FLOAT8",
+  "INT",
+  "INT1",
+  "INT2",
+  "INT3",
+  "INT4",
+  "INT8",
+  "INTEGER",
+  "LONG",
+  "LONGBLOB",
+  "LONGTEXT",
+  "MEDIUMBLOB",
+  "MEDIUMINT",
+  "MEDIUMTEXT",
+  "MIDDLEINT",
+  "NATIONAL CHAR",
+  "NATIONAL VARCHAR",
+  "NUMERIC",
+  "PRECISION",
+  "REAL",
+  "SMALLINT",
+  "TEXT",
+  "TIMESTAMP",
+  "TINYBLOB",
+  "TINYINT",
+  "TINYTEXT",
+  "VARBINARY",
+  "VARCHAR",
+  "VARCHARACTER",
+  "VARYING",
+  "YEAR"
+  // 'NUMBER', // ?? In oracle mode only
+  // 'SET' // handled as special-case in postProcess
+];
+
+// node_modules/sql-formatter/dist/esm/languages/mariadb/mariadb.functions.js
+var functions6 = [
+  // https://mariadb.com/kb/en/information-schema-sql_functions-table/
+  "ADDDATE",
+  "ADD_MONTHS",
+  "BIT_AND",
+  "BIT_OR",
+  "BIT_XOR",
+  "CAST",
+  "COUNT",
+  "CUME_DIST",
+  "CURDATE",
+  "CURTIME",
+  "DATE_ADD",
+  "DATE_SUB",
+  "DATE_FORMAT",
+  "DECODE",
+  "DENSE_RANK",
+  "EXTRACT",
+  "FIRST_VALUE",
+  "GROUP_CONCAT",
+  "JSON_ARRAYAGG",
+  "JSON_OBJECTAGG",
+  "LAG",
+  "LEAD",
+  "MAX",
+  "MEDIAN",
+  "MID",
+  "MIN",
+  "NOW",
+  "NTH_VALUE",
+  "NTILE",
+  "POSITION",
+  "PERCENT_RANK",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "RANK",
+  "ROW_NUMBER",
+  "SESSION_USER",
+  "STD",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "SUBDATE",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUM",
+  "SYSTEM_USER",
+  "TRIM",
+  "TRIM_ORACLE",
+  "VARIANCE",
+  "VAR_POP",
+  "VAR_SAMP",
+  "ABS",
+  "ACOS",
+  "ADDTIME",
+  "AES_DECRYPT",
+  "AES_ENCRYPT",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "BENCHMARK",
+  "BIN",
+  "BINLOG_GTID_POS",
+  "BIT_COUNT",
+  "BIT_LENGTH",
+  "CEIL",
+  "CEILING",
+  "CHARACTER_LENGTH",
+  "CHAR_LENGTH",
+  "CHR",
+  "COERCIBILITY",
+  "COLUMN_CHECK",
+  "COLUMN_EXISTS",
+  "COLUMN_LIST",
+  "COLUMN_JSON",
+  "COMPRESS",
+  "CONCAT",
+  "CONCAT_OPERATOR_ORACLE",
+  "CONCAT_WS",
+  "CONNECTION_ID",
+  "CONV",
+  "CONVERT_TZ",
+  "COS",
+  "COT",
+  "CRC32",
+  "DATEDIFF",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "DEGREES",
+  "DECODE_HISTOGRAM",
+  "DECODE_ORACLE",
+  "DES_DECRYPT",
+  "DES_ENCRYPT",
+  "ELT",
+  "ENCODE",
+  "ENCRYPT",
+  "EXP",
+  "EXPORT_SET",
+  "EXTRACTVALUE",
+  "FIELD",
+  "FIND_IN_SET",
+  "FLOOR",
+  "FORMAT",
+  "FOUND_ROWS",
+  "FROM_BASE64",
+  "FROM_DAYS",
+  "FROM_UNIXTIME",
+  "GET_LOCK",
+  "GREATEST",
+  "HEX",
+  "IFNULL",
+  "INSTR",
+  "ISNULL",
+  "IS_FREE_LOCK",
+  "IS_USED_LOCK",
+  "JSON_ARRAY",
+  "JSON_ARRAY_APPEND",
+  "JSON_ARRAY_INSERT",
+  "JSON_COMPACT",
+  "JSON_CONTAINS",
+  "JSON_CONTAINS_PATH",
+  "JSON_DEPTH",
+  "JSON_DETAILED",
+  "JSON_EXISTS",
+  "JSON_EXTRACT",
+  "JSON_INSERT",
+  "JSON_KEYS",
+  "JSON_LENGTH",
+  "JSON_LOOSE",
+  "JSON_MERGE",
+  "JSON_MERGE_PATCH",
+  "JSON_MERGE_PRESERVE",
+  "JSON_QUERY",
+  "JSON_QUOTE",
+  "JSON_OBJECT",
+  "JSON_REMOVE",
+  "JSON_REPLACE",
+  "JSON_SET",
+  "JSON_SEARCH",
+  "JSON_TYPE",
+  "JSON_UNQUOTE",
+  "JSON_VALID",
+  "JSON_VALUE",
+  "LAST_DAY",
+  "LAST_INSERT_ID",
+  "LCASE",
+  "LEAST",
+  "LENGTH",
+  "LENGTHB",
+  "LN",
+  "LOAD_FILE",
+  "LOCATE",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "LOWER",
+  "LPAD",
+  "LPAD_ORACLE",
+  "LTRIM",
+  "LTRIM_ORACLE",
+  "MAKEDATE",
+  "MAKETIME",
+  "MAKE_SET",
+  "MASTER_GTID_WAIT",
+  "MASTER_POS_WAIT",
+  "MD5",
+  "MONTHNAME",
+  "NAME_CONST",
+  "NVL",
+  "NVL2",
+  "OCT",
+  "OCTET_LENGTH",
+  "ORD",
+  "PERIOD_ADD",
+  "PERIOD_DIFF",
+  "PI",
+  "POW",
+  "POWER",
+  "QUOTE",
+  "REGEXP_INSTR",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "RADIANS",
+  "RAND",
+  "RELEASE_ALL_LOCKS",
+  "RELEASE_LOCK",
+  "REPLACE_ORACLE",
+  "REVERSE",
+  "ROUND",
+  "RPAD",
+  "RPAD_ORACLE",
+  "RTRIM",
+  "RTRIM_ORACLE",
+  "SEC_TO_TIME",
+  "SHA",
+  "SHA1",
+  "SHA2",
+  "SIGN",
+  "SIN",
+  "SLEEP",
+  "SOUNDEX",
+  "SPACE",
+  "SQRT",
+  "STRCMP",
+  "STR_TO_DATE",
+  "SUBSTR_ORACLE",
+  "SUBSTRING_INDEX",
+  "SUBTIME",
+  "SYS_GUID",
+  "TAN",
+  "TIMEDIFF",
+  "TIME_FORMAT",
+  "TIME_TO_SEC",
+  "TO_BASE64",
+  "TO_CHAR",
+  "TO_DAYS",
+  "TO_SECONDS",
+  "UCASE",
+  "UNCOMPRESS",
+  "UNCOMPRESSED_LENGTH",
+  "UNHEX",
+  "UNIX_TIMESTAMP",
+  "UPDATEXML",
+  "UPPER",
+  "UUID",
+  "UUID_SHORT",
+  "VERSION",
+  "WEEKDAY",
+  "WEEKOFYEAR",
+  "WSREP_LAST_WRITTEN_GTID",
+  "WSREP_LAST_SEEN_GTID",
+  "WSREP_SYNC_WAIT_UPTO_GTID",
+  "YEARWEEK",
+  // CASE expression shorthands
+  "COALESCE",
+  "NULLIF"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/mariadb/mariadb.formatter.js
+var reservedSelect6 = expandPhrases(["SELECT [ALL | DISTINCT | DISTINCTROW]"]);
+var reservedClauses6 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  // Data manipulation
+  // - insert:
+  "INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE] [INTO]",
+  "REPLACE [LOW_PRIORITY | DELAYED] [INTO]",
+  "VALUES",
+  "ON DUPLICATE KEY UPDATE",
+  // - update:
+  "SET",
+  // other
+  "RETURNING"
+]);
+var standardOnelineClauses6 = expandPhrases([
+  "CREATE [OR REPLACE] [TEMPORARY] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses6 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [SQL SECURITY DEFINER | SQL SECURITY INVOKER] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE [LOW_PRIORITY] [IGNORE]",
+  // - delete:
+  "DELETE [LOW_PRIORITY] [QUICK] [IGNORE] FROM",
+  // - drop table:
+  "DROP [TEMPORARY] TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER [ONLINE] [IGNORE] TABLE [IF EXISTS]",
+  "ADD [COLUMN] [IF NOT EXISTS]",
+  "{CHANGE | MODIFY} [COLUMN] [IF EXISTS]",
+  "DROP [COLUMN] [IF EXISTS]",
+  "RENAME [TO]",
+  "RENAME COLUMN",
+  "ALTER [COLUMN]",
+  "{SET | DROP} DEFAULT",
+  "SET {VISIBLE | INVISIBLE}",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // https://mariadb.com/docs/reference/mdb/sql-statements/
+  "ALTER DATABASE",
+  "ALTER DATABASE COMMENT",
+  "ALTER EVENT",
+  "ALTER FUNCTION",
+  "ALTER PROCEDURE",
+  "ALTER SCHEMA",
+  "ALTER SCHEMA COMMENT",
+  "ALTER SEQUENCE",
+  "ALTER SERVER",
+  "ALTER USER",
+  "ALTER VIEW",
+  "ANALYZE",
+  "ANALYZE TABLE",
+  "BACKUP LOCK",
+  "BACKUP STAGE",
+  "BACKUP UNLOCK",
+  "BEGIN",
+  "BINLOG",
+  "CACHE INDEX",
+  "CALL",
+  "CHANGE MASTER TO",
+  "CHECK TABLE",
+  "CHECK VIEW",
+  "CHECKSUM TABLE",
+  "COMMIT",
+  "CREATE AGGREGATE FUNCTION",
+  "CREATE DATABASE",
+  "CREATE EVENT",
+  "CREATE FUNCTION",
+  "CREATE INDEX",
+  "CREATE PROCEDURE",
+  "CREATE ROLE",
+  "CREATE SEQUENCE",
+  "CREATE SERVER",
+  "CREATE SPATIAL INDEX",
+  "CREATE TRIGGER",
+  "CREATE UNIQUE INDEX",
+  "CREATE USER",
+  "DEALLOCATE PREPARE",
+  "DESCRIBE",
+  "DROP DATABASE",
+  "DROP EVENT",
+  "DROP FUNCTION",
+  "DROP INDEX",
+  "DROP PREPARE",
+  "DROP PROCEDURE",
+  "DROP ROLE",
+  "DROP SEQUENCE",
+  "DROP SERVER",
+  "DROP TRIGGER",
+  "DROP USER",
+  "DROP VIEW",
+  "EXECUTE",
+  "EXPLAIN",
+  "FLUSH",
+  "GET DIAGNOSTICS",
+  "GET DIAGNOSTICS CONDITION",
+  "GRANT",
+  "HANDLER",
+  "HELP",
+  "INSTALL PLUGIN",
+  "INSTALL SONAME",
+  "KILL",
+  "LOAD DATA INFILE",
+  "LOAD INDEX INTO CACHE",
+  "LOAD XML INFILE",
+  "LOCK TABLE",
+  "OPTIMIZE TABLE",
+  "PREPARE",
+  "PURGE BINARY LOGS",
+  "PURGE MASTER LOGS",
+  "RELEASE SAVEPOINT",
+  "RENAME TABLE",
+  "RENAME USER",
+  "REPAIR TABLE",
+  "REPAIR VIEW",
+  "RESET MASTER",
+  "RESET QUERY CACHE",
+  "RESET REPLICA",
+  "RESET SLAVE",
+  "RESIGNAL",
+  "REVOKE",
+  "ROLLBACK",
+  "SAVEPOINT",
+  "SET CHARACTER SET",
+  "SET DEFAULT ROLE",
+  "SET GLOBAL TRANSACTION",
+  "SET NAMES",
+  "SET PASSWORD",
+  "SET ROLE",
+  "SET STATEMENT",
+  "SET TRANSACTION",
+  "SHOW",
+  "SHOW ALL REPLICAS STATUS",
+  "SHOW ALL SLAVES STATUS",
+  "SHOW AUTHORS",
+  "SHOW BINARY LOGS",
+  "SHOW BINLOG EVENTS",
+  "SHOW BINLOG STATUS",
+  "SHOW CHARACTER SET",
+  "SHOW CLIENT_STATISTICS",
+  "SHOW COLLATION",
+  "SHOW COLUMNS",
+  "SHOW CONTRIBUTORS",
+  "SHOW CREATE DATABASE",
+  "SHOW CREATE EVENT",
+  "SHOW CREATE FUNCTION",
+  "SHOW CREATE PACKAGE",
+  "SHOW CREATE PACKAGE BODY",
+  "SHOW CREATE PROCEDURE",
+  "SHOW CREATE SEQUENCE",
+  "SHOW CREATE TABLE",
+  "SHOW CREATE TRIGGER",
+  "SHOW CREATE USER",
+  "SHOW CREATE VIEW",
+  "SHOW DATABASES",
+  "SHOW ENGINE",
+  "SHOW ENGINE INNODB STATUS",
+  "SHOW ENGINES",
+  "SHOW ERRORS",
+  "SHOW EVENTS",
+  "SHOW EXPLAIN",
+  "SHOW FUNCTION CODE",
+  "SHOW FUNCTION STATUS",
+  "SHOW GRANTS",
+  "SHOW INDEX",
+  "SHOW INDEXES",
+  "SHOW INDEX_STATISTICS",
+  "SHOW KEYS",
+  "SHOW LOCALES",
+  "SHOW MASTER LOGS",
+  "SHOW MASTER STATUS",
+  "SHOW OPEN TABLES",
+  "SHOW PACKAGE BODY CODE",
+  "SHOW PACKAGE BODY STATUS",
+  "SHOW PACKAGE STATUS",
+  "SHOW PLUGINS",
+  "SHOW PLUGINS SONAME",
+  "SHOW PRIVILEGES",
+  "SHOW PROCEDURE CODE",
+  "SHOW PROCEDURE STATUS",
+  "SHOW PROCESSLIST",
+  "SHOW PROFILE",
+  "SHOW PROFILES",
+  "SHOW QUERY_RESPONSE_TIME",
+  "SHOW RELAYLOG EVENTS",
+  "SHOW REPLICA",
+  "SHOW REPLICA HOSTS",
+  "SHOW REPLICA STATUS",
+  "SHOW SCHEMAS",
+  "SHOW SLAVE",
+  "SHOW SLAVE HOSTS",
+  "SHOW SLAVE STATUS",
+  "SHOW STATUS",
+  "SHOW STORAGE ENGINES",
+  "SHOW TABLE STATUS",
+  "SHOW TABLES",
+  "SHOW TRIGGERS",
+  "SHOW USER_STATISTICS",
+  "SHOW VARIABLES",
+  "SHOW WARNINGS",
+  "SHOW WSREP_MEMBERSHIP",
+  "SHOW WSREP_STATUS",
+  "SHUTDOWN",
+  "SIGNAL",
+  "START ALL REPLICAS",
+  "START ALL SLAVES",
+  "START REPLICA",
+  "START SLAVE",
+  "START TRANSACTION",
+  "STOP ALL REPLICAS",
+  "STOP ALL SLAVES",
+  "STOP REPLICA",
+  "STOP SLAVE",
+  "UNINSTALL PLUGIN",
+  "UNINSTALL SONAME",
+  "UNLOCK TABLE",
+  "USE",
+  "XA BEGIN",
+  "XA COMMIT",
+  "XA END",
+  "XA PREPARE",
+  "XA RECOVER",
+  "XA ROLLBACK",
+  "XA START"
+]);
+var reservedSetOperations6 = expandPhrases([
+  "UNION [ALL | DISTINCT]",
+  "EXCEPT [ALL | DISTINCT]",
+  "INTERSECT [ALL | DISTINCT]",
+  "MINUS [ALL | DISTINCT]"
+]);
+var reservedJoins6 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL JOIN",
+  "NATURAL {LEFT | RIGHT} [OUTER] JOIN",
+  // non-standard joins
+  "STRAIGHT_JOIN"
+]);
+var reservedPhrases6 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL | SET DEFAULT]",
+  "CHARACTER SET",
+  "{ROWS | RANGE} BETWEEN",
+  "IDENTIFIED BY"
+]);
+var mariadb = {
+  name: "mariadb",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect6,
+    reservedClauses: [...reservedClauses6, ...standardOnelineClauses6, ...tabularOnelineClauses6],
+    reservedSetOperations: reservedSetOperations6,
+    reservedJoins: reservedJoins6,
+    reservedPhrases: reservedPhrases6,
+    supportsXor: true,
+    reservedKeywords: keywords7,
+    reservedDataTypes: dataTypes6,
+    reservedFunctionNames: functions6,
+    // TODO: support _ char set prefixes such as _utf8, _latin1, _binary, _utf8mb4, etc.
+    stringTypes: [
+      '""-qq-bs',
+      "''-qq-bs",
+      { quote: "''-raw", prefixes: ["B", "X"], requirePrefix: true }
+    ],
+    identTypes: ["``"],
+    identChars: { first: "$", rest: "$", allowFirstCharNumber: true },
+    variableTypes: [
+      { regex: "@@?[A-Za-z0-9_.$]+" },
+      { quote: '""-qq-bs', prefixes: ["@"], requirePrefix: true },
+      { quote: "''-qq-bs", prefixes: ["@"], requirePrefix: true },
+      { quote: "``", prefixes: ["@"], requirePrefix: true }
+    ],
+    paramTypes: { positional: true },
+    lineCommentTypes: ["--", "#"],
+    operators: [
+      "%",
+      ":=",
+      "&",
+      "|",
+      "^",
+      "~",
+      "<<",
+      ">>",
+      "<=>",
+      "&&",
+      "||",
+      "!",
+      "*.*"
+      // Not actually an operator
+    ],
+    postProcess: postProcess2
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses6, ...tabularOnelineClauses6],
+    tabularOnelineClauses: tabularOnelineClauses6
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/mysql/mysql.keywords.js
+var keywords8 = [
+  // https://dev.mysql.com/doc/refman/8.0/en/keywords.html
+  "ACCESSIBLE",
+  "ADD",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "AS",
+  "ASC",
+  "ASENSITIVE",
+  "BEFORE",
+  "BETWEEN",
+  "BOTH",
+  "BY",
+  "CALL",
+  "CASCADE",
+  "CASE",
+  "CHANGE",
+  "CHECK",
+  "COLLATE",
+  "COLUMN",
+  "CONDITION",
+  "CONSTRAINT",
+  "CONTINUE",
+  "CONVERT",
+  "CREATE",
+  "CROSS",
+  "CUBE",
+  "CUME_DIST",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURSOR",
+  "DATABASE",
+  "DATABASES",
+  "DAY_HOUR",
+  "DAY_MICROSECOND",
+  "DAY_MINUTE",
+  "DAY_SECOND",
+  "DECLARE",
+  "DEFAULT",
+  "DELAYED",
+  "DELETE",
+  "DENSE_RANK",
+  "DESC",
+  "DESCRIBE",
+  "DETERMINISTIC",
+  "DISTINCT",
+  "DISTINCTROW",
+  "DIV",
+  "DROP",
+  "DUAL",
+  "EACH",
+  "ELSE",
+  "ELSEIF",
+  "EMPTY",
+  "ENCLOSED",
+  "ESCAPED",
+  "EXCEPT",
+  "EXISTS",
+  "EXIT",
+  "EXPLAIN",
+  "FALSE",
+  "FETCH",
+  "FIRST_VALUE",
+  "FOR",
+  "FORCE",
+  "FOREIGN",
+  "FROM",
+  "FULLTEXT",
+  "FUNCTION",
+  "GENERATED",
+  "GET",
+  "GRANT",
+  "GROUP",
+  "GROUPING",
+  "GROUPS",
+  "HAVING",
+  "HIGH_PRIORITY",
+  "HOUR_MICROSECOND",
+  "HOUR_MINUTE",
+  "HOUR_SECOND",
+  "IF",
+  "IGNORE",
+  "IN",
+  "INDEX",
+  "INFILE",
+  "INNER",
+  "INOUT",
+  "INSENSITIVE",
+  "INSERT",
+  "IN",
+  "INTERSECT",
+  "INTERVAL",
+  "INTO",
+  "IO_AFTER_GTIDS",
+  "IO_BEFORE_GTIDS",
+  "IS",
+  "ITERATE",
+  "JOIN",
+  "JSON_TABLE",
+  "KEY",
+  "KEYS",
+  "KILL",
+  "LAG",
+  "LAST_VALUE",
+  "LATERAL",
+  "LEAD",
+  "LEADING",
+  "LEAVE",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "LINEAR",
+  "LINES",
+  "LOAD",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCK",
+  "LONG",
+  "LOOP",
+  "LOW_PRIORITY",
+  "MASTER_BIND",
+  "MASTER_SSL_VERIFY_SERVER_CERT",
+  "MATCH",
+  "MAXVALUE",
+  "MINUTE_MICROSECOND",
+  "MINUTE_SECOND",
+  "MOD",
+  "MODIFIES",
+  "NATURAL",
+  "NOT",
+  "NO_WRITE_TO_BINLOG",
+  "NTH_VALUE",
+  "NTILE",
+  "NULL",
+  "OF",
+  "ON",
+  "OPTIMIZE",
+  "OPTIMIZER_COSTS",
+  "OPTION",
+  "OPTIONALLY",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OUTFILE",
+  "OVER",
+  "PARTITION",
+  "PERCENT_RANK",
+  "PRIMARY",
+  "PROCEDURE",
+  "PURGE",
+  "RANGE",
+  "RANK",
+  "READ",
+  "READS",
+  "READ_WRITE",
+  "RECURSIVE",
+  "REFERENCES",
+  "REGEXP",
+  "RELEASE",
+  "RENAME",
+  "REPEAT",
+  "REPLACE",
+  "REQUIRE",
+  "RESIGNAL",
+  "RESTRICT",
+  "RETURN",
+  "REVOKE",
+  "RIGHT",
+  "RLIKE",
+  "ROW",
+  "ROWS",
+  "ROW_NUMBER",
+  "SCHEMA",
+  "SCHEMAS",
+  "SECOND_MICROSECOND",
+  "SELECT",
+  "SENSITIVE",
+  "SEPARATOR",
+  "SET",
+  "SHOW",
+  "SIGNAL",
+  "SPATIAL",
+  "SPECIFIC",
+  "SQL",
+  "SQLEXCEPTION",
+  "SQLSTATE",
+  "SQLWARNING",
+  "SQL_BIG_RESULT",
+  "SQL_CALC_FOUND_ROWS",
+  "SQL_SMALL_RESULT",
+  "SSL",
+  "STARTING",
+  "STORED",
+  "STRAIGHT_JOIN",
+  "SYSTEM",
+  "TABLE",
+  "TERMINATED",
+  "THEN",
+  "TO",
+  "TRAILING",
+  "TRIGGER",
+  "TRUE",
+  "UNDO",
+  "UNION",
+  "UNIQUE",
+  "UNLOCK",
+  "UNSIGNED",
+  "UPDATE",
+  "USAGE",
+  "USE",
+  "USING",
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "VALUES",
+  "VIRTUAL",
+  "WHEN",
+  "WHERE",
+  "WHILE",
+  "WINDOW",
+  "WITH",
+  "WRITE",
+  "XOR",
+  "YEAR_MONTH",
+  "ZEROFILL"
+  // (R)
+];
+var dataTypes7 = [
+  // https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+  "BIGINT",
+  "BINARY",
+  "BIT",
+  "BLOB",
+  "BOOL",
+  "BOOLEAN",
+  "CHAR",
+  "CHARACTER",
+  "DATE",
+  "DATETIME",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE PRECISION",
+  "DOUBLE",
+  "ENUM",
+  "FIXED",
+  "FLOAT",
+  "FLOAT4",
+  "FLOAT8",
+  "INT",
+  "INT1",
+  "INT2",
+  "INT3",
+  "INT4",
+  "INT8",
+  "INTEGER",
+  "LONGBLOB",
+  "LONGTEXT",
+  "MEDIUMBLOB",
+  "MEDIUMINT",
+  "MEDIUMTEXT",
+  "MIDDLEINT",
+  "NATIONAL CHAR",
+  "NATIONAL VARCHAR",
+  "NUMERIC",
+  "PRECISION",
+  "REAL",
+  "SMALLINT",
+  "TEXT",
+  "TIME",
+  "TIMESTAMP",
+  "TINYBLOB",
+  "TINYINT",
+  "TINYTEXT",
+  "VARBINARY",
+  "VARCHAR",
+  "VARCHARACTER",
+  "VARYING",
+  "YEAR"
+  // 'SET' // handled as special-case in postProcess
+];
+
+// node_modules/sql-formatter/dist/esm/languages/mysql/mysql.functions.js
+var functions7 = [
+  // https://dev.mysql.com/doc/refman/8.0/en/built-in-function-reference.html
+  "ABS",
+  "ACOS",
+  "ADDDATE",
+  "ADDTIME",
+  "AES_DECRYPT",
+  "AES_ENCRYPT",
+  // 'AND',
+  "ANY_VALUE",
+  "ASCII",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "AVG",
+  "BENCHMARK",
+  "BIN",
+  "BIN_TO_UUID",
+  "BINARY",
+  "BIT_AND",
+  "BIT_COUNT",
+  "BIT_LENGTH",
+  "BIT_OR",
+  "BIT_XOR",
+  "CAN_ACCESS_COLUMN",
+  "CAN_ACCESS_DATABASE",
+  "CAN_ACCESS_TABLE",
+  "CAN_ACCESS_USER",
+  "CAN_ACCESS_VIEW",
+  "CAST",
+  "CEIL",
+  "CEILING",
+  "CHAR",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "CHARSET",
+  "COALESCE",
+  "COERCIBILITY",
+  "COLLATION",
+  "COMPRESS",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONNECTION_ID",
+  "CONV",
+  "CONVERT",
+  "CONVERT_TZ",
+  "COS",
+  "COT",
+  "COUNT",
+  "CRC32",
+  "CUME_DIST",
+  "CURDATE",
+  "CURRENT_DATE",
+  "CURRENT_ROLE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURTIME",
+  "DATABASE",
+  "DATE",
+  "DATE_ADD",
+  "DATE_FORMAT",
+  "DATE_SUB",
+  "DATEDIFF",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "DEFAULT",
+  "DEGREES",
+  "DENSE_RANK",
+  "DIV",
+  "ELT",
+  "EXP",
+  "EXPORT_SET",
+  "EXTRACT",
+  "EXTRACTVALUE",
+  "FIELD",
+  "FIND_IN_SET",
+  "FIRST_VALUE",
+  "FLOOR",
+  "FORMAT",
+  "FORMAT_BYTES",
+  "FORMAT_PICO_TIME",
+  "FOUND_ROWS",
+  "FROM_BASE64",
+  "FROM_DAYS",
+  "FROM_UNIXTIME",
+  "GEOMCOLLECTION",
+  "GEOMETRYCOLLECTION",
+  "GET_DD_COLUMN_PRIVILEGES",
+  "GET_DD_CREATE_OPTIONS",
+  "GET_DD_INDEX_SUB_PART_LENGTH",
+  "GET_FORMAT",
+  "GET_LOCK",
+  "GREATEST",
+  "GROUP_CONCAT",
+  "GROUPING",
+  "GTID_SUBSET",
+  "GTID_SUBTRACT",
+  "HEX",
+  "HOUR",
+  "ICU_VERSION",
+  "IF",
+  "IFNULL",
+  // 'IN',
+  "INET_ATON",
+  "INET_NTOA",
+  "INET6_ATON",
+  "INET6_NTOA",
+  "INSERT",
+  "INSTR",
+  "INTERNAL_AUTO_INCREMENT",
+  "INTERNAL_AVG_ROW_LENGTH",
+  "INTERNAL_CHECK_TIME",
+  "INTERNAL_CHECKSUM",
+  "INTERNAL_DATA_FREE",
+  "INTERNAL_DATA_LENGTH",
+  "INTERNAL_DD_CHAR_LENGTH",
+  "INTERNAL_GET_COMMENT_OR_ERROR",
+  "INTERNAL_GET_ENABLED_ROLE_JSON",
+  "INTERNAL_GET_HOSTNAME",
+  "INTERNAL_GET_USERNAME",
+  "INTERNAL_GET_VIEW_WARNING_OR_ERROR",
+  "INTERNAL_INDEX_COLUMN_CARDINALITY",
+  "INTERNAL_INDEX_LENGTH",
+  "INTERNAL_IS_ENABLED_ROLE",
+  "INTERNAL_IS_MANDATORY_ROLE",
+  "INTERNAL_KEYS_DISABLED",
+  "INTERNAL_MAX_DATA_LENGTH",
+  "INTERNAL_TABLE_ROWS",
+  "INTERNAL_UPDATE_TIME",
+  "INTERVAL",
+  "IS",
+  "IS_FREE_LOCK",
+  "IS_IPV4",
+  "IS_IPV4_COMPAT",
+  "IS_IPV4_MAPPED",
+  "IS_IPV6",
+  "IS NOT",
+  "IS NOT NULL",
+  "IS NULL",
+  "IS_USED_LOCK",
+  "IS_UUID",
+  "ISNULL",
+  "JSON_ARRAY",
+  "JSON_ARRAY_APPEND",
+  "JSON_ARRAY_INSERT",
+  "JSON_ARRAYAGG",
+  "JSON_CONTAINS",
+  "JSON_CONTAINS_PATH",
+  "JSON_DEPTH",
+  "JSON_EXTRACT",
+  "JSON_INSERT",
+  "JSON_KEYS",
+  "JSON_LENGTH",
+  "JSON_MERGE",
+  "JSON_MERGE_PATCH",
+  "JSON_MERGE_PRESERVE",
+  "JSON_OBJECT",
+  "JSON_OBJECTAGG",
+  "JSON_OVERLAPS",
+  "JSON_PRETTY",
+  "JSON_QUOTE",
+  "JSON_REMOVE",
+  "JSON_REPLACE",
+  "JSON_SCHEMA_VALID",
+  "JSON_SCHEMA_VALIDATION_REPORT",
+  "JSON_SEARCH",
+  "JSON_SET",
+  "JSON_STORAGE_FREE",
+  "JSON_STORAGE_SIZE",
+  "JSON_TABLE",
+  "JSON_TYPE",
+  "JSON_UNQUOTE",
+  "JSON_VALID",
+  "JSON_VALUE",
+  "LAG",
+  "LAST_DAY",
+  "LAST_INSERT_ID",
+  "LAST_VALUE",
+  "LCASE",
+  "LEAD",
+  "LEAST",
+  "LEFT",
+  "LENGTH",
+  "LIKE",
+  "LINESTRING",
+  "LN",
+  "LOAD_FILE",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCATE",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "MAKE_SET",
+  "MAKEDATE",
+  "MAKETIME",
+  "MASTER_POS_WAIT",
+  "MATCH",
+  "MAX",
+  "MBRCONTAINS",
+  "MBRCOVEREDBY",
+  "MBRCOVERS",
+  "MBRDISJOINT",
+  "MBREQUALS",
+  "MBRINTERSECTS",
+  "MBROVERLAPS",
+  "MBRTOUCHES",
+  "MBRWITHIN",
+  "MD5",
+  "MEMBER OF",
+  "MICROSECOND",
+  "MID",
+  "MIN",
+  "MINUTE",
+  "MOD",
+  "MONTH",
+  "MONTHNAME",
+  "MULTILINESTRING",
+  "MULTIPOINT",
+  "MULTIPOLYGON",
+  "NAME_CONST",
+  "NOT",
+  "NOT IN",
+  "NOT LIKE",
+  "NOT REGEXP",
+  "NOW",
+  "NTH_VALUE",
+  "NTILE",
+  "NULLIF",
+  "OCT",
+  "OCTET_LENGTH",
+  // 'OR',
+  "ORD",
+  "PERCENT_RANK",
+  "PERIOD_ADD",
+  "PERIOD_DIFF",
+  "PI",
+  "POINT",
+  "POLYGON",
+  "POSITION",
+  "POW",
+  "POWER",
+  "PS_CURRENT_THREAD_ID",
+  "PS_THREAD_ID",
+  "QUARTER",
+  "QUOTE",
+  "RADIANS",
+  "RAND",
+  "RANDOM_BYTES",
+  "RANK",
+  "REGEXP",
+  "REGEXP_INSTR",
+  "REGEXP_LIKE",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "RELEASE_ALL_LOCKS",
+  "RELEASE_LOCK",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "RIGHT",
+  "RLIKE",
+  "ROLES_GRAPHML",
+  "ROUND",
+  "ROW_COUNT",
+  "ROW_NUMBER",
+  "RPAD",
+  "RTRIM",
+  "SCHEMA",
+  "SEC_TO_TIME",
+  "SECOND",
+  "SESSION_USER",
+  "SHA1",
+  "SHA2",
+  "SIGN",
+  "SIN",
+  "SLEEP",
+  "SOUNDEX",
+  "SOUNDS LIKE",
+  "SOURCE_POS_WAIT",
+  "SPACE",
+  "SQRT",
+  "ST_AREA",
+  "ST_ASBINARY",
+  "ST_ASGEOJSON",
+  "ST_ASTEXT",
+  "ST_BUFFER",
+  "ST_BUFFER_STRATEGY",
+  "ST_CENTROID",
+  "ST_COLLECT",
+  "ST_CONTAINS",
+  "ST_CONVEXHULL",
+  "ST_CROSSES",
+  "ST_DIFFERENCE",
+  "ST_DIMENSION",
+  "ST_DISJOINT",
+  "ST_DISTANCE",
+  "ST_DISTANCE_SPHERE",
+  "ST_ENDPOINT",
+  "ST_ENVELOPE",
+  "ST_EQUALS",
+  "ST_EXTERIORRING",
+  "ST_FRECHETDISTANCE",
+  "ST_GEOHASH",
+  "ST_GEOMCOLLFROMTEXT",
+  "ST_GEOMCOLLFROMWKB",
+  "ST_GEOMETRYN",
+  "ST_GEOMETRYTYPE",
+  "ST_GEOMFROMGEOJSON",
+  "ST_GEOMFROMTEXT",
+  "ST_GEOMFROMWKB",
+  "ST_HAUSDORFFDISTANCE",
+  "ST_INTERIORRINGN",
+  "ST_INTERSECTION",
+  "ST_INTERSECTS",
+  "ST_ISCLOSED",
+  "ST_ISEMPTY",
+  "ST_ISSIMPLE",
+  "ST_ISVALID",
+  "ST_LATFROMGEOHASH",
+  "ST_LATITUDE",
+  "ST_LENGTH",
+  "ST_LINEFROMTEXT",
+  "ST_LINEFROMWKB",
+  "ST_LINEINTERPOLATEPOINT",
+  "ST_LINEINTERPOLATEPOINTS",
+  "ST_LONGFROMGEOHASH",
+  "ST_LONGITUDE",
+  "ST_MAKEENVELOPE",
+  "ST_MLINEFROMTEXT",
+  "ST_MLINEFROMWKB",
+  "ST_MPOINTFROMTEXT",
+  "ST_MPOINTFROMWKB",
+  "ST_MPOLYFROMTEXT",
+  "ST_MPOLYFROMWKB",
+  "ST_NUMGEOMETRIES",
+  "ST_NUMINTERIORRING",
+  "ST_NUMPOINTS",
+  "ST_OVERLAPS",
+  "ST_POINTATDISTANCE",
+  "ST_POINTFROMGEOHASH",
+  "ST_POINTFROMTEXT",
+  "ST_POINTFROMWKB",
+  "ST_POINTN",
+  "ST_POLYFROMTEXT",
+  "ST_POLYFROMWKB",
+  "ST_SIMPLIFY",
+  "ST_SRID",
+  "ST_STARTPOINT",
+  "ST_SWAPXY",
+  "ST_SYMDIFFERENCE",
+  "ST_TOUCHES",
+  "ST_TRANSFORM",
+  "ST_UNION",
+  "ST_VALIDATE",
+  "ST_WITHIN",
+  "ST_X",
+  "ST_Y",
+  "STATEMENT_DIGEST",
+  "STATEMENT_DIGEST_TEXT",
+  "STD",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STR_TO_DATE",
+  "STRCMP",
+  "SUBDATE",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUBSTRING_INDEX",
+  "SUBTIME",
+  "SUM",
+  "SYSDATE",
+  "SYSTEM_USER",
+  "TAN",
+  "TIME",
+  "TIME_FORMAT",
+  "TIME_TO_SEC",
+  "TIMEDIFF",
+  "TIMESTAMP",
+  "TIMESTAMPADD",
+  "TIMESTAMPDIFF",
+  "TO_BASE64",
+  "TO_DAYS",
+  "TO_SECONDS",
+  "TRIM",
+  "TRUNCATE",
+  "UCASE",
+  "UNCOMPRESS",
+  "UNCOMPRESSED_LENGTH",
+  "UNHEX",
+  "UNIX_TIMESTAMP",
+  "UPDATEXML",
+  "UPPER",
+  // 'USER',
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "UUID",
+  "UUID_SHORT",
+  "UUID_TO_BIN",
+  "VALIDATE_PASSWORD_STRENGTH",
+  "VALUES",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  "VERSION",
+  "WAIT_FOR_EXECUTED_GTID_SET",
+  "WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS",
+  "WEEK",
+  "WEEKDAY",
+  "WEEKOFYEAR",
+  "WEIGHT_STRING",
+  // 'XOR',
+  "YEAR",
+  "YEARWEEK"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/mysql/mysql.formatter.js
+var reservedSelect7 = expandPhrases(["SELECT [ALL | DISTINCT | DISTINCTROW]"]);
+var reservedClauses7 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  // Data manipulation
+  // - insert:
+  "INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE] [INTO]",
+  "REPLACE [LOW_PRIORITY | DELAYED] [INTO]",
+  "VALUES",
+  "ON DUPLICATE KEY UPDATE",
+  // - update:
+  "SET"
+]);
+var standardOnelineClauses7 = expandPhrases(["CREATE [TEMPORARY] TABLE [IF NOT EXISTS]"]);
+var tabularOnelineClauses7 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [SQL SECURITY DEFINER | SQL SECURITY INVOKER] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE [LOW_PRIORITY] [IGNORE]",
+  // - delete:
+  "DELETE [LOW_PRIORITY] [QUICK] [IGNORE] FROM",
+  // - drop table:
+  "DROP [TEMPORARY] TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD [COLUMN]",
+  "{CHANGE | MODIFY} [COLUMN]",
+  "DROP [COLUMN]",
+  "RENAME [TO | AS]",
+  "RENAME COLUMN",
+  "ALTER [COLUMN]",
+  "{SET | DROP} DEFAULT",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // https://dev.mysql.com/doc/refman/8.0/en/sql-statements.html
+  "ALTER DATABASE",
+  "ALTER EVENT",
+  "ALTER FUNCTION",
+  "ALTER INSTANCE",
+  "ALTER LOGFILE GROUP",
+  "ALTER PROCEDURE",
+  "ALTER RESOURCE GROUP",
+  "ALTER SERVER",
+  "ALTER TABLESPACE",
+  "ALTER USER",
+  "ALTER VIEW",
+  "ANALYZE TABLE",
+  "BINLOG",
+  "CACHE INDEX",
+  "CALL",
+  "CHANGE MASTER TO",
+  "CHANGE REPLICATION FILTER",
+  "CHANGE REPLICATION SOURCE TO",
+  "CHECK TABLE",
+  "CHECKSUM TABLE",
+  "CLONE",
+  "COMMIT",
+  "CREATE DATABASE",
+  "CREATE EVENT",
+  "CREATE FUNCTION",
+  "CREATE FUNCTION",
+  "CREATE INDEX",
+  "CREATE LOGFILE GROUP",
+  "CREATE PROCEDURE",
+  "CREATE RESOURCE GROUP",
+  "CREATE ROLE",
+  "CREATE SERVER",
+  "CREATE SPATIAL REFERENCE SYSTEM",
+  "CREATE TABLESPACE",
+  "CREATE TRIGGER",
+  "CREATE USER",
+  "DEALLOCATE PREPARE",
+  "DESCRIBE",
+  "DROP DATABASE",
+  "DROP EVENT",
+  "DROP FUNCTION",
+  "DROP FUNCTION",
+  "DROP INDEX",
+  "DROP LOGFILE GROUP",
+  "DROP PROCEDURE",
+  "DROP RESOURCE GROUP",
+  "DROP ROLE",
+  "DROP SERVER",
+  "DROP SPATIAL REFERENCE SYSTEM",
+  "DROP TABLESPACE",
+  "DROP TRIGGER",
+  "DROP USER",
+  "DROP VIEW",
+  "EXECUTE",
+  "EXPLAIN",
+  "FLUSH",
+  "GRANT",
+  "HANDLER",
+  "HELP",
+  "IMPORT TABLE",
+  "INSTALL COMPONENT",
+  "INSTALL PLUGIN",
+  "KILL",
+  "LOAD DATA",
+  "LOAD INDEX INTO CACHE",
+  "LOAD XML",
+  "LOCK INSTANCE FOR BACKUP",
+  "LOCK TABLES",
+  "MASTER_POS_WAIT",
+  "OPTIMIZE TABLE",
+  "PREPARE",
+  "PURGE BINARY LOGS",
+  "RELEASE SAVEPOINT",
+  "RENAME TABLE",
+  "RENAME USER",
+  "REPAIR TABLE",
+  "RESET",
+  "RESET MASTER",
+  "RESET PERSIST",
+  "RESET REPLICA",
+  "RESET SLAVE",
+  "RESTART",
+  "REVOKE",
+  "ROLLBACK",
+  "ROLLBACK TO SAVEPOINT",
+  "SAVEPOINT",
+  "SET CHARACTER SET",
+  "SET DEFAULT ROLE",
+  "SET NAMES",
+  "SET PASSWORD",
+  "SET RESOURCE GROUP",
+  "SET ROLE",
+  "SET TRANSACTION",
+  "SHOW",
+  "SHOW BINARY LOGS",
+  "SHOW BINLOG EVENTS",
+  "SHOW CHARACTER SET",
+  "SHOW COLLATION",
+  "SHOW COLUMNS",
+  "SHOW CREATE DATABASE",
+  "SHOW CREATE EVENT",
+  "SHOW CREATE FUNCTION",
+  "SHOW CREATE PROCEDURE",
+  "SHOW CREATE TABLE",
+  "SHOW CREATE TRIGGER",
+  "SHOW CREATE USER",
+  "SHOW CREATE VIEW",
+  "SHOW DATABASES",
+  "SHOW ENGINE",
+  "SHOW ENGINES",
+  "SHOW ERRORS",
+  "SHOW EVENTS",
+  "SHOW FUNCTION CODE",
+  "SHOW FUNCTION STATUS",
+  "SHOW GRANTS",
+  "SHOW INDEX",
+  "SHOW MASTER STATUS",
+  "SHOW OPEN TABLES",
+  "SHOW PLUGINS",
+  "SHOW PRIVILEGES",
+  "SHOW PROCEDURE CODE",
+  "SHOW PROCEDURE STATUS",
+  "SHOW PROCESSLIST",
+  "SHOW PROFILE",
+  "SHOW PROFILES",
+  "SHOW RELAYLOG EVENTS",
+  "SHOW REPLICA STATUS",
+  "SHOW REPLICAS",
+  "SHOW SLAVE",
+  "SHOW SLAVE HOSTS",
+  "SHOW STATUS",
+  "SHOW TABLE STATUS",
+  "SHOW TABLES",
+  "SHOW TRIGGERS",
+  "SHOW VARIABLES",
+  "SHOW WARNINGS",
+  "SHUTDOWN",
+  "SOURCE_POS_WAIT",
+  "START GROUP_REPLICATION",
+  "START REPLICA",
+  "START SLAVE",
+  "START TRANSACTION",
+  "STOP GROUP_REPLICATION",
+  "STOP REPLICA",
+  "STOP SLAVE",
+  "TABLE",
+  "UNINSTALL COMPONENT",
+  "UNINSTALL PLUGIN",
+  "UNLOCK INSTANCE",
+  "UNLOCK TABLES",
+  "USE",
+  "XA",
+  // flow control
+  // 'IF',
+  "ITERATE",
+  "LEAVE",
+  "LOOP",
+  "REPEAT",
+  "RETURN",
+  "WHILE"
+]);
+var reservedSetOperations7 = expandPhrases(["UNION [ALL | DISTINCT]"]);
+var reservedJoins7 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT} [OUTER] JOIN",
+  // non-standard joins
+  "STRAIGHT_JOIN"
+]);
+var reservedPhrases7 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL]",
+  "CHARACTER SET",
+  "{ROWS | RANGE} BETWEEN",
+  "IDENTIFIED BY"
+]);
+var mysql = {
+  name: "mysql",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect7,
+    reservedClauses: [...reservedClauses7, ...standardOnelineClauses7, ...tabularOnelineClauses7],
+    reservedSetOperations: reservedSetOperations7,
+    reservedJoins: reservedJoins7,
+    reservedPhrases: reservedPhrases7,
+    supportsXor: true,
+    reservedKeywords: keywords8,
+    reservedDataTypes: dataTypes7,
+    reservedFunctionNames: functions7,
+    // TODO: support _ char set prefixes such as _utf8, _latin1, _binary, _utf8mb4, etc.
+    stringTypes: [
+      '""-qq-bs',
+      { quote: "''-qq-bs", prefixes: ["N"] },
+      { quote: "''-raw", prefixes: ["B", "X"], requirePrefix: true }
+    ],
+    identTypes: ["``"],
+    identChars: { first: "$", rest: "$", allowFirstCharNumber: true },
+    variableTypes: [
+      { regex: "@@?[A-Za-z0-9_.$]+" },
+      { quote: '""-qq-bs', prefixes: ["@"], requirePrefix: true },
+      { quote: "''-qq-bs", prefixes: ["@"], requirePrefix: true },
+      { quote: "``", prefixes: ["@"], requirePrefix: true }
+    ],
+    paramTypes: { positional: true },
+    lineCommentTypes: ["--", "#"],
+    operators: [
+      "%",
+      ":=",
+      "&",
+      "|",
+      "^",
+      "~",
+      "<<",
+      ">>",
+      "<=>",
+      "->",
+      "->>",
+      "&&",
+      "||",
+      "!",
+      "*.*"
+      // Not actually an operator
+    ],
+    postProcess: postProcess2
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses7, ...tabularOnelineClauses7],
+    tabularOnelineClauses: tabularOnelineClauses7
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/tidb/tidb.keywords.js
+var keywords9 = [
+  // https://docs.pingcap.com/tidb/stable/keywords
+  "ADD",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "ARRAY",
+  "AS",
+  "ASC",
+  "BETWEEN",
+  "BOTH",
+  "BY",
+  "CALL",
+  "CASCADE",
+  "CASE",
+  "CHANGE",
+  "CHECK",
+  "COLLATE",
+  "COLUMN",
+  "CONSTRAINT",
+  "CONTINUE",
+  "CONVERT",
+  "CREATE",
+  "CROSS",
+  "CURRENT_DATE",
+  "CURRENT_ROLE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURSOR",
+  "DATABASE",
+  "DATABASES",
+  "DAY_HOUR",
+  "DAY_MICROSECOND",
+  "DAY_MINUTE",
+  "DAY_SECOND",
+  "DEFAULT",
+  "DELAYED",
+  "DELETE",
+  "DESC",
+  "DESCRIBE",
+  "DISTINCT",
+  "DISTINCTROW",
+  "DIV",
+  "DOUBLE",
+  "DROP",
+  "DUAL",
+  "ELSE",
+  "ELSEIF",
+  "ENCLOSED",
+  "ESCAPED",
+  "EXCEPT",
+  "EXISTS",
+  "EXIT",
+  "EXPLAIN",
+  "FALSE",
+  "FETCH",
+  "FOR",
+  "FORCE",
+  "FOREIGN",
+  "FROM",
+  "FULLTEXT",
+  "GENERATED",
+  "GRANT",
+  "GROUP",
+  "GROUPS",
+  "HAVING",
+  "HIGH_PRIORITY",
+  "HOUR_MICROSECOND",
+  "HOUR_MINUTE",
+  "HOUR_SECOND",
+  "IF",
+  "IGNORE",
+  "ILIKE",
+  "IN",
+  "INDEX",
+  "INFILE",
+  "INNER",
+  "INOUT",
+  "INSERT",
+  "INTERSECT",
+  "INTERVAL",
+  "INTO",
+  "IS",
+  "ITERATE",
+  "JOIN",
+  "KEY",
+  "KEYS",
+  "KILL",
+  "LEADING",
+  "LEAVE",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "LINEAR",
+  "LINES",
+  "LOAD",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCK",
+  "LONG",
+  "LOW_PRIORITY",
+  "MATCH",
+  "MAXVALUE",
+  "MINUTE_MICROSECOND",
+  "MINUTE_SECOND",
+  "MOD",
+  "NATURAL",
+  "NOT",
+  "NO_WRITE_TO_BINLOG",
+  "NULL",
+  "OF",
+  "ON",
+  "OPTIMIZE",
+  "OPTION",
+  "OPTIONALLY",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OUTFILE",
+  "OVER",
+  "PARTITION",
+  "PRIMARY",
+  "PROCEDURE",
+  "RANGE",
+  "READ",
+  "RECURSIVE",
+  "REFERENCES",
+  "REGEXP",
+  "RELEASE",
+  "RENAME",
+  "REPEAT",
+  "REPLACE",
+  "REQUIRE",
+  "RESTRICT",
+  "REVOKE",
+  "RIGHT",
+  "RLIKE",
+  "ROW",
+  "ROWS",
+  "SECOND_MICROSECOND",
+  "SELECT",
+  "SET",
+  "SHOW",
+  "SPATIAL",
+  "SQL",
+  "SQLEXCEPTION",
+  "SQLSTATE",
+  "SQLWARNING",
+  "SQL_BIG_RESULT",
+  "SQL_CALC_FOUND_ROWS",
+  "SQL_SMALL_RESULT",
+  "SSL",
+  "STARTING",
+  "STATS_EXTENDED",
+  "STORED",
+  "STRAIGHT_JOIN",
+  "TABLE",
+  "TABLESAMPLE",
+  "TERMINATED",
+  "THEN",
+  "TO",
+  "TRAILING",
+  "TRIGGER",
+  "TRUE",
+  "TiDB_CURRENT_TSO",
+  "UNION",
+  "UNIQUE",
+  "UNLOCK",
+  "UNSIGNED",
+  "UNTIL",
+  "UPDATE",
+  "USAGE",
+  "USE",
+  "USING",
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "VALUES",
+  "VIRTUAL",
+  "WHEN",
+  "WHERE",
+  "WHILE",
+  "WINDOW",
+  "WITH",
+  "WRITE",
+  "XOR",
+  "YEAR_MONTH",
+  "ZEROFILL"
+  // (R)
+];
+var dataTypes8 = [
+  // https://docs.pingcap.com/tidb/stable/data-type-overview
+  "BIGINT",
+  "BINARY",
+  "BIT",
+  "BLOB",
+  "BOOL",
+  "BOOLEAN",
+  "CHAR",
+  "CHARACTER",
+  "DATE",
+  "DATETIME",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE PRECISION",
+  "DOUBLE",
+  "ENUM",
+  "FIXED",
+  "INT",
+  "INT1",
+  "INT2",
+  "INT3",
+  "INT4",
+  "INT8",
+  "INTEGER",
+  "LONGBLOB",
+  "LONGTEXT",
+  "MEDIUMBLOB",
+  "MEDIUMINT",
+  "MIDDLEINT",
+  "NATIONAL CHAR",
+  "NATIONAL VARCHAR",
+  "NUMERIC",
+  "PRECISION",
+  "SMALLINT",
+  "TEXT",
+  "TIME",
+  "TIMESTAMP",
+  "TINYBLOB",
+  "TINYINT",
+  "TINYTEXT",
+  "VARBINARY",
+  "VARCHAR",
+  "VARCHARACTER",
+  "VARYING",
+  "YEAR"
+  // 'SET' // handled as special-case in postProcess
+];
+
+// node_modules/sql-formatter/dist/esm/languages/tidb/tidb.functions.js
+var functions8 = [
+  // https://docs.pingcap.com/tidb/stable/sql-statement-show-builtins
+  // https://docs.pingcap.com/tidb/stable/functions-and-operators-overview
+  // + MySQL aggregate functions: https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html
+  // + MySQL window functions: https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html
+  "ABS",
+  "ACOS",
+  "ADDDATE",
+  "ADDTIME",
+  "AES_DECRYPT",
+  "AES_ENCRYPT",
+  // 'AND',
+  "ANY_VALUE",
+  "ASCII",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "AVG",
+  "BENCHMARK",
+  "BIN",
+  "BIN_TO_UUID",
+  "BIT_AND",
+  "BIT_COUNT",
+  "BIT_LENGTH",
+  "BIT_OR",
+  "BIT_XOR",
+  "BITAND",
+  "BITNEG",
+  "BITOR",
+  "BITXOR",
+  "CASE",
+  "CAST",
+  "CEIL",
+  "CEILING",
+  "CHAR_FUNC",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "CHARSET",
+  "COALESCE",
+  "COERCIBILITY",
+  "COLLATION",
+  "COMPRESS",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONNECTION_ID",
+  "CONV",
+  "CONVERT",
+  "CONVERT_TZ",
+  "COS",
+  "COT",
+  "COUNT",
+  "CRC32",
+  "CUME_DIST",
+  "CURDATE",
+  "CURRENT_DATE",
+  "CURRENT_RESOURCE_GROUP",
+  "CURRENT_ROLE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURTIME",
+  "DATABASE",
+  "DATE",
+  "DATE_ADD",
+  "DATE_FORMAT",
+  "DATE_SUB",
+  "DATEDIFF",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "DECODE",
+  "DEFAULT_FUNC",
+  "DEGREES",
+  "DENSE_RANK",
+  "DES_DECRYPT",
+  "DES_ENCRYPT",
+  "DIV",
+  "ELT",
+  "ENCODE",
+  "ENCRYPT",
+  "EQ",
+  "EXP",
+  "EXPORT_SET",
+  "EXTRACT",
+  "FIELD",
+  "FIND_IN_SET",
+  "FIRST_VALUE",
+  "FLOOR",
+  "FORMAT",
+  "FORMAT_BYTES",
+  "FORMAT_NANO_TIME",
+  "FOUND_ROWS",
+  "FROM_BASE64",
+  "FROM_DAYS",
+  "FROM_UNIXTIME",
+  "GE",
+  "GET_FORMAT",
+  "GET_LOCK",
+  "GETPARAM",
+  "GREATEST",
+  "GROUP_CONCAT",
+  "GROUPING",
+  "GT",
+  "HEX",
+  "HOUR",
+  "IF",
+  "IFNULL",
+  "ILIKE",
+  // 'IN',
+  "INET6_ATON",
+  "INET6_NTOA",
+  "INET_ATON",
+  "INET_NTOA",
+  "INSERT_FUNC",
+  "INSTR",
+  "INTDIV",
+  "INTERVAL",
+  "IS_FREE_LOCK",
+  "IS_IPV4",
+  "IS_IPV4_COMPAT",
+  "IS_IPV4_MAPPED",
+  "IS_IPV6",
+  "IS_USED_LOCK",
+  "IS_UUID",
+  "ISFALSE",
+  "ISNULL",
+  "ISTRUE",
+  "JSON_ARRAY",
+  "JSON_ARRAYAGG",
+  "JSON_ARRAY_APPEND",
+  "JSON_ARRAY_INSERT",
+  "JSON_CONTAINS",
+  "JSON_CONTAINS_PATH",
+  "JSON_DEPTH",
+  "JSON_EXTRACT",
+  "JSON_INSERT",
+  "JSON_KEYS",
+  "JSON_LENGTH",
+  "JSON_MEMBEROF",
+  "JSON_MERGE",
+  "JSON_MERGE_PATCH",
+  "JSON_MERGE_PRESERVE",
+  "JSON_OBJECT",
+  "JSON_OBJECTAGG",
+  "JSON_OVERLAPS",
+  "JSON_PRETTY",
+  "JSON_QUOTE",
+  "JSON_REMOVE",
+  "JSON_REPLACE",
+  "JSON_SEARCH",
+  "JSON_SET",
+  "JSON_STORAGE_FREE",
+  "JSON_STORAGE_SIZE",
+  "JSON_TYPE",
+  "JSON_UNQUOTE",
+  "JSON_VALID",
+  "LAG",
+  "LAST_DAY",
+  "LAST_INSERT_ID",
+  "LAST_VALUE",
+  "LASTVAL",
+  "LCASE",
+  "LE",
+  "LEAD",
+  "LEAST",
+  "LEFT",
+  "LEFTSHIFT",
+  "LENGTH",
+  "LIKE",
+  "LN",
+  "LOAD_FILE",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCATE",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "LOWER",
+  "LPAD",
+  "LT",
+  "LTRIM",
+  "MAKE_SET",
+  "MAKEDATE",
+  "MAKETIME",
+  "MASTER_POS_WAIT",
+  "MAX",
+  "MD5",
+  "MICROSECOND",
+  "MID",
+  "MIN",
+  "MINUS",
+  "MINUTE",
+  "MOD",
+  "MONTH",
+  "MONTHNAME",
+  "MUL",
+  "NAME_CONST",
+  "NE",
+  "NEXTVAL",
+  "NOT",
+  "NOW",
+  "NTH_VALUE",
+  "NTILE",
+  "NULLEQ",
+  "OCT",
+  "OCTET_LENGTH",
+  "OLD_PASSWORD",
+  // 'OR',
+  "ORD",
+  "PASSWORD_FUNC",
+  "PERCENT_RANK",
+  "PERIOD_ADD",
+  "PERIOD_DIFF",
+  "PI",
+  "PLUS",
+  "POSITION",
+  "POW",
+  "POWER",
+  "QUARTER",
+  "QUOTE",
+  "RADIANS",
+  "RAND",
+  "RANDOM_BYTES",
+  "RANK",
+  "REGEXP",
+  "REGEXP_INSTR",
+  "REGEXP_LIKE",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "RELEASE_ALL_LOCKS",
+  "RELEASE_LOCK",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "RIGHT",
+  "RIGHTSHIFT",
+  "ROUND",
+  "ROW_COUNT",
+  "ROW_NUMBER",
+  "RPAD",
+  "RTRIM",
+  "SCHEMA",
+  "SEC_TO_TIME",
+  "SECOND",
+  "SESSION_USER",
+  "SETVAL",
+  "SETVAR",
+  "SHA",
+  "SHA1",
+  "SHA2",
+  "SIGN",
+  "SIN",
+  "SLEEP",
+  "SM3",
+  "SPACE",
+  "SQRT",
+  "STD",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STR_TO_DATE",
+  "STRCMP",
+  "SUBDATE",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUBSTRING_INDEX",
+  "SUBTIME",
+  "SUM",
+  "SYSDATE",
+  "SYSTEM_USER",
+  "TAN",
+  "TIDB_BOUNDED_STALENESS",
+  "TIDB_CURRENT_TSO",
+  "TIDB_DECODE_BINARY_PLAN",
+  "TIDB_DECODE_KEY",
+  "TIDB_DECODE_PLAN",
+  "TIDB_DECODE_SQL_DIGESTS",
+  "TIDB_ENCODE_SQL_DIGEST",
+  "TIDB_IS_DDL_OWNER",
+  "TIDB_PARSE_TSO",
+  "TIDB_PARSE_TSO_LOGICAL",
+  "TIDB_ROW_CHECKSUM",
+  "TIDB_SHARD",
+  "TIDB_VERSION",
+  "TIME",
+  "TIME_FORMAT",
+  "TIME_TO_SEC",
+  "TIMEDIFF",
+  "TIMESTAMP",
+  "TIMESTAMPADD",
+  "TIMESTAMPDIFF",
+  "TO_BASE64",
+  "TO_DAYS",
+  "TO_SECONDS",
+  "TRANSLATE",
+  "TRIM",
+  "TRUNCATE",
+  "UCASE",
+  "UNARYMINUS",
+  "UNCOMPRESS",
+  "UNCOMPRESSED_LENGTH",
+  "UNHEX",
+  "UNIX_TIMESTAMP",
+  "UPPER",
+  // 'USER',
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "UUID",
+  "UUID_SHORT",
+  "UUID_TO_BIN",
+  "VALIDATE_PASSWORD_STRENGTH",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  "VERSION",
+  "VITESS_HASH",
+  "WEEK",
+  "WEEKDAY",
+  "WEEKOFYEAR",
+  "WEIGHT_STRING",
+  // 'XOR',
+  "YEAR",
+  "YEARWEEK"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/tidb/tidb.formatter.js
+var reservedSelect8 = expandPhrases(["SELECT [ALL | DISTINCT | DISTINCTROW]"]);
+var reservedClauses8 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  // Data manipulation
+  // - insert:
+  "INSERT [LOW_PRIORITY | DELAYED | HIGH_PRIORITY] [IGNORE] [INTO]",
+  "REPLACE [LOW_PRIORITY | DELAYED] [INTO]",
+  "VALUES",
+  "ON DUPLICATE KEY UPDATE",
+  // - update:
+  "SET"
+]);
+var standardOnelineClauses8 = expandPhrases(["CREATE [TEMPORARY] TABLE [IF NOT EXISTS]"]);
+var tabularOnelineClauses8 = expandPhrases([
+  // https://docs.pingcap.com/tidb/stable/sql-statement-create-view
+  "CREATE [OR REPLACE] [SQL SECURITY DEFINER | SQL SECURITY INVOKER] VIEW [IF NOT EXISTS]",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-update
+  "UPDATE [LOW_PRIORITY] [IGNORE]",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-delete
+  "DELETE [LOW_PRIORITY] [QUICK] [IGNORE] FROM",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-drop-table
+  "DROP [TEMPORARY] TABLE [IF EXISTS]",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-alter-table
+  "ALTER TABLE",
+  "ADD [COLUMN]",
+  "{CHANGE | MODIFY} [COLUMN]",
+  "DROP [COLUMN]",
+  "RENAME [TO | AS]",
+  "RENAME COLUMN",
+  "ALTER [COLUMN]",
+  "{SET | DROP} DEFAULT",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-truncate
+  "TRUNCATE [TABLE]",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-alter-database
+  "ALTER DATABASE",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-alter-instance
+  "ALTER INSTANCE",
+  "ALTER RESOURCE GROUP",
+  "ALTER SEQUENCE",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-alter-user
+  "ALTER USER",
+  "ALTER VIEW",
+  "ANALYZE TABLE",
+  "CHECK TABLE",
+  "CHECKSUM TABLE",
+  "COMMIT",
+  "CREATE DATABASE",
+  "CREATE INDEX",
+  "CREATE RESOURCE GROUP",
+  "CREATE ROLE",
+  "CREATE SEQUENCE",
+  "CREATE USER",
+  "DEALLOCATE PREPARE",
+  "DESCRIBE",
+  "DROP DATABASE",
+  "DROP INDEX",
+  "DROP RESOURCE GROUP",
+  "DROP ROLE",
+  "DROP TABLESPACE",
+  "DROP USER",
+  "DROP VIEW",
+  "EXPLAIN",
+  "FLUSH",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-grant-privileges
+  "GRANT",
+  "IMPORT TABLE",
+  "INSTALL COMPONENT",
+  "INSTALL PLUGIN",
+  "KILL",
+  "LOAD DATA",
+  "LOCK INSTANCE FOR BACKUP",
+  "LOCK TABLES",
+  "OPTIMIZE TABLE",
+  "PREPARE",
+  "RELEASE SAVEPOINT",
+  "RENAME TABLE",
+  "RENAME USER",
+  "REPAIR TABLE",
+  "RESET",
+  "REVOKE",
+  "ROLLBACK",
+  "ROLLBACK TO SAVEPOINT",
+  "SAVEPOINT",
+  "SET CHARACTER SET",
+  "SET DEFAULT ROLE",
+  "SET NAMES",
+  "SET PASSWORD",
+  "SET RESOURCE GROUP",
+  "SET ROLE",
+  "SET TRANSACTION",
+  "SHOW",
+  "SHOW BINARY LOGS",
+  "SHOW BINLOG EVENTS",
+  "SHOW CHARACTER SET",
+  "SHOW COLLATION",
+  "SHOW COLUMNS",
+  "SHOW CREATE DATABASE",
+  "SHOW CREATE TABLE",
+  "SHOW CREATE USER",
+  "SHOW CREATE VIEW",
+  "SHOW DATABASES",
+  "SHOW ENGINE",
+  "SHOW ENGINES",
+  "SHOW ERRORS",
+  "SHOW EVENTS",
+  "SHOW GRANTS",
+  "SHOW INDEX",
+  "SHOW MASTER STATUS",
+  "SHOW OPEN TABLES",
+  "SHOW PLUGINS",
+  "SHOW PRIVILEGES",
+  "SHOW PROCESSLIST",
+  "SHOW PROFILE",
+  "SHOW PROFILES",
+  "SHOW STATUS",
+  "SHOW TABLE STATUS",
+  "SHOW TABLES",
+  "SHOW TRIGGERS",
+  "SHOW VARIABLES",
+  "SHOW WARNINGS",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-table
+  "TABLE",
+  "UNINSTALL COMPONENT",
+  "UNINSTALL PLUGIN",
+  "UNLOCK INSTANCE",
+  "UNLOCK TABLES",
+  // https://docs.pingcap.com/tidb/stable/sql-statement-use
+  "USE"
+]);
+var reservedSetOperations8 = expandPhrases(["UNION [ALL | DISTINCT]"]);
+var reservedJoins8 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT} [OUTER] JOIN",
+  // non-standard joins
+  "STRAIGHT_JOIN"
+]);
+var reservedPhrases8 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL]",
+  "CHARACTER SET",
+  "{ROWS | RANGE} BETWEEN",
+  "IDENTIFIED BY"
+]);
+var tidb = {
+  name: "tidb",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect8,
+    reservedClauses: [...reservedClauses8, ...standardOnelineClauses8, ...tabularOnelineClauses8],
+    reservedSetOperations: reservedSetOperations8,
+    reservedJoins: reservedJoins8,
+    reservedPhrases: reservedPhrases8,
+    supportsXor: true,
+    reservedKeywords: keywords9,
+    reservedDataTypes: dataTypes8,
+    reservedFunctionNames: functions8,
+    // TODO: support _ char set prefixes such as _utf8, _latin1, _binary, _utf8mb4, etc.
+    stringTypes: [
+      '""-qq-bs',
+      { quote: "''-qq-bs", prefixes: ["N"] },
+      { quote: "''-raw", prefixes: ["B", "X"], requirePrefix: true }
+    ],
+    identTypes: ["``"],
+    identChars: { first: "$", rest: "$", allowFirstCharNumber: true },
+    variableTypes: [
+      { regex: "@@?[A-Za-z0-9_.$]+" },
+      { quote: '""-qq-bs', prefixes: ["@"], requirePrefix: true },
+      { quote: "''-qq-bs", prefixes: ["@"], requirePrefix: true },
+      { quote: "``", prefixes: ["@"], requirePrefix: true }
+    ],
+    paramTypes: { positional: true },
+    lineCommentTypes: ["--", "#"],
+    operators: [
+      "%",
+      ":=",
+      "&",
+      "|",
+      "^",
+      "~",
+      "<<",
+      ">>",
+      "<=>",
+      "->",
+      "->>",
+      "&&",
+      "||",
+      "!",
+      "*.*"
+      // Not actually an operator
+    ],
+    postProcess: postProcess2
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses8, ...tabularOnelineClauses8],
+    tabularOnelineClauses: tabularOnelineClauses8
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/n1ql/n1ql.functions.js
+var functions9 = [
+  // https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/functions.html
+  "ABORT",
+  "ABS",
+  "ACOS",
+  "ADVISOR",
+  "ARRAY_AGG",
+  "ARRAY_AGG",
+  "ARRAY_APPEND",
+  "ARRAY_AVG",
+  "ARRAY_BINARY_SEARCH",
+  "ARRAY_CONCAT",
+  "ARRAY_CONTAINS",
+  "ARRAY_COUNT",
+  "ARRAY_DISTINCT",
+  "ARRAY_EXCEPT",
+  "ARRAY_FLATTEN",
+  "ARRAY_IFNULL",
+  "ARRAY_INSERT",
+  "ARRAY_INTERSECT",
+  "ARRAY_LENGTH",
+  "ARRAY_MAX",
+  "ARRAY_MIN",
+  "ARRAY_MOVE",
+  "ARRAY_POSITION",
+  "ARRAY_PREPEND",
+  "ARRAY_PUT",
+  "ARRAY_RANGE",
+  "ARRAY_REMOVE",
+  "ARRAY_REPEAT",
+  "ARRAY_REPLACE",
+  "ARRAY_REVERSE",
+  "ARRAY_SORT",
+  "ARRAY_STAR",
+  "ARRAY_SUM",
+  "ARRAY_SYMDIFF",
+  "ARRAY_SYMDIFF1",
+  "ARRAY_SYMDIFFN",
+  "ARRAY_UNION",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "AVG",
+  "BASE64",
+  "BASE64_DECODE",
+  "BASE64_ENCODE",
+  "BITAND ",
+  "BITCLEAR ",
+  "BITNOT ",
+  "BITOR ",
+  "BITSET ",
+  "BITSHIFT ",
+  "BITTEST ",
+  "BITXOR ",
+  "CEIL",
+  "CLOCK_LOCAL",
+  "CLOCK_MILLIS",
+  "CLOCK_STR",
+  "CLOCK_TZ",
+  "CLOCK_UTC",
+  "COALESCE",
+  "CONCAT",
+  "CONCAT2",
+  "CONTAINS",
+  "CONTAINS_TOKEN",
+  "CONTAINS_TOKEN_LIKE",
+  "CONTAINS_TOKEN_REGEXP",
+  "COS",
+  "COUNT",
+  "COUNT",
+  "COUNTN",
+  "CUME_DIST",
+  "CURL",
+  "DATE_ADD_MILLIS",
+  "DATE_ADD_STR",
+  "DATE_DIFF_MILLIS",
+  "DATE_DIFF_STR",
+  "DATE_FORMAT_STR",
+  "DATE_PART_MILLIS",
+  "DATE_PART_STR",
+  "DATE_RANGE_MILLIS",
+  "DATE_RANGE_STR",
+  "DATE_TRUNC_MILLIS",
+  "DATE_TRUNC_STR",
+  "DECODE",
+  "DECODE_JSON",
+  "DEGREES",
+  "DENSE_RANK",
+  "DURATION_TO_STR",
+  // 'E',
+  "ENCODED_SIZE",
+  "ENCODE_JSON",
+  "EXP",
+  "FIRST_VALUE",
+  "FLOOR",
+  "GREATEST",
+  "HAS_TOKEN",
+  "IFINF",
+  "IFMISSING",
+  "IFMISSINGORNULL",
+  "IFNAN",
+  "IFNANORINF",
+  "IFNULL",
+  "INITCAP",
+  "ISARRAY",
+  "ISATOM",
+  "ISBITSET",
+  "ISBOOLEAN",
+  "ISNUMBER",
+  "ISOBJECT",
+  "ISSTRING",
+  "LAG",
+  "LAST_VALUE",
+  "LEAD",
+  "LEAST",
+  "LENGTH",
+  "LN",
+  "LOG",
+  "LOWER",
+  "LTRIM",
+  "MAX",
+  "MEAN",
+  "MEDIAN",
+  "META",
+  "MILLIS",
+  "MILLIS_TO_LOCAL",
+  "MILLIS_TO_STR",
+  "MILLIS_TO_TZ",
+  "MILLIS_TO_UTC",
+  "MILLIS_TO_ZONE_NAME",
+  "MIN",
+  "MISSINGIF",
+  "NANIF",
+  "NEGINFIF",
+  "NOW_LOCAL",
+  "NOW_MILLIS",
+  "NOW_STR",
+  "NOW_TZ",
+  "NOW_UTC",
+  "NTH_VALUE",
+  "NTILE",
+  "NULLIF",
+  "NVL",
+  "NVL2",
+  "OBJECT_ADD",
+  "OBJECT_CONCAT",
+  "OBJECT_INNER_PAIRS",
+  "OBJECT_INNER_VALUES",
+  "OBJECT_LENGTH",
+  "OBJECT_NAMES",
+  "OBJECT_PAIRS",
+  "OBJECT_PUT",
+  "OBJECT_REMOVE",
+  "OBJECT_RENAME",
+  "OBJECT_REPLACE",
+  "OBJECT_UNWRAP",
+  "OBJECT_VALUES",
+  "PAIRS",
+  "PERCENT_RANK",
+  "PI",
+  "POLY_LENGTH",
+  "POSINFIF",
+  "POSITION",
+  "POWER",
+  "RADIANS",
+  "RANDOM",
+  "RANK",
+  "RATIO_TO_REPORT",
+  "REGEXP_CONTAINS",
+  "REGEXP_LIKE",
+  "REGEXP_MATCHES",
+  "REGEXP_POSITION",
+  "REGEXP_REPLACE",
+  "REGEXP_SPLIT",
+  "REGEX_CONTAINS",
+  "REGEX_LIKE",
+  "REGEX_MATCHES",
+  "REGEX_POSITION",
+  "REGEX_REPLACE",
+  "REGEX_SPLIT",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "ROUND",
+  "ROW_NUMBER",
+  "RTRIM",
+  "SEARCH",
+  "SEARCH_META",
+  "SEARCH_SCORE",
+  "SIGN",
+  "SIN",
+  "SPLIT",
+  "SQRT",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STR_TO_DURATION",
+  "STR_TO_MILLIS",
+  "STR_TO_TZ",
+  "STR_TO_UTC",
+  "STR_TO_ZONE_NAME",
+  "SUBSTR",
+  "SUFFIXES",
+  "SUM",
+  "TAN",
+  "TITLE",
+  "TOARRAY",
+  "TOATOM",
+  "TOBOOLEAN",
+  "TOKENS",
+  "TOKENS",
+  "TONUMBER",
+  "TOOBJECT",
+  "TOSTRING",
+  "TRIM",
+  "TRUNC",
+  // 'TYPE', // disabled
+  "UPPER",
+  "UUID",
+  "VARIANCE",
+  "VARIANCE_POP",
+  "VARIANCE_SAMP",
+  "VAR_POP",
+  "VAR_SAMP",
+  "WEEKDAY_MILLIS",
+  "WEEKDAY_STR",
+  // type casting
+  // not implemented in N1QL, but added here now for the sake of tests
+  // https://docs.couchbase.com/server/current/analytics/3_query.html#Vs_SQL-92
+  "CAST"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/n1ql/n1ql.keywords.js
+var keywords10 = [
+  // https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/reservedwords.html
+  "ADVISE",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "ANY",
+  "ARRAY",
+  "AS",
+  "ASC",
+  "AT",
+  "BEGIN",
+  "BETWEEN",
+  "BINARY",
+  "BOOLEAN",
+  "BREAK",
+  "BUCKET",
+  "BUILD",
+  "BY",
+  "CALL",
+  "CASE",
+  "CAST",
+  "CLUSTER",
+  "COLLATE",
+  "COLLECTION",
+  "COMMIT",
+  "COMMITTED",
+  "CONNECT",
+  "CONTINUE",
+  "CORRELATED",
+  "COVER",
+  "CREATE",
+  "CURRENT",
+  "DATABASE",
+  "DATASET",
+  "DATASTORE",
+  "DECLARE",
+  "DECREMENT",
+  "DELETE",
+  "DERIVED",
+  "DESC",
+  "DESCRIBE",
+  "DISTINCT",
+  "DO",
+  "DROP",
+  "EACH",
+  "ELEMENT",
+  "ELSE",
+  "END",
+  "EVERY",
+  "EXCEPT",
+  "EXCLUDE",
+  "EXECUTE",
+  "EXISTS",
+  "EXPLAIN",
+  "FALSE",
+  "FETCH",
+  "FILTER",
+  "FIRST",
+  "FLATTEN",
+  "FLUSH",
+  "FOLLOWING",
+  "FOR",
+  "FORCE",
+  "FROM",
+  "FTS",
+  "FUNCTION",
+  "GOLANG",
+  "GRANT",
+  "GROUP",
+  "GROUPS",
+  "GSI",
+  "HASH",
+  "HAVING",
+  "IF",
+  "IGNORE",
+  "ILIKE",
+  "IN",
+  "INCLUDE",
+  "INCREMENT",
+  "INDEX",
+  "INFER",
+  "INLINE",
+  "INNER",
+  "INSERT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ISOLATION",
+  "JAVASCRIPT",
+  "JOIN",
+  "KEY",
+  "KEYS",
+  "KEYSPACE",
+  "KNOWN",
+  "LANGUAGE",
+  "LAST",
+  "LEFT",
+  "LET",
+  "LETTING",
+  "LEVEL",
+  "LIKE",
+  "LIMIT",
+  "LSM",
+  "MAP",
+  "MAPPING",
+  "MATCHED",
+  "MATERIALIZED",
+  "MERGE",
+  "MINUS",
+  "MISSING",
+  "NAMESPACE",
+  "NEST",
+  "NL",
+  "NO",
+  "NOT",
+  "NTH_VALUE",
+  "NULL",
+  "NULLS",
+  "NUMBER",
+  "OBJECT",
+  "OFFSET",
+  "ON",
+  "OPTION",
+  "OPTIONS",
+  "OR",
+  "ORDER",
+  "OTHERS",
+  "OUTER",
+  "OVER",
+  "PARSE",
+  "PARTITION",
+  "PASSWORD",
+  "PATH",
+  "POOL",
+  "PRECEDING",
+  "PREPARE",
+  "PRIMARY",
+  "PRIVATE",
+  "PRIVILEGE",
+  "PROBE",
+  "PROCEDURE",
+  "PUBLIC",
+  "RANGE",
+  "RAW",
+  "REALM",
+  "REDUCE",
+  "RENAME",
+  "RESPECT",
+  "RETURN",
+  "RETURNING",
+  "REVOKE",
+  "RIGHT",
+  "ROLE",
+  "ROLLBACK",
+  "ROW",
+  "ROWS",
+  "SATISFIES",
+  "SAVEPOINT",
+  "SCHEMA",
+  "SCOPE",
+  "SELECT",
+  "SELF",
+  "SEMI",
+  "SET",
+  "SHOW",
+  "SOME",
+  "START",
+  "STATISTICS",
+  "STRING",
+  "SYSTEM",
+  "THEN",
+  "TIES",
+  "TO",
+  "TRAN",
+  "TRANSACTION",
+  "TRIGGER",
+  "TRUE",
+  "TRUNCATE",
+  "UNBOUNDED",
+  "UNDER",
+  "UNION",
+  "UNIQUE",
+  "UNKNOWN",
+  "UNNEST",
+  "UNSET",
+  "UPDATE",
+  "UPSERT",
+  "USE",
+  "USER",
+  "USING",
+  "VALIDATE",
+  "VALUE",
+  "VALUED",
+  "VALUES",
+  "VIA",
+  "VIEW",
+  "WHEN",
+  "WHERE",
+  "WHILE",
+  "WINDOW",
+  "WITH",
+  "WITHIN",
+  "WORK",
+  "XOR"
+];
+var dataTypes9 = [
+  // N1QL does not support any way of declaring types for columns.
+  // It does not support the CREATE TABLE statement nor the CAST() expression.
+  //
+  // It does have several keywords like ARRAY and OBJECT, which seem to refer to types,
+  // but they are used as operators. It also reserves several words like STRING and NUMBER,
+  // which it actually doesn't use.
+  //
+  // https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/datatypes.html
+];
+
+// node_modules/sql-formatter/dist/esm/languages/n1ql/n1ql.formatter.js
+var reservedSelect9 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses9 = expandPhrases([
+  // queries
+  "WITH",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  // Data manipulation
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE INTO",
+  "WHEN [NOT] MATCHED THEN",
+  "UPDATE SET",
+  "INSERT",
+  // other
+  "NEST",
+  "UNNEST",
+  "RETURNING"
+]);
+var onelineClauses = expandPhrases([
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE FROM",
+  // - set schema:
+  "SET SCHEMA",
+  // https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/reservedwords.html
+  "ADVISE",
+  "ALTER INDEX",
+  "BEGIN TRANSACTION",
+  "BUILD INDEX",
+  "COMMIT TRANSACTION",
+  "CREATE COLLECTION",
+  "CREATE FUNCTION",
+  "CREATE INDEX",
+  "CREATE PRIMARY INDEX",
+  "CREATE SCOPE",
+  "DROP COLLECTION",
+  "DROP FUNCTION",
+  "DROP INDEX",
+  "DROP PRIMARY INDEX",
+  "DROP SCOPE",
+  "EXECUTE",
+  "EXECUTE FUNCTION",
+  "EXPLAIN",
+  "GRANT",
+  "INFER",
+  "PREPARE",
+  "REVOKE",
+  "ROLLBACK TRANSACTION",
+  "SAVEPOINT",
+  "SET TRANSACTION",
+  "UPDATE STATISTICS",
+  "UPSERT",
+  // other
+  "LET",
+  "SET CURRENT SCHEMA",
+  "SHOW",
+  "USE [PRIMARY] KEYS"
+]);
+var reservedSetOperations9 = expandPhrases(["UNION [ALL]", "EXCEPT [ALL]", "INTERSECT [ALL]"]);
+var reservedJoins9 = expandPhrases(["JOIN", "{LEFT | RIGHT} [OUTER] JOIN", "INNER JOIN"]);
+var reservedPhrases9 = expandPhrases(["{ROWS | RANGE | GROUPS} BETWEEN"]);
+var n1ql = {
+  name: "n1ql",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect9,
+    reservedClauses: [...reservedClauses9, ...onelineClauses],
+    reservedSetOperations: reservedSetOperations9,
+    reservedJoins: reservedJoins9,
+    reservedPhrases: reservedPhrases9,
+    supportsXor: true,
+    reservedKeywords: keywords10,
+    reservedDataTypes: dataTypes9,
+    reservedFunctionNames: functions9,
+    // NOTE: single quotes are actually not supported in N1QL,
+    // but we support them anyway as all other SQL dialects do,
+    // which simplifies writing tests that are shared between all dialects.
+    stringTypes: ['""-bs', "''-bs"],
+    identTypes: ["``"],
+    extraParens: ["[]", "{}"],
+    paramTypes: { positional: true, numbered: ["$"], named: ["$"] },
+    lineCommentTypes: ["#", "--"],
+    operators: ["%", "==", ":", "||"]
+  },
+  formatOptions: {
+    onelineClauses
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/plsql/plsql.keywords.js
+var keywords11 = [
+  // https://docs.oracle.com/cd/B19306_01/appdev.102/b14261/reservewords.htm
+  // 'A',
+  "ADD",
+  "AGENT",
+  "AGGREGATE",
+  "ALL",
+  "ALTER",
+  "AND",
+  "ANY",
+  "ARROW",
+  "AS",
+  "ASC",
+  "AT",
+  "ATTRIBUTE",
+  "AUTHID",
+  "AVG",
+  "BEGIN",
+  "BETWEEN",
+  "BLOCK",
+  "BODY",
+  "BOTH",
+  "BOUND",
+  "BULK",
+  "BY",
+  "BYTE",
+  // 'C',
+  "CALL",
+  "CALLING",
+  "CASCADE",
+  "CASE",
+  "CHARSET",
+  "CHARSETFORM",
+  "CHARSETID",
+  "CHECK",
+  "CLOSE",
+  "CLUSTER",
+  "CLUSTERS",
+  "COLAUTH",
+  "COLLECT",
+  "COLUMNS",
+  "COMMENT",
+  "COMMIT",
+  "COMMITTED",
+  "COMPILED",
+  "COMPRESS",
+  "CONNECT",
+  "CONSTANT",
+  "CONSTRUCTOR",
+  "CONTEXT",
+  "CONVERT",
+  "COUNT",
+  "CRASH",
+  "CREATE",
+  "CURRENT",
+  "CURSOR",
+  "CUSTOMDATUM",
+  "DANGLING",
+  "DATA",
+  "DAY",
+  "DECLARE",
+  "DEFAULT",
+  "DEFINE",
+  "DELETE",
+  "DESC",
+  "DETERMINISTIC",
+  "DISTINCT",
+  "DROP",
+  "DURATION",
+  "ELEMENT",
+  "ELSE",
+  "ELSIF",
+  "EMPTY",
+  "END",
+  "ESCAPE",
+  "EXCEPT",
+  "EXCEPTION",
+  "EXCEPTIONS",
+  "EXCLUSIVE",
+  "EXECUTE",
+  "EXISTS",
+  "EXIT",
+  "EXTERNAL",
+  "FETCH",
+  "FINAL",
+  "FIXED",
+  "FOR",
+  "FORALL",
+  "FORCE",
+  "FORM",
+  "FROM",
+  "FUNCTION",
+  "GENERAL",
+  "GOTO",
+  "GRANT",
+  "GROUP",
+  "HASH",
+  "HAVING",
+  "HEAP",
+  "HIDDEN",
+  "HOUR",
+  "IDENTIFIED",
+  "IF",
+  "IMMEDIATE",
+  "IN",
+  "INCLUDING",
+  "INDEX",
+  "INDEXES",
+  "INDICATOR",
+  "INDICES",
+  "INFINITE",
+  "INSERT",
+  "INSTANTIABLE",
+  "INTERFACE",
+  "INTERSECT",
+  "INTERVAL",
+  "INTO",
+  "INVALIDATE",
+  "IS",
+  "ISOLATION",
+  "JAVA",
+  "LANGUAGE",
+  "LARGE",
+  "LEADING",
+  "LENGTH",
+  "LEVEL",
+  "LIBRARY",
+  "LIKE",
+  "LIKE2",
+  "LIKE4",
+  "LIKEC",
+  "LIMIT",
+  "LIMITED",
+  "LOCAL",
+  "LOCK",
+  "LOOP",
+  "MAP",
+  "MAX",
+  "MAXLEN",
+  "MEMBER",
+  "MERGE",
+  "MIN",
+  "MINUS",
+  "MINUTE",
+  "MOD",
+  "MODE",
+  "MODIFY",
+  "MONTH",
+  "MULTISET",
+  "NAME",
+  "NAN",
+  "NATIONAL",
+  "NATIVE",
+  "NEW",
+  "NOCOMPRESS",
+  "NOCOPY",
+  "NOT",
+  "NOWAIT",
+  "NULL",
+  "OBJECT",
+  "OCICOLL",
+  "OCIDATE",
+  "OCIDATETIME",
+  "OCIDURATION",
+  "OCIINTERVAL",
+  "OCILOBLOCATOR",
+  "OCINUMBER",
+  "OCIRAW",
+  "OCIREF",
+  "OCIREFCURSOR",
+  "OCIROWID",
+  "OCISTRING",
+  "OCITYPE",
+  "OF",
+  "ON",
+  "ONLY",
+  "OPAQUE",
+  "OPEN",
+  "OPERATOR",
+  "OPTION",
+  "OR",
+  "ORACLE",
+  "ORADATA",
+  "ORDER",
+  "OVERLAPS",
+  "ORGANIZATION",
+  "ORLANY",
+  "ORLVARY",
+  "OTHERS",
+  "OUT",
+  "OVERRIDING",
+  "PACKAGE",
+  "PARALLEL_ENABLE",
+  "PARAMETER",
+  "PARAMETERS",
+  "PARTITION",
+  "PASCAL",
+  "PIPE",
+  "PIPELINED",
+  "PRAGMA",
+  "PRIOR",
+  "PRIVATE",
+  "PROCEDURE",
+  "PUBLIC",
+  "RAISE",
+  "RANGE",
+  "READ",
+  "RECORD",
+  "REF",
+  "REFERENCE",
+  "REM",
+  "REMAINDER",
+  "RENAME",
+  "RESOURCE",
+  "RESULT",
+  "RETURN",
+  "RETURNING",
+  "REVERSE",
+  "REVOKE",
+  "ROLLBACK",
+  "ROW",
+  "SAMPLE",
+  "SAVE",
+  "SAVEPOINT",
+  "SB1",
+  "SB2",
+  "SB4",
+  "SECOND",
+  "SEGMENT",
+  "SELECT",
+  "SELF",
+  "SEPARATE",
+  "SEQUENCE",
+  "SERIALIZABLE",
+  "SET",
+  "SHARE",
+  "SHORT",
+  "SIZE",
+  "SIZE_T",
+  "SOME",
+  "SPARSE",
+  "SQL",
+  "SQLCODE",
+  "SQLDATA",
+  "SQLNAME",
+  "SQLSTATE",
+  "STANDARD",
+  "START",
+  "STATIC",
+  "STDDEV",
+  "STORED",
+  "STRING",
+  "STRUCT",
+  "STYLE",
+  "SUBMULTISET",
+  "SUBPARTITION",
+  "SUBSTITUTABLE",
+  "SUBTYPE",
+  "SUM",
+  "SYNONYM",
+  "TABAUTH",
+  "TABLE",
+  "TDO",
+  "THE",
+  "THEN",
+  "TIME",
+  "TIMEZONE_ABBR",
+  "TIMEZONE_HOUR",
+  "TIMEZONE_MINUTE",
+  "TIMEZONE_REGION",
+  "TO",
+  "TRAILING",
+  "TRANSAC",
+  "TRANSACTIONAL",
+  "TRUSTED",
+  "TYPE",
+  "UB1",
+  "UB2",
+  "UB4",
+  "UNDER",
+  "UNION",
+  "UNIQUE",
+  "UNSIGNED",
+  "UNTRUSTED",
+  "UPDATE",
+  "USE",
+  "USING",
+  "VALIST",
+  "VALUE",
+  "VALUES",
+  "VARIABLE",
+  "VARIANCE",
+  "VARRAY",
+  "VIEW",
+  "VIEWS",
+  "VOID",
+  "WHEN",
+  "WHERE",
+  "WHILE",
+  "WITH",
+  "WORK",
+  "WRAPPED",
+  "WRITE",
+  "YEAR",
+  "ZONE"
+];
+var dataTypes10 = [
+  // https://www.ibm.com/docs/en/db2/10.5?topic=plsql-data-types
+  "ARRAY",
+  "BFILE_BASE",
+  "BINARY",
+  "BLOB_BASE",
+  "CHAR VARYING",
+  "CHAR_BASE",
+  "CHAR",
+  "CHARACTER VARYING",
+  "CHARACTER",
+  "CLOB_BASE",
+  "DATE_BASE",
+  "DATE",
+  "DECIMAL",
+  "DOUBLE",
+  "FLOAT",
+  "INT",
+  "INTERVAL DAY",
+  "INTERVAL YEAR",
+  "LONG",
+  "NATIONAL CHAR VARYING",
+  "NATIONAL CHAR",
+  "NATIONAL CHARACTER VARYING",
+  "NATIONAL CHARACTER",
+  "NCHAR VARYING",
+  "NCHAR",
+  "NCHAR",
+  "NUMBER_BASE",
+  "NUMBER",
+  "NUMBERIC",
+  "NVARCHAR",
+  "PRECISION",
+  "RAW",
+  "TIMESTAMP",
+  "UROWID",
+  "VARCHAR",
+  "VARCHAR2"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/plsql/plsql.functions.js
+var functions10 = [
+  // https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions001.htm
+  // numeric
+  "ABS",
+  "ACOS",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "BITAND",
+  "CEIL",
+  "COS",
+  "COSH",
+  "EXP",
+  "FLOOR",
+  "LN",
+  "LOG",
+  "MOD",
+  "NANVL",
+  "POWER",
+  "REMAINDER",
+  "ROUND",
+  "SIGN",
+  "SIN",
+  "SINH",
+  "SQRT",
+  "TAN",
+  "TANH",
+  "TRUNC",
+  "WIDTH_BUCKET",
+  // character
+  "CHR",
+  "CONCAT",
+  "INITCAP",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "NLS_INITCAP",
+  "NLS_LOWER",
+  "NLSSORT",
+  "NLS_UPPER",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "REPLACE",
+  "RPAD",
+  "RTRIM",
+  "SOUNDEX",
+  "SUBSTR",
+  "TRANSLATE",
+  "TREAT",
+  "TRIM",
+  "UPPER",
+  "NLS_CHARSET_DECL_LEN",
+  "NLS_CHARSET_ID",
+  "NLS_CHARSET_NAME",
+  "ASCII",
+  "INSTR",
+  "LENGTH",
+  "REGEXP_INSTR",
+  // datetime
+  "ADD_MONTHS",
+  "CURRENT_DATE",
+  "CURRENT_TIMESTAMP",
+  "DBTIMEZONE",
+  "EXTRACT",
+  "FROM_TZ",
+  "LAST_DAY",
+  "LOCALTIMESTAMP",
+  "MONTHS_BETWEEN",
+  "NEW_TIME",
+  "NEXT_DAY",
+  "NUMTODSINTERVAL",
+  "NUMTOYMINTERVAL",
+  "ROUND",
+  "SESSIONTIMEZONE",
+  "SYS_EXTRACT_UTC",
+  "SYSDATE",
+  "SYSTIMESTAMP",
+  "TO_CHAR",
+  "TO_TIMESTAMP",
+  "TO_TIMESTAMP_TZ",
+  "TO_DSINTERVAL",
+  "TO_YMINTERVAL",
+  "TRUNC",
+  "TZ_OFFSET",
+  // comparison
+  "GREATEST",
+  "LEAST",
+  // conversion
+  "ASCIISTR",
+  "BIN_TO_NUM",
+  "CAST",
+  "CHARTOROWID",
+  "COMPOSE",
+  "CONVERT",
+  "DECOMPOSE",
+  "HEXTORAW",
+  "NUMTODSINTERVAL",
+  "NUMTOYMINTERVAL",
+  "RAWTOHEX",
+  "RAWTONHEX",
+  "ROWIDTOCHAR",
+  "ROWIDTONCHAR",
+  "SCN_TO_TIMESTAMP",
+  "TIMESTAMP_TO_SCN",
+  "TO_BINARY_DOUBLE",
+  "TO_BINARY_FLOAT",
+  "TO_CHAR",
+  "TO_CLOB",
+  "TO_DATE",
+  "TO_DSINTERVAL",
+  "TO_LOB",
+  "TO_MULTI_BYTE",
+  "TO_NCHAR",
+  "TO_NCLOB",
+  "TO_NUMBER",
+  "TO_DSINTERVAL",
+  "TO_SINGLE_BYTE",
+  "TO_TIMESTAMP",
+  "TO_TIMESTAMP_TZ",
+  "TO_YMINTERVAL",
+  "TO_YMINTERVAL",
+  "TRANSLATE",
+  "UNISTR",
+  // largeObject
+  "BFILENAME",
+  "EMPTY_BLOB,",
+  "EMPTY_CLOB",
+  // collection
+  "CARDINALITY",
+  "COLLECT",
+  "POWERMULTISET",
+  "POWERMULTISET_BY_CARDINALITY",
+  "SET",
+  // hierarchical
+  "SYS_CONNECT_BY_PATH",
+  // dataMining
+  "CLUSTER_ID",
+  "CLUSTER_PROBABILITY",
+  "CLUSTER_SET",
+  "FEATURE_ID",
+  "FEATURE_SET",
+  "FEATURE_VALUE",
+  "PREDICTION",
+  "PREDICTION_COST",
+  "PREDICTION_DETAILS",
+  "PREDICTION_PROBABILITY",
+  "PREDICTION_SET",
+  // xml
+  "APPENDCHILDXML",
+  "DELETEXML",
+  "DEPTH",
+  "EXTRACT",
+  "EXISTSNODE",
+  "EXTRACTVALUE",
+  "INSERTCHILDXML",
+  "INSERTXMLBEFORE",
+  "PATH",
+  "SYS_DBURIGEN",
+  "SYS_XMLAGG",
+  "SYS_XMLGEN",
+  "UPDATEXML",
+  "XMLAGG",
+  "XMLCDATA",
+  "XMLCOLATTVAL",
+  "XMLCOMMENT",
+  "XMLCONCAT",
+  "XMLFOREST",
+  "XMLPARSE",
+  "XMLPI",
+  "XMLQUERY",
+  "XMLROOT",
+  "XMLSEQUENCE",
+  "XMLSERIALIZE",
+  "XMLTABLE",
+  "XMLTRANSFORM",
+  // encoding
+  "DECODE",
+  "DUMP",
+  "ORA_HASH",
+  "VSIZE",
+  // nullRelated
+  "COALESCE",
+  "LNNVL",
+  "NULLIF",
+  "NVL",
+  "NVL2",
+  // env
+  "SYS_CONTEXT",
+  "SYS_GUID",
+  "SYS_TYPEID",
+  "UID",
+  "USER",
+  "USERENV",
+  // aggregate
+  "AVG",
+  "COLLECT",
+  "CORR",
+  "CORR_S",
+  "CORR_K",
+  "COUNT",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "CUME_DIST",
+  "DENSE_RANK",
+  "FIRST",
+  "GROUP_ID",
+  "GROUPING",
+  "GROUPING_ID",
+  "LAST",
+  "MAX",
+  "MEDIAN",
+  "MIN",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PERCENT_RANK",
+  "RANK",
+  "REGR_SLOPE",
+  "REGR_INTERCEPT",
+  "REGR_COUNT",
+  "REGR_R2",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_SXX",
+  "REGR_SYY",
+  "REGR_SXY",
+  "STATS_BINOMIAL_TEST",
+  "STATS_CROSSTAB",
+  "STATS_F_TEST",
+  "STATS_KS_TEST",
+  "STATS_MODE",
+  "STATS_MW_TEST",
+  "STATS_ONE_WAY_ANOVA",
+  "STATS_T_TEST_ONE",
+  "STATS_T_TEST_PAIRED",
+  "STATS_T_TEST_INDEP",
+  "STATS_T_TEST_INDEPU",
+  "STATS_WSR_TEST",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "SUM",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  // Windowing functions (minus the ones already listed in aggregates)
+  // window
+  "FIRST_VALUE",
+  "LAG",
+  "LAST_VALUE",
+  "LEAD",
+  "NTILE",
+  "RATIO_TO_REPORT",
+  "ROW_NUMBER",
+  // objectReference
+  "DEREF",
+  "MAKE_REF",
+  "REF",
+  "REFTOHEX",
+  "VALUE",
+  // model
+  "CV",
+  "ITERATION_NUMBER",
+  "PRESENTNNV",
+  "PRESENTV",
+  "PREVIOUS"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/plsql/plsql.formatter.js
+var reservedSelect10 = expandPhrases(["SELECT [ALL | DISTINCT | UNIQUE]"]);
+var reservedClauses10 = expandPhrases([
+  // queries
+  "WITH",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "PARTITION BY",
+  "ORDER [SIBLINGS] BY",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  "FOR UPDATE [OF]",
+  // Data manipulation
+  // - insert:
+  "INSERT [INTO | ALL INTO]",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE [INTO]",
+  "WHEN [NOT] MATCHED [THEN]",
+  "UPDATE SET",
+  // other
+  "RETURNING"
+]);
+var standardOnelineClauses9 = expandPhrases([
+  "CREATE [GLOBAL TEMPORARY | PRIVATE TEMPORARY | SHARDED | DUPLICATED | IMMUTABLE BLOCKCHAIN | BLOCKCHAIN | IMMUTABLE] TABLE"
+]);
+var tabularOnelineClauses9 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [NO FORCE | FORCE] [EDITIONING | EDITIONABLE | EDITIONABLE EDITIONING | NONEDITIONABLE] VIEW",
+  "CREATE MATERIALIZED VIEW",
+  // - update:
+  "UPDATE [ONLY]",
+  // - delete:
+  "DELETE FROM [ONLY]",
+  // - drop table:
+  "DROP TABLE",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD",
+  "DROP {COLUMN | UNUSED COLUMNS | COLUMNS CONTINUE}",
+  "MODIFY",
+  "RENAME TO",
+  "RENAME COLUMN",
+  // - truncate:
+  "TRUNCATE TABLE",
+  // other
+  "SET SCHEMA",
+  "BEGIN",
+  "CONNECT BY",
+  "DECLARE",
+  "EXCEPT",
+  "EXCEPTION",
+  "LOOP",
+  "START WITH"
+]);
+var reservedSetOperations10 = expandPhrases(["UNION [ALL]", "MINUS", "INTERSECT"]);
+var reservedJoins10 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN",
+  // non-standard joins
+  "{CROSS | OUTER} APPLY"
+]);
+var reservedPhrases10 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL]",
+  "ON COMMIT",
+  "{ROWS | RANGE} BETWEEN"
+]);
+var plsql = {
+  name: "plsql",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect10,
+    reservedClauses: [...reservedClauses10, ...standardOnelineClauses9, ...tabularOnelineClauses9],
+    reservedSetOperations: reservedSetOperations10,
+    reservedJoins: reservedJoins10,
+    reservedPhrases: reservedPhrases10,
+    supportsXor: true,
+    reservedKeywords: keywords11,
+    reservedDataTypes: dataTypes10,
+    reservedFunctionNames: functions10,
+    stringTypes: [
+      { quote: "''-qq", prefixes: ["N"] },
+      { quote: "q''", prefixes: ["N"] }
+    ],
+    // PL/SQL doesn't actually support escaping of quotes in identifiers,
+    // but for the sake of simpler testing we'll support this anyway
+    // as all other SQL dialects with "identifiers" do.
+    identTypes: [`""-qq`],
+    identChars: { rest: "$#" },
+    variableTypes: [{ regex: "&{1,2}[A-Za-z][A-Za-z0-9_$#]*" }],
+    paramTypes: { numbered: [":"], named: [":"] },
+    operators: [
+      "**",
+      ":=",
+      "%",
+      "~=",
+      "^=",
+      // '..', // Conflicts with float followed by dot (so "2..3" gets parsed as ["2.", ".", "3"])
+      ">>",
+      "<<",
+      "=>",
+      "@",
+      "||"
+    ],
+    postProcess: postProcess3
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["@"],
+    onelineClauses: [...standardOnelineClauses9, ...tabularOnelineClauses9],
+    tabularOnelineClauses: tabularOnelineClauses9
+  }
+};
+function postProcess3(tokens2) {
+  let previousReservedToken = EOF_TOKEN;
+  return tokens2.map((token) => {
+    if (isToken.SET(token) && isToken.BY(previousReservedToken)) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.RESERVED_KEYWORD });
+    }
+    if (isReserved(token.type)) {
+      previousReservedToken = token;
+    }
+    return token;
+  });
+}
+
+// node_modules/sql-formatter/dist/esm/languages/postgresql/postgresql.functions.js
+var functions11 = [
+  // https://www.postgresql.org/docs/14/functions.html
+  //
+  // https://www.postgresql.org/docs/14/functions-math.html
+  "ABS",
+  "ACOS",
+  "ACOSD",
+  "ACOSH",
+  "ASIN",
+  "ASIND",
+  "ASINH",
+  "ATAN",
+  "ATAN2",
+  "ATAN2D",
+  "ATAND",
+  "ATANH",
+  "CBRT",
+  "CEIL",
+  "CEILING",
+  "COS",
+  "COSD",
+  "COSH",
+  "COT",
+  "COTD",
+  "DEGREES",
+  "DIV",
+  "EXP",
+  "FACTORIAL",
+  "FLOOR",
+  "GCD",
+  "LCM",
+  "LN",
+  "LOG",
+  "LOG10",
+  "MIN_SCALE",
+  "MOD",
+  "PI",
+  "POWER",
+  "RADIANS",
+  "RANDOM",
+  "ROUND",
+  "SCALE",
+  "SETSEED",
+  "SIGN",
+  "SIN",
+  "SIND",
+  "SINH",
+  "SQRT",
+  "TAN",
+  "TAND",
+  "TANH",
+  "TRIM_SCALE",
+  "TRUNC",
+  "WIDTH_BUCKET",
+  // https://www.postgresql.org/docs/14/functions-string.html
+  "ABS",
+  "ASCII",
+  "BIT_LENGTH",
+  "BTRIM",
+  "CHARACTER_LENGTH",
+  "CHAR_LENGTH",
+  "CHR",
+  "CONCAT",
+  "CONCAT_WS",
+  "FORMAT",
+  "INITCAP",
+  "LEFT",
+  "LENGTH",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "MD5",
+  "NORMALIZE",
+  "OCTET_LENGTH",
+  "OVERLAY",
+  "PARSE_IDENT",
+  "PG_CLIENT_ENCODING",
+  "POSITION",
+  "QUOTE_IDENT",
+  "QUOTE_LITERAL",
+  "QUOTE_NULLABLE",
+  "REGEXP_MATCH",
+  "REGEXP_MATCHES",
+  "REGEXP_REPLACE",
+  "REGEXP_SPLIT_TO_ARRAY",
+  "REGEXP_SPLIT_TO_TABLE",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "RIGHT",
+  "RPAD",
+  "RTRIM",
+  "SPLIT_PART",
+  "SPRINTF",
+  "STARTS_WITH",
+  "STRING_AGG",
+  "STRING_TO_ARRAY",
+  "STRING_TO_TABLE",
+  "STRPOS",
+  "SUBSTR",
+  "SUBSTRING",
+  "TO_ASCII",
+  "TO_HEX",
+  "TRANSLATE",
+  "TRIM",
+  "UNISTR",
+  "UPPER",
+  // https://www.postgresql.org/docs/14/functions-binarystring.html
+  "BIT_COUNT",
+  "BIT_LENGTH",
+  "BTRIM",
+  "CONVERT",
+  "CONVERT_FROM",
+  "CONVERT_TO",
+  "DECODE",
+  "ENCODE",
+  "GET_BIT",
+  "GET_BYTE",
+  "LENGTH",
+  "LTRIM",
+  "MD5",
+  "OCTET_LENGTH",
+  "OVERLAY",
+  "POSITION",
+  "RTRIM",
+  "SET_BIT",
+  "SET_BYTE",
+  "SHA224",
+  "SHA256",
+  "SHA384",
+  "SHA512",
+  "STRING_AGG",
+  "SUBSTR",
+  "SUBSTRING",
+  "TRIM",
+  // https://www.postgresql.org/docs/14/functions-bitstring.html
+  "BIT_COUNT",
+  "BIT_LENGTH",
+  "GET_BIT",
+  "LENGTH",
+  "OCTET_LENGTH",
+  "OVERLAY",
+  "POSITION",
+  "SET_BIT",
+  "SUBSTRING",
+  // https://www.postgresql.org/docs/14/functions-matching.html
+  "REGEXP_MATCH",
+  "REGEXP_MATCHES",
+  "REGEXP_REPLACE",
+  "REGEXP_SPLIT_TO_ARRAY",
+  "REGEXP_SPLIT_TO_TABLE",
+  // https://www.postgresql.org/docs/14/functions-formatting.html
+  "TO_CHAR",
+  "TO_DATE",
+  "TO_NUMBER",
+  "TO_TIMESTAMP",
+  // https://www.postgresql.org/docs/14/functions-datetime.html
+  // 'AGE',
+  "CLOCK_TIMESTAMP",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "DATE_BIN",
+  "DATE_PART",
+  "DATE_TRUNC",
+  "EXTRACT",
+  "ISFINITE",
+  "JUSTIFY_DAYS",
+  "JUSTIFY_HOURS",
+  "JUSTIFY_INTERVAL",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "MAKE_DATE",
+  "MAKE_INTERVAL",
+  "MAKE_TIME",
+  "MAKE_TIMESTAMP",
+  "MAKE_TIMESTAMPTZ",
+  "NOW",
+  "PG_SLEEP",
+  "PG_SLEEP_FOR",
+  "PG_SLEEP_UNTIL",
+  "STATEMENT_TIMESTAMP",
+  "TIMEOFDAY",
+  "TO_TIMESTAMP",
+  "TRANSACTION_TIMESTAMP",
+  // https://www.postgresql.org/docs/14/functions-enum.html
+  "ENUM_FIRST",
+  "ENUM_LAST",
+  "ENUM_RANGE",
+  // https://www.postgresql.org/docs/14/functions-geometry.html
+  "AREA",
+  "BOUND_BOX",
+  "BOX",
+  "CENTER",
+  "CIRCLE",
+  "DIAGONAL",
+  "DIAMETER",
+  "HEIGHT",
+  "ISCLOSED",
+  "ISOPEN",
+  "LENGTH",
+  "LINE",
+  "LSEG",
+  "NPOINTS",
+  "PATH",
+  "PCLOSE",
+  "POINT",
+  "POLYGON",
+  "POPEN",
+  "RADIUS",
+  "SLOPE",
+  "WIDTH",
+  // https://www.postgresql.org/docs/14/functions-net.html
+  "ABBREV",
+  "BROADCAST",
+  "FAMILY",
+  "HOST",
+  "HOSTMASK",
+  "INET_MERGE",
+  "INET_SAME_FAMILY",
+  "MACADDR8_SET7BIT",
+  "MASKLEN",
+  "NETMASK",
+  "NETWORK",
+  "SET_MASKLEN",
+  // 'TEXT', // excluded because it's also a data type name
+  "TRUNC",
+  // https://www.postgresql.org/docs/14/functions-textsearch.html
+  "ARRAY_TO_TSVECTOR",
+  "GET_CURRENT_TS_CONFIG",
+  "JSONB_TO_TSVECTOR",
+  "JSON_TO_TSVECTOR",
+  "LENGTH",
+  "NUMNODE",
+  "PHRASETO_TSQUERY",
+  "PLAINTO_TSQUERY",
+  "QUERYTREE",
+  "SETWEIGHT",
+  "STRIP",
+  "TO_TSQUERY",
+  "TO_TSVECTOR",
+  "TSQUERY_PHRASE",
+  "TSVECTOR_TO_ARRAY",
+  "TS_DEBUG",
+  "TS_DELETE",
+  "TS_FILTER",
+  "TS_HEADLINE",
+  "TS_LEXIZE",
+  "TS_PARSE",
+  "TS_RANK",
+  "TS_RANK_CD",
+  "TS_REWRITE",
+  "TS_STAT",
+  "TS_TOKEN_TYPE",
+  "WEBSEARCH_TO_TSQUERY",
+  // https://www.postgresql.org/docs/14/functions-uuid.html
+  "GEN_RANDOM_UUID",
+  // https://www.postgresql.org/docs/14/functions-xml.html
+  "CURSOR_TO_XML",
+  "CURSOR_TO_XMLSCHEMA",
+  "DATABASE_TO_XML",
+  "DATABASE_TO_XMLSCHEMA",
+  "DATABASE_TO_XML_AND_XMLSCHEMA",
+  "NEXTVAL",
+  "QUERY_TO_XML",
+  "QUERY_TO_XMLSCHEMA",
+  "QUERY_TO_XML_AND_XMLSCHEMA",
+  "SCHEMA_TO_XML",
+  "SCHEMA_TO_XMLSCHEMA",
+  "SCHEMA_TO_XML_AND_XMLSCHEMA",
+  "STRING",
+  "TABLE_TO_XML",
+  "TABLE_TO_XMLSCHEMA",
+  "TABLE_TO_XML_AND_XMLSCHEMA",
+  "XMLAGG",
+  "XMLCOMMENT",
+  "XMLCONCAT",
+  "XMLELEMENT",
+  "XMLEXISTS",
+  "XMLFOREST",
+  "XMLPARSE",
+  "XMLPI",
+  "XMLROOT",
+  "XMLSERIALIZE",
+  "XMLTABLE",
+  "XML_IS_WELL_FORMED",
+  "XML_IS_WELL_FORMED_CONTENT",
+  "XML_IS_WELL_FORMED_DOCUMENT",
+  "XPATH",
+  "XPATH_EXISTS",
+  // https://www.postgresql.org/docs/14/functions-json.html
+  "ARRAY_TO_JSON",
+  "JSONB_AGG",
+  "JSONB_ARRAY_ELEMENTS",
+  "JSONB_ARRAY_ELEMENTS_TEXT",
+  "JSONB_ARRAY_LENGTH",
+  "JSONB_BUILD_ARRAY",
+  "JSONB_BUILD_OBJECT",
+  "JSONB_EACH",
+  "JSONB_EACH_TEXT",
+  "JSONB_EXTRACT_PATH",
+  "JSONB_EXTRACT_PATH_TEXT",
+  "JSONB_INSERT",
+  "JSONB_OBJECT",
+  "JSONB_OBJECT_AGG",
+  "JSONB_OBJECT_KEYS",
+  "JSONB_PATH_EXISTS",
+  "JSONB_PATH_EXISTS_TZ",
+  "JSONB_PATH_MATCH",
+  "JSONB_PATH_MATCH_TZ",
+  "JSONB_PATH_QUERY",
+  "JSONB_PATH_QUERY_ARRAY",
+  "JSONB_PATH_QUERY_ARRAY_TZ",
+  "JSONB_PATH_QUERY_FIRST",
+  "JSONB_PATH_QUERY_FIRST_TZ",
+  "JSONB_PATH_QUERY_TZ",
+  "JSONB_POPULATE_RECORD",
+  "JSONB_POPULATE_RECORDSET",
+  "JSONB_PRETTY",
+  "JSONB_SET",
+  "JSONB_SET_LAX",
+  "JSONB_STRIP_NULLS",
+  "JSONB_TO_RECORD",
+  "JSONB_TO_RECORDSET",
+  "JSONB_TYPEOF",
+  "JSON_AGG",
+  "JSON_ARRAY_ELEMENTS",
+  "JSON_ARRAY_ELEMENTS_TEXT",
+  "JSON_ARRAY_LENGTH",
+  "JSON_BUILD_ARRAY",
+  "JSON_BUILD_OBJECT",
+  "JSON_EACH",
+  "JSON_EACH_TEXT",
+  "JSON_EXTRACT_PATH",
+  "JSON_EXTRACT_PATH_TEXT",
+  "JSON_OBJECT",
+  "JSON_OBJECT_AGG",
+  "JSON_OBJECT_KEYS",
+  "JSON_POPULATE_RECORD",
+  "JSON_POPULATE_RECORDSET",
+  "JSON_STRIP_NULLS",
+  "JSON_TO_RECORD",
+  "JSON_TO_RECORDSET",
+  "JSON_TYPEOF",
+  "ROW_TO_JSON",
+  "TO_JSON",
+  "TO_JSONB",
+  "TO_TIMESTAMP",
+  // https://www.postgresql.org/docs/14/functions-sequence.html
+  "CURRVAL",
+  "LASTVAL",
+  "NEXTVAL",
+  "SETVAL",
+  // https://www.postgresql.org/docs/14/functions-conditional.html
+  // 'CASE',
+  "COALESCE",
+  "GREATEST",
+  "LEAST",
+  "NULLIF",
+  // https://www.postgresql.org/docs/14/functions-array.html
+  "ARRAY_AGG",
+  "ARRAY_APPEND",
+  "ARRAY_CAT",
+  "ARRAY_DIMS",
+  "ARRAY_FILL",
+  "ARRAY_LENGTH",
+  "ARRAY_LOWER",
+  "ARRAY_NDIMS",
+  "ARRAY_POSITION",
+  "ARRAY_POSITIONS",
+  "ARRAY_PREPEND",
+  "ARRAY_REMOVE",
+  "ARRAY_REPLACE",
+  "ARRAY_TO_STRING",
+  "ARRAY_UPPER",
+  "CARDINALITY",
+  "STRING_TO_ARRAY",
+  "TRIM_ARRAY",
+  "UNNEST",
+  // https://www.postgresql.org/docs/14/functions-range.html
+  "ISEMPTY",
+  "LOWER",
+  "LOWER_INC",
+  "LOWER_INF",
+  "MULTIRANGE",
+  "RANGE_MERGE",
+  "UPPER",
+  "UPPER_INC",
+  "UPPER_INF",
+  // https://www.postgresql.org/docs/14/functions-aggregate.html
+  // 'ANY',
+  "ARRAY_AGG",
+  "AVG",
+  "BIT_AND",
+  "BIT_OR",
+  "BIT_XOR",
+  "BOOL_AND",
+  "BOOL_OR",
+  "COALESCE",
+  "CORR",
+  "COUNT",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "CUME_DIST",
+  "DENSE_RANK",
+  "EVERY",
+  "GROUPING",
+  "JSONB_AGG",
+  "JSONB_OBJECT_AGG",
+  "JSON_AGG",
+  "JSON_OBJECT_AGG",
+  "MAX",
+  "MIN",
+  "MODE",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PERCENT_RANK",
+  "RANGE_AGG",
+  "RANGE_INTERSECT_AGG",
+  "RANK",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_COUNT",
+  "REGR_INTERCEPT",
+  "REGR_R2",
+  "REGR_SLOPE",
+  "REGR_SXX",
+  "REGR_SXY",
+  "REGR_SYY",
+  // 'SOME',
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STRING_AGG",
+  "SUM",
+  "TO_JSON",
+  "TO_JSONB",
+  "VARIANCE",
+  "VAR_POP",
+  "VAR_SAMP",
+  "XMLAGG",
+  // https://www.postgresql.org/docs/14/functions-window.html
+  "CUME_DIST",
+  "DENSE_RANK",
+  "FIRST_VALUE",
+  "LAG",
+  "LAST_VALUE",
+  "LEAD",
+  "NTH_VALUE",
+  "NTILE",
+  "PERCENT_RANK",
+  "RANK",
+  "ROW_NUMBER",
+  // https://www.postgresql.org/docs/14/functions-srf.html
+  "GENERATE_SERIES",
+  "GENERATE_SUBSCRIPTS",
+  // https://www.postgresql.org/docs/14/functions-info.html
+  "ACLDEFAULT",
+  "ACLEXPLODE",
+  "COL_DESCRIPTION",
+  "CURRENT_CATALOG",
+  "CURRENT_DATABASE",
+  "CURRENT_QUERY",
+  "CURRENT_ROLE",
+  "CURRENT_SCHEMA",
+  "CURRENT_SCHEMAS",
+  "CURRENT_USER",
+  "FORMAT_TYPE",
+  "HAS_ANY_COLUMN_PRIVILEGE",
+  "HAS_COLUMN_PRIVILEGE",
+  "HAS_DATABASE_PRIVILEGE",
+  "HAS_FOREIGN_DATA_WRAPPER_PRIVILEGE",
+  "HAS_FUNCTION_PRIVILEGE",
+  "HAS_LANGUAGE_PRIVILEGE",
+  "HAS_SCHEMA_PRIVILEGE",
+  "HAS_SEQUENCE_PRIVILEGE",
+  "HAS_SERVER_PRIVILEGE",
+  "HAS_TABLESPACE_PRIVILEGE",
+  "HAS_TABLE_PRIVILEGE",
+  "HAS_TYPE_PRIVILEGE",
+  "INET_CLIENT_ADDR",
+  "INET_CLIENT_PORT",
+  "INET_SERVER_ADDR",
+  "INET_SERVER_PORT",
+  "MAKEACLITEM",
+  "OBJ_DESCRIPTION",
+  "PG_BACKEND_PID",
+  "PG_BLOCKING_PIDS",
+  "PG_COLLATION_IS_VISIBLE",
+  "PG_CONF_LOAD_TIME",
+  "PG_CONTROL_CHECKPOINT",
+  "PG_CONTROL_INIT",
+  "PG_CONTROL_SYSTEM",
+  "PG_CONVERSION_IS_VISIBLE",
+  "PG_CURRENT_LOGFILE",
+  "PG_CURRENT_SNAPSHOT",
+  "PG_CURRENT_XACT_ID",
+  "PG_CURRENT_XACT_ID_IF_ASSIGNED",
+  "PG_DESCRIBE_OBJECT",
+  "PG_FUNCTION_IS_VISIBLE",
+  "PG_GET_CATALOG_FOREIGN_KEYS",
+  "PG_GET_CONSTRAINTDEF",
+  "PG_GET_EXPR",
+  "PG_GET_FUNCTIONDEF",
+  "PG_GET_FUNCTION_ARGUMENTS",
+  "PG_GET_FUNCTION_IDENTITY_ARGUMENTS",
+  "PG_GET_FUNCTION_RESULT",
+  "PG_GET_INDEXDEF",
+  "PG_GET_KEYWORDS",
+  "PG_GET_OBJECT_ADDRESS",
+  "PG_GET_OWNED_SEQUENCE",
+  "PG_GET_RULEDEF",
+  "PG_GET_SERIAL_SEQUENCE",
+  "PG_GET_STATISTICSOBJDEF",
+  "PG_GET_TRIGGERDEF",
+  "PG_GET_USERBYID",
+  "PG_GET_VIEWDEF",
+  "PG_HAS_ROLE",
+  "PG_IDENTIFY_OBJECT",
+  "PG_IDENTIFY_OBJECT_AS_ADDRESS",
+  "PG_INDEXAM_HAS_PROPERTY",
+  "PG_INDEX_COLUMN_HAS_PROPERTY",
+  "PG_INDEX_HAS_PROPERTY",
+  "PG_IS_OTHER_TEMP_SCHEMA",
+  "PG_JIT_AVAILABLE",
+  "PG_LAST_COMMITTED_XACT",
+  "PG_LISTENING_CHANNELS",
+  "PG_MY_TEMP_SCHEMA",
+  "PG_NOTIFICATION_QUEUE_USAGE",
+  "PG_OPCLASS_IS_VISIBLE",
+  "PG_OPERATOR_IS_VISIBLE",
+  "PG_OPFAMILY_IS_VISIBLE",
+  "PG_OPTIONS_TO_TABLE",
+  "PG_POSTMASTER_START_TIME",
+  "PG_SAFE_SNAPSHOT_BLOCKING_PIDS",
+  "PG_SNAPSHOT_XIP",
+  "PG_SNAPSHOT_XMAX",
+  "PG_SNAPSHOT_XMIN",
+  "PG_STATISTICS_OBJ_IS_VISIBLE",
+  "PG_TABLESPACE_DATABASES",
+  "PG_TABLESPACE_LOCATION",
+  "PG_TABLE_IS_VISIBLE",
+  "PG_TRIGGER_DEPTH",
+  "PG_TS_CONFIG_IS_VISIBLE",
+  "PG_TS_DICT_IS_VISIBLE",
+  "PG_TS_PARSER_IS_VISIBLE",
+  "PG_TS_TEMPLATE_IS_VISIBLE",
+  "PG_TYPEOF",
+  "PG_TYPE_IS_VISIBLE",
+  "PG_VISIBLE_IN_SNAPSHOT",
+  "PG_XACT_COMMIT_TIMESTAMP",
+  "PG_XACT_COMMIT_TIMESTAMP_ORIGIN",
+  "PG_XACT_STATUS",
+  "PQSERVERVERSION",
+  "ROW_SECURITY_ACTIVE",
+  "SESSION_USER",
+  "SHOBJ_DESCRIPTION",
+  "TO_REGCLASS",
+  "TO_REGCOLLATION",
+  "TO_REGNAMESPACE",
+  "TO_REGOPER",
+  "TO_REGOPERATOR",
+  "TO_REGPROC",
+  "TO_REGPROCEDURE",
+  "TO_REGROLE",
+  "TO_REGTYPE",
+  "TXID_CURRENT",
+  "TXID_CURRENT_IF_ASSIGNED",
+  "TXID_CURRENT_SNAPSHOT",
+  "TXID_SNAPSHOT_XIP",
+  "TXID_SNAPSHOT_XMAX",
+  "TXID_SNAPSHOT_XMIN",
+  "TXID_STATUS",
+  "TXID_VISIBLE_IN_SNAPSHOT",
+  "USER",
+  "VERSION",
+  // https://www.postgresql.org/docs/14/functions-admin.html
+  "BRIN_DESUMMARIZE_RANGE",
+  "BRIN_SUMMARIZE_NEW_VALUES",
+  "BRIN_SUMMARIZE_RANGE",
+  "CONVERT_FROM",
+  "CURRENT_SETTING",
+  "GIN_CLEAN_PENDING_LIST",
+  "PG_ADVISORY_LOCK",
+  "PG_ADVISORY_LOCK_SHARED",
+  "PG_ADVISORY_UNLOCK",
+  "PG_ADVISORY_UNLOCK_ALL",
+  "PG_ADVISORY_UNLOCK_SHARED",
+  "PG_ADVISORY_XACT_LOCK",
+  "PG_ADVISORY_XACT_LOCK_SHARED",
+  "PG_BACKUP_START_TIME",
+  "PG_CANCEL_BACKEND",
+  "PG_COLLATION_ACTUAL_VERSION",
+  "PG_COLUMN_COMPRESSION",
+  "PG_COLUMN_SIZE",
+  "PG_COPY_LOGICAL_REPLICATION_SLOT",
+  "PG_COPY_PHYSICAL_REPLICATION_SLOT",
+  "PG_CREATE_LOGICAL_REPLICATION_SLOT",
+  "PG_CREATE_PHYSICAL_REPLICATION_SLOT",
+  "PG_CREATE_RESTORE_POINT",
+  "PG_CURRENT_WAL_FLUSH_LSN",
+  "PG_CURRENT_WAL_INSERT_LSN",
+  "PG_CURRENT_WAL_LSN",
+  "PG_DATABASE_SIZE",
+  "PG_DROP_REPLICATION_SLOT",
+  "PG_EXPORT_SNAPSHOT",
+  "PG_FILENODE_RELATION",
+  "PG_GET_WAL_REPLAY_PAUSE_STATE",
+  "PG_IMPORT_SYSTEM_COLLATIONS",
+  "PG_INDEXES_SIZE",
+  "PG_IS_IN_BACKUP",
+  "PG_IS_IN_RECOVERY",
+  "PG_IS_WAL_REPLAY_PAUSED",
+  "PG_LAST_WAL_RECEIVE_LSN",
+  "PG_LAST_WAL_REPLAY_LSN",
+  "PG_LAST_XACT_REPLAY_TIMESTAMP",
+  "PG_LOGICAL_EMIT_MESSAGE",
+  "PG_LOGICAL_SLOT_GET_BINARY_CHANGES",
+  "PG_LOGICAL_SLOT_GET_CHANGES",
+  "PG_LOGICAL_SLOT_PEEK_BINARY_CHANGES",
+  "PG_LOGICAL_SLOT_PEEK_CHANGES",
+  "PG_LOG_BACKEND_MEMORY_CONTEXTS",
+  "PG_LS_ARCHIVE_STATUSDIR",
+  "PG_LS_DIR",
+  "PG_LS_LOGDIR",
+  "PG_LS_TMPDIR",
+  "PG_LS_WALDIR",
+  "PG_PARTITION_ANCESTORS",
+  "PG_PARTITION_ROOT",
+  "PG_PARTITION_TREE",
+  "PG_PROMOTE",
+  "PG_READ_BINARY_FILE",
+  "PG_READ_FILE",
+  "PG_RELATION_FILENODE",
+  "PG_RELATION_FILEPATH",
+  "PG_RELATION_SIZE",
+  "PG_RELOAD_CONF",
+  "PG_REPLICATION_ORIGIN_ADVANCE",
+  "PG_REPLICATION_ORIGIN_CREATE",
+  "PG_REPLICATION_ORIGIN_DROP",
+  "PG_REPLICATION_ORIGIN_OID",
+  "PG_REPLICATION_ORIGIN_PROGRESS",
+  "PG_REPLICATION_ORIGIN_SESSION_IS_SETUP",
+  "PG_REPLICATION_ORIGIN_SESSION_PROGRESS",
+  "PG_REPLICATION_ORIGIN_SESSION_RESET",
+  "PG_REPLICATION_ORIGIN_SESSION_SETUP",
+  "PG_REPLICATION_ORIGIN_XACT_RESET",
+  "PG_REPLICATION_ORIGIN_XACT_SETUP",
+  "PG_REPLICATION_SLOT_ADVANCE",
+  "PG_ROTATE_LOGFILE",
+  "PG_SIZE_BYTES",
+  "PG_SIZE_PRETTY",
+  "PG_START_BACKUP",
+  "PG_STAT_FILE",
+  "PG_STOP_BACKUP",
+  "PG_SWITCH_WAL",
+  "PG_TABLESPACE_SIZE",
+  "PG_TABLE_SIZE",
+  "PG_TERMINATE_BACKEND",
+  "PG_TOTAL_RELATION_SIZE",
+  "PG_TRY_ADVISORY_LOCK",
+  "PG_TRY_ADVISORY_LOCK_SHARED",
+  "PG_TRY_ADVISORY_XACT_LOCK",
+  "PG_TRY_ADVISORY_XACT_LOCK_SHARED",
+  "PG_WALFILE_NAME",
+  "PG_WALFILE_NAME_OFFSET",
+  "PG_WAL_LSN_DIFF",
+  "PG_WAL_REPLAY_PAUSE",
+  "PG_WAL_REPLAY_RESUME",
+  "SET_CONFIG",
+  // https://www.postgresql.org/docs/14/functions-trigger.html
+  "SUPPRESS_REDUNDANT_UPDATES_TRIGGER",
+  "TSVECTOR_UPDATE_TRIGGER",
+  "TSVECTOR_UPDATE_TRIGGER_COLUMN",
+  // https://www.postgresql.org/docs/14/functions-event-triggers.html
+  "PG_EVENT_TRIGGER_DDL_COMMANDS",
+  "PG_EVENT_TRIGGER_DROPPED_OBJECTS",
+  "PG_EVENT_TRIGGER_TABLE_REWRITE_OID",
+  "PG_EVENT_TRIGGER_TABLE_REWRITE_REASON",
+  "PG_GET_OBJECT_ADDRESS",
+  // https://www.postgresql.org/docs/14/functions-statistics.html
+  "PG_MCV_LIST_ITEMS",
+  // cast
+  "CAST"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/postgresql/postgresql.keywords.js
+var keywords12 = [
+  // https://www.postgresql.org/docs/14/sql-keywords-appendix.html
+  "ALL",
+  "ANALYSE",
+  "ANALYZE",
+  "AND",
+  "ANY",
+  "AS",
+  "ASC",
+  "ASYMMETRIC",
+  "AUTHORIZATION",
+  "BETWEEN",
+  "BINARY",
+  "BOTH",
+  "CASE",
+  "CAST",
+  "CHECK",
+  "COLLATE",
+  "COLLATION",
+  "COLUMN",
+  "CONCURRENTLY",
+  "CONSTRAINT",
+  "CREATE",
+  "CROSS",
+  "CURRENT_CATALOG",
+  "CURRENT_DATE",
+  "CURRENT_ROLE",
+  "CURRENT_SCHEMA",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "DAY",
+  "DEFAULT",
+  "DEFERRABLE",
+  "DESC",
+  "DISTINCT",
+  "DO",
+  "ELSE",
+  "END",
+  "EXCEPT",
+  "EXISTS",
+  "FALSE",
+  "FETCH",
+  "FILTER",
+  "FOR",
+  "FOREIGN",
+  "FREEZE",
+  "FROM",
+  "FULL",
+  "GRANT",
+  "GROUP",
+  "HAVING",
+  "HOUR",
+  "ILIKE",
+  "IN",
+  "INITIALLY",
+  "INNER",
+  "INOUT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ISNULL",
+  "JOIN",
+  "LATERAL",
+  "LEADING",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "MINUTE",
+  "MONTH",
+  "NATURAL",
+  "NOT",
+  "NOTNULL",
+  "NULL",
+  "NULLIF",
+  "OFFSET",
+  "ON",
+  "ONLY",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OVER",
+  "OVERLAPS",
+  "PLACING",
+  "PRIMARY",
+  "REFERENCES",
+  "RETURNING",
+  "RIGHT",
+  "ROW",
+  "SECOND",
+  "SELECT",
+  "SESSION_USER",
+  "SIMILAR",
+  "SOME",
+  "SYMMETRIC",
+  "TABLE",
+  "TABLESAMPLE",
+  "THEN",
+  "TO",
+  "TRAILING",
+  "TRUE",
+  "UNION",
+  "UNIQUE",
+  "USER",
+  "USING",
+  "VALUES",
+  "VARIADIC",
+  "VERBOSE",
+  "WHEN",
+  "WHERE",
+  "WINDOW",
+  "WITH",
+  "WITHIN",
+  "WITHOUT",
+  "YEAR"
+  // requires AS
+];
+var dataTypes11 = [
+  // https://www.postgresql.org/docs/current/datatype.html
+  "ARRAY",
+  "BIGINT",
+  "BIT",
+  "BIT VARYING",
+  "BOOL",
+  "BOOLEAN",
+  "CHAR",
+  "CHARACTER",
+  "CHARACTER VARYING",
+  "DECIMAL",
+  "DEC",
+  "DOUBLE",
+  "ENUM",
+  "FLOAT",
+  "INT",
+  "INTEGER",
+  "INTERVAL",
+  "NCHAR",
+  "NUMERIC",
+  "JSON",
+  "JSONB",
+  "PRECISION",
+  "REAL",
+  "SMALLINT",
+  "TEXT",
+  "TIME",
+  "TIMESTAMP",
+  "TIMESTAMPTZ",
+  "UUID",
+  "VARCHAR",
+  "XML",
+  "ZONE"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/postgresql/postgresql.formatter.js
+var reservedSelect11 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses11 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY [ALL | DISTINCT]",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  "FOR {UPDATE | NO KEY UPDATE | SHARE | KEY SHARE} [OF]",
+  // Data manipulation
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  "DEFAULT VALUES",
+  // - update:
+  "SET",
+  // other
+  "RETURNING"
+]);
+var standardOnelineClauses10 = expandPhrases([
+  "CREATE [GLOBAL | LOCAL] [TEMPORARY | TEMP | UNLOGGED] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses10 = expandPhrases([
+  // - create
+  "CREATE [OR REPLACE] [TEMP | TEMPORARY] [RECURSIVE] VIEW",
+  "CREATE [MATERIALIZED] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE [ONLY]",
+  "WHERE CURRENT OF",
+  // - insert:
+  "ON CONFLICT",
+  // - delete:
+  "DELETE FROM [ONLY]",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE [IF EXISTS] [ONLY]",
+  "ALTER TABLE ALL IN TABLESPACE",
+  "RENAME [COLUMN]",
+  "RENAME TO",
+  "ADD [COLUMN] [IF NOT EXISTS]",
+  "DROP [COLUMN] [IF EXISTS]",
+  "ALTER [COLUMN]",
+  "SET DATA TYPE",
+  "{SET | DROP} DEFAULT",
+  "{SET | DROP} NOT NULL",
+  // - truncate:
+  "TRUNCATE [TABLE] [ONLY]",
+  // other
+  "SET SCHEMA",
+  "AFTER",
+  // https://www.postgresql.org/docs/14/sql-commands.html
+  "ABORT",
+  "ALTER AGGREGATE",
+  "ALTER COLLATION",
+  "ALTER CONVERSION",
+  "ALTER DATABASE",
+  "ALTER DEFAULT PRIVILEGES",
+  "ALTER DOMAIN",
+  "ALTER EVENT TRIGGER",
+  "ALTER EXTENSION",
+  "ALTER FOREIGN DATA WRAPPER",
+  "ALTER FOREIGN TABLE",
+  "ALTER FUNCTION",
+  "ALTER GROUP",
+  "ALTER INDEX",
+  "ALTER LANGUAGE",
+  "ALTER LARGE OBJECT",
+  "ALTER MATERIALIZED VIEW",
+  "ALTER OPERATOR",
+  "ALTER OPERATOR CLASS",
+  "ALTER OPERATOR FAMILY",
+  "ALTER POLICY",
+  "ALTER PROCEDURE",
+  "ALTER PUBLICATION",
+  "ALTER ROLE",
+  "ALTER ROUTINE",
+  "ALTER RULE",
+  "ALTER SCHEMA",
+  "ALTER SEQUENCE",
+  "ALTER SERVER",
+  "ALTER STATISTICS",
+  "ALTER SUBSCRIPTION",
+  "ALTER SYSTEM",
+  "ALTER TABLESPACE",
+  "ALTER TEXT SEARCH CONFIGURATION",
+  "ALTER TEXT SEARCH DICTIONARY",
+  "ALTER TEXT SEARCH PARSER",
+  "ALTER TEXT SEARCH TEMPLATE",
+  "ALTER TRIGGER",
+  "ALTER TYPE",
+  "ALTER USER",
+  "ALTER USER MAPPING",
+  "ALTER VIEW",
+  "ANALYZE",
+  "BEGIN",
+  "CALL",
+  "CHECKPOINT",
+  "CLOSE",
+  "CLUSTER",
+  "COMMIT",
+  "COMMIT PREPARED",
+  "COPY",
+  "CREATE ACCESS METHOD",
+  "CREATE [OR REPLACE] AGGREGATE",
+  "CREATE CAST",
+  "CREATE COLLATION",
+  "CREATE [DEFAULT] CONVERSION",
+  "CREATE DATABASE",
+  "CREATE DOMAIN",
+  "CREATE EVENT TRIGGER",
+  "CREATE EXTENSION",
+  "CREATE FOREIGN DATA WRAPPER",
+  "CREATE FOREIGN TABLE",
+  "CREATE [OR REPLACE] FUNCTION",
+  "CREATE GROUP",
+  "CREATE [UNIQUE] INDEX",
+  "CREATE [OR REPLACE] [TRUSTED] [PROCEDURAL] LANGUAGE",
+  "CREATE OPERATOR",
+  "CREATE OPERATOR CLASS",
+  "CREATE OPERATOR FAMILY",
+  "CREATE POLICY",
+  "CREATE [OR REPLACE] PROCEDURE",
+  "CREATE PUBLICATION",
+  "CREATE ROLE",
+  "CREATE [OR REPLACE] RULE",
+  "CREATE SCHEMA [AUTHORIZATION]",
+  "CREATE [TEMPORARY | TEMP | UNLOGGED] SEQUENCE",
+  "CREATE SERVER",
+  "CREATE STATISTICS",
+  "CREATE SUBSCRIPTION",
+  "CREATE TABLESPACE",
+  "CREATE TEXT SEARCH CONFIGURATION",
+  "CREATE TEXT SEARCH DICTIONARY",
+  "CREATE TEXT SEARCH PARSER",
+  "CREATE TEXT SEARCH TEMPLATE",
+  "CREATE [OR REPLACE] TRANSFORM",
+  "CREATE [OR REPLACE] [CONSTRAINT] TRIGGER",
+  "CREATE TYPE",
+  "CREATE USER",
+  "CREATE USER MAPPING",
+  "DEALLOCATE",
+  "DECLARE",
+  "DISCARD",
+  "DROP ACCESS METHOD",
+  "DROP AGGREGATE",
+  "DROP CAST",
+  "DROP COLLATION",
+  "DROP CONVERSION",
+  "DROP DATABASE",
+  "DROP DOMAIN",
+  "DROP EVENT TRIGGER",
+  "DROP EXTENSION",
+  "DROP FOREIGN DATA WRAPPER",
+  "DROP FOREIGN TABLE",
+  "DROP FUNCTION",
+  "DROP GROUP",
+  "DROP IDENTITY",
+  "DROP INDEX",
+  "DROP LANGUAGE",
+  "DROP MATERIALIZED VIEW [IF EXISTS]",
+  "DROP OPERATOR",
+  "DROP OPERATOR CLASS",
+  "DROP OPERATOR FAMILY",
+  "DROP OWNED",
+  "DROP POLICY",
+  "DROP PROCEDURE",
+  "DROP PUBLICATION",
+  "DROP ROLE",
+  "DROP ROUTINE",
+  "DROP RULE",
+  "DROP SCHEMA",
+  "DROP SEQUENCE",
+  "DROP SERVER",
+  "DROP STATISTICS",
+  "DROP SUBSCRIPTION",
+  "DROP TABLESPACE",
+  "DROP TEXT SEARCH CONFIGURATION",
+  "DROP TEXT SEARCH DICTIONARY",
+  "DROP TEXT SEARCH PARSER",
+  "DROP TEXT SEARCH TEMPLATE",
+  "DROP TRANSFORM",
+  "DROP TRIGGER",
+  "DROP TYPE",
+  "DROP USER",
+  "DROP USER MAPPING",
+  "DROP VIEW",
+  "EXECUTE",
+  "EXPLAIN",
+  "FETCH",
+  "GRANT",
+  "IMPORT FOREIGN SCHEMA",
+  "LISTEN",
+  "LOAD",
+  "LOCK",
+  "MOVE",
+  "NOTIFY",
+  "OVERRIDING SYSTEM VALUE",
+  "PREPARE",
+  "PREPARE TRANSACTION",
+  "REASSIGN OWNED",
+  "REFRESH MATERIALIZED VIEW",
+  "REINDEX",
+  "RELEASE SAVEPOINT",
+  "RESET [ALL|ROLE|SESSION AUTHORIZATION]",
+  "REVOKE",
+  "ROLLBACK",
+  "ROLLBACK PREPARED",
+  "ROLLBACK TO SAVEPOINT",
+  "SAVEPOINT",
+  "SECURITY LABEL",
+  "SELECT INTO",
+  "SET CONSTRAINTS",
+  "SET ROLE",
+  "SET SESSION AUTHORIZATION",
+  "SET TRANSACTION",
+  "SHOW",
+  "START TRANSACTION",
+  "UNLISTEN",
+  "VACUUM"
+]);
+var reservedSetOperations11 = expandPhrases([
+  "UNION [ALL | DISTINCT]",
+  "EXCEPT [ALL | DISTINCT]",
+  "INTERSECT [ALL | DISTINCT]"
+]);
+var reservedJoins11 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN"
+]);
+var reservedPhrases11 = expandPhrases([
+  "PRIMARY KEY",
+  "GENERATED {ALWAYS | BY DEFAULT} AS IDENTITY",
+  "ON {UPDATE | DELETE} [NO ACTION | RESTRICT | CASCADE | SET NULL | SET DEFAULT]",
+  "DO {NOTHING | UPDATE}",
+  "AS MATERIALIZED",
+  "{ROWS | RANGE | GROUPS} BETWEEN",
+  // https://www.postgresql.org/docs/current/datatype-datetime.html
+  "[TIMESTAMP | TIME] {WITH | WITHOUT} TIME ZONE",
+  // comparison operator
+  "IS [NOT] DISTINCT FROM",
+  "NULLS {FIRST | LAST}",
+  "WITH ORDINALITY"
+]);
+var postgresql = {
+  name: "postgresql",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect11,
+    reservedClauses: [...reservedClauses11, ...standardOnelineClauses10, ...tabularOnelineClauses10],
+    reservedSetOperations: reservedSetOperations11,
+    reservedJoins: reservedJoins11,
+    reservedPhrases: reservedPhrases11,
+    reservedKeywords: keywords12,
+    reservedDataTypes: dataTypes11,
+    reservedFunctionNames: functions11,
+    nestedBlockComments: true,
+    extraParens: ["[]"],
+    stringTypes: [
+      "$$",
+      { quote: "''-qq", prefixes: ["U&"] },
+      { quote: "''-qq-bs", prefixes: ["E"], requirePrefix: true },
+      { quote: "''-raw", prefixes: ["B", "X"], requirePrefix: true }
+    ],
+    identTypes: [{ quote: '""-qq', prefixes: ["U&"] }],
+    identChars: { rest: "$" },
+    paramTypes: { numbered: ["$"] },
+    operators: [
+      // Arithmetic
+      "%",
+      "^",
+      "|/",
+      "||/",
+      "@",
+      // Assignment
+      ":=",
+      // Bitwise
+      "&",
+      "|",
+      "#",
+      "~",
+      "<<",
+      ">>",
+      // Byte comparison
+      "~>~",
+      "~<~",
+      "~>=~",
+      "~<=~",
+      // Geometric
+      "@-@",
+      "@@",
+      "##",
+      "<->",
+      "&&",
+      "&<",
+      "&>",
+      "<<|",
+      "&<|",
+      "|>>",
+      "|&>",
+      "<^",
+      "^>",
+      "?#",
+      "?-",
+      "?|",
+      "?-|",
+      "?||",
+      "@>",
+      "<@",
+      "~=",
+      // JSON
+      "?",
+      "@?",
+      "?&",
+      "->",
+      "->>",
+      "#>",
+      "#>>",
+      "#-",
+      // Named function params
+      "=>",
+      // Network address
+      ">>=",
+      "<<=",
+      // Pattern matching
+      "~~",
+      "~~*",
+      "!~~",
+      "!~~*",
+      // POSIX RegExp
+      "~",
+      "~*",
+      "!~",
+      "!~*",
+      // Range/multirange
+      "-|-",
+      // String concatenation
+      "||",
+      // Text search
+      "@@@",
+      "!!",
+      "^@",
+      // Trigram/trigraph
+      "<%",
+      "%>",
+      "<<%",
+      "%>>",
+      "<<->",
+      "<->>",
+      "<<<->",
+      "<->>>",
+      // Type cast
+      "::",
+      ":",
+      // Custom operators defined by pgvector extension
+      // https://github.com/pgvector/pgvector#querying
+      "<#>",
+      "<=>",
+      "<+>",
+      "<~>",
+      "<%>"
+    ],
+    operatorKeyword: true
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["::", ":"],
+    onelineClauses: [...standardOnelineClauses10, ...tabularOnelineClauses10],
+    tabularOnelineClauses: tabularOnelineClauses10
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/redshift/redshift.functions.js
+var functions12 = [
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_Aggregate_Functions.html
+  "ANY_VALUE",
+  "APPROXIMATE PERCENTILE_DISC",
+  "AVG",
+  "COUNT",
+  "LISTAGG",
+  "MAX",
+  "MEDIAN",
+  "MIN",
+  "PERCENTILE_CONT",
+  "STDDEV_SAMP",
+  "STDDEV_POP",
+  "SUM",
+  "VAR_SAMP",
+  "VAR_POP",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_Array_Functions.html
+  "array",
+  "array_concat",
+  "array_flatten",
+  "get_array_length",
+  "split_to_array",
+  "subarray",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_bitwise_aggregate_functions.html
+  "BIT_AND",
+  "BIT_OR",
+  "BOOL_AND",
+  "BOOL_OR",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_conditional_expressions.html
+  "COALESCE",
+  "DECODE",
+  "GREATEST",
+  "LEAST",
+  "NVL",
+  "NVL2",
+  "NULLIF",
+  // https://docs.aws.amazon.com/redshift/latest/dg/Date_functions_header.html
+  "ADD_MONTHS",
+  "AT TIME ZONE",
+  "CONVERT_TIMEZONE",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "DATE_CMP",
+  "DATE_CMP_TIMESTAMP",
+  "DATE_CMP_TIMESTAMPTZ",
+  "DATE_PART_YEAR",
+  "DATEADD",
+  "DATEDIFF",
+  "DATE_PART",
+  "DATE_TRUNC",
+  "EXTRACT",
+  "GETDATE",
+  "INTERVAL_CMP",
+  "LAST_DAY",
+  "MONTHS_BETWEEN",
+  "NEXT_DAY",
+  "SYSDATE",
+  "TIMEOFDAY",
+  "TIMESTAMP_CMP",
+  "TIMESTAMP_CMP_DATE",
+  "TIMESTAMP_CMP_TIMESTAMPTZ",
+  "TIMESTAMPTZ_CMP",
+  "TIMESTAMPTZ_CMP_DATE",
+  "TIMESTAMPTZ_CMP_TIMESTAMP",
+  "TIMEZONE",
+  "TO_TIMESTAMP",
+  "TRUNC",
+  // https://docs.aws.amazon.com/redshift/latest/dg/geospatial-functions.html
+  "AddBBox",
+  "DropBBox",
+  "GeometryType",
+  "ST_AddPoint",
+  "ST_Angle",
+  "ST_Area",
+  "ST_AsBinary",
+  "ST_AsEWKB",
+  "ST_AsEWKT",
+  "ST_AsGeoJSON",
+  "ST_AsText",
+  "ST_Azimuth",
+  "ST_Boundary",
+  "ST_Collect",
+  "ST_Contains",
+  "ST_ContainsProperly",
+  "ST_ConvexHull",
+  "ST_CoveredBy",
+  "ST_Covers",
+  "ST_Crosses",
+  "ST_Dimension",
+  "ST_Disjoint",
+  "ST_Distance",
+  "ST_DistanceSphere",
+  "ST_DWithin",
+  "ST_EndPoint",
+  "ST_Envelope",
+  "ST_Equals",
+  "ST_ExteriorRing",
+  "ST_Force2D",
+  "ST_Force3D",
+  "ST_Force3DM",
+  "ST_Force3DZ",
+  "ST_Force4D",
+  "ST_GeometryN",
+  "ST_GeometryType",
+  "ST_GeomFromEWKB",
+  "ST_GeomFromEWKT",
+  "ST_GeomFromText",
+  "ST_GeomFromWKB",
+  "ST_InteriorRingN",
+  "ST_Intersects",
+  "ST_IsPolygonCCW",
+  "ST_IsPolygonCW",
+  "ST_IsClosed",
+  "ST_IsCollection",
+  "ST_IsEmpty",
+  "ST_IsSimple",
+  "ST_IsValid",
+  "ST_Length",
+  "ST_LengthSphere",
+  "ST_Length2D",
+  "ST_LineFromMultiPoint",
+  "ST_LineInterpolatePoint",
+  "ST_M",
+  "ST_MakeEnvelope",
+  "ST_MakeLine",
+  "ST_MakePoint",
+  "ST_MakePolygon",
+  "ST_MemSize",
+  "ST_MMax",
+  "ST_MMin",
+  "ST_Multi",
+  "ST_NDims",
+  "ST_NPoints",
+  "ST_NRings",
+  "ST_NumGeometries",
+  "ST_NumInteriorRings",
+  "ST_NumPoints",
+  "ST_Perimeter",
+  "ST_Perimeter2D",
+  "ST_Point",
+  "ST_PointN",
+  "ST_Points",
+  "ST_Polygon",
+  "ST_RemovePoint",
+  "ST_Reverse",
+  "ST_SetPoint",
+  "ST_SetSRID",
+  "ST_Simplify",
+  "ST_SRID",
+  "ST_StartPoint",
+  "ST_Touches",
+  "ST_Within",
+  "ST_X",
+  "ST_XMax",
+  "ST_XMin",
+  "ST_Y",
+  "ST_YMax",
+  "ST_YMin",
+  "ST_Z",
+  "ST_ZMax",
+  "ST_ZMin",
+  "SupportsBBox",
+  // https://docs.aws.amazon.com/redshift/latest/dg/hash-functions.html
+  "CHECKSUM",
+  "FUNC_SHA1",
+  "FNV_HASH",
+  "MD5",
+  "SHA",
+  "SHA1",
+  "SHA2",
+  // https://docs.aws.amazon.com/redshift/latest/dg/hyperloglog-functions.html
+  "HLL",
+  "HLL_CREATE_SKETCH",
+  "HLL_CARDINALITY",
+  "HLL_COMBINE",
+  // https://docs.aws.amazon.com/redshift/latest/dg/json-functions.html
+  "IS_VALID_JSON",
+  "IS_VALID_JSON_ARRAY",
+  "JSON_ARRAY_LENGTH",
+  "JSON_EXTRACT_ARRAY_ELEMENT_TEXT",
+  "JSON_EXTRACT_PATH_TEXT",
+  "JSON_PARSE",
+  "JSON_SERIALIZE",
+  // https://docs.aws.amazon.com/redshift/latest/dg/Math_functions.html
+  "ABS",
+  "ACOS",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "CBRT",
+  "CEILING",
+  "CEIL",
+  "COS",
+  "COT",
+  "DEGREES",
+  "DEXP",
+  "DLOG1",
+  "DLOG10",
+  "EXP",
+  "FLOOR",
+  "LN",
+  "LOG",
+  "MOD",
+  "PI",
+  "POWER",
+  "RADIANS",
+  "RANDOM",
+  "ROUND",
+  "SIN",
+  "SIGN",
+  "SQRT",
+  "TAN",
+  "TO_HEX",
+  "TRUNC",
+  // https://docs.aws.amazon.com/redshift/latest/dg/ml-function.html
+  "EXPLAIN_MODEL",
+  // https://docs.aws.amazon.com/redshift/latest/dg/String_functions_header.html
+  "ASCII",
+  "BPCHARCMP",
+  "BTRIM",
+  "BTTEXT_PATTERN_CMP",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "CHARINDEX",
+  "CHR",
+  "COLLATE",
+  "CONCAT",
+  "CRC32",
+  "DIFFERENCE",
+  "INITCAP",
+  "LEFT",
+  "RIGHT",
+  "LEN",
+  "LENGTH",
+  "LOWER",
+  "LPAD",
+  "RPAD",
+  "LTRIM",
+  "OCTETINDEX",
+  "OCTET_LENGTH",
+  "POSITION",
+  "QUOTE_IDENT",
+  "QUOTE_LITERAL",
+  "REGEXP_COUNT",
+  "REGEXP_INSTR",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "REPEAT",
+  "REPLACE",
+  "REPLICATE",
+  "REVERSE",
+  "RTRIM",
+  "SOUNDEX",
+  "SPLIT_PART",
+  "STRPOS",
+  "STRTOL",
+  "SUBSTRING",
+  "TEXTLEN",
+  "TRANSLATE",
+  "TRIM",
+  "UPPER",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_Type_Info_Functions.html
+  "decimal_precision",
+  "decimal_scale",
+  "is_array",
+  "is_bigint",
+  "is_boolean",
+  "is_char",
+  "is_decimal",
+  "is_float",
+  "is_integer",
+  "is_object",
+  "is_scalar",
+  "is_smallint",
+  "is_varchar",
+  "json_typeof",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_Window_functions.html
+  "AVG",
+  "COUNT",
+  "CUME_DIST",
+  "DENSE_RANK",
+  "FIRST_VALUE",
+  "LAST_VALUE",
+  "LAG",
+  "LEAD",
+  "LISTAGG",
+  "MAX",
+  "MEDIAN",
+  "MIN",
+  "NTH_VALUE",
+  "NTILE",
+  "PERCENT_RANK",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "RANK",
+  "RATIO_TO_REPORT",
+  "ROW_NUMBER",
+  "STDDEV_SAMP",
+  "STDDEV_POP",
+  "SUM",
+  "VAR_SAMP",
+  "VAR_POP",
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_Data_type_formatting.html
+  "CAST",
+  "CONVERT",
+  "TO_CHAR",
+  "TO_DATE",
+  "TO_NUMBER",
+  "TEXT_TO_INT_ALT",
+  "TEXT_TO_NUMERIC_ALT",
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_System_administration_functions.html
+  "CHANGE_QUERY_PRIORITY",
+  "CHANGE_SESSION_PRIORITY",
+  "CHANGE_USER_PRIORITY",
+  "CURRENT_SETTING",
+  "PG_CANCEL_BACKEND",
+  "PG_TERMINATE_BACKEND",
+  "REBOOT_CLUSTER",
+  "SET_CONFIG",
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_System_information_functions.html
+  "CURRENT_AWS_ACCOUNT",
+  "CURRENT_DATABASE",
+  "CURRENT_NAMESPACE",
+  "CURRENT_SCHEMA",
+  "CURRENT_SCHEMAS",
+  "CURRENT_USER",
+  "CURRENT_USER_ID",
+  "HAS_ASSUMEROLE_PRIVILEGE",
+  "HAS_DATABASE_PRIVILEGE",
+  "HAS_SCHEMA_PRIVILEGE",
+  "HAS_TABLE_PRIVILEGE",
+  "PG_BACKEND_PID",
+  "PG_GET_COLS",
+  "PG_GET_GRANTEE_BY_IAM_ROLE",
+  "PG_GET_IAM_ROLE_BY_USER",
+  "PG_GET_LATE_BINDING_VIEW_COLS",
+  "PG_LAST_COPY_COUNT",
+  "PG_LAST_COPY_ID",
+  "PG_LAST_UNLOAD_ID",
+  "PG_LAST_QUERY_ID",
+  "PG_LAST_UNLOAD_COUNT",
+  "SESSION_USER",
+  "SLICE_NUM",
+  "USER",
+  "VERSION"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/redshift/redshift.keywords.js
+var keywords13 = [
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_pg_keywords.html
+  "AES128",
+  "AES256",
+  "ALL",
+  "ALLOWOVERWRITE",
+  "ANY",
+  "AS",
+  "ASC",
+  "AUTHORIZATION",
+  "BACKUP",
+  "BETWEEN",
+  "BINARY",
+  "BOTH",
+  "CHECK",
+  "COLUMN",
+  "CONSTRAINT",
+  "CREATE",
+  "CROSS",
+  "DEFAULT",
+  "DEFERRABLE",
+  "DEFLATE",
+  "DEFRAG",
+  "DESC",
+  "DISABLE",
+  "DISTINCT",
+  "DO",
+  "ENABLE",
+  "ENCODE",
+  "ENCRYPT",
+  "ENCRYPTION",
+  "EXPLICIT",
+  "FALSE",
+  "FOR",
+  "FOREIGN",
+  "FREEZE",
+  "FROM",
+  "FULL",
+  "GLOBALDICT256",
+  "GLOBALDICT64K",
+  "GROUP",
+  "IDENTITY",
+  "IGNORE",
+  "ILIKE",
+  "IN",
+  "INITIALLY",
+  "INNER",
+  "INTO",
+  "IS",
+  "ISNULL",
+  "LANGUAGE",
+  "LEADING",
+  "LIKE",
+  "LIMIT",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LUN",
+  "LUNS",
+  "MINUS",
+  "NATURAL",
+  "NEW",
+  "NOT",
+  "NOTNULL",
+  "NULL",
+  "NULLS",
+  "OFF",
+  "OFFLINE",
+  "OFFSET",
+  "OID",
+  "OLD",
+  "ON",
+  "ONLY",
+  "OPEN",
+  "ORDER",
+  "OUTER",
+  "OVERLAPS",
+  "PARALLEL",
+  "PARTITION",
+  "PERCENT",
+  "PERMISSIONS",
+  "PLACING",
+  "PRIMARY",
+  "RECOVER",
+  "REFERENCES",
+  "REJECTLOG",
+  "RESORT",
+  "RESPECT",
+  "RESTORE",
+  "SIMILAR",
+  "SNAPSHOT",
+  "SOME",
+  "SYSTEM",
+  "TABLE",
+  "TAG",
+  "TDES",
+  "THEN",
+  "TIMESTAMP",
+  "TO",
+  "TOP",
+  "TRAILING",
+  "TRUE",
+  "UNIQUE",
+  "USING",
+  "VERBOSE",
+  "WALLET",
+  "WITHOUT",
+  // https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-conversion.html
+  "ACCEPTANYDATE",
+  "ACCEPTINVCHARS",
+  "BLANKSASNULL",
+  "DATEFORMAT",
+  "EMPTYASNULL",
+  "ENCODING",
+  "ESCAPE",
+  "EXPLICIT_IDS",
+  "FILLRECORD",
+  "IGNOREBLANKLINES",
+  "IGNOREHEADER",
+  "REMOVEQUOTES",
+  "ROUNDEC",
+  "TIMEFORMAT",
+  "TRIMBLANKS",
+  "TRUNCATECOLUMNS",
+  // https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-load.html
+  "COMPROWS",
+  "COMPUPDATE",
+  "MAXERROR",
+  "NOLOAD",
+  "STATUPDATE",
+  // https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-format.html
+  "FORMAT",
+  "CSV",
+  "DELIMITER",
+  "FIXEDWIDTH",
+  "SHAPEFILE",
+  "AVRO",
+  "JSON",
+  "PARQUET",
+  "ORC",
+  // https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-authorization.html
+  "ACCESS_KEY_ID",
+  "CREDENTIALS",
+  "ENCRYPTED",
+  "IAM_ROLE",
+  "MASTER_SYMMETRIC_KEY",
+  "SECRET_ACCESS_KEY",
+  "SESSION_TOKEN",
+  // https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-file-compression.html
+  "BZIP2",
+  "GZIP",
+  "LZOP",
+  "ZSTD",
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_COPY-alphabetical-parm-list.html
+  "MANIFEST",
+  "READRATIO",
+  "REGION",
+  "SSH",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_Compression_encodings.html
+  "RAW",
+  "AZ64",
+  "BYTEDICT",
+  "DELTA",
+  "DELTA32K",
+  "LZO",
+  "MOSTLY8",
+  "MOSTLY16",
+  "MOSTLY32",
+  "RUNLENGTH",
+  "TEXT255",
+  "TEXT32K",
+  // misc
+  // CREATE EXTERNAL SCHEMA (https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_EXTERNAL_SCHEMA.html)
+  "CATALOG_ROLE",
+  "SECRET_ARN",
+  "EXTERNAL",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.html
+  "AUTO",
+  "EVEN",
+  "KEY",
+  "PREDICATE",
+  // unknown
+  "COMPRESSION"
+  /**
+   * Other keywords not included:
+   * STL: https://docs.aws.amazon.com/redshift/latest/dg/c_intro_STL_tables.html
+   * SVCS: https://docs.aws.amazon.com/redshift/latest/dg/svcs_views.html
+   * SVL: https://docs.aws.amazon.com/redshift/latest/dg/svl_views.html
+   * SVV: https://docs.aws.amazon.com/redshift/latest/dg/svv_views.html
+   */
+];
+var dataTypes12 = [
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_Character_types.html#r_Character_types-text-and-bpchar-types
+  "ARRAY",
+  "BIGINT",
+  "BPCHAR",
+  "CHAR",
+  "CHARACTER VARYING",
+  "CHARACTER",
+  "DECIMAL",
+  "INT",
+  "INT2",
+  "INT4",
+  "INT8",
+  "INTEGER",
+  "NCHAR",
+  "NUMERIC",
+  "NVARCHAR",
+  "SMALLINT",
+  "TEXT",
+  "VARBYTE",
+  "VARCHAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/redshift/redshift.formatter.js
+var reservedSelect12 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses12 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "QUALIFY",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  // Data manipulation
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  // - update:
+  "SET"
+]);
+var standardOnelineClauses11 = expandPhrases([
+  "CREATE [TEMPORARY | TEMP | LOCAL TEMPORARY | LOCAL TEMP] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses11 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE | MATERIALIZED] VIEW",
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE [FROM]",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE",
+  "ALTER TABLE APPEND",
+  "ADD [COLUMN]",
+  "DROP [COLUMN]",
+  "RENAME TO",
+  "RENAME COLUMN",
+  "ALTER COLUMN",
+  "TYPE",
+  "ENCODE",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // https://docs.aws.amazon.com/redshift/latest/dg/c_SQL_commands.html
+  "ABORT",
+  "ALTER DATABASE",
+  "ALTER DATASHARE",
+  "ALTER DEFAULT PRIVILEGES",
+  "ALTER GROUP",
+  "ALTER MATERIALIZED VIEW",
+  "ALTER PROCEDURE",
+  "ALTER SCHEMA",
+  "ALTER USER",
+  "ANALYSE",
+  "ANALYZE",
+  "ANALYSE COMPRESSION",
+  "ANALYZE COMPRESSION",
+  "BEGIN",
+  "CALL",
+  "CANCEL",
+  "CLOSE",
+  "COMMIT",
+  "COPY",
+  "CREATE DATABASE",
+  "CREATE DATASHARE",
+  "CREATE EXTERNAL FUNCTION",
+  "CREATE EXTERNAL SCHEMA",
+  "CREATE EXTERNAL TABLE",
+  "CREATE FUNCTION",
+  "CREATE GROUP",
+  "CREATE LIBRARY",
+  "CREATE MODEL",
+  "CREATE PROCEDURE",
+  "CREATE SCHEMA",
+  "CREATE USER",
+  "DEALLOCATE",
+  "DECLARE",
+  "DESC DATASHARE",
+  "DROP DATABASE",
+  "DROP DATASHARE",
+  "DROP FUNCTION",
+  "DROP GROUP",
+  "DROP LIBRARY",
+  "DROP MODEL",
+  "DROP MATERIALIZED VIEW",
+  "DROP PROCEDURE",
+  "DROP SCHEMA",
+  "DROP USER",
+  "DROP VIEW",
+  "DROP",
+  "EXECUTE",
+  "EXPLAIN",
+  "FETCH",
+  "GRANT",
+  "LOCK",
+  "PREPARE",
+  "REFRESH MATERIALIZED VIEW",
+  "RESET",
+  "REVOKE",
+  "ROLLBACK",
+  "SELECT INTO",
+  "SET SESSION AUTHORIZATION",
+  "SET SESSION CHARACTERISTICS",
+  "SHOW",
+  "SHOW EXTERNAL TABLE",
+  "SHOW MODEL",
+  "SHOW DATASHARES",
+  "SHOW PROCEDURE",
+  "SHOW TABLE",
+  "SHOW VIEW",
+  "START TRANSACTION",
+  "UNLOAD",
+  "VACUUM"
+]);
+var reservedSetOperations12 = expandPhrases(["UNION [ALL]", "EXCEPT", "INTERSECT", "MINUS"]);
+var reservedJoins12 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN"
+]);
+var reservedPhrases12 = expandPhrases([
+  // https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-conversion.html
+  "NULL AS",
+  // https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_EXTERNAL_SCHEMA.html
+  "DATA CATALOG",
+  "HIVE METASTORE",
+  // in window specifications
+  "{ROWS | RANGE} BETWEEN"
+]);
+var redshift = {
+  name: "redshift",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect12,
+    reservedClauses: [...reservedClauses12, ...standardOnelineClauses11, ...tabularOnelineClauses11],
+    reservedSetOperations: reservedSetOperations12,
+    reservedJoins: reservedJoins12,
+    reservedPhrases: reservedPhrases12,
+    reservedKeywords: keywords13,
+    reservedDataTypes: dataTypes12,
+    reservedFunctionNames: functions12,
+    stringTypes: ["''-qq"],
+    identTypes: [`""-qq`],
+    identChars: { first: "#" },
+    paramTypes: { numbered: ["$"] },
+    operators: [
+      "^",
+      "%",
+      "@",
+      "|/",
+      "||/",
+      "&",
+      "|",
+      // '#', conflicts with first char of identifier
+      "~",
+      "<<",
+      ">>",
+      "||",
+      "::"
+    ]
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["::"],
+    onelineClauses: [...standardOnelineClauses11, ...tabularOnelineClauses11],
+    tabularOnelineClauses: tabularOnelineClauses11
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/spark/spark.keywords.js
+var keywords14 = [
+  // https://deepkb.com/CO_000013/en/kb/IMPORT-fbfa59f0-2bf1-31fe-bb7b-0f9efe9932c6/spark-sql-keywords
+  "ADD",
+  "AFTER",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "ANTI",
+  "ANY",
+  "ARCHIVE",
+  "AS",
+  "ASC",
+  "AT",
+  "AUTHORIZATION",
+  "BETWEEN",
+  "BOTH",
+  "BUCKET",
+  "BUCKETS",
+  "BY",
+  "CACHE",
+  "CASCADE",
+  "CAST",
+  "CHANGE",
+  "CHECK",
+  "CLEAR",
+  "CLUSTER",
+  "CLUSTERED",
+  "CODEGEN",
+  "COLLATE",
+  "COLLECTION",
+  "COLUMN",
+  "COLUMNS",
+  "COMMENT",
+  "COMMIT",
+  "COMPACT",
+  "COMPACTIONS",
+  "COMPUTE",
+  "CONCATENATE",
+  "CONSTRAINT",
+  "COST",
+  "CREATE",
+  "CROSS",
+  "CUBE",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "DATA",
+  "DATABASE",
+  "DATABASES",
+  "DAY",
+  "DBPROPERTIES",
+  "DEFINED",
+  "DELETE",
+  "DELIMITED",
+  "DESC",
+  "DESCRIBE",
+  "DFS",
+  "DIRECTORIES",
+  "DIRECTORY",
+  "DISTINCT",
+  "DISTRIBUTE",
+  "DIV",
+  "DROP",
+  "ESCAPE",
+  "ESCAPED",
+  "EXCEPT",
+  "EXCHANGE",
+  "EXISTS",
+  "EXPORT",
+  "EXTENDED",
+  "EXTERNAL",
+  "EXTRACT",
+  "FALSE",
+  "FETCH",
+  "FIELDS",
+  "FILTER",
+  "FILEFORMAT",
+  "FIRST",
+  "FIRST_VALUE",
+  "FOLLOWING",
+  "FOR",
+  "FOREIGN",
+  "FORMAT",
+  "FORMATTED",
+  "FULL",
+  "FUNCTION",
+  "FUNCTIONS",
+  "GLOBAL",
+  "GRANT",
+  "GROUP",
+  "GROUPING",
+  "HOUR",
+  "IF",
+  "IGNORE",
+  "IMPORT",
+  "IN",
+  "INDEX",
+  "INDEXES",
+  "INNER",
+  "INPATH",
+  "INPUTFORMAT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ITEMS",
+  "KEYS",
+  "LAST",
+  "LAST_VALUE",
+  "LATERAL",
+  "LAZY",
+  "LEADING",
+  "LEFT",
+  "LIKE",
+  "LINES",
+  "LIST",
+  "LOCAL",
+  "LOCATION",
+  "LOCK",
+  "LOCKS",
+  "LOGICAL",
+  "MACRO",
+  "MATCHED",
+  "MERGE",
+  "MINUTE",
+  "MONTH",
+  "MSCK",
+  "NAMESPACE",
+  "NAMESPACES",
+  "NATURAL",
+  "NO",
+  "NOT",
+  "NULL",
+  "NULLS",
+  "OF",
+  "ONLY",
+  "OPTION",
+  "OPTIONS",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OUTPUTFORMAT",
+  "OVER",
+  "OVERLAPS",
+  "OVERLAY",
+  "OVERWRITE",
+  "OWNER",
+  "PARTITION",
+  "PARTITIONED",
+  "PARTITIONS",
+  "PERCENT",
+  "PLACING",
+  "POSITION",
+  "PRECEDING",
+  "PRIMARY",
+  "PRINCIPALS",
+  "PROPERTIES",
+  "PURGE",
+  "QUERY",
+  "RANGE",
+  "RECORDREADER",
+  "RECORDWRITER",
+  "RECOVER",
+  "REDUCE",
+  "REFERENCES",
+  "RENAME",
+  "REPAIR",
+  "REPLACE",
+  "RESPECT",
+  "RESTRICT",
+  "REVOKE",
+  "RIGHT",
+  "RLIKE",
+  "ROLE",
+  "ROLES",
+  "ROLLBACK",
+  "ROLLUP",
+  "ROW",
+  "ROWS",
+  "SCHEMA",
+  "SECOND",
+  "SELECT",
+  "SEMI",
+  "SEPARATED",
+  "SERDE",
+  "SERDEPROPERTIES",
+  "SESSION_USER",
+  "SETS",
+  "SHOW",
+  "SKEWED",
+  "SOME",
+  "SORT",
+  "SORTED",
+  "START",
+  "STATISTICS",
+  "STORED",
+  "STRATIFY",
+  "SUBSTR",
+  "SUBSTRING",
+  "TABLE",
+  "TABLES",
+  "TBLPROPERTIES",
+  "TEMPORARY",
+  "TERMINATED",
+  "THEN",
+  "TO",
+  "TOUCH",
+  "TRAILING",
+  "TRANSACTION",
+  "TRANSACTIONS",
+  "TRIM",
+  "TRUE",
+  "TRUNCATE",
+  "UNARCHIVE",
+  "UNBOUNDED",
+  "UNCACHE",
+  "UNIQUE",
+  "UNKNOWN",
+  "UNLOCK",
+  "UNSET",
+  "USE",
+  "USER",
+  "USING",
+  "VIEW",
+  "WINDOW",
+  "YEAR",
+  // other
+  "ANALYSE",
+  "ARRAY_ZIP",
+  "COALESCE",
+  "CONTAINS",
+  "CONVERT",
+  "DAYS",
+  "DAY_HOUR",
+  "DAY_MINUTE",
+  "DAY_SECOND",
+  "DECODE",
+  "DEFAULT",
+  "DISTINCTROW",
+  "ENCODE",
+  "EXPLODE",
+  "EXPLODE_OUTER",
+  "FIXED",
+  "GREATEST",
+  "GROUP_CONCAT",
+  "HOURS",
+  "HOUR_MINUTE",
+  "HOUR_SECOND",
+  "IFNULL",
+  "LEAST",
+  "LEVEL",
+  "MINUTE_SECOND",
+  "NULLIF",
+  "OFFSET",
+  "ON",
+  "OPTIMIZE",
+  "REGEXP",
+  "SEPARATOR",
+  "SIZE",
+  "TYPE",
+  "TYPES",
+  "UNSIGNED",
+  "VARIABLES",
+  "YEAR_MONTH"
+];
+var dataTypes13 = [
+  // https://spark.apache.org/docs/latest/sql-ref-datatypes.html
+  "ARRAY",
+  "BIGINT",
+  "BINARY",
+  "BOOLEAN",
+  "BYTE",
+  "CHAR",
+  "DATE",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE",
+  "FLOAT",
+  "INT",
+  "INTEGER",
+  "INTERVAL",
+  "LONG",
+  "MAP",
+  "NUMERIC",
+  "REAL",
+  "SHORT",
+  "SMALLINT",
+  "STRING",
+  "STRUCT",
+  "TIMESTAMP_LTZ",
+  "TIMESTAMP_NTZ",
+  "TIMESTAMP",
+  "TINYINT",
+  "VARCHAR"
+  // No varchar type in Spark, only STRING. Added for the sake of tests
+];
+
+// node_modules/sql-formatter/dist/esm/languages/spark/spark.functions.js
+var functions13 = [
+  // http://spark.apache.org/docs/latest/sql-ref-functions.html
+  //
+  // http://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#aggregate-functions
+  // 'ANY',
+  "APPROX_COUNT_DISTINCT",
+  "APPROX_PERCENTILE",
+  "AVG",
+  "BIT_AND",
+  "BIT_OR",
+  "BIT_XOR",
+  "BOOL_AND",
+  "BOOL_OR",
+  "COLLECT_LIST",
+  "COLLECT_SET",
+  "CORR",
+  "COUNT",
+  "COUNT",
+  "COUNT",
+  "COUNT_IF",
+  "COUNT_MIN_SKETCH",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "EVERY",
+  "FIRST",
+  "FIRST_VALUE",
+  "GROUPING",
+  "GROUPING_ID",
+  "KURTOSIS",
+  "LAST",
+  "LAST_VALUE",
+  "MAX",
+  "MAX_BY",
+  "MEAN",
+  "MIN",
+  "MIN_BY",
+  "PERCENTILE",
+  "PERCENTILE",
+  "PERCENTILE_APPROX",
+  "SKEWNESS",
+  // 'SOME',
+  "STD",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "SUM",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  // http://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#window-functions
+  "CUME_DIST",
+  "DENSE_RANK",
+  "LAG",
+  "LEAD",
+  "NTH_VALUE",
+  "NTILE",
+  "PERCENT_RANK",
+  "RANK",
+  "ROW_NUMBER",
+  // http://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#array-functions
+  "ARRAY",
+  "ARRAY_CONTAINS",
+  "ARRAY_DISTINCT",
+  "ARRAY_EXCEPT",
+  "ARRAY_INTERSECT",
+  "ARRAY_JOIN",
+  "ARRAY_MAX",
+  "ARRAY_MIN",
+  "ARRAY_POSITION",
+  "ARRAY_REMOVE",
+  "ARRAY_REPEAT",
+  "ARRAY_UNION",
+  "ARRAYS_OVERLAP",
+  "ARRAYS_ZIP",
+  "FLATTEN",
+  "SEQUENCE",
+  "SHUFFLE",
+  "SLICE",
+  "SORT_ARRAY",
+  // http://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#map-functions
+  "ELEMENT_AT",
+  "ELEMENT_AT",
+  "MAP_CONCAT",
+  "MAP_ENTRIES",
+  "MAP_FROM_ARRAYS",
+  "MAP_FROM_ENTRIES",
+  "MAP_KEYS",
+  "MAP_VALUES",
+  "STR_TO_MAP",
+  // http://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#date-and-timestamp-functions
+  "ADD_MONTHS",
+  "CURRENT_DATE",
+  "CURRENT_DATE",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TIMEZONE",
+  "DATE_ADD",
+  "DATE_FORMAT",
+  "DATE_FROM_UNIX_DATE",
+  "DATE_PART",
+  "DATE_SUB",
+  "DATE_TRUNC",
+  "DATEDIFF",
+  "DAY",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "EXTRACT",
+  "FROM_UNIXTIME",
+  "FROM_UTC_TIMESTAMP",
+  "HOUR",
+  "LAST_DAY",
+  "MAKE_DATE",
+  "MAKE_DT_INTERVAL",
+  "MAKE_INTERVAL",
+  "MAKE_TIMESTAMP",
+  "MAKE_YM_INTERVAL",
+  "MINUTE",
+  "MONTH",
+  "MONTHS_BETWEEN",
+  "NEXT_DAY",
+  "NOW",
+  "QUARTER",
+  "SECOND",
+  "SESSION_WINDOW",
+  "TIMESTAMP_MICROS",
+  "TIMESTAMP_MILLIS",
+  "TIMESTAMP_SECONDS",
+  "TO_DATE",
+  "TO_TIMESTAMP",
+  "TO_UNIX_TIMESTAMP",
+  "TO_UTC_TIMESTAMP",
+  "TRUNC",
+  "UNIX_DATE",
+  "UNIX_MICROS",
+  "UNIX_MILLIS",
+  "UNIX_SECONDS",
+  "UNIX_TIMESTAMP",
+  "WEEKDAY",
+  "WEEKOFYEAR",
+  "WINDOW",
+  "YEAR",
+  // http://spark.apache.org/docs/latest/sql-ref-functions-builtin.html#json-functions
+  "FROM_JSON",
+  "GET_JSON_OBJECT",
+  "JSON_ARRAY_LENGTH",
+  "JSON_OBJECT_KEYS",
+  "JSON_TUPLE",
+  "SCHEMA_OF_JSON",
+  "TO_JSON",
+  // http://spark.apache.org/docs/latest/api/sql/index.html
+  "ABS",
+  "ACOS",
+  "ACOSH",
+  "AGGREGATE",
+  "ARRAY_SORT",
+  "ASCII",
+  "ASIN",
+  "ASINH",
+  "ASSERT_TRUE",
+  "ATAN",
+  "ATAN2",
+  "ATANH",
+  "BASE64",
+  "BIN",
+  "BIT_COUNT",
+  "BIT_GET",
+  "BIT_LENGTH",
+  "BROUND",
+  "BTRIM",
+  "CARDINALITY",
+  "CBRT",
+  "CEIL",
+  "CEILING",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "CHR",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONV",
+  "COS",
+  "COSH",
+  "COT",
+  "CRC32",
+  "CURRENT_CATALOG",
+  "CURRENT_DATABASE",
+  "CURRENT_USER",
+  "DEGREES",
+  // 'E',
+  "ELT",
+  "EXP",
+  "EXPM1",
+  "FACTORIAL",
+  "FIND_IN_SET",
+  "FLOOR",
+  "FORALL",
+  "FORMAT_NUMBER",
+  "FORMAT_STRING",
+  "FROM_CSV",
+  "GETBIT",
+  "HASH",
+  "HEX",
+  "HYPOT",
+  "INITCAP",
+  "INLINE",
+  "INLINE_OUTER",
+  "INPUT_FILE_BLOCK_LENGTH",
+  "INPUT_FILE_BLOCK_START",
+  "INPUT_FILE_NAME",
+  "INSTR",
+  "ISNAN",
+  "ISNOTNULL",
+  "ISNULL",
+  "JAVA_METHOD",
+  "LCASE",
+  "LEFT",
+  "LENGTH",
+  "LEVENSHTEIN",
+  "LN",
+  "LOCATE",
+  "LOG",
+  "LOG10",
+  "LOG1P",
+  "LOG2",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "MAP_FILTER",
+  "MAP_ZIP_WITH",
+  "MD5",
+  "MOD",
+  "MONOTONICALLY_INCREASING_ID",
+  "NAMED_STRUCT",
+  "NANVL",
+  "NEGATIVE",
+  "NVL",
+  "NVL2",
+  "OCTET_LENGTH",
+  "OVERLAY",
+  "PARSE_URL",
+  "PI",
+  "PMOD",
+  "POSEXPLODE",
+  "POSEXPLODE_OUTER",
+  "POSITION",
+  "POSITIVE",
+  "POW",
+  "POWER",
+  "PRINTF",
+  "RADIANS",
+  "RAISE_ERROR",
+  "RAND",
+  "RANDN",
+  "RANDOM",
+  "REFLECT",
+  "REGEXP_EXTRACT",
+  "REGEXP_EXTRACT_ALL",
+  "REGEXP_LIKE",
+  "REGEXP_REPLACE",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "RIGHT",
+  "RINT",
+  "ROUND",
+  "RPAD",
+  "RTRIM",
+  "SCHEMA_OF_CSV",
+  "SENTENCES",
+  "SHA",
+  "SHA1",
+  "SHA2",
+  "SHIFTLEFT",
+  "SHIFTRIGHT",
+  "SHIFTRIGHTUNSIGNED",
+  "SIGN",
+  "SIGNUM",
+  "SIN",
+  "SINH",
+  "SOUNDEX",
+  "SPACE",
+  "SPARK_PARTITION_ID",
+  "SPLIT",
+  "SQRT",
+  "STACK",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUBSTRING_INDEX",
+  "TAN",
+  "TANH",
+  "TO_CSV",
+  "TRANSFORM_KEYS",
+  "TRANSFORM_VALUES",
+  "TRANSLATE",
+  "TRIM",
+  "TRY_ADD",
+  "TRY_DIVIDE",
+  "TYPEOF",
+  "UCASE",
+  "UNBASE64",
+  "UNHEX",
+  "UPPER",
+  "UUID",
+  "VERSION",
+  "WIDTH_BUCKET",
+  "XPATH",
+  "XPATH_BOOLEAN",
+  "XPATH_DOUBLE",
+  "XPATH_FLOAT",
+  "XPATH_INT",
+  "XPATH_LONG",
+  "XPATH_NUMBER",
+  "XPATH_SHORT",
+  "XPATH_STRING",
+  "XXHASH64",
+  "ZIP_WITH",
+  // cast
+  "CAST",
+  // Shorthand functions to use in place of CASE expression
+  "COALESCE",
+  "NULLIF"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/spark/spark.formatter.js
+var reservedSelect13 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses13 = expandPhrases([
+  // queries
+  "WITH",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "SORT BY",
+  "CLUSTER BY",
+  "DISTRIBUTE BY",
+  "LIMIT",
+  // Data manipulation
+  // - insert:
+  "INSERT [INTO | OVERWRITE] [TABLE]",
+  "VALUES",
+  // - insert overwrite directory:
+  //   https://spark.apache.org/docs/latest/sql-ref-syntax-dml-insert-overwrite-directory.html
+  "INSERT OVERWRITE [LOCAL] DIRECTORY",
+  // - load:
+  //   https://spark.apache.org/docs/latest/sql-ref-syntax-dml-load.html
+  "LOAD DATA [LOCAL] INPATH",
+  "[OVERWRITE] INTO TABLE"
+]);
+var standardOnelineClauses12 = expandPhrases(["CREATE [EXTERNAL] TABLE [IF NOT EXISTS]"]);
+var tabularOnelineClauses12 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [GLOBAL TEMPORARY | TEMPORARY] VIEW [IF NOT EXISTS]",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD COLUMNS",
+  "DROP {COLUMN | COLUMNS}",
+  "RENAME TO",
+  "RENAME COLUMN",
+  "ALTER COLUMN",
+  // - truncate:
+  "TRUNCATE TABLE",
+  // other
+  "LATERAL VIEW",
+  "ALTER DATABASE",
+  "ALTER VIEW",
+  "CREATE DATABASE",
+  "CREATE FUNCTION",
+  "DROP DATABASE",
+  "DROP FUNCTION",
+  "DROP VIEW",
+  "REPAIR TABLE",
+  "USE DATABASE",
+  // Data Retrieval
+  "TABLESAMPLE",
+  "PIVOT",
+  "TRANSFORM",
+  "EXPLAIN",
+  // Auxiliary
+  "ADD FILE",
+  "ADD JAR",
+  "ANALYZE TABLE",
+  "CACHE TABLE",
+  "CLEAR CACHE",
+  "DESCRIBE DATABASE",
+  "DESCRIBE FUNCTION",
+  "DESCRIBE QUERY",
+  "DESCRIBE TABLE",
+  "LIST FILE",
+  "LIST JAR",
+  "REFRESH",
+  "REFRESH TABLE",
+  "REFRESH FUNCTION",
+  "RESET",
+  "SHOW COLUMNS",
+  "SHOW CREATE TABLE",
+  "SHOW DATABASES",
+  "SHOW FUNCTIONS",
+  "SHOW PARTITIONS",
+  "SHOW TABLE EXTENDED",
+  "SHOW TABLES",
+  "SHOW TBLPROPERTIES",
+  "SHOW VIEWS",
+  "UNCACHE TABLE"
+]);
+var reservedSetOperations13 = expandPhrases([
+  "UNION [ALL | DISTINCT]",
+  "EXCEPT [ALL | DISTINCT]",
+  "INTERSECT [ALL | DISTINCT]"
+]);
+var reservedJoins13 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN",
+  // non-standard-joins
+  "[LEFT] {ANTI | SEMI} JOIN",
+  "NATURAL [LEFT] {ANTI | SEMI} JOIN"
+]);
+var reservedPhrases13 = expandPhrases([
+  "ON DELETE",
+  "ON UPDATE",
+  "CURRENT ROW",
+  "{ROWS | RANGE} BETWEEN"
+]);
+var spark = {
+  name: "spark",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect13,
+    reservedClauses: [...reservedClauses13, ...standardOnelineClauses12, ...tabularOnelineClauses12],
+    reservedSetOperations: reservedSetOperations13,
+    reservedJoins: reservedJoins13,
+    reservedPhrases: reservedPhrases13,
+    supportsXor: true,
+    reservedKeywords: keywords14,
+    reservedDataTypes: dataTypes13,
+    reservedFunctionNames: functions13,
+    extraParens: ["[]"],
+    stringTypes: [
+      "''-bs",
+      '""-bs',
+      { quote: "''-raw", prefixes: ["R", "X"], requirePrefix: true },
+      { quote: '""-raw', prefixes: ["R", "X"], requirePrefix: true }
+    ],
+    identTypes: ["``"],
+    identChars: { allowFirstCharNumber: true },
+    variableTypes: [{ quote: "{}", prefixes: ["$"], requirePrefix: true }],
+    operators: ["%", "~", "^", "|", "&", "<=>", "==", "!", "||", "->"],
+    postProcess: postProcess4
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses12, ...tabularOnelineClauses12],
+    tabularOnelineClauses: tabularOnelineClauses12
+  }
+};
+function postProcess4(tokens2) {
+  return tokens2.map((token, i) => {
+    const prevToken = tokens2[i - 1] || EOF_TOKEN;
+    const nextToken = tokens2[i + 1] || EOF_TOKEN;
+    if (isToken.WINDOW(token) && nextToken.type === TokenType.OPEN_PAREN) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.RESERVED_FUNCTION_NAME });
+    }
+    if (token.text === "ITEMS" && token.type === TokenType.RESERVED_KEYWORD) {
+      if (!(prevToken.text === "COLLECTION" && nextToken.text === "TERMINATED")) {
+        return Object.assign(Object.assign({}, token), { type: TokenType.IDENTIFIER, text: token.raw });
+      }
+    }
+    return token;
+  });
+}
+
+// node_modules/sql-formatter/dist/esm/languages/sqlite/sqlite.functions.js
+var functions14 = [
+  // https://www.sqlite.org/lang_corefunc.html
+  "ABS",
+  "CHANGES",
+  "CHAR",
+  "COALESCE",
+  "FORMAT",
+  "GLOB",
+  "HEX",
+  "IFNULL",
+  "IIF",
+  "INSTR",
+  "LAST_INSERT_ROWID",
+  "LENGTH",
+  "LIKE",
+  "LIKELIHOOD",
+  "LIKELY",
+  "LOAD_EXTENSION",
+  "LOWER",
+  "LTRIM",
+  "NULLIF",
+  "PRINTF",
+  "QUOTE",
+  "RANDOM",
+  "RANDOMBLOB",
+  "REPLACE",
+  "ROUND",
+  "RTRIM",
+  "SIGN",
+  "SOUNDEX",
+  "SQLITE_COMPILEOPTION_GET",
+  "SQLITE_COMPILEOPTION_USED",
+  "SQLITE_OFFSET",
+  "SQLITE_SOURCE_ID",
+  "SQLITE_VERSION",
+  "SUBSTR",
+  "SUBSTRING",
+  "TOTAL_CHANGES",
+  "TRIM",
+  "TYPEOF",
+  "UNICODE",
+  "UNLIKELY",
+  "UPPER",
+  "ZEROBLOB",
+  // https://www.sqlite.org/lang_aggfunc.html
+  "AVG",
+  "COUNT",
+  "GROUP_CONCAT",
+  "MAX",
+  "MIN",
+  "SUM",
+  "TOTAL",
+  // https://www.sqlite.org/lang_datefunc.html
+  "DATE",
+  "TIME",
+  "DATETIME",
+  "JULIANDAY",
+  "UNIXEPOCH",
+  "STRFTIME",
+  // https://www.sqlite.org/windowfunctions.html#biwinfunc
+  "row_number",
+  "rank",
+  "dense_rank",
+  "percent_rank",
+  "cume_dist",
+  "ntile",
+  "lag",
+  "lead",
+  "first_value",
+  "last_value",
+  "nth_value",
+  // https://www.sqlite.org/lang_mathfunc.html
+  "ACOS",
+  "ACOSH",
+  "ASIN",
+  "ASINH",
+  "ATAN",
+  "ATAN2",
+  "ATANH",
+  "CEIL",
+  "CEILING",
+  "COS",
+  "COSH",
+  "DEGREES",
+  "EXP",
+  "FLOOR",
+  "LN",
+  "LOG",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "MOD",
+  "PI",
+  "POW",
+  "POWER",
+  "RADIANS",
+  "SIN",
+  "SINH",
+  "SQRT",
+  "TAN",
+  "TANH",
+  "TRUNC",
+  // https://www.sqlite.org/json1.html
+  "JSON",
+  "JSON_ARRAY",
+  "JSON_ARRAY_LENGTH",
+  "JSON_ARRAY_LENGTH",
+  "JSON_EXTRACT",
+  "JSON_INSERT",
+  "JSON_OBJECT",
+  "JSON_PATCH",
+  "JSON_REMOVE",
+  "JSON_REPLACE",
+  "JSON_SET",
+  "JSON_TYPE",
+  "JSON_TYPE",
+  "JSON_VALID",
+  "JSON_QUOTE",
+  "JSON_GROUP_ARRAY",
+  "JSON_GROUP_OBJECT",
+  "JSON_EACH",
+  "JSON_TREE",
+  // cast
+  "CAST"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/sqlite/sqlite.keywords.js
+var keywords15 = [
+  // https://www.sqlite.org/lang_keywords.html
+  // Note: The keywords listed on that URL are not all reserved keywords.
+  // We'll need to clean up this list to only include reserved keywords.
+  "ABORT",
+  "ACTION",
+  "ADD",
+  "AFTER",
+  "ALL",
+  "ALTER",
+  "AND",
+  "ARE",
+  "ALWAYS",
+  "ANALYZE",
+  "AS",
+  "ASC",
+  "ATTACH",
+  "AUTOINCREMENT",
+  "BEFORE",
+  "BEGIN",
+  "BETWEEN",
+  "BY",
+  "CASCADE",
+  "CASE",
+  "CAST",
+  "CHECK",
+  "COLLATE",
+  "COLUMN",
+  "COMMIT",
+  "CONFLICT",
+  "CONSTRAINT",
+  "CREATE",
+  "CROSS",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "DATABASE",
+  "DEFAULT",
+  "DEFERRABLE",
+  "DEFERRED",
+  "DELETE",
+  "DESC",
+  "DETACH",
+  "DISTINCT",
+  "DO",
+  "DROP",
+  "EACH",
+  "ELSE",
+  "END",
+  "ESCAPE",
+  "EXCEPT",
+  "EXCLUDE",
+  "EXCLUSIVE",
+  "EXISTS",
+  "EXPLAIN",
+  "FAIL",
+  "FILTER",
+  "FIRST",
+  "FOLLOWING",
+  "FOR",
+  "FOREIGN",
+  "FROM",
+  "FULL",
+  "GENERATED",
+  "GLOB",
+  "GROUP",
+  "HAVING",
+  "IF",
+  "IGNORE",
+  "IMMEDIATE",
+  "IN",
+  "INDEX",
+  "INDEXED",
+  "INITIALLY",
+  "INNER",
+  "INSERT",
+  "INSTEAD",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ISNULL",
+  "JOIN",
+  "KEY",
+  "LAST",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "MATCH",
+  "MATERIALIZED",
+  "NATURAL",
+  "NO",
+  "NOT",
+  "NOTHING",
+  "NOTNULL",
+  "NULL",
+  "NULLS",
+  "OF",
+  "OFFSET",
+  "ON",
+  "ONLY",
+  "OPEN",
+  "OR",
+  "ORDER",
+  "OTHERS",
+  "OUTER",
+  "OVER",
+  "PARTITION",
+  "PLAN",
+  "PRAGMA",
+  "PRECEDING",
+  "PRIMARY",
+  "QUERY",
+  "RAISE",
+  "RANGE",
+  "RECURSIVE",
+  "REFERENCES",
+  "REGEXP",
+  "REINDEX",
+  "RELEASE",
+  "RENAME",
+  "REPLACE",
+  "RESTRICT",
+  "RETURNING",
+  "RIGHT",
+  "ROLLBACK",
+  "ROW",
+  "ROWS",
+  "SAVEPOINT",
+  "SELECT",
+  "SET",
+  "TABLE",
+  "TEMP",
+  "TEMPORARY",
+  "THEN",
+  "TIES",
+  "TO",
+  "TRANSACTION",
+  "TRIGGER",
+  "UNBOUNDED",
+  "UNION",
+  "UNIQUE",
+  "UPDATE",
+  "USING",
+  "VACUUM",
+  "VALUES",
+  "VIEW",
+  "VIRTUAL",
+  "WHEN",
+  "WHERE",
+  "WINDOW",
+  "WITH",
+  "WITHOUT"
+];
+var dataTypes14 = [
+  // SQLite allows any word as a data type, e.g. CREATE TABLE foo (col1 madeupname(123));
+  // Here we just list some common ones as SQL Formatter
+  // is only able to detect a predefined list of data types.
+  // https://www.sqlite.org/stricttables.html
+  // https://www.sqlite.org/datatype3.html
+  "ANY",
+  "ARRAY",
+  "BLOB",
+  "CHARACTER",
+  "DECIMAL",
+  "INT",
+  "INTEGER",
+  "NATIVE CHARACTER",
+  "NCHAR",
+  "NUMERIC",
+  "NVARCHAR",
+  "REAL",
+  "TEXT",
+  "VARCHAR",
+  "VARYING CHARACTER"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/sqlite/sqlite.formatter.js
+var reservedSelect14 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses14 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  // Data manipulation
+  // - insert:
+  "INSERT [OR ABORT | OR FAIL | OR IGNORE | OR REPLACE | OR ROLLBACK] INTO",
+  "REPLACE INTO",
+  "VALUES",
+  // - update:
+  "SET"
+]);
+var standardOnelineClauses13 = expandPhrases(["CREATE [TEMPORARY | TEMP] TABLE [IF NOT EXISTS]"]);
+var tabularOnelineClauses13 = expandPhrases([
+  // - create:
+  "CREATE [TEMPORARY | TEMP] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE [OR ABORT | OR FAIL | OR IGNORE | OR REPLACE | OR ROLLBACK]",
+  // - insert:
+  "ON CONFLICT",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD [COLUMN]",
+  "DROP [COLUMN]",
+  "RENAME [COLUMN]",
+  "RENAME TO",
+  // - set schema
+  "SET SCHEMA"
+]);
+var reservedSetOperations14 = expandPhrases(["UNION [ALL]", "EXCEPT", "INTERSECT"]);
+var reservedJoins14 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN"
+]);
+var reservedPhrases14 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL | SET DEFAULT]",
+  "{ROWS | RANGE | GROUPS} BETWEEN",
+  "DO UPDATE"
+]);
+var sqlite = {
+  name: "sqlite",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect14,
+    reservedClauses: [...reservedClauses14, ...standardOnelineClauses13, ...tabularOnelineClauses13],
+    reservedSetOperations: reservedSetOperations14,
+    reservedJoins: reservedJoins14,
+    reservedPhrases: reservedPhrases14,
+    reservedKeywords: keywords15,
+    reservedDataTypes: dataTypes14,
+    reservedFunctionNames: functions14,
+    stringTypes: [
+      "''-qq",
+      { quote: "''-raw", prefixes: ["X"], requirePrefix: true }
+      // Depending on context SQLite also supports double-quotes for strings,
+      // and single-quotes for identifiers.
+    ],
+    identTypes: [`""-qq`, "``", "[]"],
+    // https://www.sqlite.org/lang_expr.html#parameters
+    paramTypes: { positional: true, numbered: ["?"], named: [":", "@", "$"] },
+    operators: ["%", "~", "&", "|", "<<", ">>", "==", "->", "->>", "||"]
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses13, ...tabularOnelineClauses13],
+    tabularOnelineClauses: tabularOnelineClauses13
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/sql/sql.functions.js
+var functions15 = [
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_9_set_function_specification
+  "GROUPING",
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_10_window_function
+  "RANK",
+  "DENSE_RANK",
+  "PERCENT_RANK",
+  "CUME_DIST",
+  "ROW_NUMBER",
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_27_numeric_value_function
+  "POSITION",
+  "OCCURRENCES_REGEX",
+  "POSITION_REGEX",
+  "EXTRACT",
+  "CHAR_LENGTH",
+  "CHARACTER_LENGTH",
+  "OCTET_LENGTH",
+  "CARDINALITY",
+  "ABS",
+  "MOD",
+  "LN",
+  "EXP",
+  "POWER",
+  "SQRT",
+  "FLOOR",
+  "CEIL",
+  "CEILING",
+  "WIDTH_BUCKET",
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_29_string_value_function
+  "SUBSTRING",
+  "SUBSTRING_REGEX",
+  "UPPER",
+  "LOWER",
+  "CONVERT",
+  "TRANSLATE",
+  "TRANSLATE_REGEX",
+  "TRIM",
+  "OVERLAY",
+  "NORMALIZE",
+  "SPECIFICTYPE",
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_31_datetime_value_function
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "LOCALTIME",
+  "CURRENT_TIMESTAMP",
+  "LOCALTIMESTAMP",
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_38_multiset_value_function
+  // SET serves multiple roles: a SET() function and a SET keyword e.g. in UPDATE table SET ...
+  // multiset
+  // 'SET', (disabled for now)
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_10_9_aggregate_function
+  "COUNT",
+  "AVG",
+  "MAX",
+  "MIN",
+  "SUM",
+  // 'EVERY',
+  // 'ANY',
+  // 'SOME',
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "VAR_SAMP",
+  "VAR_POP",
+  "COLLECT",
+  "FUSION",
+  "INTERSECTION",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "CORR",
+  "REGR_SLOPE",
+  "REGR_INTERCEPT",
+  "REGR_COUNT",
+  "REGR_R2",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_SXX",
+  "REGR_SYY",
+  "REGR_SXY",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  // CAST is a pretty complex case, involving multiple forms:
+  // - CAST(col AS int)
+  // - CAST(...) WITH ...
+  // - CAST FROM int
+  // - CREATE CAST(mycol AS int) WITH ...
+  "CAST",
+  // Shorthand functions to use in place of CASE expression
+  "COALESCE",
+  "NULLIF",
+  // Non-standard functions that have widespread support
+  "ROUND",
+  "SIN",
+  "COS",
+  "TAN",
+  "ASIN",
+  "ACOS",
+  "ATAN"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/sql/sql.keywords.js
+var keywords16 = [
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#reserved-word
+  "ALL",
+  "ALLOCATE",
+  "ALTER",
+  "ANY",
+  "ARE",
+  "AS",
+  "ASC",
+  "ASENSITIVE",
+  "ASYMMETRIC",
+  "AT",
+  "ATOMIC",
+  "AUTHORIZATION",
+  "BEGIN",
+  "BETWEEN",
+  "BOTH",
+  "BY",
+  "CALL",
+  "CALLED",
+  "CASCADED",
+  "CAST",
+  "CHECK",
+  "CLOSE",
+  "COALESCE",
+  "COLLATE",
+  "COLUMN",
+  "COMMIT",
+  "CONDITION",
+  "CONNECT",
+  "CONSTRAINT",
+  "CORRESPONDING",
+  "CREATE",
+  "CROSS",
+  "CUBE",
+  "CURRENT",
+  "CURRENT_CATALOG",
+  "CURRENT_DEFAULT_TRANSFORM_GROUP",
+  "CURRENT_PATH",
+  "CURRENT_ROLE",
+  "CURRENT_SCHEMA",
+  "CURRENT_TRANSFORM_GROUP_FOR_TYPE",
+  "CURRENT_USER",
+  "CURSOR",
+  "CYCLE",
+  "DEALLOCATE",
+  "DAY",
+  "DECLARE",
+  "DEFAULT",
+  "DELETE",
+  "DEREF",
+  "DESC",
+  "DESCRIBE",
+  "DETERMINISTIC",
+  "DISCONNECT",
+  "DISTINCT",
+  "DROP",
+  "DYNAMIC",
+  "EACH",
+  "ELEMENT",
+  "END-EXEC",
+  "ESCAPE",
+  "EVERY",
+  "EXCEPT",
+  "EXEC",
+  "EXECUTE",
+  "EXISTS",
+  "EXTERNAL",
+  "FALSE",
+  "FETCH",
+  "FILTER",
+  "FOR",
+  "FOREIGN",
+  "FREE",
+  "FROM",
+  "FULL",
+  "FUNCTION",
+  "GET",
+  "GLOBAL",
+  "GRANT",
+  "GROUP",
+  "HAVING",
+  "HOLD",
+  "HOUR",
+  "IDENTITY",
+  "IN",
+  "INDICATOR",
+  "INNER",
+  "INOUT",
+  "INSENSITIVE",
+  "INSERT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "LANGUAGE",
+  "LARGE",
+  "LATERAL",
+  "LEADING",
+  "LEFT",
+  "LIKE",
+  "LIKE_REGEX",
+  "LOCAL",
+  "MATCH",
+  "MEMBER",
+  "MERGE",
+  "METHOD",
+  "MINUTE",
+  "MODIFIES",
+  "MODULE",
+  "MONTH",
+  "NATURAL",
+  "NEW",
+  "NO",
+  "NONE",
+  "NOT",
+  "NULL",
+  "NULLIF",
+  "OF",
+  "OLD",
+  "ON",
+  "ONLY",
+  "OPEN",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OVER",
+  "OVERLAPS",
+  "PARAMETER",
+  "PARTITION",
+  "PRECISION",
+  "PREPARE",
+  "PRIMARY",
+  "PROCEDURE",
+  "RANGE",
+  "READS",
+  "REAL",
+  "RECURSIVE",
+  "REF",
+  "REFERENCES",
+  "REFERENCING",
+  "RELEASE",
+  "RESULT",
+  "RETURN",
+  "RETURNS",
+  "REVOKE",
+  "RIGHT",
+  "ROLLBACK",
+  "ROLLUP",
+  "ROW",
+  "ROWS",
+  "SAVEPOINT",
+  "SCOPE",
+  "SCROLL",
+  "SEARCH",
+  "SECOND",
+  "SELECT",
+  "SENSITIVE",
+  "SESSION_USER",
+  "SET",
+  "SIMILAR",
+  "SOME",
+  "SPECIFIC",
+  "SQL",
+  "SQLEXCEPTION",
+  "SQLSTATE",
+  "SQLWARNING",
+  "START",
+  "STATIC",
+  "SUBMULTISET",
+  "SYMMETRIC",
+  "SYSTEM",
+  "SYSTEM_USER",
+  "TABLE",
+  "TABLESAMPLE",
+  "THEN",
+  "TIMEZONE_HOUR",
+  "TIMEZONE_MINUTE",
+  "TO",
+  "TRAILING",
+  "TRANSLATION",
+  "TREAT",
+  "TRIGGER",
+  "TRUE",
+  "UESCAPE",
+  "UNION",
+  "UNIQUE",
+  "UNKNOWN",
+  "UNNEST",
+  "UPDATE",
+  "USER",
+  "USING",
+  "VALUE",
+  "VALUES",
+  "WHENEVER",
+  "WINDOW",
+  "WITHIN",
+  "WITHOUT",
+  "YEAR"
+];
+var dataTypes15 = [
+  // https://jakewheat.github.io/sql-overview/sql-2008-foundation-grammar.html#_6_1_data_type
+  "ARRAY",
+  "BIGINT",
+  "BINARY LARGE OBJECT",
+  "BINARY VARYING",
+  "BINARY",
+  "BLOB",
+  "BOOLEAN",
+  "CHAR LARGE OBJECT",
+  "CHAR VARYING",
+  "CHAR",
+  "CHARACTER LARGE OBJECT",
+  "CHARACTER VARYING",
+  "CHARACTER",
+  "CLOB",
+  "DATE",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE",
+  "FLOAT",
+  "INT",
+  "INTEGER",
+  "INTERVAL",
+  "MULTISET",
+  "NATIONAL CHAR VARYING",
+  "NATIONAL CHAR",
+  "NATIONAL CHARACTER LARGE OBJECT",
+  "NATIONAL CHARACTER VARYING",
+  "NATIONAL CHARACTER",
+  "NCHAR LARGE OBJECT",
+  "NCHAR VARYING",
+  "NCHAR",
+  "NCLOB",
+  "NUMERIC",
+  "SMALLINT",
+  "TIME",
+  "TIMESTAMP",
+  "VARBINARY",
+  "VARCHAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/sql/sql.formatter.js
+var reservedSelect15 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses15 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY [ALL | DISTINCT]",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  // Data manipulation
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  // - update:
+  "SET"
+]);
+var standardOnelineClauses14 = expandPhrases(["CREATE [GLOBAL TEMPORARY | LOCAL TEMPORARY] TABLE"]);
+var tabularOnelineClauses14 = expandPhrases([
+  // - create:
+  "CREATE [RECURSIVE] VIEW",
+  // - update:
+  "UPDATE",
+  "WHERE CURRENT OF",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD COLUMN",
+  "DROP [COLUMN]",
+  "RENAME COLUMN",
+  "RENAME TO",
+  "ALTER [COLUMN]",
+  "{SET | DROP} DEFAULT",
+  "ADD SCOPE",
+  "DROP SCOPE {CASCADE | RESTRICT}",
+  "RESTART WITH",
+  // - truncate:
+  "TRUNCATE TABLE",
+  // other
+  "SET SCHEMA"
+]);
+var reservedSetOperations15 = expandPhrases([
+  "UNION [ALL | DISTINCT]",
+  "EXCEPT [ALL | DISTINCT]",
+  "INTERSECT [ALL | DISTINCT]"
+]);
+var reservedJoins15 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN"
+]);
+var reservedPhrases15 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL | SET DEFAULT]",
+  "{ROWS | RANGE} BETWEEN"
+]);
+var sql2 = {
+  name: "sql",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect15,
+    reservedClauses: [...reservedClauses15, ...standardOnelineClauses14, ...tabularOnelineClauses14],
+    reservedSetOperations: reservedSetOperations15,
+    reservedJoins: reservedJoins15,
+    reservedPhrases: reservedPhrases15,
+    reservedKeywords: keywords16,
+    reservedDataTypes: dataTypes15,
+    reservedFunctionNames: functions15,
+    stringTypes: [
+      { quote: "''-qq-bs", prefixes: ["N", "U&"] },
+      { quote: "''-raw", prefixes: ["X"], requirePrefix: true }
+    ],
+    identTypes: [`""-qq`, "``"],
+    paramTypes: { positional: true },
+    operators: ["||"]
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses14, ...tabularOnelineClauses14],
+    tabularOnelineClauses: tabularOnelineClauses14
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/trino/trino.functions.js
+var functions16 = [
+  // https://github.com/trinodb/trino/tree/432d2897bdef99388c1a47188743a061c4ac1f34/docs/src/main/sphinx/functions
+  // rg '^\.\. function::' ./docs/src/main/sphinx/functions | cut -d' ' -f 3 | cut -d '(' -f 1 | sort | uniq
+  // rg '\* ' ./docs/src/main/sphinx/functions/list-by-topic.rst | grep    '\* :func:' | cut -d'`' -f 2
+  // rg '\* ' ./docs/src/main/sphinx/functions/list-by-topic.rst | grep -v '\* :func:'
+  // grep -e '^- ' ./docs/src/main/sphinx/functions/list.rst | grep  -e '^- :func:' | cut -d'`' -f2
+  // grep -e '^- ' ./docs/src/main/sphinx/functions/list.rst | grep -ve '^- :func:'
+  "ABS",
+  "ACOS",
+  "ALL_MATCH",
+  "ANY_MATCH",
+  "APPROX_DISTINCT",
+  "APPROX_MOST_FREQUENT",
+  "APPROX_PERCENTILE",
+  "APPROX_SET",
+  "ARBITRARY",
+  "ARRAYS_OVERLAP",
+  "ARRAY_AGG",
+  "ARRAY_DISTINCT",
+  "ARRAY_EXCEPT",
+  "ARRAY_INTERSECT",
+  "ARRAY_JOIN",
+  "ARRAY_MAX",
+  "ARRAY_MIN",
+  "ARRAY_POSITION",
+  "ARRAY_REMOVE",
+  "ARRAY_SORT",
+  "ARRAY_UNION",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "AT_TIMEZONE",
+  "AVG",
+  "BAR",
+  "BETA_CDF",
+  "BING_TILE",
+  "BING_TILES_AROUND",
+  "BING_TILE_AT",
+  "BING_TILE_COORDINATES",
+  "BING_TILE_POLYGON",
+  "BING_TILE_QUADKEY",
+  "BING_TILE_ZOOM_LEVEL",
+  "BITWISE_AND",
+  "BITWISE_AND_AGG",
+  "BITWISE_LEFT_SHIFT",
+  "BITWISE_NOT",
+  "BITWISE_OR",
+  "BITWISE_OR_AGG",
+  "BITWISE_RIGHT_SHIFT",
+  "BITWISE_RIGHT_SHIFT_ARITHMETIC",
+  "BITWISE_XOR",
+  "BIT_COUNT",
+  "BOOL_AND",
+  "BOOL_OR",
+  "CARDINALITY",
+  "CAST",
+  "CBRT",
+  "CEIL",
+  "CEILING",
+  "CHAR2HEXINT",
+  "CHECKSUM",
+  "CHR",
+  "CLASSIFY",
+  "COALESCE",
+  "CODEPOINT",
+  "COLOR",
+  "COMBINATIONS",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONTAINS",
+  "CONTAINS_SEQUENCE",
+  "CONVEX_HULL_AGG",
+  "CORR",
+  "COS",
+  "COSH",
+  "COSINE_SIMILARITY",
+  "COUNT",
+  "COUNT_IF",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "CRC32",
+  "CUME_DIST",
+  "CURRENT_CATALOG",
+  "CURRENT_DATE",
+  "CURRENT_GROUPS",
+  "CURRENT_SCHEMA",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TIMEZONE",
+  "CURRENT_USER",
+  "DATE",
+  "DATE_ADD",
+  "DATE_DIFF",
+  "DATE_FORMAT",
+  "DATE_PARSE",
+  "DATE_TRUNC",
+  "DAY",
+  "DAY_OF_MONTH",
+  "DAY_OF_WEEK",
+  "DAY_OF_YEAR",
+  "DEGREES",
+  "DENSE_RANK",
+  "DOW",
+  "DOY",
+  "E",
+  "ELEMENT_AT",
+  "EMPTY_APPROX_SET",
+  "EVALUATE_CLASSIFIER_PREDICTIONS",
+  "EVERY",
+  "EXP",
+  "EXTRACT",
+  "FEATURES",
+  "FILTER",
+  "FIRST_VALUE",
+  "FLATTEN",
+  "FLOOR",
+  "FORMAT",
+  "FORMAT_DATETIME",
+  "FORMAT_NUMBER",
+  "FROM_BASE",
+  "FROM_BASE32",
+  "FROM_BASE64",
+  "FROM_BASE64URL",
+  "FROM_BIG_ENDIAN_32",
+  "FROM_BIG_ENDIAN_64",
+  "FROM_ENCODED_POLYLINE",
+  "FROM_GEOJSON_GEOMETRY",
+  "FROM_HEX",
+  "FROM_IEEE754_32",
+  "FROM_IEEE754_64",
+  "FROM_ISO8601_DATE",
+  "FROM_ISO8601_TIMESTAMP",
+  "FROM_ISO8601_TIMESTAMP_NANOS",
+  "FROM_UNIXTIME",
+  "FROM_UNIXTIME_NANOS",
+  "FROM_UTF8",
+  "GEOMETRIC_MEAN",
+  "GEOMETRY_FROM_HADOOP_SHAPE",
+  "GEOMETRY_INVALID_REASON",
+  "GEOMETRY_NEAREST_POINTS",
+  "GEOMETRY_TO_BING_TILES",
+  "GEOMETRY_UNION",
+  "GEOMETRY_UNION_AGG",
+  "GREATEST",
+  "GREAT_CIRCLE_DISTANCE",
+  "HAMMING_DISTANCE",
+  "HASH_COUNTS",
+  "HISTOGRAM",
+  "HMAC_MD5",
+  "HMAC_SHA1",
+  "HMAC_SHA256",
+  "HMAC_SHA512",
+  "HOUR",
+  "HUMAN_READABLE_SECONDS",
+  "IF",
+  "INDEX",
+  "INFINITY",
+  "INTERSECTION_CARDINALITY",
+  "INVERSE_BETA_CDF",
+  "INVERSE_NORMAL_CDF",
+  "IS_FINITE",
+  "IS_INFINITE",
+  "IS_JSON_SCALAR",
+  "IS_NAN",
+  "JACCARD_INDEX",
+  "JSON_ARRAY_CONTAINS",
+  "JSON_ARRAY_GET",
+  "JSON_ARRAY_LENGTH",
+  "JSON_EXISTS",
+  "JSON_EXTRACT",
+  "JSON_EXTRACT_SCALAR",
+  "JSON_FORMAT",
+  "JSON_PARSE",
+  "JSON_QUERY",
+  "JSON_SIZE",
+  "JSON_VALUE",
+  "KURTOSIS",
+  "LAG",
+  "LAST_DAY_OF_MONTH",
+  "LAST_VALUE",
+  "LEAD",
+  "LEARN_CLASSIFIER",
+  "LEARN_LIBSVM_CLASSIFIER",
+  "LEARN_LIBSVM_REGRESSOR",
+  "LEARN_REGRESSOR",
+  "LEAST",
+  "LENGTH",
+  "LEVENSHTEIN_DISTANCE",
+  "LINE_INTERPOLATE_POINT",
+  "LINE_INTERPOLATE_POINTS",
+  "LINE_LOCATE_POINT",
+  "LISTAGG",
+  "LN",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "LUHN_CHECK",
+  "MAKE_SET_DIGEST",
+  "MAP",
+  "MAP_AGG",
+  "MAP_CONCAT",
+  "MAP_ENTRIES",
+  "MAP_FILTER",
+  "MAP_FROM_ENTRIES",
+  "MAP_KEYS",
+  "MAP_UNION",
+  "MAP_VALUES",
+  "MAP_ZIP_WITH",
+  "MAX",
+  "MAX_BY",
+  "MD5",
+  "MERGE",
+  "MERGE_SET_DIGEST",
+  "MILLISECOND",
+  "MIN",
+  "MINUTE",
+  "MIN_BY",
+  "MOD",
+  "MONTH",
+  "MULTIMAP_AGG",
+  "MULTIMAP_FROM_ENTRIES",
+  "MURMUR3",
+  "NAN",
+  "NGRAMS",
+  "NONE_MATCH",
+  "NORMALIZE",
+  "NORMAL_CDF",
+  "NOW",
+  "NTH_VALUE",
+  "NTILE",
+  "NULLIF",
+  "NUMERIC_HISTOGRAM",
+  "OBJECTID",
+  "OBJECTID_TIMESTAMP",
+  "PARSE_DATA_SIZE",
+  "PARSE_DATETIME",
+  "PARSE_DURATION",
+  "PERCENT_RANK",
+  "PI",
+  "POSITION",
+  "POW",
+  "POWER",
+  "QDIGEST_AGG",
+  "QUARTER",
+  "RADIANS",
+  "RAND",
+  "RANDOM",
+  "RANK",
+  "REDUCE",
+  "REDUCE_AGG",
+  "REGEXP_COUNT",
+  "REGEXP_EXTRACT",
+  "REGEXP_EXTRACT_ALL",
+  "REGEXP_LIKE",
+  "REGEXP_POSITION",
+  "REGEXP_REPLACE",
+  "REGEXP_SPLIT",
+  "REGRESS",
+  "REGR_INTERCEPT",
+  "REGR_SLOPE",
+  "RENDER",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "RGB",
+  "ROUND",
+  "ROW_NUMBER",
+  "RPAD",
+  "RTRIM",
+  "SECOND",
+  "SEQUENCE",
+  "SHA1",
+  "SHA256",
+  "SHA512",
+  "SHUFFLE",
+  "SIGN",
+  "SIMPLIFY_GEOMETRY",
+  "SIN",
+  "SKEWNESS",
+  "SLICE",
+  "SOUNDEX",
+  "SPATIAL_PARTITIONING",
+  "SPATIAL_PARTITIONS",
+  "SPLIT",
+  "SPLIT_PART",
+  "SPLIT_TO_MAP",
+  "SPLIT_TO_MULTIMAP",
+  "SPOOKY_HASH_V2_32",
+  "SPOOKY_HASH_V2_64",
+  "SQRT",
+  "STARTS_WITH",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STRPOS",
+  "ST_AREA",
+  "ST_ASBINARY",
+  "ST_ASTEXT",
+  "ST_BOUNDARY",
+  "ST_BUFFER",
+  "ST_CENTROID",
+  "ST_CONTAINS",
+  "ST_CONVEXHULL",
+  "ST_COORDDIM",
+  "ST_CROSSES",
+  "ST_DIFFERENCE",
+  "ST_DIMENSION",
+  "ST_DISJOINT",
+  "ST_DISTANCE",
+  "ST_ENDPOINT",
+  "ST_ENVELOPE",
+  "ST_ENVELOPEASPTS",
+  "ST_EQUALS",
+  "ST_EXTERIORRING",
+  "ST_GEOMETRIES",
+  "ST_GEOMETRYFROMTEXT",
+  "ST_GEOMETRYN",
+  "ST_GEOMETRYTYPE",
+  "ST_GEOMFROMBINARY",
+  "ST_INTERIORRINGN",
+  "ST_INTERIORRINGS",
+  "ST_INTERSECTION",
+  "ST_INTERSECTS",
+  "ST_ISCLOSED",
+  "ST_ISEMPTY",
+  "ST_ISRING",
+  "ST_ISSIMPLE",
+  "ST_ISVALID",
+  "ST_LENGTH",
+  "ST_LINEFROMTEXT",
+  "ST_LINESTRING",
+  "ST_MULTIPOINT",
+  "ST_NUMGEOMETRIES",
+  "ST_NUMINTERIORRING",
+  "ST_NUMPOINTS",
+  "ST_OVERLAPS",
+  "ST_POINT",
+  "ST_POINTN",
+  "ST_POINTS",
+  "ST_POLYGON",
+  "ST_RELATE",
+  "ST_STARTPOINT",
+  "ST_SYMDIFFERENCE",
+  "ST_TOUCHES",
+  "ST_UNION",
+  "ST_WITHIN",
+  "ST_X",
+  "ST_XMAX",
+  "ST_XMIN",
+  "ST_Y",
+  "ST_YMAX",
+  "ST_YMIN",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUM",
+  "TAN",
+  "TANH",
+  "TDIGEST_AGG",
+  "TIMESTAMP_OBJECTID",
+  "TIMEZONE_HOUR",
+  "TIMEZONE_MINUTE",
+  "TO_BASE",
+  "TO_BASE32",
+  "TO_BASE64",
+  "TO_BASE64URL",
+  "TO_BIG_ENDIAN_32",
+  "TO_BIG_ENDIAN_64",
+  "TO_CHAR",
+  "TO_DATE",
+  "TO_ENCODED_POLYLINE",
+  "TO_GEOJSON_GEOMETRY",
+  "TO_GEOMETRY",
+  "TO_HEX",
+  "TO_IEEE754_32",
+  "TO_IEEE754_64",
+  "TO_ISO8601",
+  "TO_MILLISECONDS",
+  "TO_SPHERICAL_GEOGRAPHY",
+  "TO_TIMESTAMP",
+  "TO_UNIXTIME",
+  "TO_UTF8",
+  "TRANSFORM",
+  "TRANSFORM_KEYS",
+  "TRANSFORM_VALUES",
+  "TRANSLATE",
+  "TRIM",
+  "TRIM_ARRAY",
+  "TRUNCATE",
+  "TRY",
+  "TRY_CAST",
+  "TYPEOF",
+  "UPPER",
+  "URL_DECODE",
+  "URL_ENCODE",
+  "URL_EXTRACT_FRAGMENT",
+  "URL_EXTRACT_HOST",
+  "URL_EXTRACT_PARAMETER",
+  "URL_EXTRACT_PATH",
+  "URL_EXTRACT_PORT",
+  "URL_EXTRACT_PROTOCOL",
+  "URL_EXTRACT_QUERY",
+  "UUID",
+  "VALUES_AT_QUANTILES",
+  "VALUE_AT_QUANTILE",
+  "VARIANCE",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VERSION",
+  "WEEK",
+  "WEEK_OF_YEAR",
+  "WIDTH_BUCKET",
+  "WILSON_INTERVAL_LOWER",
+  "WILSON_INTERVAL_UPPER",
+  "WITH_TIMEZONE",
+  "WORD_STEM",
+  "XXHASH64",
+  "YEAR",
+  "YEAR_OF_WEEK",
+  "YOW",
+  "ZIP",
+  "ZIP_WITH",
+  // https://trino.io/docs/current/sql/match-recognize.html#row-pattern-recognition-expressions
+  "CLASSIFIER",
+  "FIRST",
+  "LAST",
+  "MATCH_NUMBER",
+  "NEXT",
+  "PERMUTE",
+  "PREV"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/trino/trino.keywords.js
+var keywords17 = [
+  // https://github.com/trinodb/trino/blob/432d2897bdef99388c1a47188743a061c4ac1f34/core/trino-parser/src/main/antlr4/io/trino/sql/parser/SqlBase.g4#L858-L1128
+  "ABSENT",
+  "ADD",
+  "ADMIN",
+  "AFTER",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "ANY",
+  "AS",
+  "ASC",
+  "AT",
+  "AUTHORIZATION",
+  "BERNOULLI",
+  "BETWEEN",
+  "BOTH",
+  "BY",
+  "CALL",
+  "CASCADE",
+  "CASE",
+  "CATALOGS",
+  "COLUMN",
+  "COLUMNS",
+  "COMMENT",
+  "COMMIT",
+  "COMMITTED",
+  "CONDITIONAL",
+  "CONSTRAINT",
+  "COPARTITION",
+  "CREATE",
+  "CROSS",
+  "CUBE",
+  "CURRENT",
+  "CURRENT_PATH",
+  "CURRENT_ROLE",
+  "DATA",
+  "DEALLOCATE",
+  "DEFAULT",
+  "DEFINE",
+  "DEFINER",
+  "DELETE",
+  "DENY",
+  "DESC",
+  "DESCRIBE",
+  "DESCRIPTOR",
+  "DISTINCT",
+  "DISTRIBUTED",
+  "DOUBLE",
+  "DROP",
+  "ELSE",
+  "EMPTY",
+  "ENCODING",
+  "END",
+  "ERROR",
+  "ESCAPE",
+  "EXCEPT",
+  "EXCLUDING",
+  "EXECUTE",
+  "EXISTS",
+  "EXPLAIN",
+  "FALSE",
+  "FETCH",
+  "FINAL",
+  "FIRST",
+  "FOLLOWING",
+  "FOR",
+  "FROM",
+  "FULL",
+  "FUNCTIONS",
+  "GRANT",
+  "GRANTED",
+  "GRANTS",
+  "GRAPHVIZ",
+  "GROUP",
+  "GROUPING",
+  "GROUPS",
+  "HAVING",
+  "IGNORE",
+  "IN",
+  "INCLUDING",
+  "INITIAL",
+  "INNER",
+  "INPUT",
+  "INSERT",
+  "INTERSECT",
+  "INTERVAL",
+  "INTO",
+  "INVOKER",
+  "IO",
+  "IS",
+  "ISOLATION",
+  "JOIN",
+  "JSON",
+  "JSON_ARRAY",
+  "JSON_OBJECT",
+  "KEEP",
+  "KEY",
+  "KEYS",
+  "LAST",
+  "LATERAL",
+  "LEADING",
+  "LEFT",
+  "LEVEL",
+  "LIKE",
+  "LIMIT",
+  "LOCAL",
+  "LOGICAL",
+  "MATCH",
+  "MATCHED",
+  "MATCHES",
+  "MATCH_RECOGNIZE",
+  "MATERIALIZED",
+  "MEASURES",
+  "NATURAL",
+  "NEXT",
+  "NFC",
+  "NFD",
+  "NFKC",
+  "NFKD",
+  "NO",
+  "NONE",
+  "NOT",
+  "NULL",
+  "NULLS",
+  "OBJECT",
+  "OF",
+  "OFFSET",
+  "OMIT",
+  "ON",
+  "ONE",
+  "ONLY",
+  "OPTION",
+  "OR",
+  "ORDER",
+  "ORDINALITY",
+  "OUTER",
+  "OUTPUT",
+  "OVER",
+  "OVERFLOW",
+  "PARTITION",
+  "PARTITIONS",
+  "PASSING",
+  "PAST",
+  "PATH",
+  "PATTERN",
+  "PER",
+  "PERMUTE",
+  "PRECEDING",
+  "PRECISION",
+  "PREPARE",
+  "PRIVILEGES",
+  "PROPERTIES",
+  "PRUNE",
+  "QUOTES",
+  "RANGE",
+  "READ",
+  "RECURSIVE",
+  "REFRESH",
+  "RENAME",
+  "REPEATABLE",
+  "RESET",
+  "RESPECT",
+  "RESTRICT",
+  "RETURNING",
+  "REVOKE",
+  "RIGHT",
+  "ROLE",
+  "ROLES",
+  "ROLLBACK",
+  "ROLLUP",
+  "ROW",
+  "ROWS",
+  "RUNNING",
+  "SCALAR",
+  "SCHEMA",
+  "SCHEMAS",
+  "SECURITY",
+  "SEEK",
+  "SELECT",
+  "SERIALIZABLE",
+  "SESSION",
+  "SET",
+  "SETS",
+  "SHOW",
+  "SKIP",
+  "SOME",
+  "START",
+  "STATS",
+  "STRING",
+  "SUBSET",
+  "SYSTEM",
+  "TABLE",
+  "TABLES",
+  "TABLESAMPLE",
+  "TEXT",
+  "THEN",
+  "TIES",
+  "TIME",
+  "TIMESTAMP",
+  "TO",
+  "TRAILING",
+  "TRANSACTION",
+  "TRUE",
+  "TYPE",
+  "UESCAPE",
+  "UNBOUNDED",
+  "UNCOMMITTED",
+  "UNCONDITIONAL",
+  "UNION",
+  "UNIQUE",
+  "UNKNOWN",
+  "UNMATCHED",
+  "UNNEST",
+  "UPDATE",
+  "USE",
+  "USER",
+  "USING",
+  "UTF16",
+  "UTF32",
+  "UTF8",
+  "VALIDATE",
+  "VALUE",
+  "VALUES",
+  "VERBOSE",
+  "VIEW",
+  "WHEN",
+  "WHERE",
+  "WINDOW",
+  "WITH",
+  "WITHIN",
+  "WITHOUT",
+  "WORK",
+  "WRAPPER",
+  "WRITE",
+  "ZONE"
+];
+var dataTypes16 = [
+  // https://github.com/trinodb/trino/blob/432d2897bdef99388c1a47188743a061c4ac1f34/core/trino-main/src/main/java/io/trino/metadata/TypeRegistry.java#L131-L168
+  // or https://trino.io/docs/current/language/types.html
+  "BIGINT",
+  "INT",
+  "INTEGER",
+  "SMALLINT",
+  "TINYINT",
+  "BOOLEAN",
+  "DATE",
+  "DECIMAL",
+  "REAL",
+  "DOUBLE",
+  "HYPERLOGLOG",
+  "QDIGEST",
+  "TDIGEST",
+  "P4HYPERLOGLOG",
+  "INTERVAL",
+  "TIMESTAMP",
+  "TIME",
+  "VARBINARY",
+  "VARCHAR",
+  "CHAR",
+  "ROW",
+  "ARRAY",
+  "MAP",
+  "JSON",
+  "JSON2016",
+  "IPADDRESS",
+  "GEOMETRY",
+  "UUID",
+  "SETDIGEST",
+  "JONIREGEXP",
+  "RE2JREGEXP",
+  "LIKEPATTERN",
+  "COLOR",
+  "CODEPOINTS",
+  "FUNCTION",
+  "JSONPATH"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/trino/trino.formatter.js
+var reservedSelect16 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses16 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY [ALL | DISTINCT]",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  // Data manipulation
+  // - insert:
+  "INSERT INTO",
+  "VALUES",
+  // - update:
+  "SET",
+  // MATCH_RECOGNIZE
+  "MATCH_RECOGNIZE",
+  "MEASURES",
+  "ONE ROW PER MATCH",
+  "ALL ROWS PER MATCH",
+  "AFTER MATCH",
+  "PATTERN",
+  "SUBSET",
+  "DEFINE"
+]);
+var standardOnelineClauses15 = expandPhrases(["CREATE TABLE [IF NOT EXISTS]"]);
+var tabularOnelineClauses15 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [MATERIALIZED] VIEW",
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE [IF EXISTS]",
+  "ADD COLUMN [IF NOT EXISTS]",
+  "DROP COLUMN [IF EXISTS]",
+  "RENAME COLUMN [IF EXISTS]",
+  "RENAME TO",
+  "SET AUTHORIZATION [USER | ROLE]",
+  "SET PROPERTIES",
+  "EXECUTE",
+  // - truncate:
+  "TRUNCATE TABLE",
+  // other
+  "ALTER SCHEMA",
+  "ALTER MATERIALIZED VIEW",
+  "ALTER VIEW",
+  "CREATE SCHEMA",
+  "CREATE ROLE",
+  "DROP SCHEMA",
+  "DROP MATERIALIZED VIEW",
+  "DROP VIEW",
+  "DROP ROLE",
+  // Auxiliary
+  "EXPLAIN",
+  "ANALYZE",
+  "EXPLAIN ANALYZE",
+  "EXPLAIN ANALYZE VERBOSE",
+  "USE",
+  "DESCRIBE INPUT",
+  "DESCRIBE OUTPUT",
+  "REFRESH MATERIALIZED VIEW",
+  "RESET SESSION",
+  "SET SESSION",
+  "SET PATH",
+  "SET TIME ZONE",
+  "SHOW GRANTS",
+  "SHOW CREATE TABLE",
+  "SHOW CREATE SCHEMA",
+  "SHOW CREATE VIEW",
+  "SHOW CREATE MATERIALIZED VIEW",
+  "SHOW TABLES",
+  "SHOW SCHEMAS",
+  "SHOW CATALOGS",
+  "SHOW COLUMNS",
+  "SHOW STATS FOR",
+  "SHOW ROLES",
+  "SHOW CURRENT ROLES",
+  "SHOW ROLE GRANTS",
+  "SHOW FUNCTIONS",
+  "SHOW SESSION"
+]);
+var reservedSetOperations16 = expandPhrases([
+  "UNION [ALL | DISTINCT]",
+  "EXCEPT [ALL | DISTINCT]",
+  "INTERSECT [ALL | DISTINCT]"
+]);
+var reservedJoins16 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL [INNER] JOIN",
+  "NATURAL {LEFT | RIGHT | FULL} [OUTER] JOIN"
+]);
+var reservedPhrases16 = expandPhrases([
+  "{ROWS | RANGE | GROUPS} BETWEEN",
+  // comparison operator
+  "IS [NOT] DISTINCT FROM"
+]);
+var trino = {
+  name: "trino",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect16,
+    reservedClauses: [...reservedClauses16, ...standardOnelineClauses15, ...tabularOnelineClauses15],
+    reservedSetOperations: reservedSetOperations16,
+    reservedJoins: reservedJoins16,
+    reservedPhrases: reservedPhrases16,
+    reservedKeywords: keywords17,
+    reservedDataTypes: dataTypes16,
+    reservedFunctionNames: functions16,
+    // Trino also supports {- ... -} parenthesis.
+    // The formatting of these currently works out as a result of { and -
+    // not getting a space added in-between.
+    // https://trino.io/docs/current/sql/match-recognize.html#row-pattern-syntax
+    extraParens: ["[]", "{}"],
+    // https://trino.io/docs/current/language/types.html#string
+    // https://trino.io/docs/current/language/types.html#varbinary
+    stringTypes: [
+      { quote: "''-qq", prefixes: ["U&"] },
+      { quote: "''-raw", prefixes: ["X"], requirePrefix: true }
+    ],
+    // https://trino.io/docs/current/language/reserved.html
+    identTypes: ['""-qq'],
+    paramTypes: { positional: true },
+    operators: [
+      "%",
+      "->",
+      "=>",
+      ":",
+      "||",
+      // Row pattern syntax
+      "|",
+      "^",
+      "$"
+      // '?', conflicts with positional placeholders
+    ]
+  },
+  formatOptions: {
+    onelineClauses: [...standardOnelineClauses15, ...tabularOnelineClauses15],
+    tabularOnelineClauses: tabularOnelineClauses15
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/transactsql/transactsql.functions.js
+var functions17 = [
+  // https://docs.microsoft.com/en-us/sql/t-sql/functions/functions?view=sql-server-ver15
+  // aggregate
+  "APPROX_COUNT_DISTINCT",
+  "AVG",
+  "CHECKSUM_AGG",
+  "COUNT",
+  "COUNT_BIG",
+  "GROUPING",
+  "GROUPING_ID",
+  "MAX",
+  "MIN",
+  "STDEV",
+  "STDEVP",
+  "SUM",
+  "VAR",
+  "VARP",
+  // analytic
+  "CUME_DIST",
+  "FIRST_VALUE",
+  "LAG",
+  "LAST_VALUE",
+  "LEAD",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PERCENT_RANK",
+  "Collation - COLLATIONPROPERTY",
+  "Collation - TERTIARY_WEIGHTS",
+  // configuration
+  "@@DBTS",
+  "@@LANGID",
+  "@@LANGUAGE",
+  "@@LOCK_TIMEOUT",
+  "@@MAX_CONNECTIONS",
+  "@@MAX_PRECISION",
+  "@@NESTLEVEL",
+  "@@OPTIONS",
+  "@@REMSERVER",
+  "@@SERVERNAME",
+  "@@SERVICENAME",
+  "@@SPID",
+  "@@TEXTSIZE",
+  "@@VERSION",
+  // conversion
+  "CAST",
+  "CONVERT",
+  "PARSE",
+  "TRY_CAST",
+  "TRY_CONVERT",
+  "TRY_PARSE",
+  // cryptographic
+  "ASYMKEY_ID",
+  "ASYMKEYPROPERTY",
+  "CERTPROPERTY",
+  "CERT_ID",
+  "CRYPT_GEN_RANDOM",
+  "DECRYPTBYASYMKEY",
+  "DECRYPTBYCERT",
+  "DECRYPTBYKEY",
+  "DECRYPTBYKEYAUTOASYMKEY",
+  "DECRYPTBYKEYAUTOCERT",
+  "DECRYPTBYPASSPHRASE",
+  "ENCRYPTBYASYMKEY",
+  "ENCRYPTBYCERT",
+  "ENCRYPTBYKEY",
+  "ENCRYPTBYPASSPHRASE",
+  "HASHBYTES",
+  "IS_OBJECTSIGNED",
+  "KEY_GUID",
+  "KEY_ID",
+  "KEY_NAME",
+  "SIGNBYASYMKEY",
+  "SIGNBYCERT",
+  "SYMKEYPROPERTY",
+  "VERIFYSIGNEDBYCERT",
+  "VERIFYSIGNEDBYASYMKEY",
+  // cursor
+  "@@CURSOR_ROWS",
+  "@@FETCH_STATUS",
+  "CURSOR_STATUS",
+  // dataType
+  "DATALENGTH",
+  "IDENT_CURRENT",
+  "IDENT_INCR",
+  "IDENT_SEED",
+  "IDENTITY",
+  "SQL_VARIANT_PROPERTY",
+  // datetime
+  "@@DATEFIRST",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TIMEZONE",
+  "CURRENT_TIMEZONE_ID",
+  "DATEADD",
+  "DATEDIFF",
+  "DATEDIFF_BIG",
+  "DATEFROMPARTS",
+  "DATENAME",
+  "DATEPART",
+  "DATETIME2FROMPARTS",
+  "DATETIMEFROMPARTS",
+  "DATETIMEOFFSETFROMPARTS",
+  "DAY",
+  "EOMONTH",
+  "GETDATE",
+  "GETUTCDATE",
+  "ISDATE",
+  "MONTH",
+  "SMALLDATETIMEFROMPARTS",
+  "SWITCHOFFSET",
+  "SYSDATETIME",
+  "SYSDATETIMEOFFSET",
+  "SYSUTCDATETIME",
+  "TIMEFROMPARTS",
+  "TODATETIMEOFFSET",
+  "YEAR",
+  "JSON",
+  "ISJSON",
+  "JSON_VALUE",
+  "JSON_QUERY",
+  "JSON_MODIFY",
+  // mathematical
+  "ABS",
+  "ACOS",
+  "ASIN",
+  "ATAN",
+  "ATN2",
+  "CEILING",
+  "COS",
+  "COT",
+  "DEGREES",
+  "EXP",
+  "FLOOR",
+  "LOG",
+  "LOG10",
+  "PI",
+  "POWER",
+  "RADIANS",
+  "RAND",
+  "ROUND",
+  "SIGN",
+  "SIN",
+  "SQRT",
+  "SQUARE",
+  "TAN",
+  "CHOOSE",
+  "GREATEST",
+  "IIF",
+  "LEAST",
+  // metadata
+  "@@PROCID",
+  "APP_NAME",
+  "APPLOCK_MODE",
+  "APPLOCK_TEST",
+  "ASSEMBLYPROPERTY",
+  "COL_LENGTH",
+  "COL_NAME",
+  "COLUMNPROPERTY",
+  "DATABASEPROPERTYEX",
+  "DB_ID",
+  "DB_NAME",
+  "FILE_ID",
+  "FILE_IDEX",
+  "FILE_NAME",
+  "FILEGROUP_ID",
+  "FILEGROUP_NAME",
+  "FILEGROUPPROPERTY",
+  "FILEPROPERTY",
+  "FILEPROPERTYEX",
+  "FULLTEXTCATALOGPROPERTY",
+  "FULLTEXTSERVICEPROPERTY",
+  "INDEX_COL",
+  "INDEXKEY_PROPERTY",
+  "INDEXPROPERTY",
+  "NEXT VALUE FOR",
+  "OBJECT_DEFINITION",
+  "OBJECT_ID",
+  "OBJECT_NAME",
+  "OBJECT_SCHEMA_NAME",
+  "OBJECTPROPERTY",
+  "OBJECTPROPERTYEX",
+  "ORIGINAL_DB_NAME",
+  "PARSENAME",
+  "SCHEMA_ID",
+  "SCHEMA_NAME",
+  "SCOPE_IDENTITY",
+  "SERVERPROPERTY",
+  "STATS_DATE",
+  "TYPE_ID",
+  "TYPE_NAME",
+  "TYPEPROPERTY",
+  // ranking
+  "DENSE_RANK",
+  "NTILE",
+  "RANK",
+  "ROW_NUMBER",
+  "PUBLISHINGSERVERNAME",
+  // security
+  "CERTENCODED",
+  "CERTPRIVATEKEY",
+  "CURRENT_USER",
+  "DATABASE_PRINCIPAL_ID",
+  "HAS_DBACCESS",
+  "HAS_PERMS_BY_NAME",
+  "IS_MEMBER",
+  "IS_ROLEMEMBER",
+  "IS_SRVROLEMEMBER",
+  "LOGINPROPERTY",
+  "ORIGINAL_LOGIN",
+  "PERMISSIONS",
+  "PWDENCRYPT",
+  "PWDCOMPARE",
+  "SESSION_USER",
+  "SESSIONPROPERTY",
+  "SUSER_ID",
+  "SUSER_NAME",
+  "SUSER_SID",
+  "SUSER_SNAME",
+  "SYSTEM_USER",
+  "USER",
+  "USER_ID",
+  "USER_NAME",
+  // string
+  "ASCII",
+  "CHARINDEX",
+  "CONCAT",
+  "CONCAT_WS",
+  "DIFFERENCE",
+  "FORMAT",
+  "LEFT",
+  "LEN",
+  "LOWER",
+  "LTRIM",
+  "PATINDEX",
+  "QUOTENAME",
+  "REPLACE",
+  "REPLICATE",
+  "REVERSE",
+  "RIGHT",
+  "RTRIM",
+  "SOUNDEX",
+  "SPACE",
+  "STR",
+  "STRING_AGG",
+  "STRING_ESCAPE",
+  "STUFF",
+  "SUBSTRING",
+  "TRANSLATE",
+  "TRIM",
+  "UNICODE",
+  "UPPER",
+  // system
+  "$PARTITION",
+  "@@ERROR",
+  "@@IDENTITY",
+  "@@PACK_RECEIVED",
+  "@@ROWCOUNT",
+  "@@TRANCOUNT",
+  "BINARY_CHECKSUM",
+  "CHECKSUM",
+  "COMPRESS",
+  "CONNECTIONPROPERTY",
+  "CONTEXT_INFO",
+  "CURRENT_REQUEST_ID",
+  "CURRENT_TRANSACTION_ID",
+  "DECOMPRESS",
+  "ERROR_LINE",
+  "ERROR_MESSAGE",
+  "ERROR_NUMBER",
+  "ERROR_PROCEDURE",
+  "ERROR_SEVERITY",
+  "ERROR_STATE",
+  "FORMATMESSAGE",
+  "GET_FILESTREAM_TRANSACTION_CONTEXT",
+  "GETANSINULL",
+  "HOST_ID",
+  "HOST_NAME",
+  "ISNULL",
+  "ISNUMERIC",
+  "MIN_ACTIVE_ROWVERSION",
+  "NEWID",
+  "NEWSEQUENTIALID",
+  "ROWCOUNT_BIG",
+  "SESSION_CONTEXT",
+  "XACT_STATE",
+  // statistical
+  "@@CONNECTIONS",
+  "@@CPU_BUSY",
+  "@@IDLE",
+  "@@IO_BUSY",
+  "@@PACK_SENT",
+  "@@PACKET_ERRORS",
+  "@@TIMETICKS",
+  "@@TOTAL_ERRORS",
+  "@@TOTAL_READ",
+  "@@TOTAL_WRITE",
+  "TEXTPTR",
+  "TEXTVALID",
+  // trigger
+  "COLUMNS_UPDATED",
+  "EVENTDATA",
+  "TRIGGER_NESTLEVEL",
+  "UPDATE",
+  // Shorthand functions to use in place of CASE expression
+  "COALESCE",
+  "NULLIF"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/transactsql/transactsql.keywords.js
+var keywords18 = [
+  // https://docs.microsoft.com/en-us/sql/t-sql/language-elements/reserved-keywords-transact-sql?view=sql-server-ver15
+  // standard
+  "ADD",
+  "ALL",
+  "ALTER",
+  "AND",
+  "ANY",
+  "AS",
+  "ASC",
+  "AUTHORIZATION",
+  "BACKUP",
+  "BEGIN",
+  "BETWEEN",
+  "BREAK",
+  "BROWSE",
+  "BULK",
+  "BY",
+  "CASCADE",
+  "CHECK",
+  "CHECKPOINT",
+  "CLOSE",
+  "CLUSTERED",
+  "COALESCE",
+  "COLLATE",
+  "COLUMN",
+  "COMMIT",
+  "COMPUTE",
+  "CONSTRAINT",
+  "CONTAINS",
+  "CONTAINSTABLE",
+  "CONTINUE",
+  "CONVERT",
+  "CREATE",
+  "CROSS",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURSOR",
+  "DATABASE",
+  "DBCC",
+  "DEALLOCATE",
+  "DECLARE",
+  "DEFAULT",
+  "DELETE",
+  "DENY",
+  "DESC",
+  "DISK",
+  "DISTINCT",
+  "DISTRIBUTED",
+  "DROP",
+  "DUMP",
+  "ERRLVL",
+  "ESCAPE",
+  "EXEC",
+  "EXECUTE",
+  "EXISTS",
+  "EXIT",
+  "EXTERNAL",
+  "FETCH",
+  "FILE",
+  "FILLFACTOR",
+  "FOR",
+  "FOREIGN",
+  "FREETEXT",
+  "FREETEXTTABLE",
+  "FROM",
+  "FULL",
+  "FUNCTION",
+  "GOTO",
+  "GRANT",
+  "GROUP",
+  "HAVING",
+  "HOLDLOCK",
+  "IDENTITY",
+  "IDENTITYCOL",
+  "IDENTITY_INSERT",
+  "IF",
+  "IN",
+  "INDEX",
+  "INNER",
+  "INSERT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "JOIN",
+  "KEY",
+  "KILL",
+  "LEFT",
+  "LIKE",
+  "LINENO",
+  "LOAD",
+  "MERGE",
+  "NOCHECK",
+  "NONCLUSTERED",
+  "NOT",
+  "NULL",
+  "NULLIF",
+  "OF",
+  "OFF",
+  "OFFSETS",
+  "ON",
+  "OPEN",
+  "OPENDATASOURCE",
+  "OPENQUERY",
+  "OPENROWSET",
+  "OPENXML",
+  "OPTION",
+  "OR",
+  "ORDER",
+  "OUTER",
+  "OVER",
+  "PERCENT",
+  "PIVOT",
+  "PLAN",
+  "PRIMARY",
+  "PRINT",
+  "PROC",
+  "PROCEDURE",
+  "PUBLIC",
+  "RAISERROR",
+  "READ",
+  "READTEXT",
+  "RECONFIGURE",
+  "REFERENCES",
+  "REPLICATION",
+  "RESTORE",
+  "RESTRICT",
+  "RETURN",
+  "REVERT",
+  "REVOKE",
+  "RIGHT",
+  "ROLLBACK",
+  "ROWCOUNT",
+  "ROWGUIDCOL",
+  "RULE",
+  "SAVE",
+  "SCHEMA",
+  "SECURITYAUDIT",
+  "SELECT",
+  "SEMANTICKEYPHRASETABLE",
+  "SEMANTICSIMILARITYDETAILSTABLE",
+  "SEMANTICSIMILARITYTABLE",
+  "SESSION_USER",
+  "SET",
+  "SETUSER",
+  "SHUTDOWN",
+  "SOME",
+  "STATISTICS",
+  "SYSTEM_USER",
+  "TABLE",
+  "TABLESAMPLE",
+  "TEXTSIZE",
+  "THEN",
+  "TO",
+  "TOP",
+  "TRAN",
+  "TRANSACTION",
+  "TRIGGER",
+  "TRUNCATE",
+  "TRY_CONVERT",
+  "TSEQUAL",
+  "UNION",
+  "UNIQUE",
+  "UNPIVOT",
+  "UPDATE",
+  "UPDATETEXT",
+  "USE",
+  "USER",
+  "VALUES",
+  "VIEW",
+  "WAITFOR",
+  "WHERE",
+  "WHILE",
+  "WITH",
+  "WITHIN GROUP",
+  "WRITETEXT",
+  // https://learn.microsoft.com/en-us/sql/t-sql/queries/output-clause-transact-sql?view=sql-server-ver16#action
+  "$ACTION"
+];
+var dataTypes17 = [
+  // https://learn.microsoft.com/en-us/sql/t-sql/data-types/data-types-transact-sql?view=sql-server-ver15
+  "BINARY",
+  "BIT",
+  "CHAR",
+  "CHAR",
+  "CHARACTER",
+  "DATE",
+  "DATETIME2",
+  "DATETIMEOFFSET",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE",
+  "FLOAT",
+  "INT",
+  "INTEGER",
+  "NATIONAL",
+  "NCHAR",
+  "NUMERIC",
+  "NVARCHAR",
+  "PRECISION",
+  "REAL",
+  "SMALLINT",
+  "TIME",
+  "TIMESTAMP",
+  "VARBINARY",
+  "VARCHAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/transactsql/transactsql.formatter.js
+var reservedSelect17 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses17 = expandPhrases([
+  // queries
+  "WITH",
+  "INTO",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "WINDOW",
+  "PARTITION BY",
+  "ORDER BY",
+  "OFFSET",
+  "FETCH {FIRST | NEXT}",
+  "FOR {BROWSE | XML | JSON}",
+  "OPTION",
+  // Data manipulation
+  // - insert:
+  "INSERT [INTO]",
+  "VALUES",
+  // - update:
+  "SET",
+  // - merge:
+  "MERGE [INTO]",
+  "WHEN [NOT] MATCHED [BY TARGET | BY SOURCE] [THEN]",
+  "UPDATE SET",
+  // Data definition
+  "CREATE [OR ALTER] {PROC | PROCEDURE}"
+]);
+var standardOnelineClauses16 = expandPhrases(["CREATE TABLE"]);
+var tabularOnelineClauses16 = expandPhrases([
+  // - create:
+  "CREATE [OR ALTER] [MATERIALIZED] VIEW",
+  // - update:
+  "UPDATE",
+  "WHERE CURRENT OF",
+  // - delete:
+  "DELETE [FROM]",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE",
+  "ADD",
+  "DROP COLUMN [IF EXISTS]",
+  "ALTER COLUMN",
+  // - truncate:
+  "TRUNCATE TABLE",
+  // indexes
+  "CREATE [UNIQUE] [CLUSTERED] INDEX",
+  // databases
+  "CREATE DATABASE",
+  "ALTER DATABASE",
+  "DROP DATABASE [IF EXISTS]",
+  // other statements
+  "GO",
+  "USE",
+  // https://docs.microsoft.com/en-us/sql/t-sql/statements/statements?view=sql-server-ver15
+  "ADD SENSITIVITY CLASSIFICATION",
+  "ADD SIGNATURE",
+  "AGGREGATE",
+  "ANSI_DEFAULTS",
+  "ANSI_NULLS",
+  "ANSI_NULL_DFLT_OFF",
+  "ANSI_NULL_DFLT_ON",
+  "ANSI_PADDING",
+  "ANSI_WARNINGS",
+  "APPLICATION ROLE",
+  "ARITHABORT",
+  "ARITHIGNORE",
+  "ASSEMBLY",
+  "ASYMMETRIC KEY",
+  "AUTHORIZATION",
+  "AVAILABILITY GROUP",
+  "BACKUP",
+  "BACKUP CERTIFICATE",
+  "BACKUP MASTER KEY",
+  "BACKUP SERVICE MASTER KEY",
+  "BEGIN CONVERSATION TIMER",
+  "BEGIN DIALOG CONVERSATION",
+  "BROKER PRIORITY",
+  "BULK INSERT",
+  "CERTIFICATE",
+  "CLOSE MASTER KEY",
+  "CLOSE SYMMETRIC KEY",
+  "COLLATE",
+  "COLUMN ENCRYPTION KEY",
+  "COLUMN MASTER KEY",
+  "COLUMNSTORE INDEX",
+  "CONCAT_NULL_YIELDS_NULL",
+  "CONTEXT_INFO",
+  "CONTRACT",
+  "CREDENTIAL",
+  "CRYPTOGRAPHIC PROVIDER",
+  "CURSOR_CLOSE_ON_COMMIT",
+  "DATABASE",
+  "DATABASE AUDIT SPECIFICATION",
+  "DATABASE ENCRYPTION KEY",
+  "DATABASE HADR",
+  "DATABASE SCOPED CONFIGURATION",
+  "DATABASE SCOPED CREDENTIAL",
+  "DATABASE SET",
+  "DATEFIRST",
+  "DATEFORMAT",
+  "DEADLOCK_PRIORITY",
+  "DENY",
+  "DENY XML",
+  "DISABLE TRIGGER",
+  "ENABLE TRIGGER",
+  "END CONVERSATION",
+  "ENDPOINT",
+  "EVENT NOTIFICATION",
+  "EVENT SESSION",
+  "EXECUTE AS",
+  "EXTERNAL DATA SOURCE",
+  "EXTERNAL FILE FORMAT",
+  "EXTERNAL LANGUAGE",
+  "EXTERNAL LIBRARY",
+  "EXTERNAL RESOURCE POOL",
+  "EXTERNAL TABLE",
+  "FIPS_FLAGGER",
+  "FMTONLY",
+  "FORCEPLAN",
+  "FULLTEXT CATALOG",
+  "FULLTEXT INDEX",
+  "FULLTEXT STOPLIST",
+  "FUNCTION",
+  "GET CONVERSATION GROUP",
+  "GET_TRANSMISSION_STATUS",
+  "GRANT",
+  "GRANT XML",
+  "IDENTITY_INSERT",
+  "IMPLICIT_TRANSACTIONS",
+  "INDEX",
+  "LANGUAGE",
+  "LOCK_TIMEOUT",
+  "LOGIN",
+  "MASTER KEY",
+  "MESSAGE TYPE",
+  "MOVE CONVERSATION",
+  "NOCOUNT",
+  "NOEXEC",
+  "NUMERIC_ROUNDABORT",
+  "OFFSETS",
+  "OPEN MASTER KEY",
+  "OPEN SYMMETRIC KEY",
+  "PARSEONLY",
+  "PARTITION FUNCTION",
+  "PARTITION SCHEME",
+  "PROCEDURE",
+  "QUERY_GOVERNOR_COST_LIMIT",
+  "QUEUE",
+  "QUOTED_IDENTIFIER",
+  "RECEIVE",
+  "REMOTE SERVICE BINDING",
+  "REMOTE_PROC_TRANSACTIONS",
+  "RESOURCE GOVERNOR",
+  "RESOURCE POOL",
+  "RESTORE",
+  "RESTORE FILELISTONLY",
+  "RESTORE HEADERONLY",
+  "RESTORE LABELONLY",
+  "RESTORE MASTER KEY",
+  "RESTORE REWINDONLY",
+  "RESTORE SERVICE MASTER KEY",
+  "RESTORE VERIFYONLY",
+  "REVERT",
+  "REVOKE",
+  "REVOKE XML",
+  "ROLE",
+  "ROUTE",
+  "ROWCOUNT",
+  "RULE",
+  "SCHEMA",
+  "SEARCH PROPERTY LIST",
+  "SECURITY POLICY",
+  "SELECTIVE XML INDEX",
+  "SEND",
+  "SENSITIVITY CLASSIFICATION",
+  "SEQUENCE",
+  "SERVER AUDIT",
+  "SERVER AUDIT SPECIFICATION",
+  "SERVER CONFIGURATION",
+  "SERVER ROLE",
+  "SERVICE",
+  "SERVICE MASTER KEY",
+  "SETUSER",
+  "SHOWPLAN_ALL",
+  "SHOWPLAN_TEXT",
+  "SHOWPLAN_XML",
+  "SIGNATURE",
+  "SPATIAL INDEX",
+  "STATISTICS",
+  "STATISTICS IO",
+  "STATISTICS PROFILE",
+  "STATISTICS TIME",
+  "STATISTICS XML",
+  "SYMMETRIC KEY",
+  "SYNONYM",
+  "TABLE",
+  "TABLE IDENTITY",
+  "TEXTSIZE",
+  "TRANSACTION ISOLATION LEVEL",
+  "TRIGGER",
+  "TYPE",
+  "UPDATE STATISTICS",
+  "USER",
+  "WORKLOAD GROUP",
+  "XACT_ABORT",
+  "XML INDEX",
+  "XML SCHEMA COLLECTION"
+]);
+var reservedSetOperations17 = expandPhrases(["UNION [ALL]", "EXCEPT", "INTERSECT"]);
+var reservedJoins17 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  // non-standard joins
+  "{CROSS | OUTER} APPLY"
+]);
+var reservedPhrases17 = expandPhrases([
+  "ON {UPDATE | DELETE} [SET NULL | SET DEFAULT]",
+  "{ROWS | RANGE} BETWEEN"
+]);
+var transactsql = {
+  name: "transactsql",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect17,
+    reservedClauses: [...reservedClauses17, ...standardOnelineClauses16, ...tabularOnelineClauses16],
+    reservedSetOperations: reservedSetOperations17,
+    reservedJoins: reservedJoins17,
+    reservedPhrases: reservedPhrases17,
+    reservedKeywords: keywords18,
+    reservedDataTypes: dataTypes17,
+    reservedFunctionNames: functions17,
+    nestedBlockComments: true,
+    stringTypes: [{ quote: "''-qq", prefixes: ["N"] }, "{}"],
+    identTypes: [`""-qq`, "[]"],
+    identChars: { first: "#@", rest: "#@$" },
+    paramTypes: { named: ["@"], quoted: ["@"] },
+    operators: [
+      "%",
+      "&",
+      "|",
+      "^",
+      "~",
+      "!<",
+      "!>",
+      "+=",
+      "-=",
+      "*=",
+      "/=",
+      "%=",
+      "|=",
+      "&=",
+      "^=",
+      "::",
+      ":"
+    ],
+    propertyAccessOperators: [".."]
+    // TODO: Support for money constants
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["::"],
+    onelineClauses: [...standardOnelineClauses16, ...tabularOnelineClauses16],
+    tabularOnelineClauses: tabularOnelineClauses16
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/singlestoredb/singlestoredb.keywords.js
+var keywords19 = [
+  // List of all keywords taken from:
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/restricted-keywords/list-of-restricted-keywords.html
+  // Then filtered down to reserved keywords by running
+  // > SELECT * AS <keyword>;
+  // for each keyword in that list and observing which of these produce an error.
+  "ADD",
+  "ALL",
+  "ALTER",
+  "ANALYZE",
+  "AND",
+  "AS",
+  "ASC",
+  "ASENSITIVE",
+  "BEFORE",
+  "BETWEEN",
+  "_BINARY",
+  "BOTH",
+  "BY",
+  "CALL",
+  "CASCADE",
+  "CASE",
+  "CHANGE",
+  "CHECK",
+  "COLLATE",
+  "COLUMN",
+  "CONDITION",
+  "CONSTRAINT",
+  "CONTINUE",
+  "CONVERT",
+  "CREATE",
+  "CROSS",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURSOR",
+  "DATABASE",
+  "DATABASES",
+  "DAY_HOUR",
+  "DAY_MICROSECOND",
+  "DAY_MINUTE",
+  "DAY_SECOND",
+  "DECLARE",
+  "DEFAULT",
+  "DELAYED",
+  "DELETE",
+  "DESC",
+  "DESCRIBE",
+  "DETERMINISTIC",
+  "DISTINCT",
+  "DISTINCTROW",
+  "DIV",
+  "DROP",
+  "DUAL",
+  "EACH",
+  "ELSE",
+  "ELSEIF",
+  "ENCLOSED",
+  "ESCAPED",
+  "EXCEPT",
+  "EXISTS",
+  "EXIT",
+  "EXPLAIN",
+  "EXTRA_JOIN",
+  "FALSE",
+  "FETCH",
+  "FOR",
+  "FORCE",
+  "FORCE_COMPILED_MODE",
+  "FORCE_INTERPRETER_MODE",
+  "FOREIGN",
+  "FROM",
+  "FULL",
+  "FULLTEXT",
+  "GRANT",
+  "GROUP",
+  "HAVING",
+  "HEARTBEAT_NO_LOGGING",
+  "HIGH_PRIORITY",
+  "HOUR_MICROSECOND",
+  "HOUR_MINUTE",
+  "HOUR_SECOND",
+  "IF",
+  "IGNORE",
+  "IN",
+  "INDEX",
+  "INFILE",
+  "INNER",
+  "INOUT",
+  "INSENSITIVE",
+  "INSERT",
+  "IN",
+  "_INTERNAL_DYNAMIC_TYPECAST",
+  "INTERSECT",
+  "INTERVAL",
+  "INTO",
+  "ITERATE",
+  "JOIN",
+  "KEY",
+  "KEYS",
+  "KILL",
+  "LEADING",
+  "LEAVE",
+  "LEFT",
+  "LIKE",
+  "LIMIT",
+  "LINES",
+  "LOAD",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCK",
+  "LOOP",
+  "LOW_PRIORITY",
+  "MATCH",
+  "MAXVALUE",
+  "MINUS",
+  "MINUTE_MICROSECOND",
+  "MINUTE_SECOND",
+  "MOD",
+  "MODIFIES",
+  "NATURAL",
+  "NO_QUERY_REWRITE",
+  "NOT",
+  "NO_WRITE_TO_BINLOG",
+  "NO_QUERY_REWRITE",
+  "NULL",
+  "ON",
+  "OPTIMIZE",
+  "OPTION",
+  "OPTIONALLY",
+  "OR",
+  "ORDER",
+  "OUT",
+  "OUTER",
+  "OUTFILE",
+  "OVER",
+  "PRIMARY",
+  "PROCEDURE",
+  "PURGE",
+  "RANGE",
+  "READ",
+  "READS",
+  "REFERENCES",
+  "REGEXP",
+  "RELEASE",
+  "RENAME",
+  "REPEAT",
+  "REPLACE",
+  "REQUIRE",
+  "RESTRICT",
+  "RETURN",
+  "REVOKE",
+  "RIGHT",
+  "RIGHT_ANTI_JOIN",
+  "RIGHT_SEMI_JOIN",
+  "RIGHT_STRAIGHT_JOIN",
+  "RLIKE",
+  "SCHEMA",
+  "SCHEMAS",
+  "SECOND_MICROSECOND",
+  "SELECT",
+  "SEMI_JOIN",
+  "SENSITIVE",
+  "SEPARATOR",
+  "SET",
+  "SHOW",
+  "SIGNAL",
+  "SPATIAL",
+  "SPECIFIC",
+  "SQL",
+  "SQL_BIG_RESULT",
+  "SQL_BUFFER_RESULT",
+  "SQL_CACHE",
+  "SQL_CALC_FOUND_ROWS",
+  "SQLEXCEPTION",
+  "SQL_NO_CACHE",
+  "SQL_NO_LOGGING",
+  "SQL_SMALL_RESULT",
+  "SQLSTATE",
+  "SQLWARNING",
+  "STRAIGHT_JOIN",
+  "TABLE",
+  "TERMINATED",
+  "THEN",
+  "TO",
+  "TRAILING",
+  "TRIGGER",
+  "TRUE",
+  "UNBOUNDED",
+  "UNDO",
+  "UNION",
+  "UNIQUE",
+  "UNLOCK",
+  "UPDATE",
+  "USAGE",
+  "USE",
+  "USING",
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "_UTF8",
+  "VALUES",
+  "WHEN",
+  "WHERE",
+  "WHILE",
+  "WINDOW",
+  "WITH",
+  "WITHIN",
+  "WRITE",
+  "XOR",
+  "YEAR_MONTH",
+  "ZEROFILL"
+];
+var dataTypes18 = [
+  // https://docs.singlestore.com/cloud/reference/sql-reference/data-types/
+  "BIGINT",
+  "BINARY",
+  "BIT",
+  "BLOB",
+  "CHAR",
+  "CHARACTER",
+  "DATETIME",
+  "DEC",
+  "DECIMAL",
+  "DOUBLE PRECISION",
+  "DOUBLE",
+  "ENUM",
+  "FIXED",
+  "FLOAT",
+  "FLOAT4",
+  "FLOAT8",
+  "INT",
+  "INT1",
+  "INT2",
+  "INT3",
+  "INT4",
+  "INT8",
+  "INTEGER",
+  "LONG",
+  "LONGBLOB",
+  "LONGTEXT",
+  "MEDIUMBLOB",
+  "MEDIUMINT",
+  "MEDIUMTEXT",
+  "MIDDLEINT",
+  "NATIONAL CHAR",
+  "NATIONAL VARCHAR",
+  "NUMERIC",
+  "PRECISION",
+  "REAL",
+  "SMALLINT",
+  "TEXT",
+  "TIME",
+  "TIMESTAMP",
+  "TINYBLOB",
+  "TINYINT",
+  "TINYTEXT",
+  "UNSIGNED",
+  "VARBINARY",
+  "VARCHAR",
+  "VARCHARACTER",
+  "YEAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/singlestoredb/singlestoredb.functions.js
+var functions18 = [
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/vector-functions/vector-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/window-functions/window-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/string-functions/string-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/conditional-functions/conditional-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/numeric-functions/numeric-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/geospatial-functions/geospatial-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/json-functions/json-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/information-functions/information-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/aggregate-functions/aggregate-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/time-series-functions/time-series-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/identifier-generation-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/date-and-time-functions/date-and-time-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/distinct-count-estimation-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/full-text-search-functions/full-text-search-functions.html
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference/regular-expression-functions.html
+  "ABS",
+  "ACOS",
+  "ADDDATE",
+  "ADDTIME",
+  "AES_DECRYPT",
+  "AES_ENCRYPT",
+  "ANY_VALUE",
+  "APPROX_COUNT_DISTINCT",
+  "APPROX_COUNT_DISTINCT_ACCUMULATE",
+  "APPROX_COUNT_DISTINCT_COMBINE",
+  "APPROX_COUNT_DISTINCT_ESTIMATE",
+  "APPROX_GEOGRAPHY_INTERSECTS",
+  "APPROX_PERCENTILE",
+  "ASCII",
+  "ASIN",
+  "ATAN",
+  "ATAN2",
+  "AVG",
+  "BIN",
+  "BINARY",
+  "BIT_AND",
+  "BIT_COUNT",
+  "BIT_OR",
+  "BIT_XOR",
+  "CAST",
+  "CEIL",
+  "CEILING",
+  "CHAR",
+  "CHARACTER_LENGTH",
+  "CHAR_LENGTH",
+  "CHARSET",
+  "COALESCE",
+  "COERCIBILITY",
+  "COLLATION",
+  "COLLECT",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONNECTION_ID",
+  "CONV",
+  "CONVERT",
+  "CONVERT_TZ",
+  "COS",
+  "COT",
+  "COUNT",
+  "CUME_DIST",
+  "CURDATE",
+  "CURRENT_DATE",
+  "CURRENT_ROLE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "CURTIME",
+  "DATABASE",
+  "DATE",
+  "DATE_ADD",
+  "DATEDIFF",
+  "DATE_FORMAT",
+  "DATE_SUB",
+  "DATE_TRUNC",
+  "DAY",
+  "DAYNAME",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFYEAR",
+  "DECODE",
+  "DEFAULT",
+  "DEGREES",
+  "DENSE_RANK",
+  "DIV",
+  "DOT_PRODUCT",
+  "ELT",
+  "EUCLIDEAN_DISTANCE",
+  "EXP",
+  "EXTRACT",
+  "FIELD",
+  "FIRST",
+  "FIRST_VALUE",
+  "FLOOR",
+  "FORMAT",
+  "FOUND_ROWS",
+  "FROM_BASE64",
+  "FROM_DAYS",
+  "FROM_UNIXTIME",
+  "GEOGRAPHY_AREA",
+  "GEOGRAPHY_CONTAINS",
+  "GEOGRAPHY_DISTANCE",
+  "GEOGRAPHY_INTERSECTS",
+  "GEOGRAPHY_LATITUDE",
+  "GEOGRAPHY_LENGTH",
+  "GEOGRAPHY_LONGITUDE",
+  "GEOGRAPHY_POINT",
+  "GEOGRAPHY_WITHIN_DISTANCE",
+  "GEOMETRY_AREA",
+  "GEOMETRY_CONTAINS",
+  "GEOMETRY_DISTANCE",
+  "GEOMETRY_FILTER",
+  "GEOMETRY_INTERSECTS",
+  "GEOMETRY_LENGTH",
+  "GEOMETRY_POINT",
+  "GEOMETRY_WITHIN_DISTANCE",
+  "GEOMETRY_X",
+  "GEOMETRY_Y",
+  "GREATEST",
+  "GROUPING",
+  "GROUP_CONCAT",
+  "HEX",
+  "HIGHLIGHT",
+  "HOUR",
+  "ICU_VERSION",
+  "IF",
+  "IFNULL",
+  "INET_ATON",
+  "INET_NTOA",
+  "INET6_ATON",
+  "INET6_NTOA",
+  "INITCAP",
+  "INSERT",
+  "INSTR",
+  "INTERVAL",
+  "IS",
+  "IS NULL",
+  "JSON_AGG",
+  "JSON_ARRAY_CONTAINS_DOUBLE",
+  "JSON_ARRAY_CONTAINS_JSON",
+  "JSON_ARRAY_CONTAINS_STRING",
+  "JSON_ARRAY_PUSH_DOUBLE",
+  "JSON_ARRAY_PUSH_JSON",
+  "JSON_ARRAY_PUSH_STRING",
+  "JSON_DELETE_KEY",
+  "JSON_EXTRACT_DOUBLE",
+  "JSON_EXTRACT_JSON",
+  "JSON_EXTRACT_STRING",
+  "JSON_EXTRACT_BIGINT",
+  "JSON_GET_TYPE",
+  "JSON_LENGTH",
+  "JSON_SET_DOUBLE",
+  "JSON_SET_JSON",
+  "JSON_SET_STRING",
+  "JSON_SPLICE_DOUBLE",
+  "JSON_SPLICE_JSON",
+  "JSON_SPLICE_STRING",
+  "LAG",
+  "LAST_DAY",
+  "LAST_VALUE",
+  "LCASE",
+  "LEAD",
+  "LEAST",
+  "LEFT",
+  "LENGTH",
+  "LIKE",
+  "LN",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOCATE",
+  "LOG",
+  "LOG10",
+  "LOG2",
+  "LPAD",
+  "LTRIM",
+  "MATCH",
+  "MAX",
+  "MD5",
+  "MEDIAN",
+  "MICROSECOND",
+  "MIN",
+  "MINUTE",
+  "MOD",
+  "MONTH",
+  "MONTHNAME",
+  "MONTHS_BETWEEN",
+  "NOT",
+  "NOW",
+  "NTH_VALUE",
+  "NTILE",
+  "NULLIF",
+  "OCTET_LENGTH",
+  "PERCENT_RANK",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PI",
+  "PIVOT",
+  "POSITION",
+  "POW",
+  "POWER",
+  "QUARTER",
+  "QUOTE",
+  "RADIANS",
+  "RAND",
+  "RANK",
+  "REGEXP",
+  "REPEAT",
+  "REPLACE",
+  "REVERSE",
+  "RIGHT",
+  "RLIKE",
+  "ROUND",
+  "ROW_COUNT",
+  "ROW_NUMBER",
+  "RPAD",
+  "RTRIM",
+  "SCALAR",
+  "SCHEMA",
+  "SEC_TO_TIME",
+  "SHA1",
+  "SHA2",
+  "SIGMOID",
+  "SIGN",
+  "SIN",
+  "SLEEP",
+  "SPLIT",
+  "SOUNDEX",
+  "SOUNDS LIKE",
+  "SOURCE_POS_WAIT",
+  "SPACE",
+  "SQRT",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STR_TO_DATE",
+  "SUBDATE",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUBSTRING_INDEX",
+  "SUM",
+  "SYS_GUID",
+  "TAN",
+  "TIME",
+  "TIMEDIFF",
+  "TIME_BUCKET",
+  "TIME_FORMAT",
+  "TIMESTAMP",
+  "TIMESTAMPADD",
+  "TIMESTAMPDIFF",
+  "TIME_TO_SEC",
+  "TO_BASE64",
+  "TO_CHAR",
+  "TO_DAYS",
+  "TO_JSON",
+  "TO_NUMBER",
+  "TO_SECONDS",
+  "TO_TIMESTAMP",
+  "TRIM",
+  "TRUNC",
+  "TRUNCATE",
+  "UCASE",
+  "UNHEX",
+  "UNIX_TIMESTAMP",
+  "UPDATEXML",
+  "UPPER",
+  // 'USER',
+  "UTC_DATE",
+  "UTC_TIME",
+  "UTC_TIMESTAMP",
+  "UUID",
+  "VALUES",
+  "VARIANCE",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VECTOR_SUB",
+  "VERSION",
+  "WEEK",
+  "WEEKDAY",
+  "WEEKOFYEAR",
+  "YEAR"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/singlestoredb/singlestoredb.formatter.js
+var reservedSelect18 = expandPhrases(["SELECT [ALL | DISTINCT | DISTINCTROW]"]);
+var reservedClauses18 = expandPhrases([
+  // queries
+  "WITH",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "PARTITION BY",
+  "ORDER BY",
+  "LIMIT",
+  "OFFSET",
+  // Data manipulation
+  // - insert:
+  "INSERT [IGNORE] [INTO]",
+  "VALUES",
+  "REPLACE [INTO]",
+  "ON DUPLICATE KEY UPDATE",
+  // - update:
+  "SET",
+  // Data definition
+  "CREATE [OR REPLACE] [TEMPORARY] PROCEDURE [IF NOT EXISTS]",
+  "CREATE [OR REPLACE] [EXTERNAL] FUNCTION"
+]);
+var standardOnelineClauses17 = expandPhrases([
+  "CREATE [ROWSTORE] [REFERENCE | TEMPORARY | GLOBAL TEMPORARY] TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses17 = expandPhrases([
+  // - create:
+  "CREATE VIEW",
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE [FROM]",
+  // - drop table:
+  "DROP [TEMPORARY] TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER [ONLINE] TABLE",
+  "ADD [COLUMN]",
+  "ADD [UNIQUE] {INDEX | KEY}",
+  "DROP [COLUMN]",
+  "MODIFY [COLUMN]",
+  "CHANGE",
+  "RENAME [TO | AS]",
+  // - truncate:
+  "TRUNCATE [TABLE]",
+  // https://docs.singlestore.com/managed-service/en/reference/sql-reference.html
+  "ADD AGGREGATOR",
+  "ADD LEAF",
+  "AGGREGATOR SET AS MASTER",
+  "ALTER DATABASE",
+  "ALTER PIPELINE",
+  "ALTER RESOURCE POOL",
+  "ALTER USER",
+  "ALTER VIEW",
+  "ANALYZE TABLE",
+  "ATTACH DATABASE",
+  "ATTACH LEAF",
+  "ATTACH LEAF ALL",
+  "BACKUP DATABASE",
+  "BINLOG",
+  "BOOTSTRAP AGGREGATOR",
+  "CACHE INDEX",
+  "CALL",
+  "CHANGE",
+  "CHANGE MASTER TO",
+  "CHANGE REPLICATION FILTER",
+  "CHANGE REPLICATION SOURCE TO",
+  "CHECK BLOB CHECKSUM",
+  "CHECK TABLE",
+  "CHECKSUM TABLE",
+  "CLEAR ORPHAN DATABASES",
+  "CLONE",
+  "COMMIT",
+  "CREATE DATABASE",
+  "CREATE GROUP",
+  "CREATE INDEX",
+  "CREATE LINK",
+  "CREATE MILESTONE",
+  "CREATE PIPELINE",
+  "CREATE RESOURCE POOL",
+  "CREATE ROLE",
+  "CREATE USER",
+  "DEALLOCATE PREPARE",
+  "DESCRIBE",
+  "DETACH DATABASE",
+  "DETACH PIPELINE",
+  "DROP DATABASE",
+  "DROP FUNCTION",
+  "DROP INDEX",
+  "DROP LINK",
+  "DROP PIPELINE",
+  "DROP PROCEDURE",
+  "DROP RESOURCE POOL",
+  "DROP ROLE",
+  "DROP USER",
+  "DROP VIEW",
+  "EXECUTE",
+  "EXPLAIN",
+  "FLUSH",
+  "FORCE",
+  "GRANT",
+  "HANDLER",
+  "HELP",
+  "KILL CONNECTION",
+  "KILLALL QUERIES",
+  "LOAD DATA",
+  "LOAD INDEX INTO CACHE",
+  "LOAD XML",
+  "LOCK INSTANCE FOR BACKUP",
+  "LOCK TABLES",
+  "MASTER_POS_WAIT",
+  "OPTIMIZE TABLE",
+  "PREPARE",
+  "PURGE BINARY LOGS",
+  "REBALANCE PARTITIONS",
+  "RELEASE SAVEPOINT",
+  "REMOVE AGGREGATOR",
+  "REMOVE LEAF",
+  "REPAIR TABLE",
+  "REPLACE",
+  "REPLICATE DATABASE",
+  "RESET",
+  "RESET MASTER",
+  "RESET PERSIST",
+  "RESET REPLICA",
+  "RESET SLAVE",
+  "RESTART",
+  "RESTORE DATABASE",
+  "RESTORE REDUNDANCY",
+  "REVOKE",
+  "ROLLBACK",
+  "ROLLBACK TO SAVEPOINT",
+  "SAVEPOINT",
+  "SET CHARACTER SET",
+  "SET DEFAULT ROLE",
+  "SET NAMES",
+  "SET PASSWORD",
+  "SET RESOURCE GROUP",
+  "SET ROLE",
+  "SET TRANSACTION",
+  "SHOW",
+  "SHOW CHARACTER SET",
+  "SHOW COLLATION",
+  "SHOW COLUMNS",
+  "SHOW CREATE DATABASE",
+  "SHOW CREATE FUNCTION",
+  "SHOW CREATE PIPELINE",
+  "SHOW CREATE PROCEDURE",
+  "SHOW CREATE TABLE",
+  "SHOW CREATE USER",
+  "SHOW CREATE VIEW",
+  "SHOW DATABASES",
+  "SHOW ENGINE",
+  "SHOW ENGINES",
+  "SHOW ERRORS",
+  "SHOW FUNCTION CODE",
+  "SHOW FUNCTION STATUS",
+  "SHOW GRANTS",
+  "SHOW INDEX",
+  "SHOW MASTER STATUS",
+  "SHOW OPEN TABLES",
+  "SHOW PLUGINS",
+  "SHOW PRIVILEGES",
+  "SHOW PROCEDURE CODE",
+  "SHOW PROCEDURE STATUS",
+  "SHOW PROCESSLIST",
+  "SHOW PROFILE",
+  "SHOW PROFILES",
+  "SHOW RELAYLOG EVENTS",
+  "SHOW REPLICA STATUS",
+  "SHOW REPLICAS",
+  "SHOW SLAVE",
+  "SHOW SLAVE HOSTS",
+  "SHOW STATUS",
+  "SHOW TABLE STATUS",
+  "SHOW TABLES",
+  "SHOW VARIABLES",
+  "SHOW WARNINGS",
+  "SHUTDOWN",
+  "SNAPSHOT DATABASE",
+  "SOURCE_POS_WAIT",
+  "START GROUP_REPLICATION",
+  "START PIPELINE",
+  "START REPLICA",
+  "START SLAVE",
+  "START TRANSACTION",
+  "STOP GROUP_REPLICATION",
+  "STOP PIPELINE",
+  "STOP REPLICA",
+  "STOP REPLICATING",
+  "STOP SLAVE",
+  "TEST PIPELINE",
+  "UNLOCK INSTANCE",
+  "UNLOCK TABLES",
+  "USE",
+  "XA",
+  // flow control
+  "ITERATE",
+  "LEAVE",
+  "LOOP",
+  "REPEAT",
+  "RETURN",
+  "WHILE"
+]);
+var reservedSetOperations18 = expandPhrases([
+  "UNION [ALL | DISTINCT]",
+  "EXCEPT",
+  "INTERSECT",
+  "MINUS"
+]);
+var reservedJoins18 = expandPhrases([
+  "JOIN",
+  "{LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{INNER | CROSS} JOIN",
+  "NATURAL {LEFT | RIGHT} [OUTER] JOIN",
+  // non-standard joins
+  "STRAIGHT_JOIN"
+]);
+var reservedPhrases18 = expandPhrases([
+  "ON DELETE",
+  "ON UPDATE",
+  "CHARACTER SET",
+  "{ROWS | RANGE} BETWEEN",
+  "IDENTIFIED BY"
+]);
+var singlestoredb = {
+  name: "singlestoredb",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect18,
+    reservedClauses: [...reservedClauses18, ...standardOnelineClauses17, ...tabularOnelineClauses17],
+    reservedSetOperations: reservedSetOperations18,
+    reservedJoins: reservedJoins18,
+    reservedPhrases: reservedPhrases18,
+    reservedKeywords: keywords19,
+    reservedDataTypes: dataTypes18,
+    reservedFunctionNames: functions18,
+    // TODO: support _binary"some string" prefix
+    stringTypes: [
+      '""-qq-bs',
+      "''-qq-bs",
+      { quote: "''-raw", prefixes: ["B", "X"], requirePrefix: true }
+    ],
+    identTypes: ["``"],
+    identChars: { first: "$", rest: "$", allowFirstCharNumber: true },
+    variableTypes: [
+      { regex: "@@?[A-Za-z0-9_$]+" },
+      { quote: "``", prefixes: ["@"], requirePrefix: true }
+    ],
+    lineCommentTypes: ["--", "#"],
+    operators: [
+      ":=",
+      "&",
+      "|",
+      "^",
+      "~",
+      "<<",
+      ">>",
+      "<=>",
+      "&&",
+      "||",
+      "::",
+      "::$",
+      "::%",
+      ":>",
+      "!:>",
+      "*.*"
+      // Not actually an operator
+    ],
+    postProcess: postProcess2
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["::", "::$", "::%"],
+    onelineClauses: [...standardOnelineClauses17, ...tabularOnelineClauses17],
+    tabularOnelineClauses: tabularOnelineClauses17
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/languages/snowflake/snowflake.functions.js
+var functions19 = [
+  // https://docs.snowflake.com/en/sql-reference-functions.html
+  //
+  // https://docs.snowflake.com/en/sql-reference/functions-all.html
+  // 1. run in console on this page: $x('//tbody/tr/*[1]//a/span/text()').map(x => x.nodeValue)
+  // 2. split all lines that contain ',' or '/' into multiple lines
+  // 3. remove all '— Deprecated' parts from the strings
+  // 4. delete all strings that end with '<object_type>', they are already covered in the list
+  // 5. remove all strings that contain '[', they are operators not functions
+  // 6. fix all values that contain '*'
+  // 7. delete operatos ':', '::', '||'
+  //
+  // Steps 1-5 can be combined by the following script in the developer console:
+  // $x('//tbody/tr/*[1]//a/span/text()').map(x => x.nodeValue) // Step 1
+  //   .map(x => x.split(x.includes(',') ? ',' : '/')).flat().map(x => x.trim()) // Step 2
+  //   .map(x => x.replace('— Deprecated', '')) // Step 3
+  //   .filter(x => !x.endsWith('<object_type>')) // Step 4
+  //   .filter(x => !x.includes('[')) // Step 5
+  "ABS",
+  "ACOS",
+  "ACOSH",
+  "ADD_MONTHS",
+  "ALL_USER_NAMES",
+  "ANY_VALUE",
+  "APPROX_COUNT_DISTINCT",
+  "APPROX_PERCENTILE",
+  "APPROX_PERCENTILE_ACCUMULATE",
+  "APPROX_PERCENTILE_COMBINE",
+  "APPROX_PERCENTILE_ESTIMATE",
+  "APPROX_TOP_K",
+  "APPROX_TOP_K_ACCUMULATE",
+  "APPROX_TOP_K_COMBINE",
+  "APPROX_TOP_K_ESTIMATE",
+  "APPROXIMATE_JACCARD_INDEX",
+  "APPROXIMATE_SIMILARITY",
+  "ARRAY_AGG",
+  "ARRAY_APPEND",
+  "ARRAY_CAT",
+  "ARRAY_COMPACT",
+  "ARRAY_CONSTRUCT",
+  "ARRAY_CONSTRUCT_COMPACT",
+  "ARRAY_CONTAINS",
+  "ARRAY_INSERT",
+  "ARRAY_INTERSECTION",
+  "ARRAY_POSITION",
+  "ARRAY_PREPEND",
+  "ARRAY_SIZE",
+  "ARRAY_SLICE",
+  "ARRAY_TO_STRING",
+  "ARRAY_UNION_AGG",
+  "ARRAY_UNIQUE_AGG",
+  "ARRAYS_OVERLAP",
+  "AS_ARRAY",
+  "AS_BINARY",
+  "AS_BOOLEAN",
+  "AS_CHAR",
+  "AS_VARCHAR",
+  "AS_DATE",
+  "AS_DECIMAL",
+  "AS_NUMBER",
+  "AS_DOUBLE",
+  "AS_REAL",
+  "AS_INTEGER",
+  "AS_OBJECT",
+  "AS_TIME",
+  "AS_TIMESTAMP_LTZ",
+  "AS_TIMESTAMP_NTZ",
+  "AS_TIMESTAMP_TZ",
+  "ASCII",
+  "ASIN",
+  "ASINH",
+  "ATAN",
+  "ATAN2",
+  "ATANH",
+  "AUTO_REFRESH_REGISTRATION_HISTORY",
+  "AUTOMATIC_CLUSTERING_HISTORY",
+  "AVG",
+  "BASE64_DECODE_BINARY",
+  "BASE64_DECODE_STRING",
+  "BASE64_ENCODE",
+  "BIT_LENGTH",
+  "BITAND",
+  "BITAND_AGG",
+  "BITMAP_BIT_POSITION",
+  "BITMAP_BUCKET_NUMBER",
+  "BITMAP_CONSTRUCT_AGG",
+  "BITMAP_COUNT",
+  "BITMAP_OR_AGG",
+  "BITNOT",
+  "BITOR",
+  "BITOR_AGG",
+  "BITSHIFTLEFT",
+  "BITSHIFTRIGHT",
+  "BITXOR",
+  "BITXOR_AGG",
+  "BOOLAND",
+  "BOOLAND_AGG",
+  "BOOLNOT",
+  "BOOLOR",
+  "BOOLOR_AGG",
+  "BOOLXOR",
+  "BOOLXOR_AGG",
+  "BUILD_SCOPED_FILE_URL",
+  "BUILD_STAGE_FILE_URL",
+  "CASE",
+  "CAST",
+  "CBRT",
+  "CEIL",
+  "CHARINDEX",
+  "CHECK_JSON",
+  "CHECK_XML",
+  "CHR",
+  "CHAR",
+  "COALESCE",
+  "COLLATE",
+  "COLLATION",
+  "COMPLETE_TASK_GRAPHS",
+  "COMPRESS",
+  "CONCAT",
+  "CONCAT_WS",
+  "CONDITIONAL_CHANGE_EVENT",
+  "CONDITIONAL_TRUE_EVENT",
+  "CONTAINS",
+  "CONVERT_TIMEZONE",
+  "COPY_HISTORY",
+  "CORR",
+  "COS",
+  "COSH",
+  "COT",
+  "COUNT",
+  "COUNT_IF",
+  "COVAR_POP",
+  "COVAR_SAMP",
+  "CUME_DIST",
+  "CURRENT_ACCOUNT",
+  "CURRENT_AVAILABLE_ROLES",
+  "CURRENT_CLIENT",
+  "CURRENT_DATABASE",
+  "CURRENT_DATE",
+  "CURRENT_IP_ADDRESS",
+  "CURRENT_REGION",
+  "CURRENT_ROLE",
+  "CURRENT_SCHEMA",
+  "CURRENT_SCHEMAS",
+  "CURRENT_SECONDARY_ROLES",
+  "CURRENT_SESSION",
+  "CURRENT_STATEMENT",
+  "CURRENT_TASK_GRAPHS",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_TRANSACTION",
+  "CURRENT_USER",
+  "CURRENT_VERSION",
+  "CURRENT_WAREHOUSE",
+  "DATA_TRANSFER_HISTORY",
+  "DATABASE_REFRESH_HISTORY",
+  "DATABASE_REFRESH_PROGRESS",
+  "DATABASE_REFRESH_PROGRESS_BY_JOB",
+  "DATABASE_STORAGE_USAGE_HISTORY",
+  "DATE_FROM_PARTS",
+  "DATE_PART",
+  "DATE_TRUNC",
+  "DATEADD",
+  "DATEDIFF",
+  "DAYNAME",
+  "DECODE",
+  "DECOMPRESS_BINARY",
+  "DECOMPRESS_STRING",
+  "DECRYPT",
+  "DECRYPT_RAW",
+  "DEGREES",
+  "DENSE_RANK",
+  "DIV0",
+  "EDITDISTANCE",
+  "ENCRYPT",
+  "ENCRYPT_RAW",
+  "ENDSWITH",
+  "EQUAL_NULL",
+  "EXP",
+  "EXPLAIN_JSON",
+  "EXTERNAL_FUNCTIONS_HISTORY",
+  "EXTERNAL_TABLE_FILES",
+  "EXTERNAL_TABLE_FILE_REGISTRATION_HISTORY",
+  "EXTRACT",
+  "EXTRACT_SEMANTIC_CATEGORIES",
+  "FACTORIAL",
+  "FILTER",
+  "FIRST_VALUE",
+  "FLATTEN",
+  "FLOOR",
+  "GENERATE_COLUMN_DESCRIPTION",
+  "GENERATOR",
+  "GET",
+  "GET_ABSOLUTE_PATH",
+  "GET_DDL",
+  "GET_IGNORE_CASE",
+  "GET_OBJECT_REFERENCES",
+  "GET_PATH",
+  "GET_PRESIGNED_URL",
+  "GET_RELATIVE_PATH",
+  "GET_STAGE_LOCATION",
+  "GETBIT",
+  "GREATEST",
+  "GREATEST_IGNORE_NULLS",
+  "GROUPING",
+  "GROUPING_ID",
+  "HASH",
+  "HASH_AGG",
+  "HAVERSINE",
+  "HEX_DECODE_BINARY",
+  "HEX_DECODE_STRING",
+  "HEX_ENCODE",
+  "HLL",
+  "HLL_ACCUMULATE",
+  "HLL_COMBINE",
+  "HLL_ESTIMATE",
+  "HLL_EXPORT",
+  "HLL_IMPORT",
+  "HOUR",
+  "MINUTE",
+  "SECOND",
+  "IFF",
+  "IFNULL",
+  "ILIKE",
+  "ILIKE ANY",
+  "INFER_SCHEMA",
+  "INITCAP",
+  "INSERT",
+  "INVOKER_ROLE",
+  "INVOKER_SHARE",
+  "IS_ARRAY",
+  "IS_BINARY",
+  "IS_BOOLEAN",
+  "IS_CHAR",
+  "IS_VARCHAR",
+  "IS_DATE",
+  "IS_DATE_VALUE",
+  "IS_DECIMAL",
+  "IS_DOUBLE",
+  "IS_REAL",
+  "IS_GRANTED_TO_INVOKER_ROLE",
+  "IS_INTEGER",
+  "IS_NULL_VALUE",
+  "IS_OBJECT",
+  "IS_ROLE_IN_SESSION",
+  "IS_TIME",
+  "IS_TIMESTAMP_LTZ",
+  "IS_TIMESTAMP_NTZ",
+  "IS_TIMESTAMP_TZ",
+  "JAROWINKLER_SIMILARITY",
+  "JSON_EXTRACT_PATH_TEXT",
+  "KURTOSIS",
+  "LAG",
+  "LAST_DAY",
+  "LAST_QUERY_ID",
+  "LAST_TRANSACTION",
+  "LAST_VALUE",
+  "LEAD",
+  "LEAST",
+  "LEFT",
+  "LENGTH",
+  "LEN",
+  "LIKE",
+  "LIKE ALL",
+  "LIKE ANY",
+  "LISTAGG",
+  "LN",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "LOG",
+  "LOGIN_HISTORY",
+  "LOGIN_HISTORY_BY_USER",
+  "LOWER",
+  "LPAD",
+  "LTRIM",
+  "MATERIALIZED_VIEW_REFRESH_HISTORY",
+  "MD5",
+  "MD5_HEX",
+  "MD5_BINARY",
+  "MD5_NUMBER \u2014 Obsoleted",
+  "MD5_NUMBER_LOWER64",
+  "MD5_NUMBER_UPPER64",
+  "MEDIAN",
+  "MIN",
+  "MAX",
+  "MINHASH",
+  "MINHASH_COMBINE",
+  "MOD",
+  "MODE",
+  "MONTHNAME",
+  "MONTHS_BETWEEN",
+  "NEXT_DAY",
+  "NORMAL",
+  "NTH_VALUE",
+  "NTILE",
+  "NULLIF",
+  "NULLIFZERO",
+  "NVL",
+  "NVL2",
+  "OBJECT_AGG",
+  "OBJECT_CONSTRUCT",
+  "OBJECT_CONSTRUCT_KEEP_NULL",
+  "OBJECT_DELETE",
+  "OBJECT_INSERT",
+  "OBJECT_KEYS",
+  "OBJECT_PICK",
+  "OCTET_LENGTH",
+  "PARSE_IP",
+  "PARSE_JSON",
+  "PARSE_URL",
+  "PARSE_XML",
+  "PERCENT_RANK",
+  "PERCENTILE_CONT",
+  "PERCENTILE_DISC",
+  "PI",
+  "PIPE_USAGE_HISTORY",
+  "POLICY_CONTEXT",
+  "POLICY_REFERENCES",
+  "POSITION",
+  "POW",
+  "POWER",
+  "PREVIOUS_DAY",
+  "QUERY_ACCELERATION_HISTORY",
+  "QUERY_HISTORY",
+  "QUERY_HISTORY_BY_SESSION",
+  "QUERY_HISTORY_BY_USER",
+  "QUERY_HISTORY_BY_WAREHOUSE",
+  "RADIANS",
+  "RANDOM",
+  "RANDSTR",
+  "RANK",
+  "RATIO_TO_REPORT",
+  "REGEXP",
+  "REGEXP_COUNT",
+  "REGEXP_INSTR",
+  "REGEXP_LIKE",
+  "REGEXP_REPLACE",
+  "REGEXP_SUBSTR",
+  "REGEXP_SUBSTR_ALL",
+  "REGR_AVGX",
+  "REGR_AVGY",
+  "REGR_COUNT",
+  "REGR_INTERCEPT",
+  "REGR_R2",
+  "REGR_SLOPE",
+  "REGR_SXX",
+  "REGR_SXY",
+  "REGR_SYY",
+  "REGR_VALX",
+  "REGR_VALY",
+  "REPEAT",
+  "REPLACE",
+  "REPLICATION_GROUP_REFRESH_HISTORY",
+  "REPLICATION_GROUP_REFRESH_PROGRESS",
+  "REPLICATION_GROUP_REFRESH_PROGRESS_BY_JOB",
+  "REPLICATION_GROUP_USAGE_HISTORY",
+  "REPLICATION_USAGE_HISTORY",
+  "REST_EVENT_HISTORY",
+  "RESULT_SCAN",
+  "REVERSE",
+  "RIGHT",
+  "RLIKE",
+  "ROUND",
+  "ROW_NUMBER",
+  "RPAD",
+  "RTRIM",
+  "RTRIMMED_LENGTH",
+  "SEARCH_OPTIMIZATION_HISTORY",
+  "SEQ1",
+  "SEQ2",
+  "SEQ4",
+  "SEQ8",
+  "SERVERLESS_TASK_HISTORY",
+  "SHA1",
+  "SHA1_HEX",
+  "SHA1_BINARY",
+  "SHA2",
+  "SHA2_HEX",
+  "SHA2_BINARY",
+  "SIGN",
+  "SIN",
+  "SINH",
+  "SKEW",
+  "SOUNDEX",
+  "SPACE",
+  "SPLIT",
+  "SPLIT_PART",
+  "SPLIT_TO_TABLE",
+  "SQRT",
+  "SQUARE",
+  "ST_AREA",
+  "ST_ASEWKB",
+  "ST_ASEWKT",
+  "ST_ASGEOJSON",
+  "ST_ASWKB",
+  "ST_ASBINARY",
+  "ST_ASWKT",
+  "ST_ASTEXT",
+  "ST_AZIMUTH",
+  "ST_CENTROID",
+  "ST_COLLECT",
+  "ST_CONTAINS",
+  "ST_COVEREDBY",
+  "ST_COVERS",
+  "ST_DIFFERENCE",
+  "ST_DIMENSION",
+  "ST_DISJOINT",
+  "ST_DISTANCE",
+  "ST_DWITHIN",
+  "ST_ENDPOINT",
+  "ST_ENVELOPE",
+  "ST_GEOGFROMGEOHASH",
+  "ST_GEOGPOINTFROMGEOHASH",
+  "ST_GEOGRAPHYFROMWKB",
+  "ST_GEOGRAPHYFROMWKT",
+  "ST_GEOHASH",
+  "ST_GEOMETRYFROMWKB",
+  "ST_GEOMETRYFROMWKT",
+  "ST_HAUSDORFFDISTANCE",
+  "ST_INTERSECTION",
+  "ST_INTERSECTS",
+  "ST_LENGTH",
+  "ST_MAKEGEOMPOINT",
+  "ST_GEOM_POINT",
+  "ST_MAKELINE",
+  "ST_MAKEPOINT",
+  "ST_POINT",
+  "ST_MAKEPOLYGON",
+  "ST_POLYGON",
+  "ST_NPOINTS",
+  "ST_NUMPOINTS",
+  "ST_PERIMETER",
+  "ST_POINTN",
+  "ST_SETSRID",
+  "ST_SIMPLIFY",
+  "ST_SRID",
+  "ST_STARTPOINT",
+  "ST_SYMDIFFERENCE",
+  "ST_UNION",
+  "ST_WITHIN",
+  "ST_X",
+  "ST_XMAX",
+  "ST_XMIN",
+  "ST_Y",
+  "ST_YMAX",
+  "ST_YMIN",
+  "STAGE_DIRECTORY_FILE_REGISTRATION_HISTORY",
+  "STAGE_STORAGE_USAGE_HISTORY",
+  "STARTSWITH",
+  "STDDEV",
+  "STDDEV_POP",
+  "STDDEV_SAMP",
+  "STRIP_NULL_VALUE",
+  "STRTOK",
+  "STRTOK_SPLIT_TO_TABLE",
+  "STRTOK_TO_ARRAY",
+  "SUBSTR",
+  "SUBSTRING",
+  "SUM",
+  "SYSDATE",
+  "SYSTEM$ABORT_SESSION",
+  "SYSTEM$ABORT_TRANSACTION",
+  "SYSTEM$AUTHORIZE_PRIVATELINK",
+  "SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS",
+  "SYSTEM$BEHAVIOR_CHANGE_BUNDLE_STATUS",
+  "SYSTEM$CANCEL_ALL_QUERIES",
+  "SYSTEM$CANCEL_QUERY",
+  "SYSTEM$CLUSTERING_DEPTH",
+  "SYSTEM$CLUSTERING_INFORMATION",
+  "SYSTEM$CLUSTERING_RATIO ",
+  "SYSTEM$CURRENT_USER_TASK_NAME",
+  "SYSTEM$DATABASE_REFRESH_HISTORY ",
+  "SYSTEM$DATABASE_REFRESH_PROGRESS",
+  "SYSTEM$DATABASE_REFRESH_PROGRESS_BY_JOB ",
+  "SYSTEM$DISABLE_BEHAVIOR_CHANGE_BUNDLE",
+  "SYSTEM$DISABLE_DATABASE_REPLICATION",
+  "SYSTEM$ENABLE_BEHAVIOR_CHANGE_BUNDLE",
+  "SYSTEM$ESTIMATE_QUERY_ACCELERATION",
+  "SYSTEM$ESTIMATE_SEARCH_OPTIMIZATION_COSTS",
+  "SYSTEM$EXPLAIN_JSON_TO_TEXT",
+  "SYSTEM$EXPLAIN_PLAN_JSON",
+  "SYSTEM$EXTERNAL_TABLE_PIPE_STATUS",
+  "SYSTEM$GENERATE_SAML_CSR",
+  "SYSTEM$GENERATE_SCIM_ACCESS_TOKEN",
+  "SYSTEM$GET_AWS_SNS_IAM_POLICY",
+  "SYSTEM$GET_PREDECESSOR_RETURN_VALUE",
+  "SYSTEM$GET_PRIVATELINK",
+  "SYSTEM$GET_PRIVATELINK_AUTHORIZED_ENDPOINTS",
+  "SYSTEM$GET_PRIVATELINK_CONFIG",
+  "SYSTEM$GET_SNOWFLAKE_PLATFORM_INFO",
+  "SYSTEM$GET_TAG",
+  "SYSTEM$GET_TAG_ALLOWED_VALUES",
+  "SYSTEM$GET_TAG_ON_CURRENT_COLUMN",
+  "SYSTEM$GET_TAG_ON_CURRENT_TABLE",
+  "SYSTEM$GLOBAL_ACCOUNT_SET_PARAMETER",
+  "SYSTEM$LAST_CHANGE_COMMIT_TIME",
+  "SYSTEM$LINK_ACCOUNT_OBJECTS_BY_NAME",
+  "SYSTEM$MIGRATE_SAML_IDP_REGISTRATION",
+  "SYSTEM$PIPE_FORCE_RESUME",
+  "SYSTEM$PIPE_STATUS",
+  "SYSTEM$REVOKE_PRIVATELINK",
+  "SYSTEM$REVOKE_STAGE_PRIVATELINK_ACCESS",
+  "SYSTEM$SET_RETURN_VALUE",
+  "SYSTEM$SHOW_OAUTH_CLIENT_SECRETS",
+  "SYSTEM$STREAM_GET_TABLE_TIMESTAMP",
+  "SYSTEM$STREAM_HAS_DATA",
+  "SYSTEM$TASK_DEPENDENTS_ENABLE",
+  "SYSTEM$TYPEOF",
+  "SYSTEM$USER_TASK_CANCEL_ONGOING_EXECUTIONS",
+  "SYSTEM$VERIFY_EXTERNAL_OAUTH_TOKEN",
+  "SYSTEM$WAIT",
+  "SYSTEM$WHITELIST",
+  "SYSTEM$WHITELIST_PRIVATELINK",
+  "TAG_REFERENCES",
+  "TAG_REFERENCES_ALL_COLUMNS",
+  "TAG_REFERENCES_WITH_LINEAGE",
+  "TAN",
+  "TANH",
+  "TASK_DEPENDENTS",
+  "TASK_HISTORY",
+  "TIME_FROM_PARTS",
+  "TIME_SLICE",
+  "TIMEADD",
+  "TIMEDIFF",
+  "TIMESTAMP_FROM_PARTS",
+  "TIMESTAMPADD",
+  "TIMESTAMPDIFF",
+  "TO_ARRAY",
+  "TO_BINARY",
+  "TO_BOOLEAN",
+  "TO_CHAR",
+  "TO_VARCHAR",
+  "TO_DATE",
+  "DATE",
+  "TO_DECIMAL",
+  "TO_NUMBER",
+  "TO_NUMERIC",
+  "TO_DOUBLE",
+  "TO_GEOGRAPHY",
+  "TO_GEOMETRY",
+  "TO_JSON",
+  "TO_OBJECT",
+  "TO_TIME",
+  "TIME",
+  "TO_TIMESTAMP",
+  "TO_TIMESTAMP_LTZ",
+  "TO_TIMESTAMP_NTZ",
+  "TO_TIMESTAMP_TZ",
+  "TO_VARIANT",
+  "TO_XML",
+  "TRANSLATE",
+  "TRIM",
+  "TRUNCATE",
+  "TRUNC",
+  "TRUNC",
+  "TRY_BASE64_DECODE_BINARY",
+  "TRY_BASE64_DECODE_STRING",
+  "TRY_CAST",
+  "TRY_HEX_DECODE_BINARY",
+  "TRY_HEX_DECODE_STRING",
+  "TRY_PARSE_JSON",
+  "TRY_TO_BINARY",
+  "TRY_TO_BOOLEAN",
+  "TRY_TO_DATE",
+  "TRY_TO_DECIMAL",
+  "TRY_TO_NUMBER",
+  "TRY_TO_NUMERIC",
+  "TRY_TO_DOUBLE",
+  "TRY_TO_GEOGRAPHY",
+  "TRY_TO_GEOMETRY",
+  "TRY_TO_TIME",
+  "TRY_TO_TIMESTAMP",
+  "TRY_TO_TIMESTAMP_LTZ",
+  "TRY_TO_TIMESTAMP_NTZ",
+  "TRY_TO_TIMESTAMP_TZ",
+  "TYPEOF",
+  "UNICODE",
+  "UNIFORM",
+  "UPPER",
+  "UUID_STRING",
+  "VALIDATE",
+  "VALIDATE_PIPE_LOAD",
+  "VAR_POP",
+  "VAR_SAMP",
+  "VARIANCE",
+  "VARIANCE_SAMP",
+  "VARIANCE_POP",
+  "WAREHOUSE_LOAD_HISTORY",
+  "WAREHOUSE_METERING_HISTORY",
+  "WIDTH_BUCKET",
+  "XMLGET",
+  "YEAR",
+  "YEAROFWEEK",
+  "YEAROFWEEKISO",
+  "DAY",
+  "DAYOFMONTH",
+  "DAYOFWEEK",
+  "DAYOFWEEKISO",
+  "DAYOFYEAR",
+  "WEEK",
+  "WEEK",
+  "WEEKOFYEAR",
+  "WEEKISO",
+  "MONTH",
+  "QUARTER",
+  "ZEROIFNULL",
+  "ZIPF"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/snowflake/snowflake.keywords.js
+var keywords20 = [
+  // https://docs.snowflake.com/en/sql-reference/reserved-keywords.html
+  //
+  // run in console on this page: $x('//tbody/tr/*[1]/p/text()').map(x => x.nodeValue)
+  "ACCOUNT",
+  "ALL",
+  "ALTER",
+  "AND",
+  "ANY",
+  "AS",
+  "BETWEEN",
+  "BY",
+  "CASE",
+  "CAST",
+  "CHECK",
+  "COLUMN",
+  "CONNECT",
+  "CONNECTION",
+  "CONSTRAINT",
+  "CREATE",
+  "CROSS",
+  "CURRENT",
+  "CURRENT_DATE",
+  "CURRENT_TIME",
+  "CURRENT_TIMESTAMP",
+  "CURRENT_USER",
+  "DATABASE",
+  "DELETE",
+  "DISTINCT",
+  "DROP",
+  "ELSE",
+  "EXISTS",
+  "FALSE",
+  "FOLLOWING",
+  "FOR",
+  "FROM",
+  "FULL",
+  "GRANT",
+  "GROUP",
+  "GSCLUSTER",
+  "HAVING",
+  "ILIKE",
+  "IN",
+  "INCREMENT",
+  "INNER",
+  "INSERT",
+  "INTERSECT",
+  "INTO",
+  "IS",
+  "ISSUE",
+  "JOIN",
+  "LATERAL",
+  "LEFT",
+  "LIKE",
+  "LOCALTIME",
+  "LOCALTIMESTAMP",
+  "MINUS",
+  "NATURAL",
+  "NOT",
+  "NULL",
+  "OF",
+  "ON",
+  "OR",
+  "ORDER",
+  "ORGANIZATION",
+  "QUALIFY",
+  "REGEXP",
+  "REVOKE",
+  "RIGHT",
+  "RLIKE",
+  "ROW",
+  "ROWS",
+  "SAMPLE",
+  "SCHEMA",
+  "SELECT",
+  "SET",
+  "SOME",
+  "START",
+  "TABLE",
+  "TABLESAMPLE",
+  "THEN",
+  "TO",
+  "TRIGGER",
+  "TRUE",
+  "TRY_CAST",
+  "UNION",
+  "UNIQUE",
+  "UPDATE",
+  "USING",
+  "VALUES",
+  "VIEW",
+  "WHEN",
+  "WHENEVER",
+  "WHERE",
+  "WITH",
+  // These are definitely keywords, but haven't found a definite list in the docs
+  "COMMENT"
+];
+var dataTypes19 = [
+  "NUMBER",
+  "DECIMAL",
+  "NUMERIC",
+  "INT",
+  "INTEGER",
+  "BIGINT",
+  "SMALLINT",
+  "TINYINT",
+  "BYTEINT",
+  "FLOAT",
+  "FLOAT4",
+  "FLOAT8",
+  "DOUBLE",
+  "DOUBLE PRECISION",
+  "REAL",
+  "VARCHAR",
+  "CHAR",
+  "CHARACTER",
+  "STRING",
+  "TEXT",
+  "BINARY",
+  "VARBINARY",
+  "BOOLEAN",
+  "DATE",
+  "DATETIME",
+  "TIME",
+  "TIMESTAMP",
+  "TIMESTAMP_LTZ",
+  "TIMESTAMP_NTZ",
+  "TIMESTAMP",
+  "TIMESTAMP_TZ",
+  "VARIANT",
+  "OBJECT",
+  "ARRAY",
+  "GEOGRAPHY",
+  "GEOMETRY"
+];
+
+// node_modules/sql-formatter/dist/esm/languages/snowflake/snowflake.formatter.js
+var reservedSelect19 = expandPhrases(["SELECT [ALL | DISTINCT]"]);
+var reservedClauses19 = expandPhrases([
+  // queries
+  "WITH [RECURSIVE]",
+  "FROM",
+  "WHERE",
+  "GROUP BY",
+  "HAVING",
+  "PARTITION BY",
+  "ORDER BY",
+  "QUALIFY",
+  "LIMIT",
+  "OFFSET",
+  "FETCH [FIRST | NEXT]",
+  // Data manipulation
+  // - insert:
+  "INSERT [OVERWRITE] [ALL INTO | INTO | ALL | FIRST]",
+  "{THEN | ELSE} INTO",
+  "VALUES",
+  // - update:
+  "SET",
+  "CLUSTER BY",
+  "[WITH] {MASKING POLICY | TAG | ROW ACCESS POLICY}",
+  "COPY GRANTS",
+  "USING TEMPLATE",
+  "MERGE INTO",
+  "WHEN MATCHED [AND]",
+  "THEN {UPDATE SET | DELETE}",
+  "WHEN NOT MATCHED THEN INSERT"
+]);
+var standardOnelineClauses18 = expandPhrases([
+  "CREATE [OR REPLACE] [VOLATILE] TABLE [IF NOT EXISTS]",
+  "CREATE [OR REPLACE] [LOCAL | GLOBAL] {TEMP|TEMPORARY} TABLE [IF NOT EXISTS]"
+]);
+var tabularOnelineClauses18 = expandPhrases([
+  // - create:
+  "CREATE [OR REPLACE] [SECURE] [RECURSIVE] VIEW [IF NOT EXISTS]",
+  // - update:
+  "UPDATE",
+  // - delete:
+  "DELETE FROM",
+  // - drop table:
+  "DROP TABLE [IF EXISTS]",
+  // - alter table:
+  "ALTER TABLE [IF EXISTS]",
+  "RENAME TO",
+  "SWAP WITH",
+  "[SUSPEND | RESUME] RECLUSTER",
+  "DROP CLUSTERING KEY",
+  "ADD [COLUMN]",
+  "RENAME COLUMN",
+  "{ALTER | MODIFY} [COLUMN]",
+  "DROP [COLUMN]",
+  "{ADD | ALTER | MODIFY | DROP} [CONSTRAINT]",
+  "RENAME CONSTRAINT",
+  "{ADD | DROP} SEARCH OPTIMIZATION",
+  "{SET | UNSET} TAG",
+  "{ADD | DROP} ROW ACCESS POLICY",
+  "DROP ALL ROW ACCESS POLICIES",
+  "{SET | DROP} DEFAULT",
+  "{SET | DROP} NOT NULL",
+  "SET DATA TYPE",
+  "UNSET COMMENT",
+  "{SET | UNSET} MASKING POLICY",
+  // - truncate:
+  "TRUNCATE [TABLE] [IF EXISTS]",
+  // other
+  // https://docs.snowflake.com/en/sql-reference/sql-all.html
+  //
+  // 1. run in console on this page: $x('//tbody/tr/*[1]//a/span/text()').map(x => x.nodeValue)
+  // 2. delete all lines that contain a sting like '(.*)', they are already covered in the list
+  // 3. delete all lines that contain a sting like '<.*>', they are already covered in the list
+  // 4. delete all lines that contain '…', they are part of a regex statement that can't be covered here
+  // 5. Manually add 'COPY INTO'
+  // 6. Remove all lines that are already in `reservedClauses`
+  //
+  // Steps 1-4 can be combined by the following script in the developer console:
+  // $x('//tbody/tr/*[1]//a/span/text()').map(x => x.nodeValue) // Step 1
+  //   filter(x => !x.match(/\(.*\)/) && !x.match(/…/) && !x.match(/<.*>/)) // Step 2-4
+  "ALTER ACCOUNT",
+  "ALTER API INTEGRATION",
+  "ALTER CONNECTION",
+  "ALTER DATABASE",
+  "ALTER EXTERNAL TABLE",
+  "ALTER FAILOVER GROUP",
+  "ALTER FILE FORMAT",
+  "ALTER FUNCTION",
+  "ALTER INTEGRATION",
+  "ALTER MASKING POLICY",
+  "ALTER MATERIALIZED VIEW",
+  "ALTER NETWORK POLICY",
+  "ALTER NOTIFICATION INTEGRATION",
+  "ALTER PIPE",
+  "ALTER PROCEDURE",
+  "ALTER REPLICATION GROUP",
+  "ALTER RESOURCE MONITOR",
+  "ALTER ROLE",
+  "ALTER ROW ACCESS POLICY",
+  "ALTER SCHEMA",
+  "ALTER SECURITY INTEGRATION",
+  "ALTER SEQUENCE",
+  "ALTER SESSION",
+  "ALTER SESSION POLICY",
+  "ALTER SHARE",
+  "ALTER STAGE",
+  "ALTER STORAGE INTEGRATION",
+  "ALTER STREAM",
+  "ALTER TAG",
+  "ALTER TASK",
+  "ALTER USER",
+  "ALTER VIEW",
+  "ALTER WAREHOUSE",
+  "BEGIN",
+  "CALL",
+  "COMMIT",
+  "COPY INTO",
+  "CREATE ACCOUNT",
+  "CREATE API INTEGRATION",
+  "CREATE CONNECTION",
+  "CREATE DATABASE",
+  "CREATE EXTERNAL FUNCTION",
+  "CREATE EXTERNAL TABLE",
+  "CREATE FAILOVER GROUP",
+  "CREATE FILE FORMAT",
+  "CREATE FUNCTION",
+  "CREATE INTEGRATION",
+  "CREATE MANAGED ACCOUNT",
+  "CREATE MASKING POLICY",
+  "CREATE MATERIALIZED VIEW",
+  "CREATE NETWORK POLICY",
+  "CREATE NOTIFICATION INTEGRATION",
+  "CREATE PIPE",
+  "CREATE PROCEDURE",
+  "CREATE REPLICATION GROUP",
+  "CREATE RESOURCE MONITOR",
+  "CREATE ROLE",
+  "CREATE ROW ACCESS POLICY",
+  "CREATE SCHEMA",
+  "CREATE SECURITY INTEGRATION",
+  "CREATE SEQUENCE",
+  "CREATE SESSION POLICY",
+  "CREATE SHARE",
+  "CREATE STAGE",
+  "CREATE STORAGE INTEGRATION",
+  "CREATE STREAM",
+  "CREATE TAG",
+  "CREATE TASK",
+  "CREATE USER",
+  "CREATE WAREHOUSE",
+  "DELETE",
+  "DESCRIBE DATABASE",
+  "DESCRIBE EXTERNAL TABLE",
+  "DESCRIBE FILE FORMAT",
+  "DESCRIBE FUNCTION",
+  "DESCRIBE INTEGRATION",
+  "DESCRIBE MASKING POLICY",
+  "DESCRIBE MATERIALIZED VIEW",
+  "DESCRIBE NETWORK POLICY",
+  "DESCRIBE PIPE",
+  "DESCRIBE PROCEDURE",
+  "DESCRIBE RESULT",
+  "DESCRIBE ROW ACCESS POLICY",
+  "DESCRIBE SCHEMA",
+  "DESCRIBE SEQUENCE",
+  "DESCRIBE SESSION POLICY",
+  "DESCRIBE SHARE",
+  "DESCRIBE STAGE",
+  "DESCRIBE STREAM",
+  "DESCRIBE TABLE",
+  "DESCRIBE TASK",
+  "DESCRIBE TRANSACTION",
+  "DESCRIBE USER",
+  "DESCRIBE VIEW",
+  "DESCRIBE WAREHOUSE",
+  "DROP CONNECTION",
+  "DROP DATABASE",
+  "DROP EXTERNAL TABLE",
+  "DROP FAILOVER GROUP",
+  "DROP FILE FORMAT",
+  "DROP FUNCTION",
+  "DROP INTEGRATION",
+  "DROP MANAGED ACCOUNT",
+  "DROP MASKING POLICY",
+  "DROP MATERIALIZED VIEW",
+  "DROP NETWORK POLICY",
+  "DROP PIPE",
+  "DROP PROCEDURE",
+  "DROP REPLICATION GROUP",
+  "DROP RESOURCE MONITOR",
+  "DROP ROLE",
+  "DROP ROW ACCESS POLICY",
+  "DROP SCHEMA",
+  "DROP SEQUENCE",
+  "DROP SESSION POLICY",
+  "DROP SHARE",
+  "DROP STAGE",
+  "DROP STREAM",
+  "DROP TAG",
+  "DROP TASK",
+  "DROP USER",
+  "DROP VIEW",
+  "DROP WAREHOUSE",
+  "EXECUTE IMMEDIATE",
+  "EXECUTE TASK",
+  "EXPLAIN",
+  "GET",
+  "GRANT OWNERSHIP",
+  "GRANT ROLE",
+  "INSERT",
+  "LIST",
+  "MERGE",
+  "PUT",
+  "REMOVE",
+  "REVOKE ROLE",
+  "ROLLBACK",
+  "SHOW COLUMNS",
+  "SHOW CONNECTIONS",
+  "SHOW DATABASES",
+  "SHOW DATABASES IN FAILOVER GROUP",
+  "SHOW DATABASES IN REPLICATION GROUP",
+  "SHOW DELEGATED AUTHORIZATIONS",
+  "SHOW EXTERNAL FUNCTIONS",
+  "SHOW EXTERNAL TABLES",
+  "SHOW FAILOVER GROUPS",
+  "SHOW FILE FORMATS",
+  "SHOW FUNCTIONS",
+  "SHOW GLOBAL ACCOUNTS",
+  "SHOW GRANTS",
+  "SHOW INTEGRATIONS",
+  "SHOW LOCKS",
+  "SHOW MANAGED ACCOUNTS",
+  "SHOW MASKING POLICIES",
+  "SHOW MATERIALIZED VIEWS",
+  "SHOW NETWORK POLICIES",
+  "SHOW OBJECTS",
+  "SHOW ORGANIZATION ACCOUNTS",
+  "SHOW PARAMETERS",
+  "SHOW PIPES",
+  "SHOW PRIMARY KEYS",
+  "SHOW PROCEDURES",
+  "SHOW REGIONS",
+  "SHOW REPLICATION ACCOUNTS",
+  "SHOW REPLICATION DATABASES",
+  "SHOW REPLICATION GROUPS",
+  "SHOW RESOURCE MONITORS",
+  "SHOW ROLES",
+  "SHOW ROW ACCESS POLICIES",
+  "SHOW SCHEMAS",
+  "SHOW SEQUENCES",
+  "SHOW SESSION POLICIES",
+  "SHOW SHARES",
+  "SHOW SHARES IN FAILOVER GROUP",
+  "SHOW SHARES IN REPLICATION GROUP",
+  "SHOW STAGES",
+  "SHOW STREAMS",
+  "SHOW TABLES",
+  "SHOW TAGS",
+  "SHOW TASKS",
+  "SHOW TRANSACTIONS",
+  "SHOW USER FUNCTIONS",
+  "SHOW USERS",
+  "SHOW VARIABLES",
+  "SHOW VIEWS",
+  "SHOW WAREHOUSES",
+  "TRUNCATE MATERIALIZED VIEW",
+  "UNDROP DATABASE",
+  "UNDROP SCHEMA",
+  "UNDROP TABLE",
+  "UNDROP TAG",
+  "UNSET",
+  "USE DATABASE",
+  "USE ROLE",
+  "USE SCHEMA",
+  "USE SECONDARY ROLES",
+  "USE WAREHOUSE"
+]);
+var reservedSetOperations19 = expandPhrases(["UNION [ALL]", "MINUS", "EXCEPT", "INTERSECT"]);
+var reservedJoins19 = expandPhrases([
+  "[INNER] JOIN",
+  "[NATURAL] {LEFT | RIGHT | FULL} [OUTER] JOIN",
+  "{CROSS | NATURAL} JOIN"
+]);
+var reservedPhrases19 = expandPhrases([
+  "{ROWS | RANGE} BETWEEN",
+  "ON {UPDATE | DELETE} [SET NULL | SET DEFAULT]"
+]);
+var snowflake = {
+  name: "snowflake",
+  tokenizerOptions: {
+    reservedSelect: reservedSelect19,
+    reservedClauses: [...reservedClauses19, ...standardOnelineClauses18, ...tabularOnelineClauses18],
+    reservedSetOperations: reservedSetOperations19,
+    reservedJoins: reservedJoins19,
+    reservedPhrases: reservedPhrases19,
+    reservedKeywords: keywords20,
+    reservedDataTypes: dataTypes19,
+    reservedFunctionNames: functions19,
+    stringTypes: ["$$", `''-qq-bs`],
+    identTypes: ['""-qq'],
+    variableTypes: [
+      // for accessing columns at certain positons in the table
+      { regex: "[$][1-9]\\d*" },
+      // identifier style syntax
+      { regex: "[$][_a-zA-Z][_a-zA-Z0-9$]*" }
+    ],
+    extraParens: ["[]"],
+    identChars: { rest: "$" },
+    lineCommentTypes: ["--", "//"],
+    operators: [
+      // Modulo
+      "%",
+      // Type cast
+      "::",
+      // String concat
+      "||",
+      // Generators: https://docs.snowflake.com/en/sql-reference/functions/generator.html#generator
+      "=>",
+      // Assignment https://docs.snowflake.com/en/sql-reference/snowflake-scripting/let
+      ":=",
+      // Lambda: https://docs.snowflake.com/en/user-guide/querying-semistructured#lambda-expressions
+      "->"
+    ],
+    propertyAccessOperators: [":"]
+  },
+  formatOptions: {
+    alwaysDenseOperators: ["::"],
+    onelineClauses: [...standardOnelineClauses18, ...tabularOnelineClauses18],
+    tabularOnelineClauses: tabularOnelineClauses18
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/utils.js
+var last2 = (arr) => arr[arr.length - 1];
+var sortByLengthDesc = (strings) => strings.sort((a, b) => b.length - a.length || a.localeCompare(b));
+var equalizeWhitespace = (s) => s.replace(/\s+/gu, " ");
+var isMultiline = (text2) => /\n/.test(text2);
+
+// node_modules/sql-formatter/dist/esm/lexer/regexUtil.js
+var escapeRegExp = (string3) => string3.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+var WHITESPACE_REGEX = /\s+/uy;
+var patternToRegex = (pattern) => new RegExp(`(?:${pattern})`, "uy");
+var toCaseInsensitivePattern = (prefix) => prefix.split("").map((char) => / /gu.test(char) ? "\\s+" : `[${char.toUpperCase()}${char.toLowerCase()}]`).join("");
+var withDashes = (pattern) => pattern + "(?:-" + pattern + ")*";
+var prefixesPattern = ({ prefixes, requirePrefix }) => `(?:${prefixes.map(toCaseInsensitivePattern).join("|")}${requirePrefix ? "" : "|"})`;
+
+// node_modules/sql-formatter/dist/esm/lexer/regexFactory.js
+var lineComment = (lineCommentTypes) => new RegExp(`(?:${lineCommentTypes.map(escapeRegExp).join("|")}).*?(?=\r
+|\r|
+|$)`, "uy");
+var parenthesis = (kind, extraParens = []) => {
+  const index = kind === "open" ? 0 : 1;
+  const parens = ["()", ...extraParens].map((pair2) => pair2[index]);
+  return patternToRegex(parens.map(escapeRegExp).join("|"));
+};
+var operator2 = (operators) => patternToRegex(`${sortByLengthDesc(operators).map(escapeRegExp).join("|")}`);
+var rejectIdentCharsPattern = ({ rest, dashes }) => rest || dashes ? `(?![${rest || ""}${dashes ? "-" : ""}])` : "";
+var reservedWord = (reservedKeywords, identChars = {}) => {
+  if (reservedKeywords.length === 0) {
+    return /^\b$/u;
+  }
+  const avoidIdentChars = rejectIdentCharsPattern(identChars);
+  const reservedKeywordsPattern = sortByLengthDesc(reservedKeywords).map(escapeRegExp).join("|").replace(/ /gu, "\\s+");
+  return new RegExp(`(?:${reservedKeywordsPattern})${avoidIdentChars}\\b`, "iuy");
+};
+var parameter = (paramTypes, pattern) => {
+  if (!paramTypes.length) {
+    return void 0;
+  }
+  const typesRegex = paramTypes.map(escapeRegExp).join("|");
+  return patternToRegex(`(?:${typesRegex})(?:${pattern})`);
+};
+var buildQStringPatterns = () => {
+  const specialDelimiterMap = {
+    "<": ">",
+    "[": "]",
+    "(": ")",
+    "{": "}"
+  };
+  const singlePattern = "{left}(?:(?!{right}').)*?{right}";
+  const patternList = Object.entries(specialDelimiterMap).map(([left2, right2]) => singlePattern.replace(/{left}/g, escapeRegExp(left2)).replace(/{right}/g, escapeRegExp(right2)));
+  const specialDelimiters = escapeRegExp(Object.keys(specialDelimiterMap).join(""));
+  const standardDelimiterPattern = String.raw`(?<tag>[^\s${specialDelimiters}])(?:(?!\k<tag>').)*?\k<tag>`;
+  const qStringPattern = `[Qq]'(?:${standardDelimiterPattern}|${patternList.join("|")})'`;
+  return qStringPattern;
+};
+var quotePatterns = {
+  // - backtick quoted (using `` to escape)
+  "``": "(?:`[^`]*`)+",
+  // - Transact-SQL square bracket quoted (using ]] to escape)
+  "[]": String.raw`(?:\[[^\]]*\])(?:\][^\]]*\])*`,
+  // double-quoted
+  '""-qq': String.raw`(?:"[^"]*")+`,
+  '""-bs': String.raw`(?:"[^"\\]*(?:\\.[^"\\]*)*")`,
+  '""-qq-bs': String.raw`(?:"[^"\\]*(?:\\.[^"\\]*)*")+`,
+  '""-raw': String.raw`(?:"[^"]*")`,
+  // single-quoted
+  "''-qq": String.raw`(?:'[^']*')+`,
+  "''-bs": String.raw`(?:'[^'\\]*(?:\\.[^'\\]*)*')`,
+  "''-qq-bs": String.raw`(?:'[^'\\]*(?:\\.[^'\\]*)*')+`,
+  "''-raw": String.raw`(?:'[^']*')`,
+  // PostgreSQL dollar-quoted
+  "$$": String.raw`(?<tag>\$\w*\$)[\s\S]*?\k<tag>`,
+  // BigQuery '''triple-quoted''' (using \' to escape)
+  "'''..'''": String.raw`'''[^\\]*?(?:\\.[^\\]*?)*?'''`,
+  // BigQuery """triple-quoted""" (using \" to escape)
+  '""".."""': String.raw`"""[^\\]*?(?:\\.[^\\]*?)*?"""`,
+  // Hive and Spark variables: ${name}
+  "{}": String.raw`(?:\{[^\}]*\})`,
+  // Oracle q'' strings: q'<text>' q'|text|' ...
+  "q''": buildQStringPatterns()
+};
+var singleQuotePattern = (quoteTypes) => {
+  if (typeof quoteTypes === "string") {
+    return quotePatterns[quoteTypes];
+  } else if ("regex" in quoteTypes) {
+    return quoteTypes.regex;
+  } else {
+    return prefixesPattern(quoteTypes) + quotePatterns[quoteTypes.quote];
+  }
+};
+var variable = (varTypes) => patternToRegex(varTypes.map((varType) => "regex" in varType ? varType.regex : singleQuotePattern(varType)).join("|"));
+var stringPattern = (quoteTypes) => quoteTypes.map(singleQuotePattern).join("|");
+var string2 = (quoteTypes) => patternToRegex(stringPattern(quoteTypes));
+var identifier = (specialChars = {}) => patternToRegex(identifierPattern(specialChars));
+var identifierPattern = ({ first, rest, dashes, allowFirstCharNumber } = {}) => {
+  const letter = "\\p{Alphabetic}\\p{Mark}_";
+  const number2 = "\\p{Decimal_Number}";
+  const firstChars = escapeRegExp(first !== null && first !== void 0 ? first : "");
+  const restChars = escapeRegExp(rest !== null && rest !== void 0 ? rest : "");
+  const pattern = allowFirstCharNumber ? `[${letter}${number2}${firstChars}][${letter}${number2}${restChars}]*` : `[${letter}${firstChars}][${letter}${number2}${restChars}]*`;
+  return dashes ? withDashes(pattern) : pattern;
+};
+
+// node_modules/sql-formatter/dist/esm/lexer/lineColFromIndex.js
+function lineColFromIndex(source, index) {
+  const lines = source.slice(0, index).split(/\n/);
+  return { line: lines.length, col: lines[lines.length - 1].length + 1 };
+}
+
+// node_modules/sql-formatter/dist/esm/lexer/TokenizerEngine.js
+var TokenizerEngine = class {
+  constructor(rules, dialectName) {
+    this.rules = rules;
+    this.dialectName = dialectName;
+    this.input = "";
+    this.index = 0;
+  }
+  /**
+   * Takes a SQL string and breaks it into tokens.
+   * Each token is an object with type and value.
+   *
+   * @param {string} input - The SQL string
+   * @returns {Token[]} output token stream
+   */
+  tokenize(input2) {
+    this.input = input2;
+    this.index = 0;
+    const tokens2 = [];
+    let token;
+    while (this.index < this.input.length) {
+      const precedingWhitespace = this.getWhitespace();
+      if (this.index < this.input.length) {
+        token = this.getNextToken();
+        if (!token) {
+          throw this.createParseError();
+        }
+        tokens2.push(Object.assign(Object.assign({}, token), { precedingWhitespace }));
+      }
+    }
+    return tokens2;
+  }
+  createParseError() {
+    const text2 = this.input.slice(this.index, this.index + 10);
+    const { line, col } = lineColFromIndex(this.input, this.index);
+    return new Error(`Parse error: Unexpected "${text2}" at line ${line} column ${col}.
+${this.dialectInfo()}`);
+  }
+  dialectInfo() {
+    if (this.dialectName === "sql") {
+      return `This likely happens because you're using the default "sql" dialect.
+If possible, please select a more specific dialect (like sqlite, postgresql, etc).`;
+    } else {
+      return `SQL dialect used: "${this.dialectName}".`;
+    }
+  }
+  getWhitespace() {
+    WHITESPACE_REGEX.lastIndex = this.index;
+    const matches = WHITESPACE_REGEX.exec(this.input);
+    if (matches) {
+      this.index += matches[0].length;
+      return matches[0];
+    }
+    return void 0;
+  }
+  getNextToken() {
+    for (const rule of this.rules) {
+      const token = this.match(rule);
+      if (token) {
+        return token;
+      }
+    }
+    return void 0;
+  }
+  // Attempts to match token rule regex at current position in input
+  match(rule) {
+    rule.regex.lastIndex = this.index;
+    const matches = rule.regex.exec(this.input);
+    if (matches) {
+      const matchedText = matches[0];
+      const token = {
+        type: rule.type,
+        raw: matchedText,
+        text: rule.text ? rule.text(matchedText) : matchedText,
+        start: this.index
+      };
+      if (rule.key) {
+        token.key = rule.key(matchedText);
+      }
+      this.index += matchedText.length;
+      return token;
+    }
+    return void 0;
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/lexer/NestedComment.js
+var START = /\/\*/uy;
+var ANY_CHAR = /[\s\S]/uy;
+var END2 = /\*\//uy;
+var NestedComment = class {
+  constructor() {
+    this.lastIndex = 0;
+  }
+  exec(input2) {
+    let result = "";
+    let match2;
+    let nestLevel = 0;
+    if (match2 = this.matchSection(START, input2)) {
+      result += match2;
+      nestLevel++;
+    } else {
+      return null;
+    }
+    while (nestLevel > 0) {
+      if (match2 = this.matchSection(START, input2)) {
+        result += match2;
+        nestLevel++;
+      } else if (match2 = this.matchSection(END2, input2)) {
+        result += match2;
+        nestLevel--;
+      } else if (match2 = this.matchSection(ANY_CHAR, input2)) {
+        result += match2;
+      } else {
+        return null;
+      }
+    }
+    return [result];
+  }
+  matchSection(regex, input2) {
+    regex.lastIndex = this.lastIndex;
+    const matches = regex.exec(input2);
+    if (matches) {
+      this.lastIndex += matches[0].length;
+    }
+    return matches ? matches[0] : null;
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/lexer/Tokenizer.js
+var Tokenizer = class {
+  constructor(cfg, dialectName) {
+    this.cfg = cfg;
+    this.dialectName = dialectName;
+    this.rulesBeforeParams = this.buildRulesBeforeParams(cfg);
+    this.rulesAfterParams = this.buildRulesAfterParams(cfg);
+  }
+  tokenize(input2, paramTypesOverrides) {
+    const rules = [
+      ...this.rulesBeforeParams,
+      ...this.buildParamRules(this.cfg, paramTypesOverrides),
+      ...this.rulesAfterParams
+    ];
+    const tokens2 = new TokenizerEngine(rules, this.dialectName).tokenize(input2);
+    return this.cfg.postProcess ? this.cfg.postProcess(tokens2) : tokens2;
+  }
+  // These rules can be cached as they only depend on
+  // the Tokenizer config options specified for each SQL dialect
+  buildRulesBeforeParams(cfg) {
+    var _a2, _b;
+    return this.validRules([
+      {
+        type: TokenType.BLOCK_COMMENT,
+        regex: /(\/\* *sql-formatter-disable *\*\/[\s\S]*?(?:\/\* *sql-formatter-enable *\*\/|$))/uy
+      },
+      {
+        type: TokenType.BLOCK_COMMENT,
+        regex: cfg.nestedBlockComments ? new NestedComment() : /(\/\*[^]*?\*\/)/uy
+      },
+      {
+        type: TokenType.LINE_COMMENT,
+        regex: lineComment((_a2 = cfg.lineCommentTypes) !== null && _a2 !== void 0 ? _a2 : ["--"])
+      },
+      {
+        type: TokenType.QUOTED_IDENTIFIER,
+        regex: string2(cfg.identTypes)
+      },
+      {
+        type: TokenType.NUMBER,
+        regex: /(?:0x[0-9a-fA-F]+|0b[01]+|(?:-\s*)?(?:[0-9]*\.[0-9]+|[0-9]+(?:\.[0-9]*)?)(?:[eE][-+]?[0-9]+(?:\.[0-9]+)?)?)(?![\w\p{Alphabetic}])/uy
+      },
+      // RESERVED_PHRASE is matched before all other keyword tokens
+      // to e.g. prioritize matching "TIMESTAMP WITH TIME ZONE" phrase over "WITH" clause.
+      {
+        type: TokenType.RESERVED_PHRASE,
+        regex: reservedWord((_b = cfg.reservedPhrases) !== null && _b !== void 0 ? _b : [], cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.CASE,
+        regex: /CASE\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.END,
+        regex: /END\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.BETWEEN,
+        regex: /BETWEEN\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.LIMIT,
+        regex: cfg.reservedClauses.includes("LIMIT") ? /LIMIT\b/iuy : void 0,
+        text: toCanonical
+      },
+      {
+        type: TokenType.RESERVED_CLAUSE,
+        regex: reservedWord(cfg.reservedClauses, cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.RESERVED_SELECT,
+        regex: reservedWord(cfg.reservedSelect, cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.RESERVED_SET_OPERATION,
+        regex: reservedWord(cfg.reservedSetOperations, cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.WHEN,
+        regex: /WHEN\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.ELSE,
+        regex: /ELSE\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.THEN,
+        regex: /THEN\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.RESERVED_JOIN,
+        regex: reservedWord(cfg.reservedJoins, cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.AND,
+        regex: /AND\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.OR,
+        regex: /OR\b/iuy,
+        text: toCanonical
+      },
+      {
+        type: TokenType.XOR,
+        regex: cfg.supportsXor ? /XOR\b/iuy : void 0,
+        text: toCanonical
+      },
+      ...cfg.operatorKeyword ? [
+        {
+          type: TokenType.OPERATOR,
+          regex: /OPERATOR *\([^)]+\)/iuy
+        }
+      ] : [],
+      {
+        type: TokenType.RESERVED_FUNCTION_NAME,
+        regex: reservedWord(cfg.reservedFunctionNames, cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.RESERVED_DATA_TYPE,
+        regex: reservedWord(cfg.reservedDataTypes, cfg.identChars),
+        text: toCanonical
+      },
+      {
+        type: TokenType.RESERVED_KEYWORD,
+        regex: reservedWord(cfg.reservedKeywords, cfg.identChars),
+        text: toCanonical
+      }
+    ]);
+  }
+  // These rules can also be cached as they only depend on
+  // the Tokenizer config options specified for each SQL dialect
+  buildRulesAfterParams(cfg) {
+    var _a2, _b;
+    return this.validRules([
+      {
+        type: TokenType.VARIABLE,
+        regex: cfg.variableTypes ? variable(cfg.variableTypes) : void 0
+      },
+      { type: TokenType.STRING, regex: string2(cfg.stringTypes) },
+      {
+        type: TokenType.IDENTIFIER,
+        regex: identifier(cfg.identChars)
+      },
+      { type: TokenType.DELIMITER, regex: /[;]/uy },
+      { type: TokenType.COMMA, regex: /[,]/y },
+      {
+        type: TokenType.OPEN_PAREN,
+        regex: parenthesis("open", cfg.extraParens)
+      },
+      {
+        type: TokenType.CLOSE_PAREN,
+        regex: parenthesis("close", cfg.extraParens)
+      },
+      {
+        type: TokenType.OPERATOR,
+        regex: operator2([
+          // standard operators
+          "+",
+          "-",
+          "/",
+          ">",
+          "<",
+          "=",
+          "<>",
+          "<=",
+          ">=",
+          "!=",
+          ...(_a2 = cfg.operators) !== null && _a2 !== void 0 ? _a2 : []
+        ])
+      },
+      { type: TokenType.ASTERISK, regex: /[*]/uy },
+      {
+        type: TokenType.PROPERTY_ACCESS_OPERATOR,
+        regex: operator2([".", ...(_b = cfg.propertyAccessOperators) !== null && _b !== void 0 ? _b : []])
+      }
+    ]);
+  }
+  // These rules can't be blindly cached as the paramTypesOverrides object
+  // can differ on each invocation of the format() function.
+  buildParamRules(cfg, paramTypesOverrides) {
+    var _a2, _b, _c, _d, _e;
+    const paramTypes = {
+      named: (paramTypesOverrides === null || paramTypesOverrides === void 0 ? void 0 : paramTypesOverrides.named) || ((_a2 = cfg.paramTypes) === null || _a2 === void 0 ? void 0 : _a2.named) || [],
+      quoted: (paramTypesOverrides === null || paramTypesOverrides === void 0 ? void 0 : paramTypesOverrides.quoted) || ((_b = cfg.paramTypes) === null || _b === void 0 ? void 0 : _b.quoted) || [],
+      numbered: (paramTypesOverrides === null || paramTypesOverrides === void 0 ? void 0 : paramTypesOverrides.numbered) || ((_c = cfg.paramTypes) === null || _c === void 0 ? void 0 : _c.numbered) || [],
+      positional: typeof (paramTypesOverrides === null || paramTypesOverrides === void 0 ? void 0 : paramTypesOverrides.positional) === "boolean" ? paramTypesOverrides.positional : (_d = cfg.paramTypes) === null || _d === void 0 ? void 0 : _d.positional,
+      custom: (paramTypesOverrides === null || paramTypesOverrides === void 0 ? void 0 : paramTypesOverrides.custom) || ((_e = cfg.paramTypes) === null || _e === void 0 ? void 0 : _e.custom) || []
+    };
+    return this.validRules([
+      {
+        type: TokenType.NAMED_PARAMETER,
+        regex: parameter(paramTypes.named, identifierPattern(cfg.paramChars || cfg.identChars)),
+        key: (v) => v.slice(1)
+      },
+      {
+        type: TokenType.QUOTED_PARAMETER,
+        regex: parameter(paramTypes.quoted, stringPattern(cfg.identTypes)),
+        key: (v) => (({ tokenKey, quoteChar }) => tokenKey.replace(new RegExp(escapeRegExp("\\" + quoteChar), "gu"), quoteChar))({
+          tokenKey: v.slice(2, -1),
+          quoteChar: v.slice(-1)
+        })
+      },
+      {
+        type: TokenType.NUMBERED_PARAMETER,
+        regex: parameter(paramTypes.numbered, "[0-9]+"),
+        key: (v) => v.slice(1)
+      },
+      {
+        type: TokenType.POSITIONAL_PARAMETER,
+        regex: paramTypes.positional ? /[?]/y : void 0
+      },
+      ...paramTypes.custom.map((customParam) => {
+        var _a3;
+        return {
+          type: TokenType.CUSTOM_PARAMETER,
+          regex: patternToRegex(customParam.regex),
+          key: (_a3 = customParam.key) !== null && _a3 !== void 0 ? _a3 : (v) => v
+        };
+      })
+    ]);
+  }
+  // filters out rules for token types whose regex is undefined
+  validRules(rules) {
+    return rules.filter((rule) => Boolean(rule.regex));
+  }
+};
+var toCanonical = (v) => equalizeWhitespace(v.toUpperCase());
+
+// node_modules/sql-formatter/dist/esm/dialect.js
+var cache = /* @__PURE__ */ new Map();
+var createDialect = (options) => {
+  let dialect2 = cache.get(options);
+  if (!dialect2) {
+    dialect2 = dialectFromOptions(options);
+    cache.set(options, dialect2);
+  }
+  return dialect2;
+};
+var dialectFromOptions = (dialectOptions) => ({
+  tokenizer: new Tokenizer(dialectOptions.tokenizerOptions, dialectOptions.name),
+  formatOptions: processDialectFormatOptions(dialectOptions.formatOptions)
+});
+var processDialectFormatOptions = (options) => {
+  var _a2;
+  return {
+    alwaysDenseOperators: options.alwaysDenseOperators || [],
+    onelineClauses: Object.fromEntries(options.onelineClauses.map((name2) => [name2, true])),
+    tabularOnelineClauses: Object.fromEntries(((_a2 = options.tabularOnelineClauses) !== null && _a2 !== void 0 ? _a2 : options.onelineClauses).map((name2) => [name2, true]))
+  };
+};
+
+// node_modules/sql-formatter/dist/esm/formatter/config.js
+function indentString2(cfg) {
+  if (cfg.indentStyle === "tabularLeft" || cfg.indentStyle === "tabularRight") {
+    return " ".repeat(10);
+  }
+  if (cfg.useTabs) {
+    return "	";
+  }
+  return " ".repeat(cfg.tabWidth);
+}
+function isTabularStyle(cfg) {
+  return cfg.indentStyle === "tabularLeft" || cfg.indentStyle === "tabularRight";
+}
+
+// node_modules/sql-formatter/dist/esm/formatter/Params.js
+var Params = class {
+  constructor(params) {
+    this.params = params;
+    this.index = 0;
+  }
+  /**
+   * Returns param value that matches given placeholder with param key.
+   */
+  get({ key, text: text2 }) {
+    if (!this.params) {
+      return text2;
+    }
+    if (key) {
+      return this.params[key];
+    }
+    return this.params[this.index++];
+  }
+  /**
+   * Returns index of current positional parameter.
+   */
+  getPositionalParameterIndex() {
+    return this.index;
+  }
+  /**
+   * Sets index of current positional parameter.
+   */
+  setPositionalParameterIndex(i) {
+    this.index = i;
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/parser/createParser.js
+var import_nearley = __toESM(require_nearley(), 1);
+
+// node_modules/sql-formatter/dist/esm/lexer/disambiguateTokens.js
+function disambiguateTokens(tokens2) {
+  return tokens2.map(propertyNameKeywordToIdent).map(funcNameToIdent).map(dataTypeToParameterizedDataType).map(identToArrayIdent).map(dataTypeToArrayKeyword);
+}
+var propertyNameKeywordToIdent = (token, i, tokens2) => {
+  if (isReserved(token.type)) {
+    const prevToken = prevNonCommentToken(tokens2, i);
+    if (prevToken && prevToken.type === TokenType.PROPERTY_ACCESS_OPERATOR) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.IDENTIFIER, text: token.raw });
+    }
+    const nextToken = nextNonCommentToken(tokens2, i);
+    if (nextToken && nextToken.type === TokenType.PROPERTY_ACCESS_OPERATOR) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.IDENTIFIER, text: token.raw });
+    }
+  }
+  return token;
+};
+var funcNameToIdent = (token, i, tokens2) => {
+  if (token.type === TokenType.RESERVED_FUNCTION_NAME) {
+    const nextToken = nextNonCommentToken(tokens2, i);
+    if (!nextToken || !isOpenParen(nextToken)) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.IDENTIFIER, text: token.raw });
+    }
+  }
+  return token;
+};
+var dataTypeToParameterizedDataType = (token, i, tokens2) => {
+  if (token.type === TokenType.RESERVED_DATA_TYPE) {
+    const nextToken = nextNonCommentToken(tokens2, i);
+    if (nextToken && isOpenParen(nextToken)) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.RESERVED_PARAMETERIZED_DATA_TYPE });
+    }
+  }
+  return token;
+};
+var identToArrayIdent = (token, i, tokens2) => {
+  if (token.type === TokenType.IDENTIFIER) {
+    const nextToken = nextNonCommentToken(tokens2, i);
+    if (nextToken && isOpenBracket(nextToken)) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.ARRAY_IDENTIFIER });
+    }
+  }
+  return token;
+};
+var dataTypeToArrayKeyword = (token, i, tokens2) => {
+  if (token.type === TokenType.RESERVED_DATA_TYPE) {
+    const nextToken = nextNonCommentToken(tokens2, i);
+    if (nextToken && isOpenBracket(nextToken)) {
+      return Object.assign(Object.assign({}, token), { type: TokenType.ARRAY_KEYWORD });
+    }
+  }
+  return token;
+};
+var prevNonCommentToken = (tokens2, index) => nextNonCommentToken(tokens2, index, -1);
+var nextNonCommentToken = (tokens2, index, dir = 1) => {
+  let i = 1;
+  while (tokens2[index + i * dir] && isComment(tokens2[index + i * dir])) {
+    i++;
+  }
+  return tokens2[index + i * dir];
+};
+var isOpenParen = (t2) => t2.type === TokenType.OPEN_PAREN && t2.text === "(";
+var isOpenBracket = (t2) => t2.type === TokenType.OPEN_PAREN && t2.text === "[";
+var isComment = (t2) => t2.type === TokenType.BLOCK_COMMENT || t2.type === TokenType.LINE_COMMENT;
+
+// node_modules/sql-formatter/dist/esm/parser/LexerAdapter.js
+var LexerAdapter = class {
+  constructor(tokenize) {
+    this.tokenize = tokenize;
+    this.index = 0;
+    this.tokens = [];
+    this.input = "";
+  }
+  reset(chunk, _info) {
+    this.input = chunk;
+    this.index = 0;
+    this.tokens = this.tokenize(chunk);
+  }
+  next() {
+    return this.tokens[this.index++];
+  }
+  save() {
+  }
+  formatError(token) {
+    const { line, col } = lineColFromIndex(this.input, token.start);
+    return `Parse error at token: ${token.text} at line ${line} column ${col}`;
+  }
+  has(name2) {
+    return name2 in TokenType;
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/parser/ast.js
+var NodeType2;
+(function(NodeType3) {
+  NodeType3["statement"] = "statement";
+  NodeType3["clause"] = "clause";
+  NodeType3["set_operation"] = "set_operation";
+  NodeType3["function_call"] = "function_call";
+  NodeType3["parameterized_data_type"] = "parameterized_data_type";
+  NodeType3["array_subscript"] = "array_subscript";
+  NodeType3["property_access"] = "property_access";
+  NodeType3["parenthesis"] = "parenthesis";
+  NodeType3["between_predicate"] = "between_predicate";
+  NodeType3["case_expression"] = "case_expression";
+  NodeType3["case_when"] = "case_when";
+  NodeType3["case_else"] = "case_else";
+  NodeType3["limit_clause"] = "limit_clause";
+  NodeType3["all_columns_asterisk"] = "all_columns_asterisk";
+  NodeType3["literal"] = "literal";
+  NodeType3["identifier"] = "identifier";
+  NodeType3["keyword"] = "keyword";
+  NodeType3["data_type"] = "data_type";
+  NodeType3["parameter"] = "parameter";
+  NodeType3["operator"] = "operator";
+  NodeType3["comma"] = "comma";
+  NodeType3["line_comment"] = "line_comment";
+  NodeType3["block_comment"] = "block_comment";
+  NodeType3["disable_comment"] = "disable_comment";
+})(NodeType2 = NodeType2 || (NodeType2 = {}));
+
+// node_modules/sql-formatter/dist/esm/parser/grammar.js
+function id2(d) {
+  return d[0];
+}
+var lexer = new LexerAdapter((chunk) => []);
+var unwrap = ([[el]]) => el;
+var toKeywordNode = (token) => ({
+  type: NodeType2.keyword,
+  tokenType: token.type,
+  text: token.text,
+  raw: token.raw
+});
+var toDataTypeNode = (token) => ({
+  type: NodeType2.data_type,
+  text: token.text,
+  raw: token.raw
+});
+var addComments = (node, { leading, trailing }) => {
+  if (leading === null || leading === void 0 ? void 0 : leading.length) {
+    node = Object.assign(Object.assign({}, node), { leadingComments: leading });
+  }
+  if (trailing === null || trailing === void 0 ? void 0 : trailing.length) {
+    node = Object.assign(Object.assign({}, node), { trailingComments: trailing });
+  }
+  return node;
+};
+var addCommentsToArray = (nodes, { leading, trailing }) => {
+  if (leading === null || leading === void 0 ? void 0 : leading.length) {
+    const [first, ...rest] = nodes;
+    nodes = [addComments(first, { leading }), ...rest];
+  }
+  if (trailing === null || trailing === void 0 ? void 0 : trailing.length) {
+    const lead = nodes.slice(0, -1);
+    const last3 = nodes[nodes.length - 1];
+    nodes = [...lead, addComments(last3, { trailing })];
+  }
+  return nodes;
+};
+var grammar = {
+  Lexer: lexer,
+  ParserRules: [
+    { "name": "main$ebnf$1", "symbols": [] },
+    { "name": "main$ebnf$1", "symbols": ["main$ebnf$1", "statement"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "main",
+      "symbols": ["main$ebnf$1"],
+      "postprocess": ([statements]) => {
+        const last3 = statements[statements.length - 1];
+        if (last3 && !last3.hasSemicolon) {
+          return last3.children.length > 0 ? statements : statements.slice(0, -1);
+        } else {
+          return statements;
+        }
+      }
+    },
+    { "name": "statement$subexpression$1", "symbols": [lexer.has("DELIMITER") ? { type: "DELIMITER" } : DELIMITER] },
+    { "name": "statement$subexpression$1", "symbols": [lexer.has("EOF") ? { type: "EOF" } : EOF] },
+    {
+      "name": "statement",
+      "symbols": ["expressions_or_clauses", "statement$subexpression$1"],
+      "postprocess": ([children, [delimiter]]) => ({
+        type: NodeType2.statement,
+        children,
+        hasSemicolon: delimiter.type === TokenType.DELIMITER
+      })
+    },
+    { "name": "expressions_or_clauses$ebnf$1", "symbols": [] },
+    { "name": "expressions_or_clauses$ebnf$1", "symbols": ["expressions_or_clauses$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    { "name": "expressions_or_clauses$ebnf$2", "symbols": [] },
+    { "name": "expressions_or_clauses$ebnf$2", "symbols": ["expressions_or_clauses$ebnf$2", "clause"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "expressions_or_clauses",
+      "symbols": ["expressions_or_clauses$ebnf$1", "expressions_or_clauses$ebnf$2"],
+      "postprocess": ([expressions, clauses]) => [...expressions, ...clauses]
+    },
+    { "name": "clause$subexpression$1", "symbols": ["limit_clause"] },
+    { "name": "clause$subexpression$1", "symbols": ["select_clause"] },
+    { "name": "clause$subexpression$1", "symbols": ["other_clause"] },
+    { "name": "clause$subexpression$1", "symbols": ["set_operation"] },
+    { "name": "clause", "symbols": ["clause$subexpression$1"], "postprocess": unwrap },
+    { "name": "limit_clause$ebnf$1$subexpression$1$ebnf$1", "symbols": ["free_form_sql"] },
+    { "name": "limit_clause$ebnf$1$subexpression$1$ebnf$1", "symbols": ["limit_clause$ebnf$1$subexpression$1$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    { "name": "limit_clause$ebnf$1$subexpression$1", "symbols": [lexer.has("COMMA") ? { type: "COMMA" } : COMMA, "limit_clause$ebnf$1$subexpression$1$ebnf$1"] },
+    { "name": "limit_clause$ebnf$1", "symbols": ["limit_clause$ebnf$1$subexpression$1"], "postprocess": id2 },
+    { "name": "limit_clause$ebnf$1", "symbols": [], "postprocess": () => null },
+    {
+      "name": "limit_clause",
+      "symbols": [lexer.has("LIMIT") ? { type: "LIMIT" } : LIMIT, "_", "expression_chain_", "limit_clause$ebnf$1"],
+      "postprocess": ([limitToken, _, exp1, optional]) => {
+        if (optional) {
+          const [comma, exp2] = optional;
+          return {
+            type: NodeType2.limit_clause,
+            limitKw: addComments(toKeywordNode(limitToken), { trailing: _ }),
+            offset: exp1,
+            count: exp2
+          };
+        } else {
+          return {
+            type: NodeType2.limit_clause,
+            limitKw: addComments(toKeywordNode(limitToken), { trailing: _ }),
+            count: exp1
+          };
+        }
+      }
+    },
+    { "name": "select_clause$subexpression$1$ebnf$1", "symbols": [] },
+    { "name": "select_clause$subexpression$1$ebnf$1", "symbols": ["select_clause$subexpression$1$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    { "name": "select_clause$subexpression$1", "symbols": ["all_columns_asterisk", "select_clause$subexpression$1$ebnf$1"] },
+    { "name": "select_clause$subexpression$1$ebnf$2", "symbols": [] },
+    { "name": "select_clause$subexpression$1$ebnf$2", "symbols": ["select_clause$subexpression$1$ebnf$2", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    { "name": "select_clause$subexpression$1", "symbols": ["asteriskless_free_form_sql", "select_clause$subexpression$1$ebnf$2"] },
+    {
+      "name": "select_clause",
+      "symbols": [lexer.has("RESERVED_SELECT") ? { type: "RESERVED_SELECT" } : RESERVED_SELECT, "select_clause$subexpression$1"],
+      "postprocess": ([nameToken, [exp, expressions]]) => ({
+        type: NodeType2.clause,
+        nameKw: toKeywordNode(nameToken),
+        children: [exp, ...expressions]
+      })
+    },
+    {
+      "name": "select_clause",
+      "symbols": [lexer.has("RESERVED_SELECT") ? { type: "RESERVED_SELECT" } : RESERVED_SELECT],
+      "postprocess": ([nameToken]) => ({
+        type: NodeType2.clause,
+        nameKw: toKeywordNode(nameToken),
+        children: []
+      })
+    },
+    {
+      "name": "all_columns_asterisk",
+      "symbols": [lexer.has("ASTERISK") ? { type: "ASTERISK" } : ASTERISK],
+      "postprocess": () => ({ type: NodeType2.all_columns_asterisk })
+    },
+    { "name": "other_clause$ebnf$1", "symbols": [] },
+    { "name": "other_clause$ebnf$1", "symbols": ["other_clause$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "other_clause",
+      "symbols": [lexer.has("RESERVED_CLAUSE") ? { type: "RESERVED_CLAUSE" } : RESERVED_CLAUSE, "other_clause$ebnf$1"],
+      "postprocess": ([nameToken, children]) => ({
+        type: NodeType2.clause,
+        nameKw: toKeywordNode(nameToken),
+        children
+      })
+    },
+    { "name": "set_operation$ebnf$1", "symbols": [] },
+    { "name": "set_operation$ebnf$1", "symbols": ["set_operation$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "set_operation",
+      "symbols": [lexer.has("RESERVED_SET_OPERATION") ? { type: "RESERVED_SET_OPERATION" } : RESERVED_SET_OPERATION, "set_operation$ebnf$1"],
+      "postprocess": ([nameToken, children]) => ({
+        type: NodeType2.set_operation,
+        nameKw: toKeywordNode(nameToken),
+        children
+      })
+    },
+    { "name": "expression_chain_$ebnf$1", "symbols": ["expression_with_comments_"] },
+    { "name": "expression_chain_$ebnf$1", "symbols": ["expression_chain_$ebnf$1", "expression_with_comments_"], "postprocess": (d) => d[0].concat([d[1]]) },
+    { "name": "expression_chain_", "symbols": ["expression_chain_$ebnf$1"], "postprocess": id2 },
+    { "name": "expression_chain$ebnf$1", "symbols": [] },
+    { "name": "expression_chain$ebnf$1", "symbols": ["expression_chain$ebnf$1", "_expression_with_comments"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "expression_chain",
+      "symbols": ["expression", "expression_chain$ebnf$1"],
+      "postprocess": ([expr, chain]) => [expr, ...chain]
+    },
+    { "name": "andless_expression_chain$ebnf$1", "symbols": [] },
+    { "name": "andless_expression_chain$ebnf$1", "symbols": ["andless_expression_chain$ebnf$1", "_andless_expression_with_comments"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "andless_expression_chain",
+      "symbols": ["andless_expression", "andless_expression_chain$ebnf$1"],
+      "postprocess": ([expr, chain]) => [expr, ...chain]
+    },
+    {
+      "name": "expression_with_comments_",
+      "symbols": ["expression", "_"],
+      "postprocess": ([expr, _]) => addComments(expr, { trailing: _ })
+    },
+    {
+      "name": "_expression_with_comments",
+      "symbols": ["_", "expression"],
+      "postprocess": ([_, expr]) => addComments(expr, { leading: _ })
+    },
+    {
+      "name": "_andless_expression_with_comments",
+      "symbols": ["_", "andless_expression"],
+      "postprocess": ([_, expr]) => addComments(expr, { leading: _ })
+    },
+    { "name": "free_form_sql$subexpression$1", "symbols": ["asteriskless_free_form_sql"] },
+    { "name": "free_form_sql$subexpression$1", "symbols": ["asterisk"] },
+    { "name": "free_form_sql", "symbols": ["free_form_sql$subexpression$1"], "postprocess": unwrap },
+    { "name": "asteriskless_free_form_sql$subexpression$1", "symbols": ["asteriskless_andless_expression"] },
+    { "name": "asteriskless_free_form_sql$subexpression$1", "symbols": ["logic_operator"] },
+    { "name": "asteriskless_free_form_sql$subexpression$1", "symbols": ["comma"] },
+    { "name": "asteriskless_free_form_sql$subexpression$1", "symbols": ["comment"] },
+    { "name": "asteriskless_free_form_sql$subexpression$1", "symbols": ["other_keyword"] },
+    { "name": "asteriskless_free_form_sql", "symbols": ["asteriskless_free_form_sql$subexpression$1"], "postprocess": unwrap },
+    { "name": "expression$subexpression$1", "symbols": ["andless_expression"] },
+    { "name": "expression$subexpression$1", "symbols": ["logic_operator"] },
+    { "name": "expression", "symbols": ["expression$subexpression$1"], "postprocess": unwrap },
+    { "name": "andless_expression$subexpression$1", "symbols": ["asteriskless_andless_expression"] },
+    { "name": "andless_expression$subexpression$1", "symbols": ["asterisk"] },
+    { "name": "andless_expression", "symbols": ["andless_expression$subexpression$1"], "postprocess": unwrap },
+    { "name": "asteriskless_andless_expression$subexpression$1", "symbols": ["atomic_expression"] },
+    { "name": "asteriskless_andless_expression$subexpression$1", "symbols": ["between_predicate"] },
+    { "name": "asteriskless_andless_expression$subexpression$1", "symbols": ["case_expression"] },
+    { "name": "asteriskless_andless_expression", "symbols": ["asteriskless_andless_expression$subexpression$1"], "postprocess": unwrap },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["array_subscript"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["function_call"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["property_access"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["parenthesis"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["curly_braces"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["square_brackets"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["operator"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["identifier"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["parameter"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["literal"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["data_type"] },
+    { "name": "atomic_expression$subexpression$1", "symbols": ["keyword"] },
+    { "name": "atomic_expression", "symbols": ["atomic_expression$subexpression$1"], "postprocess": unwrap },
+    {
+      "name": "array_subscript",
+      "symbols": [lexer.has("ARRAY_IDENTIFIER") ? { type: "ARRAY_IDENTIFIER" } : ARRAY_IDENTIFIER, "_", "square_brackets"],
+      "postprocess": ([arrayToken, _, brackets]) => ({
+        type: NodeType2.array_subscript,
+        array: addComments({ type: NodeType2.identifier, quoted: false, text: arrayToken.text }, { trailing: _ }),
+        parenthesis: brackets
+      })
+    },
+    {
+      "name": "array_subscript",
+      "symbols": [lexer.has("ARRAY_KEYWORD") ? { type: "ARRAY_KEYWORD" } : ARRAY_KEYWORD, "_", "square_brackets"],
+      "postprocess": ([arrayToken, _, brackets]) => ({
+        type: NodeType2.array_subscript,
+        array: addComments(toKeywordNode(arrayToken), { trailing: _ }),
+        parenthesis: brackets
+      })
+    },
+    {
+      "name": "function_call",
+      "symbols": [lexer.has("RESERVED_FUNCTION_NAME") ? { type: "RESERVED_FUNCTION_NAME" } : RESERVED_FUNCTION_NAME, "_", "parenthesis"],
+      "postprocess": ([nameToken, _, parens]) => ({
+        type: NodeType2.function_call,
+        nameKw: addComments(toKeywordNode(nameToken), { trailing: _ }),
+        parenthesis: parens
+      })
+    },
+    {
+      "name": "parenthesis",
+      "symbols": [{ "literal": "(" }, "expressions_or_clauses", { "literal": ")" }],
+      "postprocess": ([open, children, close]) => ({
+        type: NodeType2.parenthesis,
+        children,
+        openParen: "(",
+        closeParen: ")"
+      })
+    },
+    { "name": "curly_braces$ebnf$1", "symbols": [] },
+    { "name": "curly_braces$ebnf$1", "symbols": ["curly_braces$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "curly_braces",
+      "symbols": [{ "literal": "{" }, "curly_braces$ebnf$1", { "literal": "}" }],
+      "postprocess": ([open, children, close]) => ({
+        type: NodeType2.parenthesis,
+        children,
+        openParen: "{",
+        closeParen: "}"
+      })
+    },
+    { "name": "square_brackets$ebnf$1", "symbols": [] },
+    { "name": "square_brackets$ebnf$1", "symbols": ["square_brackets$ebnf$1", "free_form_sql"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "square_brackets",
+      "symbols": [{ "literal": "[" }, "square_brackets$ebnf$1", { "literal": "]" }],
+      "postprocess": ([open, children, close]) => ({
+        type: NodeType2.parenthesis,
+        children,
+        openParen: "[",
+        closeParen: "]"
+      })
+    },
+    { "name": "property_access$subexpression$1", "symbols": ["identifier"] },
+    { "name": "property_access$subexpression$1", "symbols": ["array_subscript"] },
+    { "name": "property_access$subexpression$1", "symbols": ["all_columns_asterisk"] },
+    { "name": "property_access$subexpression$1", "symbols": ["parameter"] },
+    {
+      "name": "property_access",
+      "symbols": ["atomic_expression", "_", lexer.has("PROPERTY_ACCESS_OPERATOR") ? { type: "PROPERTY_ACCESS_OPERATOR" } : PROPERTY_ACCESS_OPERATOR, "_", "property_access$subexpression$1"],
+      "postprocess": (
+        // Allowing property to be <array_subscript> is currently a hack.
+        // A better way would be to allow <property_access> on the left side of array_subscript,
+        // but we currently can't do that because of another hack that requires
+        // %ARRAY_IDENTIFIER on the left side of <array_subscript>.
+        ([object, _1, dot, _2, [property]]) => {
+          return {
+            type: NodeType2.property_access,
+            object: addComments(object, { trailing: _1 }),
+            operator: dot.text,
+            property: addComments(property, { leading: _2 })
+          };
+        }
+      )
+    },
+    {
+      "name": "between_predicate",
+      "symbols": [lexer.has("BETWEEN") ? { type: "BETWEEN" } : BETWEEN, "_", "andless_expression_chain", "_", lexer.has("AND") ? { type: "AND" } : AND, "_", "andless_expression"],
+      "postprocess": ([betweenToken, _1, expr1, _2, andToken, _3, expr2]) => ({
+        type: NodeType2.between_predicate,
+        betweenKw: toKeywordNode(betweenToken),
+        expr1: addCommentsToArray(expr1, { leading: _1, trailing: _2 }),
+        andKw: toKeywordNode(andToken),
+        expr2: [addComments(expr2, { leading: _3 })]
+      })
+    },
+    { "name": "case_expression$ebnf$1", "symbols": ["expression_chain_"], "postprocess": id2 },
+    { "name": "case_expression$ebnf$1", "symbols": [], "postprocess": () => null },
+    { "name": "case_expression$ebnf$2", "symbols": [] },
+    { "name": "case_expression$ebnf$2", "symbols": ["case_expression$ebnf$2", "case_clause"], "postprocess": (d) => d[0].concat([d[1]]) },
+    {
+      "name": "case_expression",
+      "symbols": [lexer.has("CASE") ? { type: "CASE" } : CASE, "_", "case_expression$ebnf$1", "case_expression$ebnf$2", lexer.has("END") ? { type: "END" } : END],
+      "postprocess": ([caseToken, _, expr, clauses, endToken]) => ({
+        type: NodeType2.case_expression,
+        caseKw: addComments(toKeywordNode(caseToken), { trailing: _ }),
+        endKw: toKeywordNode(endToken),
+        expr: expr || [],
+        clauses
+      })
+    },
+    {
+      "name": "case_clause",
+      "symbols": [lexer.has("WHEN") ? { type: "WHEN" } : WHEN, "_", "expression_chain_", lexer.has("THEN") ? { type: "THEN" } : THEN, "_", "expression_chain_"],
+      "postprocess": ([whenToken, _1, cond, thenToken, _2, expr]) => ({
+        type: NodeType2.case_when,
+        whenKw: addComments(toKeywordNode(whenToken), { trailing: _1 }),
+        thenKw: addComments(toKeywordNode(thenToken), { trailing: _2 }),
+        condition: cond,
+        result: expr
+      })
+    },
+    {
+      "name": "case_clause",
+      "symbols": [lexer.has("ELSE") ? { type: "ELSE" } : ELSE, "_", "expression_chain_"],
+      "postprocess": ([elseToken, _, expr]) => ({
+        type: NodeType2.case_else,
+        elseKw: addComments(toKeywordNode(elseToken), { trailing: _ }),
+        result: expr
+      })
+    },
+    { "name": "comma$subexpression$1", "symbols": [lexer.has("COMMA") ? { type: "COMMA" } : COMMA] },
+    { "name": "comma", "symbols": ["comma$subexpression$1"], "postprocess": ([[token]]) => ({ type: NodeType2.comma }) },
+    { "name": "asterisk$subexpression$1", "symbols": [lexer.has("ASTERISK") ? { type: "ASTERISK" } : ASTERISK] },
+    { "name": "asterisk", "symbols": ["asterisk$subexpression$1"], "postprocess": ([[token]]) => ({ type: NodeType2.operator, text: token.text }) },
+    { "name": "operator$subexpression$1", "symbols": [lexer.has("OPERATOR") ? { type: "OPERATOR" } : OPERATOR] },
+    { "name": "operator", "symbols": ["operator$subexpression$1"], "postprocess": ([[token]]) => ({ type: NodeType2.operator, text: token.text }) },
+    { "name": "identifier$subexpression$1", "symbols": [lexer.has("IDENTIFIER") ? { type: "IDENTIFIER" } : IDENTIFIER] },
+    { "name": "identifier$subexpression$1", "symbols": [lexer.has("QUOTED_IDENTIFIER") ? { type: "QUOTED_IDENTIFIER" } : QUOTED_IDENTIFIER] },
+    { "name": "identifier$subexpression$1", "symbols": [lexer.has("VARIABLE") ? { type: "VARIABLE" } : VARIABLE] },
+    { "name": "identifier", "symbols": ["identifier$subexpression$1"], "postprocess": ([[token]]) => ({ type: NodeType2.identifier, quoted: token.type !== "IDENTIFIER", text: token.text }) },
+    { "name": "parameter$subexpression$1", "symbols": [lexer.has("NAMED_PARAMETER") ? { type: "NAMED_PARAMETER" } : NAMED_PARAMETER] },
+    { "name": "parameter$subexpression$1", "symbols": [lexer.has("QUOTED_PARAMETER") ? { type: "QUOTED_PARAMETER" } : QUOTED_PARAMETER] },
+    { "name": "parameter$subexpression$1", "symbols": [lexer.has("NUMBERED_PARAMETER") ? { type: "NUMBERED_PARAMETER" } : NUMBERED_PARAMETER] },
+    { "name": "parameter$subexpression$1", "symbols": [lexer.has("POSITIONAL_PARAMETER") ? { type: "POSITIONAL_PARAMETER" } : POSITIONAL_PARAMETER] },
+    { "name": "parameter$subexpression$1", "symbols": [lexer.has("CUSTOM_PARAMETER") ? { type: "CUSTOM_PARAMETER" } : CUSTOM_PARAMETER] },
+    { "name": "parameter", "symbols": ["parameter$subexpression$1"], "postprocess": ([[token]]) => ({ type: NodeType2.parameter, key: token.key, text: token.text }) },
+    { "name": "literal$subexpression$1", "symbols": [lexer.has("NUMBER") ? { type: "NUMBER" } : NUMBER] },
+    { "name": "literal$subexpression$1", "symbols": [lexer.has("STRING") ? { type: "STRING" } : STRING] },
+    { "name": "literal", "symbols": ["literal$subexpression$1"], "postprocess": ([[token]]) => ({ type: NodeType2.literal, text: token.text }) },
+    { "name": "keyword$subexpression$1", "symbols": [lexer.has("RESERVED_KEYWORD") ? { type: "RESERVED_KEYWORD" } : RESERVED_KEYWORD] },
+    { "name": "keyword$subexpression$1", "symbols": [lexer.has("RESERVED_PHRASE") ? { type: "RESERVED_PHRASE" } : RESERVED_PHRASE] },
+    { "name": "keyword$subexpression$1", "symbols": [lexer.has("RESERVED_JOIN") ? { type: "RESERVED_JOIN" } : RESERVED_JOIN] },
+    {
+      "name": "keyword",
+      "symbols": ["keyword$subexpression$1"],
+      "postprocess": ([[token]]) => toKeywordNode(token)
+    },
+    { "name": "data_type$subexpression$1", "symbols": [lexer.has("RESERVED_DATA_TYPE") ? { type: "RESERVED_DATA_TYPE" } : RESERVED_DATA_TYPE] },
+    {
+      "name": "data_type",
+      "symbols": ["data_type$subexpression$1"],
+      "postprocess": ([[token]]) => toDataTypeNode(token)
+    },
+    {
+      "name": "data_type",
+      "symbols": [lexer.has("RESERVED_PARAMETERIZED_DATA_TYPE") ? { type: "RESERVED_PARAMETERIZED_DATA_TYPE" } : RESERVED_PARAMETERIZED_DATA_TYPE, "_", "parenthesis"],
+      "postprocess": ([nameToken, _, parens]) => ({
+        type: NodeType2.parameterized_data_type,
+        dataType: addComments(toDataTypeNode(nameToken), { trailing: _ }),
+        parenthesis: parens
+      })
+    },
+    { "name": "logic_operator$subexpression$1", "symbols": [lexer.has("AND") ? { type: "AND" } : AND] },
+    { "name": "logic_operator$subexpression$1", "symbols": [lexer.has("OR") ? { type: "OR" } : OR] },
+    { "name": "logic_operator$subexpression$1", "symbols": [lexer.has("XOR") ? { type: "XOR" } : XOR] },
+    {
+      "name": "logic_operator",
+      "symbols": ["logic_operator$subexpression$1"],
+      "postprocess": ([[token]]) => toKeywordNode(token)
+    },
+    { "name": "other_keyword$subexpression$1", "symbols": [lexer.has("WHEN") ? { type: "WHEN" } : WHEN] },
+    { "name": "other_keyword$subexpression$1", "symbols": [lexer.has("THEN") ? { type: "THEN" } : THEN] },
+    { "name": "other_keyword$subexpression$1", "symbols": [lexer.has("ELSE") ? { type: "ELSE" } : ELSE] },
+    { "name": "other_keyword$subexpression$1", "symbols": [lexer.has("END") ? { type: "END" } : END] },
+    {
+      "name": "other_keyword",
+      "symbols": ["other_keyword$subexpression$1"],
+      "postprocess": ([[token]]) => toKeywordNode(token)
+    },
+    { "name": "_$ebnf$1", "symbols": [] },
+    { "name": "_$ebnf$1", "symbols": ["_$ebnf$1", "comment"], "postprocess": (d) => d[0].concat([d[1]]) },
+    { "name": "_", "symbols": ["_$ebnf$1"], "postprocess": ([comments]) => comments },
+    {
+      "name": "comment",
+      "symbols": [lexer.has("LINE_COMMENT") ? { type: "LINE_COMMENT" } : LINE_COMMENT],
+      "postprocess": ([token]) => ({
+        type: NodeType2.line_comment,
+        text: token.text,
+        precedingWhitespace: token.precedingWhitespace
+      })
+    },
+    {
+      "name": "comment",
+      "symbols": [lexer.has("BLOCK_COMMENT") ? { type: "BLOCK_COMMENT" } : BLOCK_COMMENT],
+      "postprocess": ([token]) => ({
+        type: NodeType2.block_comment,
+        text: token.text,
+        precedingWhitespace: token.precedingWhitespace
+      })
+    },
+    {
+      "name": "comment",
+      "symbols": [lexer.has("DISABLE_COMMENT") ? { type: "DISABLE_COMMENT" } : DISABLE_COMMENT],
+      "postprocess": ([token]) => ({
+        type: NodeType2.disable_comment,
+        text: token.text,
+        precedingWhitespace: token.precedingWhitespace
+      })
+    }
+  ],
+  ParserStart: "main"
+};
+var grammar_default = grammar;
+
+// node_modules/sql-formatter/dist/esm/parser/createParser.js
+var { Parser: NearleyParser, Grammar } = import_nearley.default;
+function createParser(tokenizer) {
+  let paramTypesOverrides = {};
+  const lexer2 = new LexerAdapter((chunk) => [
+    ...disambiguateTokens(tokenizer.tokenize(chunk, paramTypesOverrides)),
+    createEofToken(chunk.length)
+  ]);
+  const parser3 = new NearleyParser(Grammar.fromCompiled(grammar_default), { lexer: lexer2 });
+  return {
+    parse: (sql3, paramTypes) => {
+      paramTypesOverrides = paramTypes;
+      const { results } = parser3.feed(sql3);
+      if (results.length === 1) {
+        return results[0];
+      } else if (results.length === 0) {
+        throw new Error("Parse error: Invalid SQL");
+      } else {
+        throw new Error(`Parse error: Ambiguous grammar
+${JSON.stringify(results, void 0, 2)}`);
+      }
+    }
+  };
+}
+
+// node_modules/sql-formatter/dist/esm/formatter/Layout.js
+var WS;
+(function(WS2) {
+  WS2[WS2["SPACE"] = 0] = "SPACE";
+  WS2[WS2["NO_SPACE"] = 1] = "NO_SPACE";
+  WS2[WS2["NO_NEWLINE"] = 2] = "NO_NEWLINE";
+  WS2[WS2["NEWLINE"] = 3] = "NEWLINE";
+  WS2[WS2["MANDATORY_NEWLINE"] = 4] = "MANDATORY_NEWLINE";
+  WS2[WS2["INDENT"] = 5] = "INDENT";
+  WS2[WS2["SINGLE_INDENT"] = 6] = "SINGLE_INDENT";
+})(WS = WS || (WS = {}));
+var Layout = class {
+  constructor(indentation) {
+    this.indentation = indentation;
+    this.items = [];
+  }
+  /**
+   * Appends token strings and whitespace modifications to SQL string.
+   */
+  add(...items) {
+    for (const item of items) {
+      switch (item) {
+        case WS.SPACE:
+          this.items.push(WS.SPACE);
+          break;
+        case WS.NO_SPACE:
+          this.trimHorizontalWhitespace();
+          break;
+        case WS.NO_NEWLINE:
+          this.trimWhitespace();
+          break;
+        case WS.NEWLINE:
+          this.trimHorizontalWhitespace();
+          this.addNewline(WS.NEWLINE);
+          break;
+        case WS.MANDATORY_NEWLINE:
+          this.trimHorizontalWhitespace();
+          this.addNewline(WS.MANDATORY_NEWLINE);
+          break;
+        case WS.INDENT:
+          this.addIndentation();
+          break;
+        case WS.SINGLE_INDENT:
+          this.items.push(WS.SINGLE_INDENT);
+          break;
+        default:
+          this.items.push(item);
+      }
+    }
+  }
+  trimHorizontalWhitespace() {
+    while (isHorizontalWhitespace(last2(this.items))) {
+      this.items.pop();
+    }
+  }
+  trimWhitespace() {
+    while (isRemovableWhitespace(last2(this.items))) {
+      this.items.pop();
+    }
+  }
+  addNewline(newline) {
+    if (this.items.length > 0) {
+      switch (last2(this.items)) {
+        case WS.NEWLINE:
+          this.items.pop();
+          this.items.push(newline);
+          break;
+        case WS.MANDATORY_NEWLINE:
+          break;
+        default:
+          this.items.push(newline);
+          break;
+      }
+    }
+  }
+  addIndentation() {
+    for (let i = 0; i < this.indentation.getLevel(); i++) {
+      this.items.push(WS.SINGLE_INDENT);
+    }
+  }
+  /**
+   * Returns the final SQL string.
+   */
+  toString() {
+    return this.items.map((item) => this.itemToString(item)).join("");
+  }
+  /**
+   * Returns the internal layout data
+   */
+  getLayoutItems() {
+    return this.items;
+  }
+  itemToString(item) {
+    switch (item) {
+      case WS.SPACE:
+        return " ";
+      case WS.NEWLINE:
+      case WS.MANDATORY_NEWLINE:
+        return "\n";
+      case WS.SINGLE_INDENT:
+        return this.indentation.getSingleIndent();
+      default:
+        return item;
+    }
+  }
+};
+var isHorizontalWhitespace = (item) => item === WS.SPACE || item === WS.SINGLE_INDENT;
+var isRemovableWhitespace = (item) => item === WS.SPACE || item === WS.SINGLE_INDENT || item === WS.NEWLINE;
+
+// node_modules/sql-formatter/dist/esm/formatter/tabularStyle.js
+function toTabularFormat(tokenText, indentStyle) {
+  if (indentStyle === "standard") {
+    return tokenText;
+  }
+  let tail = [];
+  if (tokenText.length >= 10 && tokenText.includes(" ")) {
+    [tokenText, ...tail] = tokenText.split(" ");
+  }
+  if (indentStyle === "tabularLeft") {
+    tokenText = tokenText.padEnd(9, " ");
+  } else {
+    tokenText = tokenText.padStart(9, " ");
+  }
+  return tokenText + ["", ...tail].join(" ");
+}
+function isTabularToken(type) {
+  return isLogicalOperator(type) || type === TokenType.RESERVED_CLAUSE || type === TokenType.RESERVED_SELECT || type === TokenType.RESERVED_SET_OPERATION || type === TokenType.RESERVED_JOIN || type === TokenType.LIMIT;
+}
+
+// node_modules/sql-formatter/dist/esm/formatter/Indentation.js
+var INDENT_TYPE_TOP_LEVEL = "top-level";
+var INDENT_TYPE_BLOCK_LEVEL = "block-level";
+var Indentation = class {
+  /**
+   * @param {string} indent A string to indent with
+   */
+  constructor(indent2) {
+    this.indent = indent2;
+    this.indentTypes = [];
+  }
+  /**
+   * Returns indentation string for single indentation step.
+   */
+  getSingleIndent() {
+    return this.indent;
+  }
+  /**
+   * Returns current indentation level
+   */
+  getLevel() {
+    return this.indentTypes.length;
+  }
+  /**
+   * Increases indentation by one top-level indent.
+   */
+  increaseTopLevel() {
+    this.indentTypes.push(INDENT_TYPE_TOP_LEVEL);
+  }
+  /**
+   * Increases indentation by one block-level indent.
+   */
+  increaseBlockLevel() {
+    this.indentTypes.push(INDENT_TYPE_BLOCK_LEVEL);
+  }
+  /**
+   * Decreases indentation by one top-level indent.
+   * Does nothing when the previous indent is not top-level.
+   */
+  decreaseTopLevel() {
+    if (this.indentTypes.length > 0 && last2(this.indentTypes) === INDENT_TYPE_TOP_LEVEL) {
+      this.indentTypes.pop();
+    }
+  }
+  /**
+   * Decreases indentation by one block-level indent.
+   * If there are top-level indents within the block-level indent,
+   * throws away these as well.
+   */
+  decreaseBlockLevel() {
+    while (this.indentTypes.length > 0) {
+      const type = this.indentTypes.pop();
+      if (type !== INDENT_TYPE_TOP_LEVEL) {
+        break;
+      }
+    }
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/formatter/InlineLayout.js
+var InlineLayout = class extends Layout {
+  constructor(expressionWidth) {
+    super(new Indentation(""));
+    this.expressionWidth = expressionWidth;
+    this.length = 0;
+    this.trailingSpace = false;
+  }
+  add(...items) {
+    items.forEach((item) => this.addToLength(item));
+    if (this.length > this.expressionWidth) {
+      throw new InlineLayoutError();
+    }
+    super.add(...items);
+  }
+  addToLength(item) {
+    if (typeof item === "string") {
+      this.length += item.length;
+      this.trailingSpace = false;
+    } else if (item === WS.MANDATORY_NEWLINE || item === WS.NEWLINE) {
+      throw new InlineLayoutError();
+    } else if (item === WS.INDENT || item === WS.SINGLE_INDENT || item === WS.SPACE) {
+      if (!this.trailingSpace) {
+        this.length++;
+        this.trailingSpace = true;
+      }
+    } else if (item === WS.NO_NEWLINE || item === WS.NO_SPACE) {
+      if (this.trailingSpace) {
+        this.trailingSpace = false;
+        this.length--;
+      }
+    }
+  }
+};
+var InlineLayoutError = class extends Error {
+};
+
+// node_modules/sql-formatter/dist/esm/formatter/ExpressionFormatter.js
+var ExpressionFormatter = class _ExpressionFormatter {
+  constructor({ cfg, dialectCfg, params, layout, inline = false }) {
+    this.inline = false;
+    this.nodes = [];
+    this.index = -1;
+    this.cfg = cfg;
+    this.dialectCfg = dialectCfg;
+    this.inline = inline;
+    this.params = params;
+    this.layout = layout;
+  }
+  format(nodes) {
+    this.nodes = nodes;
+    for (this.index = 0; this.index < this.nodes.length; this.index++) {
+      this.formatNode(this.nodes[this.index]);
+    }
+    return this.layout;
+  }
+  formatNode(node) {
+    this.formatComments(node.leadingComments);
+    this.formatNodeWithoutComments(node);
+    this.formatComments(node.trailingComments);
+  }
+  formatNodeWithoutComments(node) {
+    switch (node.type) {
+      case NodeType2.function_call:
+        return this.formatFunctionCall(node);
+      case NodeType2.parameterized_data_type:
+        return this.formatParameterizedDataType(node);
+      case NodeType2.array_subscript:
+        return this.formatArraySubscript(node);
+      case NodeType2.property_access:
+        return this.formatPropertyAccess(node);
+      case NodeType2.parenthesis:
+        return this.formatParenthesis(node);
+      case NodeType2.between_predicate:
+        return this.formatBetweenPredicate(node);
+      case NodeType2.case_expression:
+        return this.formatCaseExpression(node);
+      case NodeType2.case_when:
+        return this.formatCaseWhen(node);
+      case NodeType2.case_else:
+        return this.formatCaseElse(node);
+      case NodeType2.clause:
+        return this.formatClause(node);
+      case NodeType2.set_operation:
+        return this.formatSetOperation(node);
+      case NodeType2.limit_clause:
+        return this.formatLimitClause(node);
+      case NodeType2.all_columns_asterisk:
+        return this.formatAllColumnsAsterisk(node);
+      case NodeType2.literal:
+        return this.formatLiteral(node);
+      case NodeType2.identifier:
+        return this.formatIdentifier(node);
+      case NodeType2.parameter:
+        return this.formatParameter(node);
+      case NodeType2.operator:
+        return this.formatOperator(node);
+      case NodeType2.comma:
+        return this.formatComma(node);
+      case NodeType2.line_comment:
+        return this.formatLineComment(node);
+      case NodeType2.block_comment:
+        return this.formatBlockComment(node);
+      case NodeType2.disable_comment:
+        return this.formatBlockComment(node);
+      case NodeType2.data_type:
+        return this.formatDataType(node);
+      case NodeType2.keyword:
+        return this.formatKeywordNode(node);
+    }
+  }
+  formatFunctionCall(node) {
+    this.withComments(node.nameKw, () => {
+      this.layout.add(this.showFunctionKw(node.nameKw));
+    });
+    this.formatNode(node.parenthesis);
+  }
+  formatParameterizedDataType(node) {
+    this.withComments(node.dataType, () => {
+      this.layout.add(this.showDataType(node.dataType));
+    });
+    this.formatNode(node.parenthesis);
+  }
+  formatArraySubscript(node) {
+    let formattedArray;
+    switch (node.array.type) {
+      case NodeType2.data_type:
+        formattedArray = this.showDataType(node.array);
+        break;
+      case NodeType2.keyword:
+        formattedArray = this.showKw(node.array);
+        break;
+      default:
+        formattedArray = this.showIdentifier(node.array);
+        break;
+    }
+    this.withComments(node.array, () => {
+      this.layout.add(formattedArray);
+    });
+    this.formatNode(node.parenthesis);
+  }
+  formatPropertyAccess(node) {
+    this.formatNode(node.object);
+    this.layout.add(WS.NO_SPACE, node.operator);
+    this.formatNode(node.property);
+  }
+  formatParenthesis(node) {
+    const inlineLayout = this.formatInlineExpression(node.children);
+    if (inlineLayout) {
+      this.layout.add(node.openParen);
+      this.layout.add(...inlineLayout.getLayoutItems());
+      this.layout.add(WS.NO_SPACE, node.closeParen, WS.SPACE);
+    } else {
+      this.layout.add(node.openParen, WS.NEWLINE);
+      if (isTabularStyle(this.cfg)) {
+        this.layout.add(WS.INDENT);
+        this.layout = this.formatSubExpression(node.children);
+      } else {
+        this.layout.indentation.increaseBlockLevel();
+        this.layout.add(WS.INDENT);
+        this.layout = this.formatSubExpression(node.children);
+        this.layout.indentation.decreaseBlockLevel();
+      }
+      this.layout.add(WS.NEWLINE, WS.INDENT, node.closeParen, WS.SPACE);
+    }
+  }
+  formatBetweenPredicate(node) {
+    this.layout.add(this.showKw(node.betweenKw), WS.SPACE);
+    this.layout = this.formatSubExpression(node.expr1);
+    this.layout.add(WS.NO_SPACE, WS.SPACE, this.showNonTabularKw(node.andKw), WS.SPACE);
+    this.layout = this.formatSubExpression(node.expr2);
+    this.layout.add(WS.SPACE);
+  }
+  formatCaseExpression(node) {
+    this.formatNode(node.caseKw);
+    this.layout.indentation.increaseBlockLevel();
+    this.layout = this.formatSubExpression(node.expr);
+    this.layout = this.formatSubExpression(node.clauses);
+    this.layout.indentation.decreaseBlockLevel();
+    this.layout.add(WS.NEWLINE, WS.INDENT);
+    this.formatNode(node.endKw);
+  }
+  formatCaseWhen(node) {
+    this.layout.add(WS.NEWLINE, WS.INDENT);
+    this.formatNode(node.whenKw);
+    this.layout = this.formatSubExpression(node.condition);
+    this.formatNode(node.thenKw);
+    this.layout = this.formatSubExpression(node.result);
+  }
+  formatCaseElse(node) {
+    this.layout.add(WS.NEWLINE, WS.INDENT);
+    this.formatNode(node.elseKw);
+    this.layout = this.formatSubExpression(node.result);
+  }
+  formatClause(node) {
+    if (this.isOnelineClause(node)) {
+      this.formatClauseInOnelineStyle(node);
+    } else if (isTabularStyle(this.cfg)) {
+      this.formatClauseInTabularStyle(node);
+    } else {
+      this.formatClauseInIndentedStyle(node);
+    }
+  }
+  isOnelineClause(node) {
+    if (isTabularStyle(this.cfg)) {
+      return this.dialectCfg.tabularOnelineClauses[node.nameKw.text];
+    } else {
+      return this.dialectCfg.onelineClauses[node.nameKw.text];
+    }
+  }
+  formatClauseInIndentedStyle(node) {
+    this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node.nameKw), WS.NEWLINE);
+    this.layout.indentation.increaseTopLevel();
+    this.layout.add(WS.INDENT);
+    this.layout = this.formatSubExpression(node.children);
+    this.layout.indentation.decreaseTopLevel();
+  }
+  formatClauseInOnelineStyle(node) {
+    this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node.nameKw), WS.SPACE);
+    this.layout = this.formatSubExpression(node.children);
+  }
+  formatClauseInTabularStyle(node) {
+    this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node.nameKw), WS.SPACE);
+    this.layout.indentation.increaseTopLevel();
+    this.layout = this.formatSubExpression(node.children);
+    this.layout.indentation.decreaseTopLevel();
+  }
+  formatSetOperation(node) {
+    this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node.nameKw), WS.NEWLINE);
+    this.layout.add(WS.INDENT);
+    this.layout = this.formatSubExpression(node.children);
+  }
+  formatLimitClause(node) {
+    this.withComments(node.limitKw, () => {
+      this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node.limitKw));
+    });
+    this.layout.indentation.increaseTopLevel();
+    if (isTabularStyle(this.cfg)) {
+      this.layout.add(WS.SPACE);
+    } else {
+      this.layout.add(WS.NEWLINE, WS.INDENT);
+    }
+    if (node.offset) {
+      this.layout = this.formatSubExpression(node.offset);
+      this.layout.add(WS.NO_SPACE, ",", WS.SPACE);
+      this.layout = this.formatSubExpression(node.count);
+    } else {
+      this.layout = this.formatSubExpression(node.count);
+    }
+    this.layout.indentation.decreaseTopLevel();
+  }
+  formatAllColumnsAsterisk(_node) {
+    this.layout.add("*", WS.SPACE);
+  }
+  formatLiteral(node) {
+    this.layout.add(node.text, WS.SPACE);
+  }
+  formatIdentifier(node) {
+    this.layout.add(this.showIdentifier(node), WS.SPACE);
+  }
+  formatParameter(node) {
+    this.layout.add(this.params.get(node), WS.SPACE);
+  }
+  formatOperator({ text: text2 }) {
+    if (this.cfg.denseOperators || this.dialectCfg.alwaysDenseOperators.includes(text2)) {
+      this.layout.add(WS.NO_SPACE, text2);
+    } else if (text2 === ":") {
+      this.layout.add(WS.NO_SPACE, text2, WS.SPACE);
+    } else {
+      this.layout.add(text2, WS.SPACE);
+    }
+  }
+  formatComma(_node) {
+    if (!this.inline) {
+      this.layout.add(WS.NO_SPACE, ",", WS.NEWLINE, WS.INDENT);
+    } else {
+      this.layout.add(WS.NO_SPACE, ",", WS.SPACE);
+    }
+  }
+  withComments(node, fn2) {
+    this.formatComments(node.leadingComments);
+    fn2();
+    this.formatComments(node.trailingComments);
+  }
+  formatComments(comments) {
+    if (!comments) {
+      return;
+    }
+    comments.forEach((com) => {
+      if (com.type === NodeType2.line_comment) {
+        this.formatLineComment(com);
+      } else {
+        this.formatBlockComment(com);
+      }
+    });
+  }
+  formatLineComment(node) {
+    if (isMultiline(node.precedingWhitespace || "")) {
+      this.layout.add(WS.NEWLINE, WS.INDENT, node.text, WS.MANDATORY_NEWLINE, WS.INDENT);
+    } else if (this.layout.getLayoutItems().length > 0) {
+      this.layout.add(WS.NO_NEWLINE, WS.SPACE, node.text, WS.MANDATORY_NEWLINE, WS.INDENT);
+    } else {
+      this.layout.add(node.text, WS.MANDATORY_NEWLINE, WS.INDENT);
+    }
+  }
+  formatBlockComment(node) {
+    if (node.type === NodeType2.block_comment && this.isMultilineBlockComment(node)) {
+      this.splitBlockComment(node.text).forEach((line) => {
+        this.layout.add(WS.NEWLINE, WS.INDENT, line);
+      });
+      this.layout.add(WS.NEWLINE, WS.INDENT);
+    } else {
+      this.layout.add(node.text, WS.SPACE);
+    }
+  }
+  isMultilineBlockComment(node) {
+    return isMultiline(node.text) || isMultiline(node.precedingWhitespace || "");
+  }
+  isDocComment(comment3) {
+    const lines = comment3.split(/\n/);
+    return (
+      // first line starts with /* or /**
+      /^\/\*\*?$/.test(lines[0]) && // intermediate lines start with *
+      lines.slice(1, lines.length - 1).every((line) => /^\s*\*/.test(line)) && // last line ends with */
+      /^\s*\*\/$/.test(last2(lines))
+    );
+  }
+  // Breaks up block comment to multiple lines.
+  // For example this doc-comment (dots representing leading whitespace):
+  //
+  //   ..../**
+  //   .....* Some description here
+  //   .....* and here too
+  //   .....*/
+  //
+  // gets broken to this array (note the leading single spaces):
+  //
+  //   [ '/**',
+  //     '.* Some description here',
+  //     '.* and here too',
+  //     '.*/' ]
+  //
+  // However, a normal comment (non-doc-comment) like this:
+  //
+  //   ..../*
+  //   ....Some description here
+  //   ....*/
+  //
+  // gets broken to this array (no leading spaces):
+  //
+  //   [ '/*',
+  //     'Some description here',
+  //     '*/' ]
+  //
+  splitBlockComment(comment3) {
+    if (this.isDocComment(comment3)) {
+      return comment3.split(/\n/).map((line) => {
+        if (/^\s*\*/.test(line)) {
+          return " " + line.replace(/^\s*/, "");
+        } else {
+          return line;
+        }
+      });
+    } else {
+      return comment3.split(/\n/).map((line) => line.replace(/^\s*/, ""));
+    }
+  }
+  formatSubExpression(nodes) {
+    return new _ExpressionFormatter({
+      cfg: this.cfg,
+      dialectCfg: this.dialectCfg,
+      params: this.params,
+      layout: this.layout,
+      inline: this.inline
+    }).format(nodes);
+  }
+  formatInlineExpression(nodes) {
+    const oldParamIndex = this.params.getPositionalParameterIndex();
+    try {
+      return new _ExpressionFormatter({
+        cfg: this.cfg,
+        dialectCfg: this.dialectCfg,
+        params: this.params,
+        layout: new InlineLayout(this.cfg.expressionWidth),
+        inline: true
+      }).format(nodes);
+    } catch (e) {
+      if (e instanceof InlineLayoutError) {
+        this.params.setPositionalParameterIndex(oldParamIndex);
+        return void 0;
+      } else {
+        throw e;
+      }
+    }
+  }
+  formatKeywordNode(node) {
+    switch (node.tokenType) {
+      case TokenType.RESERVED_JOIN:
+        return this.formatJoin(node);
+      case TokenType.AND:
+      case TokenType.OR:
+      case TokenType.XOR:
+        return this.formatLogicalOperator(node);
+      default:
+        return this.formatKeyword(node);
+    }
+  }
+  formatJoin(node) {
+    if (isTabularStyle(this.cfg)) {
+      this.layout.indentation.decreaseTopLevel();
+      this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node), WS.SPACE);
+      this.layout.indentation.increaseTopLevel();
+    } else {
+      this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node), WS.SPACE);
+    }
+  }
+  formatKeyword(node) {
+    this.layout.add(this.showKw(node), WS.SPACE);
+  }
+  formatLogicalOperator(node) {
+    if (this.cfg.logicalOperatorNewline === "before") {
+      if (isTabularStyle(this.cfg)) {
+        this.layout.indentation.decreaseTopLevel();
+        this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node), WS.SPACE);
+        this.layout.indentation.increaseTopLevel();
+      } else {
+        this.layout.add(WS.NEWLINE, WS.INDENT, this.showKw(node), WS.SPACE);
+      }
+    } else {
+      this.layout.add(this.showKw(node), WS.NEWLINE, WS.INDENT);
+    }
+  }
+  formatDataType(node) {
+    this.layout.add(this.showDataType(node), WS.SPACE);
+  }
+  showKw(node) {
+    if (isTabularToken(node.tokenType)) {
+      return toTabularFormat(this.showNonTabularKw(node), this.cfg.indentStyle);
+    } else {
+      return this.showNonTabularKw(node);
+    }
+  }
+  // Like showKw(), but skips tabular formatting
+  showNonTabularKw(node) {
+    switch (this.cfg.keywordCase) {
+      case "preserve":
+        return equalizeWhitespace(node.raw);
+      case "upper":
+        return node.text;
+      case "lower":
+        return node.text.toLowerCase();
+    }
+  }
+  showFunctionKw(node) {
+    if (isTabularToken(node.tokenType)) {
+      return toTabularFormat(this.showNonTabularFunctionKw(node), this.cfg.indentStyle);
+    } else {
+      return this.showNonTabularFunctionKw(node);
+    }
+  }
+  // Like showFunctionKw(), but skips tabular formatting
+  showNonTabularFunctionKw(node) {
+    switch (this.cfg.functionCase) {
+      case "preserve":
+        return equalizeWhitespace(node.raw);
+      case "upper":
+        return node.text;
+      case "lower":
+        return node.text.toLowerCase();
+    }
+  }
+  showIdentifier(node) {
+    if (node.quoted) {
+      return node.text;
+    } else {
+      switch (this.cfg.identifierCase) {
+        case "preserve":
+          return node.text;
+        case "upper":
+          return node.text.toUpperCase();
+        case "lower":
+          return node.text.toLowerCase();
+      }
+    }
+  }
+  showDataType(node) {
+    switch (this.cfg.dataTypeCase) {
+      case "preserve":
+        return equalizeWhitespace(node.raw);
+      case "upper":
+        return node.text;
+      case "lower":
+        return node.text.toLowerCase();
+    }
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/formatter/Formatter.js
+var Formatter = class {
+  constructor(dialect2, cfg) {
+    this.dialect = dialect2;
+    this.cfg = cfg;
+    this.params = new Params(this.cfg.params);
+  }
+  /**
+   * Formats an SQL query.
+   * @param {string} query - The SQL query string to be formatted
+   * @return {string} The formatter query
+   */
+  format(query) {
+    const ast = this.parse(query);
+    const formattedQuery = this.formatAst(ast);
+    return formattedQuery.trimEnd();
+  }
+  parse(query) {
+    return createParser(this.dialect.tokenizer).parse(query, this.cfg.paramTypes || {});
+  }
+  formatAst(statements) {
+    return statements.map((stat) => this.formatStatement(stat)).join("\n".repeat(this.cfg.linesBetweenQueries + 1));
+  }
+  formatStatement(statement) {
+    const layout = new ExpressionFormatter({
+      cfg: this.cfg,
+      dialectCfg: this.dialect.formatOptions,
+      params: this.params,
+      layout: new Layout(new Indentation(indentString2(this.cfg)))
+    }).format(statement.children);
+    if (!statement.hasSemicolon) {
+    } else if (this.cfg.newlineBeforeSemicolon) {
+      layout.add(WS.NEWLINE, ";");
+    } else {
+      layout.add(WS.NO_NEWLINE, ";");
+    }
+    return layout.toString();
+  }
+};
+
+// node_modules/sql-formatter/dist/esm/validateConfig.js
+var ConfigError = class extends Error {
+};
+function validateConfig(cfg) {
+  const removedOptions = [
+    "multilineLists",
+    "newlineBeforeOpenParen",
+    "newlineBeforeCloseParen",
+    "aliasAs",
+    "commaPosition",
+    "tabulateAlias"
+  ];
+  for (const optionName of removedOptions) {
+    if (optionName in cfg) {
+      throw new ConfigError(`${optionName} config is no more supported.`);
+    }
+  }
+  if (cfg.expressionWidth <= 0) {
+    throw new ConfigError(`expressionWidth config must be positive number. Received ${cfg.expressionWidth} instead.`);
+  }
+  if (cfg.params && !validateParams(cfg.params)) {
+    console.warn('WARNING: All "params" option values should be strings.');
+  }
+  if (cfg.paramTypes && !validateParamTypes(cfg.paramTypes)) {
+    throw new ConfigError("Empty regex given in custom paramTypes. That would result in matching infinite amount of parameters.");
+  }
+  return cfg;
+}
+function validateParams(params) {
+  const paramValues = params instanceof Array ? params : Object.values(params);
+  return paramValues.every((p) => typeof p === "string");
+}
+function validateParamTypes(paramTypes) {
+  if (paramTypes.custom && Array.isArray(paramTypes.custom)) {
+    return paramTypes.custom.every((p) => p.regex !== "");
+  }
+  return true;
+}
+
+// node_modules/sql-formatter/dist/esm/sqlFormatter.js
+var __rest = function(s, e) {
+  var t2 = {};
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+    t2[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function")
+    for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+        t2[p[i]] = s[p[i]];
+    }
+  return t2;
+};
+var dialectNameMap = {
+  bigquery: "bigquery",
+  db2: "db2",
+  db2i: "db2i",
+  duckdb: "duckdb",
+  hive: "hive",
+  mariadb: "mariadb",
+  mysql: "mysql",
+  n1ql: "n1ql",
+  plsql: "plsql",
+  postgresql: "postgresql",
+  redshift: "redshift",
+  spark: "spark",
+  sqlite: "sqlite",
+  sql: "sql",
+  tidb: "tidb",
+  trino: "trino",
+  transactsql: "transactsql",
+  tsql: "transactsql",
+  singlestoredb: "singlestoredb",
+  snowflake: "snowflake"
+};
+var supportedDialects = Object.keys(dialectNameMap);
+var defaultOptions = {
+  tabWidth: 2,
+  useTabs: false,
+  keywordCase: "preserve",
+  identifierCase: "preserve",
+  dataTypeCase: "preserve",
+  functionCase: "preserve",
+  indentStyle: "standard",
+  logicalOperatorNewline: "before",
+  expressionWidth: 50,
+  linesBetweenQueries: 1,
+  denseOperators: false,
+  newlineBeforeSemicolon: false
+};
+var format = (query, cfg = {}) => {
+  if (typeof cfg.language === "string" && !supportedDialects.includes(cfg.language)) {
+    throw new ConfigError(`Unsupported SQL dialect: ${cfg.language}`);
+  }
+  const canonicalDialectName = dialectNameMap[cfg.language || "sql"];
+  return formatDialect(query, Object.assign(Object.assign({}, cfg), { dialect: allDialects_exports[canonicalDialectName] }));
+};
+var formatDialect = (query, _a2) => {
+  var { dialect: dialect2 } = _a2, cfg = __rest(_a2, ["dialect"]);
+  if (typeof query !== "string") {
+    throw new Error("Invalid query argument. Expected string, instead got " + typeof query);
+  }
+  const options = validateConfig(Object.assign(Object.assign({}, defaultOptions), cfg));
+  return new Formatter(createDialect(dialect2), options).format(query);
+};
+
+// node_modules/xml-parser-xo/dist/esm/index.js
+var ParsingError = class extends Error {
+  constructor(message, cause) {
+    super(message);
+    this.cause = cause;
+  }
+};
+var parsingState;
+function nextChild() {
+  return element(false) || text() || comment2() || cdata() || processingInstruction(false);
+}
+function nextRootChild() {
+  match(/\s*/);
+  return element(true) || comment2() || doctype() || processingInstruction(false);
+}
+function parseDocument() {
+  const declaration = processingInstruction(true);
+  const children = [];
+  let documentRootNode;
+  let child = nextRootChild();
+  while (child) {
+    if (child.node.type === "Element") {
+      if (documentRootNode) {
+        throw new Error("Found multiple root nodes");
+      }
+      documentRootNode = child.node;
+    }
+    if (!child.excluded) {
+      children.push(child.node);
+    }
+    child = nextRootChild();
+  }
+  if (!documentRootNode) {
+    throw new ParsingError("Failed to parse XML", "Root Element not found");
+  }
+  if (parsingState.xml.length !== 0) {
+    throw new ParsingError("Failed to parse XML", "Not Well-Formed XML");
+  }
+  return {
+    declaration: declaration ? declaration.node : null,
+    root: documentRootNode,
+    children
+  };
+}
+function processingInstruction(matchDeclaration) {
+  const m = matchDeclaration ? match(/^<\?(xml(-stylesheet)?)\s*/) : match(/^<\?([\w-:.]+)\s*/);
+  if (!m)
+    return;
+  const node = {
+    name: m[1],
+    type: "ProcessingInstruction",
+    attributes: {}
+  };
+  while (!(eos() || is("?>"))) {
+    const attr = attribute();
+    if (attr) {
+      node.attributes[attr.name] = attr.value;
+    } else {
+      return;
+    }
+  }
+  match(/\?>/);
+  return {
+    excluded: matchDeclaration ? false : parsingState.options.filter(node) === false,
+    node
+  };
+}
+function element(matchRoot) {
+  const m = match(/^<([^?!</>\s]+)\s*/);
+  if (!m)
+    return;
+  const node = {
+    type: "Element",
+    name: m[1],
+    attributes: {},
+    children: []
+  };
+  const excluded = matchRoot ? false : parsingState.options.filter(node) === false;
+  while (!(eos() || is(">") || is("?>") || is("/>"))) {
+    const attr = attribute();
+    if (attr) {
+      node.attributes[attr.name] = attr.value;
+    } else {
+      return;
+    }
+  }
+  if (match(/^\s*\/>/)) {
+    node.children = null;
+    return {
+      excluded,
+      node
+    };
+  }
+  match(/\??>/);
+  let child = nextChild();
+  while (child) {
+    if (!child.excluded) {
+      node.children.push(child.node);
+    }
+    child = nextChild();
+  }
+  if (parsingState.options.strictMode) {
+    const closingTag = `</${node.name}>`;
+    if (parsingState.xml.startsWith(closingTag)) {
+      parsingState.xml = parsingState.xml.slice(closingTag.length);
+    } else {
+      throw new ParsingError("Failed to parse XML", `Closing tag not matching "${closingTag}"`);
+    }
+  } else {
+    match(/^<\/[\w-:.\u00C0-\u00FF]+\s*>/);
+  }
+  return {
+    excluded,
+    node
+  };
+}
+function doctype() {
+  const m = match(/^<!DOCTYPE\s+\S+\s+SYSTEM[^>]*>/) || match(/^<!DOCTYPE\s+\S+\s+PUBLIC[^>]*>/) || match(/^<!DOCTYPE\s+\S+\s*\[[^\]]*]>/) || match(/^<!DOCTYPE\s+\S+\s*>/);
+  if (m) {
+    const node = {
+      type: "DocumentType",
+      content: m[0]
+    };
+    return {
+      excluded: parsingState.options.filter(node) === false,
+      node
+    };
+  }
+}
+function cdata() {
+  if (parsingState.xml.startsWith("<![CDATA[")) {
+    const endPositionStart = parsingState.xml.indexOf("]]>");
+    if (endPositionStart > -1) {
+      const endPositionFinish = endPositionStart + 3;
+      const node = {
+        type: "CDATA",
+        content: parsingState.xml.substring(0, endPositionFinish)
+      };
+      parsingState.xml = parsingState.xml.slice(endPositionFinish);
+      return {
+        excluded: parsingState.options.filter(node) === false,
+        node
+      };
+    }
+  }
+}
+function comment2() {
+  const m = match(/^<!--[\s\S]*?-->/);
+  if (m) {
+    const node = {
+      type: "Comment",
+      content: m[0]
+    };
+    return {
+      excluded: parsingState.options.filter(node) === false,
+      node
+    };
+  }
+}
+function text() {
+  const m = match(/^([^<]+)/);
+  if (m) {
+    const node = {
+      type: "Text",
+      content: m[1]
+    };
+    return {
+      excluded: parsingState.options.filter(node) === false,
+      node
+    };
+  }
+}
+function attribute() {
+  const m = match(/([^=]+)\s*=\s*("[^"]*"|'[^']*'|[^>\s]+)\s*/);
+  if (m) {
+    return {
+      name: m[1].trim(),
+      value: stripQuotes(m[2].trim())
+    };
+  }
+}
+function stripQuotes(val) {
+  return val.replace(/^['"]|['"]$/g, "");
+}
+function match(re) {
+  const m = parsingState.xml.match(re);
+  if (m) {
+    parsingState.xml = parsingState.xml.slice(m[0].length);
+    return m;
+  }
+}
+function eos() {
+  return 0 === parsingState.xml.length;
+}
+function is(prefix) {
+  return 0 === parsingState.xml.indexOf(prefix);
+}
+function parseXml(xml2, options = {}) {
+  xml2 = xml2.trim();
+  const filter2 = options.filter || (() => true);
+  parsingState = {
+    xml: xml2,
+    options: Object.assign(Object.assign({}, options), { filter: filter2, strictMode: options.strictMode === true })
+  };
+  return parseDocument();
+}
+if (typeof module !== "undefined" && typeof exports === "object") {
+  module.exports = parseXml;
+}
+var esm_default = parseXml;
+
+// node_modules/xml-formatter/dist/esm/index.js
+function newLine(state) {
+  if (!state.options.indentation && !state.options.lineSeparator)
+    return;
+  state.content += state.options.lineSeparator;
+  let i;
+  for (i = 0; i < state.level; i++) {
+    state.content += state.options.indentation;
+  }
+}
+function indent(state) {
+  state.content = state.content.replace(/ +$/, "");
+  let i;
+  for (i = 0; i < state.level; i++) {
+    state.content += state.options.indentation;
+  }
+}
+function appendContent(state, content2) {
+  state.content += content2;
+}
+function processNode(node, state, preserveSpace) {
+  if (typeof node.content === "string") {
+    processContent(node.content, state, preserveSpace);
+  } else if (node.type === "Element") {
+    processElementNode(node, state, preserveSpace);
+  } else if (node.type === "ProcessingInstruction") {
+    processProcessingIntruction(node, state);
+  } else {
+    throw new Error("Unknown node type: " + node.type);
+  }
+}
+function processContent(content2, state, preserveSpace) {
+  if (!preserveSpace) {
+    const trimmedContent = content2.trim();
+    if (state.options.lineSeparator) {
+      content2 = trimmedContent;
+    } else if (trimmedContent.length === 0) {
+      content2 = trimmedContent;
+    }
+  }
+  if (content2.length > 0) {
+    if (!preserveSpace && state.content.length > 0) {
+      newLine(state);
+    }
+    appendContent(state, content2);
+  }
+}
+function isPathMatchingIgnoredPaths(path, ignoredPaths) {
+  const fullPath = "/" + path.join("/");
+  const pathLastPart = path[path.length - 1];
+  return ignoredPaths.includes(pathLastPart) || ignoredPaths.includes(fullPath);
+}
+function processElementNode(node, state, preserveSpace) {
+  state.path.push(node.name);
+  if (!preserveSpace && state.content.length > 0) {
+    newLine(state);
+  }
+  appendContent(state, "<" + node.name);
+  processAttributes(state, node.attributes);
+  if (node.children === null || state.options.forceSelfClosingEmptyTag && node.children.length === 0) {
+    const selfClosingNodeClosingTag = state.options.whiteSpaceAtEndOfSelfclosingTag ? " />" : "/>";
+    appendContent(state, selfClosingNodeClosingTag);
+  } else if (node.children.length === 0) {
+    appendContent(state, "></" + node.name + ">");
+  } else {
+    const nodeChildren = node.children;
+    appendContent(state, ">");
+    state.level++;
+    let nodePreserveSpace = node.attributes["xml:space"] === "preserve" || preserveSpace;
+    let ignoredPath = false;
+    if (!nodePreserveSpace && state.options.ignoredPaths) {
+      ignoredPath = isPathMatchingIgnoredPaths(state.path, state.options.ignoredPaths);
+      nodePreserveSpace = ignoredPath;
+    }
+    if (!nodePreserveSpace && state.options.collapseContent) {
+      let containsTextNodes = false;
+      let containsTextNodesWithLineBreaks = false;
+      let containsNonTextNodes = false;
+      nodeChildren.forEach(function(child, index) {
+        if (child.type === "Text") {
+          if (child.content.includes("\n")) {
+            containsTextNodesWithLineBreaks = true;
+            child.content = child.content.trim();
+          } else if ((index === 0 || index === nodeChildren.length - 1) && !preserveSpace) {
+            if (child.content.trim().length === 0) {
+              child.content = "";
+            }
+          }
+          if (child.content.trim().length > 0 || nodeChildren.length === 1) {
+            containsTextNodes = true;
+          }
+        } else if (child.type === "CDATA") {
+          containsTextNodes = true;
+        } else {
+          containsNonTextNodes = true;
+        }
+      });
+      if (containsTextNodes && (!containsNonTextNodes || !containsTextNodesWithLineBreaks)) {
+        nodePreserveSpace = true;
+      }
+    }
+    nodeChildren.forEach(function(child) {
+      processNode(child, state, preserveSpace || nodePreserveSpace);
+    });
+    state.level--;
+    if (!preserveSpace && !nodePreserveSpace) {
+      newLine(state);
+    }
+    if (ignoredPath) {
+      indent(state);
+    }
+    appendContent(state, "</" + node.name + ">");
+  }
+  state.path.pop();
+}
+function processAttributes(state, attributes) {
+  Object.keys(attributes).forEach(function(attr) {
+    const escaped = attributes[attr].replace(/"/g, "&quot;");
+    appendContent(state, " " + attr + '="' + escaped + '"');
+  });
+}
+function processProcessingIntruction(node, state) {
+  if (state.content.length > 0) {
+    newLine(state);
+  }
+  appendContent(state, "<?" + node.name);
+  processAttributes(state, node.attributes);
+  appendContent(state, "?>");
+}
+function formatXml(xml2, options = {}) {
+  options.indentation = "indentation" in options ? options.indentation : "    ";
+  options.collapseContent = options.collapseContent === true;
+  options.lineSeparator = "lineSeparator" in options ? options.lineSeparator : "\r\n";
+  options.whiteSpaceAtEndOfSelfclosingTag = options.whiteSpaceAtEndOfSelfclosingTag === true;
+  options.throwOnFailure = options.throwOnFailure !== false;
+  try {
+    const parsedXml = esm_default(xml2, { filter: options.filter, strictMode: options.strictMode });
+    const state = { content: "", level: 0, options, path: [] };
+    if (parsedXml.declaration) {
+      processProcessingIntruction(parsedXml.declaration, state);
+    }
+    parsedXml.children.forEach(function(child) {
+      processNode(child, state, false);
+    });
+    if (!options.lineSeparator) {
+      return state.content;
+    }
+    return state.content.replace(/\r\n/g, "\n").replace(/\n/g, options.lineSeparator);
+  } catch (err) {
+    if (options.throwOnFailure) {
+      throw err;
+    }
+    return xml2;
+  }
+}
+formatXml.minify = (xml2, options = {}) => {
+  return formatXml(xml2, Object.assign(Object.assign({}, options), { indentation: "", lineSeparator: "" }));
+};
+if (typeof module !== "undefined" && typeof exports === "object") {
+  module.exports = formatXml;
+}
+var esm_default2 = formatXml;
+
 // src/app/components/output/translation-result/translation-result.ts
-function TranslationResult_Conditional_17_Conditional_1_Template(rf, ctx) {
+function TranslationResult_Conditional_8_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275text(0);
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "label", 2)(1, "input", 6);
+    \u0275\u0275twoWayListener("ngModelChange", function TranslationResult_Conditional_8_Template_input_ngModelChange_1_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      \u0275\u0275twoWayBindingSet(ctx_r1.displayType, $event) || (ctx_r1.displayType = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(2, " Filter ");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "label", 2)(4, "input", 7);
+    \u0275\u0275twoWayListener("ngModelChange", function TranslationResult_Conditional_8_Template_input_ngModelChange_4_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      \u0275\u0275twoWayBindingSet(ctx_r1.displayType, $event) || (ctx_r1.displayType = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(5, " XML Filter ");
+    \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    let tmp_2_0;
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1("\n                    ", (tmp_2_0 = ctx_r0.translation()) == null ? null : tmp_2_0.sql, "\n                ");
-  }
-}
-function TranslationResult_Conditional_17_Conditional_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0);
-  }
-  if (rf & 2) {
-    let tmp_2_0;
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1("\n                    ", (tmp_2_0 = ctx_r0.translation()) == null ? null : tmp_2_0.query, "\n                ");
-  }
-}
-function TranslationResult_Conditional_17_Conditional_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0);
-  }
-  if (rf & 2) {
-    let tmp_2_0;
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1("\n                    ", (tmp_2_0 = ctx_r0.translation()) == null ? null : tmp_2_0.filter, "\n                ");
-  }
-}
-function TranslationResult_Conditional_17_Conditional_4_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0);
-  }
-  if (rf & 2) {
-    let tmp_2_0;
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275textInterpolate1("\n                    ", (tmp_2_0 = ctx_r0.translation()) == null ? null : tmp_2_0.xmlFilter, "\n                ");
-  }
-}
-function TranslationResult_Conditional_17_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0, "\n                ");
-    \u0275\u0275conditionalCreate(1, TranslationResult_Conditional_17_Conditional_1_Template, 1, 1)(2, TranslationResult_Conditional_17_Conditional_2_Template, 1, 1)(3, TranslationResult_Conditional_17_Conditional_3_Template, 1, 1)(4, TranslationResult_Conditional_17_Conditional_4_Template, 1, 1);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
+    const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r0.displayType === "SQL" ? 1 : ctx_r0.displayType === "HQL" ? 2 : ctx_r0.displayType === "Filter" ? 3 : ctx_r0.displayType === "XMLFilter" ? 4 : -1);
+    \u0275\u0275twoWayProperty("ngModel", ctx_r1.displayType);
+    \u0275\u0275advance(3);
+    \u0275\u0275twoWayProperty("ngModel", ctx_r1.displayType);
+  }
+}
+function TranslationResult_Conditional_10_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_2_0;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r1.formatSql((tmp_2_0 = ctx_r1.translation()) == null ? null : tmp_2_0.sql, false));
+  }
+}
+function TranslationResult_Conditional_10_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_2_0;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r1.formatSql((tmp_2_0 = ctx_r1.translation()) == null ? null : tmp_2_0.query, false));
+  }
+}
+function TranslationResult_Conditional_10_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_2_0;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate((tmp_2_0 = ctx_r1.translation()) == null ? null : tmp_2_0.filter);
+  }
+}
+function TranslationResult_Conditional_10_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_2_0;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r1.formatXml((tmp_2_0 = ctx_r1.translation()) == null ? null : tmp_2_0.xmlFilter));
+  }
+}
+function TranslationResult_Conditional_10_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275conditionalCreate(0, TranslationResult_Conditional_10_Conditional_0_Template, 2, 1, "div", 8)(1, TranslationResult_Conditional_10_Conditional_1_Template, 2, 1, "div", 8)(2, TranslationResult_Conditional_10_Conditional_2_Template, 2, 1, "div", 8)(3, TranslationResult_Conditional_10_Conditional_3_Template, 2, 1, "div", 8);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275conditional(ctx_r1.displayType === "SQL" ? 0 : ctx_r1.displayType === "HQL" ? 1 : ctx_r1.displayType === "Filter" ? 2 : ctx_r1.displayType === "XMLFilter" ? 3 : -1);
   }
 }
 var TranslationResult = class _TranslationResult {
@@ -80962,10 +97924,26 @@ var TranslationResult = class _TranslationResult {
     });
     this.displayType = "SQL";
   }
+  formatSql(sql3, params = false) {
+    if (!sql3) {
+      return "";
+    }
+    if (params) {
+      return format(sql3, { language: "mysql", paramTypes: { named: [":"], positional: true }, params: this.translation()?.params });
+    } else {
+      return format(sql3, { language: "mysql", paramTypes: { named: [":"], positional: true } });
+    }
+  }
+  formatXml(xml2) {
+    if (!xml2) {
+      return "";
+    }
+    return esm_default2(xml2);
+  }
   static \u0275fac = function TranslationResult_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _TranslationResult)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TranslationResult, selectors: [["translation-result"]], decls: 18, vars: 5, consts: [["id", "idwQueryPluginTranslationResult"], [1, "translation-options"], [1, "radio-inline"], ["type", "radio", "name", "translationType", "value", "SQL", 3, "ngModelChange", "ngModel"], ["type", "radio", "name", "translationType", "value", "HQL", 3, "ngModelChange", "ngModel"], ["type", "radio", "name", "translationType", "value", "Filter", 3, "ngModelChange", "ngModel"], ["type", "radio", "name", "translationType", "value", "XMLFilter", 3, "ngModelChange", "ngModel"], [1, "translation-result"], [1, "translation-text"]], template: function TranslationResult_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TranslationResult, selectors: [["translation-result"]], decls: 11, vars: 4, consts: [["id", "idwQueryPluginTranslationResult"], [1, "translation-options"], [1, "radio-inline"], ["type", "radio", "name", "translationType", "value", "SQL", 3, "ngModelChange", "ngModel"], ["type", "radio", "name", "translationType", "value", "HQL", 3, "ngModelChange", "ngModel"], [1, "translation-result"], ["type", "radio", "name", "translationType", "value", "Filter", 3, "ngModelChange", "ngModel"], ["type", "radio", "name", "translationType", "value", "XMLFilter", 3, "ngModelChange", "ngModel"], [1, "translation-text"]], template: function TranslationResult_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "label", 2)(3, "input", 3);
       \u0275\u0275twoWayListener("ngModelChange", function TranslationResult_Template_input_ngModelChange_3_listener($event) {
@@ -80983,40 +97961,24 @@ var TranslationResult = class _TranslationResult {
       \u0275\u0275elementEnd();
       \u0275\u0275text(7, " HQL ");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "label", 2)(9, "input", 5);
-      \u0275\u0275twoWayListener("ngModelChange", function TranslationResult_Template_input_ngModelChange_9_listener($event) {
-        \u0275\u0275twoWayBindingSet(ctx.displayType, $event) || (ctx.displayType = $event);
-        return $event;
-      });
+      \u0275\u0275conditionalCreate(8, TranslationResult_Conditional_8_Template, 6, 2);
       \u0275\u0275elementEnd();
-      \u0275\u0275text(10, " Filter ");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(11, "label", 2)(12, "input", 6);
-      \u0275\u0275twoWayListener("ngModelChange", function TranslationResult_Template_input_ngModelChange_12_listener($event) {
-        \u0275\u0275twoWayBindingSet(ctx.displayType, $event) || (ctx.displayType = $event);
-        return $event;
-      });
-      \u0275\u0275elementEnd();
-      \u0275\u0275text(13, " XML Filter ");
+      \u0275\u0275elementStart(9, "div", 5);
+      \u0275\u0275conditionalCreate(10, TranslationResult_Conditional_10_Template, 4, 1);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(14, "div", 7)(15, "pre", 8);
-      \u0275\u0275text(16, "            ");
-      \u0275\u0275conditionalCreate(17, TranslationResult_Conditional_17_Template, 5, 1);
-      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
+      let tmp_2_0;
       \u0275\u0275advance(3);
       \u0275\u0275twoWayProperty("ngModel", ctx.displayType);
       \u0275\u0275advance(3);
       \u0275\u0275twoWayProperty("ngModel", ctx.displayType);
-      \u0275\u0275advance(3);
-      \u0275\u0275twoWayProperty("ngModel", ctx.displayType);
-      \u0275\u0275advance(3);
-      \u0275\u0275twoWayProperty("ngModel", ctx.displayType);
-      \u0275\u0275advance(5);
-      \u0275\u0275conditional(ctx.translation() !== null ? 17 : -1);
+      \u0275\u0275advance(2);
+      \u0275\u0275conditional(((tmp_2_0 = ctx.translation()) == null ? null : tmp_2_0.filter) ? 8 : -1);
+      \u0275\u0275advance(2);
+      \u0275\u0275conditional(ctx.translation() !== null ? 10 : -1);
     }
-  }, dependencies: [FormsModule, DefaultValueAccessor, RadioControlValueAccessor, NgControlStatus, NgModel], encapsulation: 2 });
+  }, dependencies: [FormsModule, DefaultValueAccessor, RadioControlValueAccessor, NgControlStatus, NgModel], styles: ['\n\ndiv.translation-text[_ngcontent-%COMP%] {\n  font-size: 1em;\n  font-family:\n    Menlo,\n    Monaco,\n    Consolas,\n    "Courier New",\n    monospace !important;\n  white-space: pre;\n  margin-top: 5px;\n  border-top: 1px dotted #ccc;\n  padding-top: 5px;\n  padding-left: 10px;\n}\n/*# sourceMappingURL=translation-result.css.map */'] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TranslationResult, [{
@@ -81033,70 +97995,70 @@ var TranslationResult = class _TranslationResult {
             <input type="radio" name="translationType" [(ngModel)]="displayType" value="HQL"> HQL
         </label>
 
-        <label class="radio-inline">
-            <input type="radio" name="translationType" [(ngModel)]="displayType" value="Filter"> Filter
-        </label>
+        @if (translation()?.filter) {
+            <label class="radio-inline">
+                <input type="radio" name="translationType" [(ngModel)]="displayType" value="Filter"> Filter
+            </label>
 
-        <label class="radio-inline">
-            <input type="radio" name="translationType" [(ngModel)]="displayType" value="XMLFilter"> XML Filter
-        </label>
+            <label class="radio-inline">
+                <input type="radio" name="translationType" [(ngModel)]="displayType" value="XMLFilter"> XML Filter
+            </label>
+        }
     </div>
     <div class="translation-result">
-        <pre class="translation-text">
-            @if (translation() !== null) {
-                @if (displayType === 'SQL') {
-                    {{ translation()?.sql }}
-                } @else if (displayType === 'HQL') {
-                    {{ translation()?.query }}
-                } @else if (displayType === 'Filter') {
-                    {{ translation()?.filter }}
-                } @else if (displayType === 'XMLFilter') {
-                    {{ translation()?.xmlFilter }}
-                }
+        @if (translation() !== null) {
+            @if (displayType === 'SQL') {
+                <div class="translation-text">{{ formatSql(translation()?.sql, false) }}</div>
+            } @else if (displayType === 'HQL') {
+                <div class="translation-text">{{ formatSql(translation()?.query, false) }}</div>
+            } @else if (displayType === 'Filter') {
+                <div class="translation-text">{{ translation()?.filter }}</div>
+            } @else if (displayType === 'XMLFilter') {
+                <div class="translation-text">{{ formatXml(translation()?.xmlFilter) }}</div>
             }
-        </pre>
+        }
     </div>
-</div>` }]
+</div>`, styles: ['/* src/app/components/output/translation-result/translation-result.scss */\ndiv.translation-text {\n  font-size: 1em;\n  font-family:\n    Menlo,\n    Monaco,\n    Consolas,\n    "Courier New",\n    monospace !important;\n  white-space: pre;\n  margin-top: 5px;\n  border-top: 1px dotted #ccc;\n  padding-top: 5px;\n  padding-left: 10px;\n}\n/*# sourceMappingURL=translation-result.css.map */\n'] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TranslationResult, { className: "TranslationResult", filePath: "src/app/components/output/translation-result/translation-result.ts", lineNumber: 16 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TranslationResult, { className: "TranslationResult", filePath: "src/app/components/output/translation-result/translation-result.ts", lineNumber: 18 });
 })();
 
 // src/app/components/output/panel/output-panel.component.ts
-function OutputPanel_Conditional_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "results-table");
-  }
-}
-function OutputPanel_Conditional_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "translation-result");
-  }
-}
 var OutputPanel = class _OutputPanel {
   eventBus = inject2(EventBus);
+  resultsTable = viewChild(ResultsTable, ...ngDevMode ? [{ debugName: "resultsTable" }] : []);
   resultVariety = signal(null, ...ngDevMode ? [{ debugName: "resultVariety" }] : []);
+  state = inject2(ApplicationState);
   constructor() {
     this.eventBus.on(QUERY_COMPLETED, (data) => {
       this.resultVariety.set("table");
+      this.state.resultsPresent.set(true);
     });
     this.eventBus.on(TRANSLATE_COMPLETED, (data) => {
       this.resultVariety.set("translation");
+      this.state.resultsPresent.set(true);
     });
   }
   static \u0275fac = function OutputPanel_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _OutputPanel)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _OutputPanel, selectors: [["output-panel"]], decls: 2, vars: 2, template: function OutputPanel_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _OutputPanel, selectors: [["output-panel"]], viewQuery: function OutputPanel_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275conditionalCreate(0, OutputPanel_Conditional_0_Template, 1, 0, "results-table");
-      \u0275\u0275conditionalCreate(1, OutputPanel_Conditional_1_Template, 1, 0, "translation-result");
+      \u0275\u0275viewQuerySignal(ctx.resultsTable, ResultsTable, 5);
     }
     if (rf & 2) {
-      \u0275\u0275conditional(ctx.resultVariety() === "table" ? 0 : -1);
+      \u0275\u0275queryAdvance();
+    }
+  }, decls: 2, vars: 2, consts: [[3, "hidden"]], template: function OutputPanel_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275element(0, "results-table", 0)(1, "translation-result", 0);
+    }
+    if (rf & 2) {
+      \u0275\u0275property("hidden", ctx.resultVariety() !== "table");
       \u0275\u0275advance();
-      \u0275\u0275conditional(ctx.resultVariety() === "translation" ? 1 : -1);
+      \u0275\u0275property("hidden", ctx.resultVariety() !== "translation");
     }
   }, dependencies: [
     ResultsTable,
@@ -81111,7 +98073,9 @@ var OutputPanel = class _OutputPanel {
       ResultsTable,
       NgbPaginationModule,
       TranslationResult
-    ], template: "@if (resultVariety() === 'table') {\n    <results-table></results-table>\n}\n@if (resultVariety() === 'translation') {\n    <translation-result></translation-result>\n}\n" }]
+    ], template: `<results-table [hidden]="resultVariety() !== 'table'"></results-table>
+<translation-result [hidden]="resultVariety() !== 'translation'"></translation-result>
+` }]
   }], () => [], null);
 })();
 (() => {
@@ -81126,16 +98090,17 @@ var App = class _App {
   }
   ngOnInit() {
     this.api.getConfiguration().then((config3) => {
-      this.state.configuration = config3;
+      this.state.configuration.set(config3);
     });
-    this.api.enumerateDatabase().then((databaseInfo) => {
-      this.state.databaseInfo = databaseInfo;
-    });
+    this.state.ready.set(true);
+  }
+  closeResultsPane() {
+    this.state.resultsPresent.set(false);
   }
   static \u0275fac = function App_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _App)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _App, selectors: [["app-root"]], decls: 13, vars: 0, consts: [["id", "idwQueryPluginMain"], [1, "panel"], [1, "panel-heading"], [1, "panel-title"], [1, "panel-body"]], template: function App_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _App, selectors: [["app-root"]], decls: 16, vars: 1, consts: [["id", "idwQueryPluginMain", 1, "bs5"], [1, "panel", "panel-default"], [1, "panel-heading"], [1, "panel-title"], [1, "panel-body"], [1, "panel", "panel-default", 3, "hidden"], [1, "panel-title", 2, "display", "inline-block"], ["type", "button", "data-dismiss", "modal", "aria-label", "Close", 1, "close", 2, "float", "left", "color", "#333", 3, "click"], ["aria-hidden", "true"]], template: function App_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "h3", 3);
       \u0275\u0275text(4, "Query Editor");
@@ -81143,33 +98108,44 @@ var App = class _App {
       \u0275\u0275elementStart(5, "div", 4);
       \u0275\u0275element(6, "qp-editor");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(7, "div", 1)(8, "div", 2)(9, "h3", 3);
+      \u0275\u0275elementStart(7, "div", 5)(8, "div", 2)(9, "h3", 6);
       \u0275\u0275text(10, "Query Results");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(11, "div", 4);
-      \u0275\u0275element(12, "output-panel");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(11, "button", 7);
+      \u0275\u0275listener("click", function App_Template_button_click_11_listener() {
+        return ctx.closeResultsPane();
+      });
+      \u0275\u0275elementStart(12, "span", 8);
+      \u0275\u0275text(13, "\xD7");
+      \u0275\u0275elementEnd()()();
+      \u0275\u0275elementStart(14, "div", 4);
+      \u0275\u0275element(15, "output-panel");
       \u0275\u0275elementEnd()()();
     }
+    if (rf & 2) {
+      \u0275\u0275advance(7);
+      \u0275\u0275property("hidden", !ctx.state.resultsPresent());
+    }
   }, dependencies: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
     Editor,
     OutputPanel
-  ], encapsulation: 2 });
+  ], styles: ["\n\n#idwQueryPluginMain[_ngcontent-%COMP%]   div.panel-heading[_ngcontent-%COMP%] {\n  font-size: 120%;\n}\n/*# sourceMappingURL=app.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(App, [{
     type: Component,
     args: [{ selector: "app-root", imports: [
-      BrowserModule,
+      CommonModule,
       FormsModule,
       Editor,
       OutputPanel
-    ], template: '<div id="idwQueryPluginMain">\n    <div class="panel">\n        <div class="panel-heading">\n            <h3 class="panel-title">Query Editor</h3>\n        </div>\n        <div class="panel-body">\n            <qp-editor></qp-editor>\n        </div>\n    </div>\n    <div class="panel">\n        <div class="panel-heading">\n            <h3 class="panel-title">Query Results</h3>\n        </div>\n        <div class="panel-body">\n            <output-panel></output-panel>\n        </div>\n    </div>\n</div>' }]
+    ], template: '<div id="idwQueryPluginMain" class="bs5">\n    <div class="panel panel-default">\n        <div class="panel-heading">\n            <h3 class="panel-title">Query Editor</h3>\n        </div>\n        <div class="panel-body">\n            <qp-editor></qp-editor>\n        </div>\n    </div>\n    <div class="panel panel-default" [hidden]="!state.resultsPresent()">\n        <div class="panel-heading">\n            <h3 class="panel-title" style="display: inline-block">Query Results</h3>\n            <button type="button" style="float: left; color: #333" class="close" data-dismiss="modal" aria-label="Close" (click)="closeResultsPane()"><span aria-hidden="true">&times;</span></button>\n        </div>\n        <div class="panel-body">\n            <output-panel></output-panel>\n        </div>\n    </div>\n</div>', styles: ["/* src/app/app.scss */\n#idwQueryPluginMain div.panel-heading {\n  font-size: 120%;\n}\n/*# sourceMappingURL=app.css.map */\n"] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(App, { className: "App", filePath: "src/app/app.ts", lineNumber: 20 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(App, { className: "App", filePath: "src/app/app.ts", lineNumber: 21 });
 })();
 
 // src/main.ts

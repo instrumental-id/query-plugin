@@ -13,11 +13,18 @@ import {HistoryEntry} from "./HistoryService";
     {providedIn: 'root'}
 )
 export class ApplicationState {
-    configuration!: Configuration;
+    readonly configuration: WritableSignal<Configuration> = signal<Configuration>({
+        applications: [],
+        privileges: {}
+    });
     
-    databaseInfo!: DatabaseInfo;
+    readonly databaseInfo: Map<string, DatabaseInfo> = new Map<string, DatabaseInfo>();
 
-    history: Signal<HistoryEntry[]> = signal([]);
+    readonly history: WritableSignal<HistoryEntry[]> = signal([]);
 
-    running: WritableSignal<Boolean> = signal(false);
+    readonly ready: WritableSignal<Boolean> = signal(false);
+
+    readonly resultsPresent: WritableSignal<Boolean> = signal(false);
+
+    readonly running: WritableSignal<Boolean> = signal(false);
 }

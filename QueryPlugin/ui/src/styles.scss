@@ -1,2 +1,14 @@
-/* Importing Bootstrap SCSS file. */
-@use 'bootstrap/scss/bootstrap';
+div.cm-editor, div.cm-gutter, div.cm-content {
+  height: 100%;
+  font-size: 1em;
+}
+
+div.cm-line {
+  font-size: 1em;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
+
+  span {
+    font-size: 1em;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
+  }
+}

@@ -45,7 +45,8 @@ export class HistoryService {
                 queryType: lastState.queryType || 'SQL',
                 application: lastState.application,
                 rowLimit: lastState.rowLimit || 100,
-                startAt: lastState.startAt || 0
+                startAt: lastState.startAt || 0,
+                queryClass: lastState.queryClass || ''
             };
         }
         return null;
@@ -69,7 +70,8 @@ export class HistoryService {
             queryType: editorState.queryType,
             application: editorState.application,
             rowLimit: editorState.rowLimit,
-            startAt: editorState.startAt
+            startAt: editorState.startAt,
+            queryClass: editorState.queryClass || ''
         };
 
         await this.historyStore.setItem(LAST_STATE_KEY, lastState);

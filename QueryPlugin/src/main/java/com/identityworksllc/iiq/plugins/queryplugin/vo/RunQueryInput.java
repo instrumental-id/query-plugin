@@ -1,6 +1,7 @@
 package com.identityworksllc.iiq.plugins.queryplugin.vo;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.identityworksllc.iiq.plugins.queryplugin.QueryType;
 import sailpoint.api.SailPointContext;
 import sailpoint.object.Application;
@@ -17,6 +18,7 @@ import java.util.StringJoiner;
  * The input to the /query endpoint in {@link com.identityworksllc.iiq.plugins.queryplugin.QueryPluginResource}
  */
 @JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.ANY, setterVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RunQueryInput {
 
     /**

@@ -10,6 +10,7 @@ import {NgClass} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {RunQueryResponse} from "../../../services/API";
+import {ApplicationState} from "../../../services/ApplicationState";
 
 @Component({
   selector: 'results-table',
@@ -25,29 +26,96 @@ export class ResultsTable {
 
     columns: Signal<string[]> = computed(() => {
         let r = this.results();
-        return r ? r.columns : [];
+        if (r?.columns && r.columns.length > 0) {
+            return r.columns;
+        } else if (r?.data && r.data.length > 0) {
+            // If columns are not provided, infer them from the first row of data
+            return Object.keys(r.data[0]);
+        }
+        return [];
     });
 
     empty: Signal<boolean> = computed(() => {
         let localResults = this.results();
-        let rows = localResults ? localResults.rows : [];
+        let rows = localResults?.data ?? []
         return rows.length === 0
     });
 
-    filteredRows: WritableSignal<any[]> = signal([]);
+    filteredRows: Signal<any[]> = computed(() => {
+        if (this.empty()) {
+            return [];
+        }
 
-    filters: WritableSignal<{ [key: string]: string }> = signal({});
+        // We know it isn't null here
+        let results = this.results() as RunQueryResponse;
 
-    pageContents: Signal<any[]> = computed(() => this.getRowsForPage());
+        let filters = this.filters();
+
+        // Apply filters
+        return results.data.filter(row => {
+            return Object.keys(filters).every(key => {
+                const filterValue = filters[key].toLowerCase();
+                if (filterValue) {
+                    return row[key] && row[key].toString().toLowerCase().includes(filterValue);
+                } else {
+                    return true; // No filter applied for this column
+                }
+            });
+        });
+    })
+
+    filters: WritableSignal<{ [key: string]: string }> = signal({})
+
+    host: Signal<string> = computed(() => {
+        return this.results()?.host ?? '';
+    })
 
     _pageIndex: WritableSignal<number> = signal(0);
 
-    _pageSize: WritableSignal<number> = signal(10);
+    _pageSize: WritableSignal<number> = signal(25);
 
     results: WritableSignal<RunQueryResponse | null> = signal(null);
 
+    rowsForPage: Signal<any[]> = computed(() => {
+        if (this.empty()) {
+            return [];
+        }
+
+        let rows = this.filteredRows();
+
+        let shiftedIndex = this._pageIndex() - 1;
+
+        let start = shiftedIndex * this._pageSize();
+        let end = start + this._pageSize();
+
+        if (start >= rows.length) {
+            start = rows.length - this._pageSize();
+        }
+
+        if (end > rows.length) {
+            end = rows.length;
+        }
+
+        if (start < 0) {
+            start = 0;
+        }
+
+        if (end < 0) {
+            end = 0;
+        }
+
+        let pageRows = rows.slice(start, end);
+
+        return pageRows;
+    });
+
+    size: Signal<number | null> = computed(() => {
+        return this.results()?.data.length || null;
+    })
+
     private readonly eventBus: EventBus = inject(EventBus);
 
+    protected readonly state: ApplicationState = inject(ApplicationState);
 
     constructor() {
         this.eventBus.on(QUERY_COMPLETED, (data: RunQueryResponse) => {
@@ -56,82 +124,6 @@ export class ResultsTable {
             this.filters.set({});
             console.log("Query completed:", data);
         });
-
-        effect(() => {
-            if (!this.empty()) {
-                let needsFilter = false;
-                let filters = this.filters();
-                for (let key in Object.keys(filters)) {
-                    if (filters[key]) {
-                        needsFilter = true;
-                        break;
-                    }
-                }
-                if (needsFilter) {
-                    this.filter();
-                }
-            }
-        })
-    }
-
-    /**
-     * Filters the results based on the current filter values.
-     * @private
-     */
-    private filter(): void {
-        if (this.empty()) {
-            return;
-        }
-        
-        // We know it isn't null here
-        let results = this.results() as RunQueryResponse;
-
-        let _filters = this.filters();
-        
-        // Apply filters
-        this.filteredRows.set(results.rows.filter(row => {
-            return Object.keys(_filters).every(key => {
-                const filterValue = _filters[key].toLowerCase();
-                if (filterValue) {
-                    return row[key] && row[key].toString().toLowerCase().includes(filterValue);
-                } else {
-                    return true; // No filter applied for this column
-                }
-            });
-        }));
-    }
-
-    /**
-     * Get the rows for the current page based on the page index and size.
-     * @private
-     */
-    private getRowsForPage() {
-        if (this.empty()) {
-            return [];
-        }
-
-        let rows = this.filteredRows();
-        
-        let start = this._pageIndex() * this._pageSize();
-        let end = start + this._pageSize();
-
-        if (start >= rows.length) {
-          start = rows.length - this._pageSize();
-        }
-
-        if (end > rows.length) {
-          end = rows.length;
-        }
-
-        if (start < 0) {
-          start = 0;
-        }
-
-        if (end < 0) {
-          end = 0;
-        }
-
-        return rows.slice(start, end);
     }
 
     get pageIndex() {
@@ -155,9 +147,11 @@ export class ResultsTable {
 
 
     updateFilter(item: string, $event: any) {
+        // Event here is the new value
         this.filters.update(filters => {
-            filters[item] = $event.target.value;
-            return filters;
+            let newFilters = { ...filters }; // Create a shallow copy to ensure reactivity
+            newFilters[item] = $event;
+            return newFilters;
         });
     }
 }

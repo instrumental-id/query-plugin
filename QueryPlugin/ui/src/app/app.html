@@ -1,5 +1,5 @@
-<div id="idwQueryPluginMain">
-    <div class="panel">
+<div id="idwQueryPluginMain" class="bs5">
+    <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Query Editor</h3>
         </div>
@@ -7,9 +7,10 @@
             <qp-editor></qp-editor>
         </div>
     </div>
-    <div class="panel">
+    <div class="panel panel-default" [hidden]="!state.resultsPresent()">
         <div class="panel-heading">
-            <h3 class="panel-title">Query Results</h3>
+            <h3 class="panel-title" style="display: inline-block">Query Results</h3>
+            <button type="button" style="float: right; color: #333" class="close" data-dismiss="modal" aria-label="Close" (click)="closeResultsPane()"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="panel-body">
             <output-panel></output-panel>

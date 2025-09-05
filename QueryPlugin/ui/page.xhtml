@@ -8,15 +8,12 @@
 <body>
 
 <ui:composition>
-	<div class="container" ng-app="QueryPluginModule">
+	<div class="container">
 		<app-root></app-root>
 	</div>
 
-	<script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/sql-formatter.min.js"></script>
-
 	<ui:remove>NG INSERT</ui:remove>
-<link rel="stylesheet" href="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/css/app/styles.css">
-    <script src="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/js/app/polyfills.js" type="module"></script><script src="#{plugins.requestContextPath}/plugin/IDWUserPageEnhancer/ui/js/app/main.js" type="module"></script></ui:composition>
+<link rel="stylesheet" href="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/css/app/styles.css"></link><script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/app/polyfills.js" type="module"></script><script src="#{plugins.requestContextPath}/plugin/IDWQueryPlugin/ui/js/app/main.js" type="module"></script></ui:composition>
 
 </body>
 

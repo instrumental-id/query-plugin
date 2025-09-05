@@ -2,7 +2,7 @@ import {
     Component,
     inject,
     signal,
-    Signal,
+    Signal, viewChild,
     WritableSignal
 } from '@angular/core';
 import {ResultsTable} from "../table/ResultsTable";
@@ -31,15 +31,21 @@ type ResultVariety = 'table' | 'translation' | null;
 export class OutputPanel {
     private eventBus = inject(EventBus);
 
+    resultsTable: Signal<ResultsTable | undefined> = viewChild(ResultsTable);
+
     resultVariety: WritableSignal<ResultVariety> = signal<ResultVariety>(null);
+
+    state: ApplicationState = inject(ApplicationState);
   
     constructor() {
         this.eventBus.on(QUERY_COMPLETED, (data: RunQueryResponse) => {
             this.resultVariety.set('table');
+            this.state.resultsPresent.set(true);
         });
 
         this.eventBus.on(TRANSLATE_COMPLETED, (data: TranslateQueryResponse) => {
             this.resultVariety.set('translation');
+            this.state.resultsPresent.set(true);
         });
     }
 

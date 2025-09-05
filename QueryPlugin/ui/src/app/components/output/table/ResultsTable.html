@@ -1,29 +1,62 @@
-<table id="idwQueryPluginResultsTable" class="table table-striped">
-    <thead>
-        @for (item of columns(); track item) {
-            <th>
-                <div class="header">{{item}}</div>
-                <div class="filter">
-                    <input type="text" class="form-control" [ngModel]="filters()[item]" (ngModelChange)="updateFilter(item, $event)" />
-                </div>
-            </th>
-        }
-    </thead>
-    <tbody>
-        @for (row of pageContents(); track row) {
-            <tr class="idwQueryPluginResultsTableRow">
-                @for (item of columns(); track item) {
-                    <td class="idwQueryPluginResultsTableCell" [ngClass]="{item: true}">
-                        @if (row[item] !== undefined) {
-                            {{row[item]}}
+<div class="idwQueryPluginResultsTableContainer" aria-live="polite">
+    @if (state.running()) {
+        <p class="bg-info" role="alert" aria-live="polite">Query is running...</p>
+    } @else {
+        <table id="idwQueryPluginResultsTable" class="table table-striped idwQueryPluginResultsTable">
+            <thead>
+                <tr>
+                    @for (item of columns(); track item) {
+                        <td role="columnheader">
+                            <div class="header">{{item}}</div>
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    @for (item of columns(); track item) {
+                        <td class="filterCell">
+                            <div class="filter">
+                                <input type="text" class="form-control" placeholder="Filter..." [ngModel]="filters()[item]" (ngModelChange)="updateFilter(item, $event)" />
+                            </div>
+                        </td>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (row of rowsForPage(); track row) {
+                    <tr class="idwQueryPluginResultsTableRow">
+                        @for (item of columns(); track item) {
+                            <td class="idwQueryPluginResultsTableCell" [ngClass]="{item: true}">
+                                @if (row[item] !== undefined) {
+                                    {{row[item]}}
+                                }
+                            </td>
                         }
-                    </td>
+                    </tr>
                 }
-            </tr>
-        }
-    </tbody>
-</table>
+            </tbody>
+        </table>
 
-<ngb-pagination [(page)]="pageIndex"
-                [pageSize]="pageSize"
-                [collectionSize]="filteredRows().length || 0" />
+        @if (rowsForPage().length === 0) {
+            @if (empty()) {
+                <div class="no-results" role="alert" aria-live="polite">No results to display.</div>
+            } @else {
+                <div class="all-results-filtered" role="alert" aria-live="polite">No unfiltered results to display.</div>
+            }
+        }
+    }
+
+    @if (!state.running() && !empty()) {
+        <ngb-pagination [(page)]="pageIndex"
+                        [pageSize]="pageSize"
+                        [collectionSize]="filteredRows().length || 0" />
+    }
+</div>
+
+@if (!state.running()) {
+    <div class="resultsMetadata">
+        @if (size()) {
+            <p class="text-muted">Total results: {{size()}}</p>
+        }
+        <p class="text-muted">Executed on: {{host()}}</p>
+    </div>
+}
