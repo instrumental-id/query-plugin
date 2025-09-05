@@ -6,7 +6,7 @@ import {
     WritableSignal
 } from '@angular/core';
 import {EventBus, QUERY_COMPLETED} from "../../../services/EventBus";
-import {NgClass} from "@angular/common";
+import {NgClass, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {RunQueryResponse} from "../../../services/API";
@@ -17,7 +17,8 @@ import {ApplicationState} from "../../../services/ApplicationState";
     imports: [
         NgClass,
         FormsModule,
-        NgbPagination
+        NgbPagination,
+        NgStyle
     ],
   templateUrl: './ResultsTable.html',
   styleUrl: './ResultsTable.scss',

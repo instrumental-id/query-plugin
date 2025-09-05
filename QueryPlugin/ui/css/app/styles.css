@@ -23,6 +23,27 @@ div.cm-line span {
     "Courier New",
     monospace !important;
 }
+@keyframes pulseGreen {
+  0% {
+    background-color: #d4edda;
+  }
+  25% {
+    background-color: #72e889;
+  }
+  100% {
+    background-color: #d4edda;
+  }
+}
+.pulse-green {
+  animation: pulseGreen 0.3s ease-in-out;
+}
+.idwqpHighlight {
+  background-color: violet;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+}
 
 /* angular:styles/global:styles */
 /*# sourceMappingURL=styles.css.map */

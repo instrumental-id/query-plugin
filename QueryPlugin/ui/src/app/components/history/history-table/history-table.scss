@@ -1,0 +1,45 @@
+.historyColumnContent {
+    margin: 0;
+    padding-left: 0;
+
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+
+    width: max-content;
+
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
+
+    span {
+        font-family: inherit !important;
+    }
+}
+
+.historyColumnLoadButton {
+    width: 3rem;
+}
+
+.historyColumnQueryType {
+    p {
+        line-height: 1rem;
+    }
+    width: 13rem;
+}
+
+.historyColumnTimestamp {
+    width: 15rem;
+}
+
+.historyColumnLoadButton {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#idwQueryPluginHistory button {
+    background: white !important;
+    color: #333 !important;
+    font-weight: bold;
+    margin: 0;
+    font-size: 120%;
+    white-space: discard-after;
+}

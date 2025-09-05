@@ -2,7 +2,7 @@
     @if (state.running()) {
         <p class="bg-info" role="alert" aria-live="polite">Query is running...</p>
     } @else {
-        <table id="idwQueryPluginResultsTable" class="table table-striped idwQueryPluginResultsTable">
+        <table id="idwQueryPluginResultsTable" class="table table-striped idwQueryPluginResultsTable" [ngStyle]="{'display': empty() ? 'none' : 'block'}">
             <thead>
                 <tr>
                     @for (item of columns(); track item) {
@@ -38,9 +38,15 @@
 
         @if (rowsForPage().length === 0) {
             @if (empty()) {
-                <div class="no-results" role="alert" aria-live="polite">No results to display.</div>
+                <div class="no-results" role="alert" aria-live="polite">
+                    <i class="glyphicon glyphicon-warning-sign"></i>
+                    No results to display.
+                </div>
             } @else {
-                <div class="all-results-filtered" role="alert" aria-live="polite">No unfiltered results to display.</div>
+                <div class="all-results-filtered" role="alert" aria-live="polite">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                    No unfiltered results to display.
+                </div>
             }
         }
     }

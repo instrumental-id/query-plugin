@@ -15,7 +15,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="selectQueryType">Type:</label>
-                <select id="selectQueryType" class="form-control" [(ngModel)]="queryType" (ngModelChange)="stateUpdated('queryType')">
+                <select id="selectQueryType" class="form-control" [(ngModel)]="queryType">
                     <option value="SQL">SQL (primary schema)</option>
                     <option value="SQLPlugin">SQL (plugin schema)</option>
                     <option value="SQLAccessHistory">SQL (access history)</option>
@@ -37,7 +37,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="selectQueryClass">Filter Class:</label>
-                <select id="selectQueryClass" class="form-control" [(ngModel)]="queryClass" [disabled]="queryType() !== 'Filter' && queryType() !== 'XMLFilter'" (ngModelChange)="stateUpdated('queryClass')">
+                <select id="selectQueryClass" class="form-control" [(ngModel)]="queryClass" [disabled]="queryType() !== 'Filter' && queryType() !== 'XMLFilter'">
                     <option value="Application">Application</option>
                     <option value="AuditEvent">AuditEvent</option>
                     <option value="Bundle">Bundle</option>
@@ -63,7 +63,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="applicationSelect">Application:</label>
-                <select id="applicationSelect" class="form-control" [(ngModel)]="application" [disabled]="queryType() !== 'Application'" (ngModelChange)="stateUpdated('application')">
+                <select id="applicationSelect" class="form-control" [(ngModel)]="application" [disabled]="queryType() !== 'Application'">
                     @for (app of applications(); track app) {
                         <option [value]="app">{{app}}</option>
                     }

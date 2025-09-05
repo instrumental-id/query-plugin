@@ -1,0 +1,35 @@
+<table id="idwQueryPluginHistory" class="table table-hover table-condensed">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Timestamp</th>
+            <th>Type</th>
+            <th>Content</th>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input type="text" class="form-control historyFilter" placeholder="Search history..." [(ngModel)]="filter" />
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @for (row of rowsForPage(); track row) {
+            <tr>
+                <td class="historyColumnLoadButton"><button class="btn btn-default" (click)="loadHistory($event, row)"><i class="glyphicon glyphicon-open-file"></i></button></td>
+                <td class="historyColumnTimestamp">{{row.timestamp | date:'yyyy-MMM-dd HH:mm:ss'}}</td>
+                <td class="historyColumnQueryType">
+                    <p><strong>{{row.queryType}}</strong></p>
+                    @if (row.queryType === "XMLFilter" || row.queryType === "Filter" || row.queryType === "HQL") {
+                        <p>{{row.queryClass}}</p>
+                    }
+                </td>
+                <!-- TODO: Make this collapse better -->
+                <td class="historyColumnContent" [innerHTML]="sanitize(row.content) | highlightSearch:filter() | safeHtml"></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<ngb-pagination [(page)]="pageIndex"
+                [pageSize]="pageSize()"
+                [collectionSize]="filteredRows().length || 0" />

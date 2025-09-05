@@ -10,6 +10,10 @@ export const QUERY_ERROR = "query.error";
 
 export const TRANSLATE_COMPLETED = "translate.completed";
 
+export const HISTORY_ITEM_SAVED = "history.item.saved";
+
+export const HISTORY_ITEM_LOADED = "history.item.loaded";
+
 export interface SourceUpdatedEvent {
     content: string;
 }

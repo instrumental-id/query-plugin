@@ -1,17 +1,21 @@
 $border_color: #aaa;
 
+$no-results-color: #ffc16c;
+$no-results-border-color: adjust-color($no-results-color, $lightness: -20%);
+
 div.idwQueryPluginResultsTableContainer {
   overflow-x: scroll;
   width: 100%;
 
   div.no-results {
-    font-size: 130%;
+    font-size: 110%;
     color: #333333;
-    background-color: #fccaca;
+    background-color: $no-results-color;
     border-radius: 2px;
-    border: 1px solid #ccc;
+    border: 1px solid color $no-results-border-color;
+    border-left: 5px solid $no-results-border-color;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 5px 5px 5px 2rem;
   }
 
   div.all-results-filtered {

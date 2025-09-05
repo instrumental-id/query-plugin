@@ -3,3 +3,16 @@
     font-size: 120%;
   }
 }
+
+// Animated collapse for history table
+.panel-history-table {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  padding: 0 10px;
+}
+
+.panel-history-table.open {
+  max-height: 500px; /* set larger than expected content height */
+  padding: 10px;
+}

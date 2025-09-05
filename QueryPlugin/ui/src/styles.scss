@@ -12,3 +12,24 @@ div.cm-line {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace !important;
   }
 }
+
+/* Define the pulse animation */
+@keyframes pulseGreen {
+  0%   { background-color: #d4edda; }  /* light green */
+  25%  { background-color: #72e889; }  /* brighter */
+  100% { background-color: #d4edda; }  /* back */
+}
+
+/* Class to trigger the animation */
+.pulse-green {
+  animation: pulseGreen 0.3s ease-in-out;
+}
+
+
+.idwqpHighlight {
+  background-color: violet;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+}

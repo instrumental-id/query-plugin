@@ -1,7 +1,8 @@
-import {Injectable} from "@angular/core";
+import {inject, Injectable} from "@angular/core";
 import {EditorState} from "../common/EditorState";
 
 import * as localForage from "localforage";
+import {EventBus, HISTORY_ITEM_SAVED} from "./EventBus";
 
 function entryMatches(a: EditorState, b: EditorState): boolean {
     return a.content === b.content && a.queryType === b.queryType && a.application === b.application;
@@ -21,6 +22,8 @@ export interface HistoryEntry extends EditorState {
  */
 @Injectable({providedIn: 'root'})
 export class HistoryService {
+    private eventBus: EventBus = inject(EventBus)
+
     /**
      * The LocalForage instance used to store the query history and last editor state.
      * @private
@@ -53,11 +56,11 @@ export class HistoryService {
     }
 
     /**
-     * Load the history from local storage, sorted by timestamp.
+     * Load the history from local storage, sorted descending by timestamp.
      */
     async loadHistory(): Promise<HistoryEntry[]> {
         let history = await this.historyStore.getItem<HistoryEntry[]>(HISTORY_KEY) || [];
-        return history.sort((a, b) => a.timestamp - b.timestamp);
+        return history.sort((a, b) => b.timestamp - a.timestamp);
     }
 
     /**
@@ -84,9 +87,9 @@ export class HistoryService {
      * @param editorState The editor state to store in history.
      */
     async storeHistory(editorState: EditorState) {
-        let existingHistory = await this.historyStore.getItem<HistoryEntry[]>(HISTORY_KEY) || [];
+        const existingHistory = await this.historyStore.getItem<HistoryEntry[]>(HISTORY_KEY) || [];
 
-        let exists = existingHistory.some(item => entryMatches(item, editorState));
+        const exists: boolean = existingHistory.some(item => entryMatches(item, editorState));
 
         if (exists) {
             // remove the existing entry and update it with the new timestamp
@@ -97,12 +100,15 @@ export class HistoryService {
             }
 
             await this.historyStore.setItem('history', [...updatedHistory, newEntry]);
+
+            this.eventBus.emit(HISTORY_ITEM_SAVED, {item: newEntry})
         } else {
             const newEntry: HistoryEntry = {
                 ...editorState,
                 timestamp: Date.now()
             };
             await this.historyStore.setItem('history', [...existingHistory, newEntry]);
+            this.eventBus.emit(HISTORY_ITEM_SAVED, {item: newEntry})
         }
 
         return await this.loadHistory();
