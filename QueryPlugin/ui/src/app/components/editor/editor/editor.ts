@@ -195,6 +195,13 @@ export class Editor {
         effect(() => {
             this.replaceSchema(this.queryType(), this.editorView?.value());
         })
+
+        effect(() => {
+            let type = this.queryType();
+            if (type === "HQL" || type === "SQL" || type == "SQLPlugin" || type === "SQLAccessHistory" || type === "Application") {
+                this.queryClass.set(undefined);
+            }
+        })
     }
 
     /**

@@ -19,7 +19,11 @@ import {FormsModule} from "@angular/forms";
 import {HighlightSearchPipe} from "../../../common/HighlightPipe";
 import {SafeHtmlPipe} from "../../../common/SafeHtml";
 
-import {escapeHTML, pulseRow} from "../../../common/utils";
+import {
+    accessibleMotionReduced,
+    escapeHTML,
+    pulseRow
+} from "../../../common/utils";
 
 @Component({
     selector: 'history-table',
@@ -115,12 +119,21 @@ export class HistoryTable {
     }
 
     loadHistory(event: MouseEvent, entry: HistoryEntry) {
-        let target = event.target as HTMLElement;
-        // Find parent tr
+        if (accessibleMotionReduced) {
+            let target = event.target as HTMLElement;
+            let existing = target.style.background;
+            target.style.background = '#ffff99';
+            setTimeout(() => {
+                target.style.background = existing ?? ''
+            }, 300);
+        } else {
+            let target = event.target as HTMLElement;
+            // Find parent tr
 
-        let tr = target.closest('tr');
-        if (tr) {
-            pulseRow(tr)
+            let tr = target.closest('tr');
+            if (tr) {
+                pulseRow(tr)
+            }
         }
 
         this.eventBus.emit(HISTORY_ITEM_LOADED, entry)

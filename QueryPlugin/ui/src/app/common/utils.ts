@@ -15,3 +15,6 @@ export function pulseRow(row: HTMLElement) {
         row.classList.remove("pulse-green");
     }, { once: true });
 }
+
+//@ts-ignore
+export const accessibleMotionReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;
