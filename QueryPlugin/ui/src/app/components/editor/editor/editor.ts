@@ -1,8 +1,7 @@
 import {
-    Component, computed, effect, ElementRef,
+    Component, computed, effect,
     inject, model,
-    resource, Signal, signal, viewChild,
-    WritableSignal
+    resource, signal, Signal, viewChild, WritableSignal
 } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {EditorState} from "../../../common/EditorState";
@@ -14,55 +13,24 @@ import {
     SOURCE_UPDATED,
     SourceUpdatedEvent, TRANSLATE_COMPLETED
 } from "../../../services/EventBus";
-import {
-    Extension,
-    EditorState as CMEditorState,
-    Compartment
-} from "@codemirror/state";
-import {
-    MSSQL,
-    MySQL,
-    sql,
-    SQLConfig,
-    SQLDialect,
-    StandardSQL
-} from '@codemirror/lang-sql';
-import {minimalSetup} from 'codemirror';
-import {autocompletion, closeBrackets} from "@codemirror/autocomplete";
-import {vscodeLight} from '@uiw/codemirror-theme-vscode';
-import {defaultKeymap} from "@codemirror/commands";
-import {highlightSelectionMatches} from "@codemirror/search";
-import {EditorView, highlightActiveLine, ViewUpdate} from "@codemirror/view";
 import {ApplicationState} from "../../../services/ApplicationState";
 import {
-    API,
-    DatabaseInfo, QueryType,
-    TableInfo
+    API, QueryType,
 } from "../../../services/API";
 
 
-import {
-    keymap, lineNumbers
-} from "@codemirror/view"
-import {
-    bracketMatching,
-    defaultHighlightStyle,
-    syntaxHighlighting
-} from "@codemirror/language";
-import {debounce} from "../../../common/QueryPluginUtils";
 import {HistoryService} from "../../../services/HistoryService";
-import {xml} from "@codemirror/lang-xml";
-
-interface SchemaMap {
-    [table: string]: string[];
-}
-
+import {EditorButtons} from "../editor-buttons/editor-buttons";
+import {CodemirrorEditor} from "../codemirror-editor/codemirror-editor";
+import {APIError} from "../../../common/APIError";
 
 @Component({
     selector: 'qp-editor',
     templateUrl: './editor.html',
     imports: [
-        FormsModule
+        FormsModule,
+        EditorButtons,
+        CodemirrorEditor
     ],
     standalone: true,
     styleUrl: './editor.scss'
@@ -82,27 +50,9 @@ export class Editor {
     });
 
     /**
-     * Information about the connected database, including schema and catalog.
-     */
-    protected readonly databaseInfo: WritableSignal<DatabaseInfo | undefined> = signal<DatabaseInfo | undefined>(undefined);
-
-    /**
      * The content of the query editor.
      */
     protected content = model('')
-
-    /**
-     * Reference to the editor's DOM element.
-     */
-    protected editor = viewChild<ElementRef<HTMLDivElement>>('idwQueryPluginEditorSlot')
-
-    /**
-     * Resource for the CodeMirror editor view instance.
-     */
-    private readonly editorView = resource({
-        params: () => ({nativeElement: this.editor()?.nativeElement}),
-        loader: ({params}) => this.initializeView(params),
-    })
 
     /**
      * The current editor state, including content, query type, row limit, etc.
@@ -118,6 +68,10 @@ export class Editor {
             queryClass: this.queryClass()
         }
     })
+
+    protected editorComponent = viewChild<CodemirrorEditor>('codemirrorEditor')
+
+    lastEditorState: WritableSignal<EditorState | null | undefined> = signal<EditorState | null | undefined>(undefined)
 
     /**
      * The query class, if any, for advanced query types.
@@ -140,17 +94,6 @@ export class Editor {
     protected startAt = model<number | undefined>(0)
 
     /**
-     * The default schema or catalog name for the current database.
-     */
-    protected schema: Signal<string> = computed(() => {
-        const dbInfo = this.databaseInfo();
-        if (dbInfo) {
-            return dbInfo.schema || dbInfo.catalog || '';
-        }
-        return '';
-    });
-
-    /**
      * API service for querying and schema enumeration.
      */
     protected readonly api: API = inject(API);
@@ -164,11 +107,6 @@ export class Editor {
      * Service for managing query and editor history.
      */
     private readonly historyService: HistoryService = inject(HistoryService);
-
-    /**
-     * Compartment for dynamically reconfiguring the editor's language mode.
-     */
-    private languageCompartment: Compartment = new Compartment();
 
     /**
      * Application state service for global state management.
@@ -189,152 +127,37 @@ export class Editor {
         })
 
         effect(() => {
-            this.stateUpdated(this.editorState())
-        })
-
-        effect(() => {
-            this.replaceSchema(this.queryType(), this.editorView?.value());
+            console.debug("Editor state updated with value:", this.editorState());
+            this.historyService.storeEditorState(this.editorState())
         })
 
         effect(() => {
             let type = this.queryType();
-            if (type === "HQL" || type === "SQL" || type == "SQLPlugin" || type === "SQLAccessHistory" || type === "Application") {
+            if (!(type === "Filter" || type === "XMLFilter")) {
                 this.queryClass.set(undefined);
             }
-        })
-    }
 
-    /**
-     * Initializes the CodeMirror editor view with the given parameters.
-     * @param params Parameters including the native DOM element to attach the editor to.
-     * @returns A promise that resolves to the initialized EditorView instance.
-     * @private
-     */
-    private async initializeView(params: any): Promise<EditorView> {
-        const nativeElement = params.nativeElement as HTMLDivElement
-
-        let lastState = await this.historyService.loadLastEditorState();
-
-        const code = lastState?.content ?? '';
-
-        if (lastState) {
-            this.queryType.set(lastState.queryType)
-            this.application.set(lastState.application)
-            this.rowLimit.set(lastState.rowLimit)
-            this.queryClass.set(lastState.queryClass || '')
-        }
-
-        let compartmentExtension = this.languageCompartment.of([])
-
-        const debouncedUpdate = debounce(1000, (c: string) => {
-            this.updateContent(c);
+            if (type !== "Application") {
+                this.application.set(undefined);
+            }
         })
 
-        const extensions: Extension = [
-            minimalSetup,
-            highlightActiveLine(),
-            bracketMatching(),
-            closeBrackets(),
-            vscodeLight,
-            lineNumbers(),
-            syntaxHighlighting(defaultHighlightStyle),
-            highlightSelectionMatches({minSelectionLength: 4}),
-            keymap.of(defaultKeymap),
-            autocompletion({
-                activateOnTyping: false
-            }),
-            compartmentExtension,
-            EditorView.updateListener.of((v: ViewUpdate) => {
-                if (v.docChanged) {
-                    const content = v.state.doc.toString();
-                    debouncedUpdate(content);
-                }
-            })
-        ];
+        this.historyService.loadLastEditorState().then((lastState) => {
+            if (lastState) {
+                console.debug("Loaded last editor state from history service:", lastState);
+                this.lastEditorState.set(lastState)
 
-        const view = new EditorView({
-            state: CMEditorState.create({
-                doc: code,
-                extensions: extensions,
-            }),
-            parent: nativeElement,
-        });
-
-        if (code) {
-            this.updateContent(code);
-        }
-
-        setTimeout(async () => {
-            await this.replaceSchema(this.queryType(), view);
-        }, 0)
-
-        return view;
-    }
-
-    /**
-     * Calculates the database schema and updates the SQL configuration accordingly.
-     * @param sqlConfig The SQL configuration object to update with schema information.
-     * @returns A promise that resolves to the fetched DatabaseInfo, or null if fetching failed.
-     * @private
-     */
-    private async calculateSchema(sqlConfig: SQLConfig) {
-        try {
-            let databaseInfo: DatabaseInfo = await this.api.enumerateDatabase({
-                type: this.queryType(),
-                application: this.application()
-            })
-
-            console.info("Fetched database info:", databaseInfo);
-
-            if (databaseInfo?.databaseProductName) {
-                const name = databaseInfo.databaseProductName.toLowerCase();
-                if (name.includes("mysql")) {
-                    sqlConfig.dialect = MySQL;
-                } else if (name.includes("microsoft")) {
-                    sqlConfig.dialect = MSSQL;
-                } else if (name.includes("oracle")) {
-                    // Oracle is not supported by the SQL plugin, so we use StandardSQL
-                    let keywordList = databaseInfo.extraKeywords.join( ' ')
-                    sqlConfig.dialect = SQLDialect.define({
-                        builtin: StandardSQL.spec.builtin + " SYSDATE SYSTIMESTAMP",
-                        keywords: StandardSQL.spec.keywords + " " + keywordList,
-                        operatorChars: StandardSQL.spec.operatorChars,
-                        doubleQuotedStrings: false,
-                        types: StandardSQL.spec.types + " VARCHAR2"
-                    });
-                } else {
-                    sqlConfig.dialect = StandardSQL;
-                }
+                console.debug("Restoring last editor state:", lastState);
+                this.queryType.set(lastState.queryType)
+                this.application.set(lastState.application)
+                this.rowLimit.set(lastState.rowLimit)
+                this.queryClass.set(lastState.queryClass || '')
+                this.onCodeUpdated(lastState.content)
+            } else {
+                this.lastEditorState.set(null)
             }
+        })
 
-            let tableInfo: TableInfo[] = await this.api.enumerateTables(
-                {
-                    type: this.queryType(),
-                    application: this.application()
-                }
-            );
-
-            console.info("Fetched table info:", tableInfo);
-
-            let schemaMap: SchemaMap = {};
-            sqlConfig.defaultSchema = databaseInfo?.schema || databaseInfo?.catalog;
-
-            if (sqlConfig.defaultSchema) {
-                for (let table of tableInfo) {
-                    if (table.schema && table.schema === sqlConfig.defaultSchema) {
-                        schemaMap[table.table] = [...table.columns]
-                    }
-                }
-            }
-
-            sqlConfig.schema = schemaMap;
-
-            return databaseInfo;
-        } catch(e) {
-            console.error("Error fetching database info:", e);
-        }
-
-        return null;
     }
 
     /**
@@ -343,12 +166,7 @@ export class Editor {
     clearQuery() {
         this.content.set('');
 
-        if (this.editorView.hasValue()) {
-            const view = this.editorView.value()
-            view.dispatch({
-                changes: {from: 0, to: view.state.doc.length, insert: ''}
-            });
-        }
+        this.editorComponent()?.setContent('');
     }
 
     /**
@@ -425,58 +243,7 @@ export class Editor {
         } else {
             this.updateContent(newContent);
 
-            if (this.editorView.hasValue()) {
-                const view = this.editorView.value()
-                view.dispatch({
-                    changes: {
-                        from: 0,
-                        to: view.state.doc.length,
-                        insert: newContent
-                    }
-                });
-            }
-        }
-    }
-
-    /**
-     * Replaces the current schema in the editor with a new schema. This is
-     * invoked when the query type changes.
-     */
-    async replaceSchema(queryType: QueryType, view: EditorView | undefined) {
-        if (!view) {
-            console.debug("replaceSchema(): Editor view is not initialized yet. Will try again later.");
-            return;
-        }
-
-        if (queryType === 'SQL' || queryType === 'SQLPlugin' || queryType === 'Application' || queryType === "SQLAccessHistory") {
-            let newConfig: SQLConfig = {
-                dialect: StandardSQL,
-                schema: {}
-            }
-
-            let databaseInfo: DatabaseInfo | null = await this.calculateSchema(newConfig);
-
-            if (databaseInfo) {
-                this.databaseInfo.set(databaseInfo);
-                this.state.databaseInfo.set(queryType, databaseInfo);
-            } else {
-                this.databaseInfo.set(undefined);
-            }
-
-            view?.dispatch({
-                effects: this.languageCompartment.reconfigure(sql(newConfig))
-            });
-        } else if (queryType === "XMLFilter") {
-            // For XMLFilter, we don't need a specific SQL configuration
-            view?.dispatch({
-                effects: this.languageCompartment.reconfigure(xml({
-                    autoCloseTags: true
-                }))
-            });
-        } else {
-            view?.dispatch({
-                effects: this.languageCompartment.reconfigure([])
-            });
+            this.editorComponent()?.setContent(newContent);
         }
     }
 
@@ -493,15 +260,10 @@ export class Editor {
     }
 
     /**
-     * Handler invoked when any part of the editor state is updated. It stores the new state
-     * in the history service and, if the query type changed, it also updates the schema.
-     *
-     * TODO replace this with an effect()
-     *
-     * @param field The field of the editor state that was updated.
+     * Replaces the current code when the editor indicates that a change has been made
+     * @param newSource
      */
-    async stateUpdated(contents: EditorState) {
-        console.debug("Editor state updated with value:", this.editorState());
-        await this.historyService.storeEditorState(contents)
+    onCodeUpdated(newSource: string) {
+        this.updateContent(newSource);
     }
 }

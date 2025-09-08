@@ -1,5 +1,6 @@
 import {IPluginHelper} from "./Sailpoint";
 import {Injectable} from "@angular/core";
+import {APIError} from "../common/APIError";
 
 declare var PluginHelper: IPluginHelper;
 
@@ -164,7 +165,13 @@ export class API {
             body: JSON.stringify(request)
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new APIError({
+                status: response.status,
+                statusText: response.statusText,
+                url: url,
+                message: `HTTP error! status: ${response.status} ${response.statusText} at ${url}`,
+                content: await response.text()
+            })
         }
         return await response.json() as RunQueryResponse;
     }
@@ -195,7 +202,13 @@ export class API {
             }
         });
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status} ${await response.text()}`);
+            throw new APIError({
+                status: response.status,
+                statusText: response.statusText,
+                url: url,
+                message: `HTTP error! status: ${response.status} ${response.statusText} at ${url}`,
+                content: await response.text()
+            })
         }
 
         return await response.json() as TranslateQueryResponse;

@@ -1,15 +1,11 @@
 <div class="editor container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="code-editor-container" #idwQueryPluginEditorSlot></div>
+            <app-codemirror-editor [queryType]="queryType()" [lastEditorState]="lastEditorState()" (codeUpdated)="onCodeUpdated($event)" class="code-editor-container" #codemirrorEditor></app-codemirror-editor>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <button class="btn btn-primary" (click)="executeQuery()" [disabled]="!state.ready() || state.running()">Run Query</button>
-            <button class="btn btn-secondary" (click)="clearQuery()" [disabled]="state.running()">Clear</button>
-            <button class="btn btn-secondary" (click)="executeTranslate()" [disabled]="state.running() || queryType() === null || queryType() === 'Application' || queryType().startsWith('SQL')">Translate</button>
-        </div>
+        <editor-buttons class="col-md-4" [queryType]="queryType()" (executeQuery)="executeQuery()" (clearQuery)="clearQuery()" (executeTranslate)="executeTranslate()"></editor-buttons>
     </div>
     <div class="row options-container">
         <div class="col-md-3">
