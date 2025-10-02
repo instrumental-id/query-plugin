@@ -103,14 +103,6 @@ cp "${DIST_DIR}"/styles*.css.map "${CSS_DIR}/app"
 
 greenecho "Transforming Javascript files for plugin purposes..."
 
-# The imports are compiled without the '.js', and the IIQ servlet doesn't like that.
-# This command appends the '.js' suffix.
-if [[ "${MAC_SED}" == "yes" ]]; then
-  find "${JS_DIR}/app" -name '*.js' -exec sed -i '' -e 's#\(from "\..*\)\";#\1\.js\";#' {} \;
-else
-  find "${JS_DIR}/app" -name '*.js' -exec sed -i -e 's#\(from "\..*\)\";#\1\.js\";#' {} \;
-fi
-
 temp="${TEMP_DIR}/page-temp.xhtml"
 
 greenecho "Generating page.xhtml..."
