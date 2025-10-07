@@ -22,7 +22,7 @@ export interface RunQueryRequest {
 
 export interface RunQueryResponse {
     columns: string[];
-    data: any[];
+    data: Array<Record<string, any>>;
     query?: string;
     elapsed?: number;
     host: string;

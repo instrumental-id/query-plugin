@@ -52,6 +52,8 @@ export class OutputPanel {
         });
 
         this.eventBus.on(QUERY_ERROR, (event: {error: Error}) => {
+            this.resultVariety.set(null);
+
             let exception = event.error;
             if (exception instanceof APIError) {
                 let contents = exception.content;

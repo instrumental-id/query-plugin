@@ -1,6 +1,6 @@
 import {
     Component, computed,
-    inject,
+    inject, model,
     signal,
     Signal,
     WritableSignal
@@ -8,9 +8,20 @@ import {
 import {EventBus, QUERY_COMPLETED} from "../../../services/EventBus";
 import {NgClass, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {RunQueryResponse} from "../../../services/API";
 import {ApplicationState} from "../../../services/ApplicationState";
+import {ExportOptions, ExportService} from "../../../services/ExportService";
+
+export interface ExportModalOutput {
+    filename: string;
+    includeHeaders: boolean;
+    filteredOnly: boolean;
+    columns: Record<string, boolean>;
+}
+
+
+declare var jQuery: any;
 
 @Component({
   selector: 'results-table',
@@ -36,11 +47,15 @@ export class ResultsTable {
         return [];
     });
 
+    columnFilter = model<string>('');
+
     empty: Signal<boolean> = computed(() => {
         let localResults = this.results();
         let rows = localResults?.data ?? []
         return rows.length === 0
     });
+
+    private exportService = inject(ExportService);
 
     filteredRows: Signal<any[]> = computed(() => {
         if (this.empty()) {
@@ -70,6 +85,15 @@ export class ResultsTable {
     host: Signal<string> = computed(() => {
         return this.results()?.host ?? '';
     })
+
+    private modalService = inject(NgbModal);
+
+    exportOptions: ExportModalOutput = {
+        includeHeaders: true,
+        filename: 'results.csv',
+        filteredOnly: false,
+        columns: {}
+    }
 
     _pageIndex: WritableSignal<number> = signal(0);
 
@@ -153,5 +177,58 @@ export class ResultsTable {
             newFilters[item] = $event;
             return newFilters;
         });
+    }
+
+    async exportCSV() {
+        // Initialize export options
+        this.exportOptions = {
+            filename: 'results.csv',
+            includeHeaders: true,
+            filteredOnly: false,
+            columns: {}
+        };
+
+        let cols = this.columns() ?? []
+
+        for (let col of cols) {
+            if (col === "attributes") {
+                this.exportOptions.columns[col] = false;
+            } else {
+                this.exportOptions.columns[col] = true;
+            }
+        }
+
+        console.log("Showing export options modal with inputs", this.exportOptions)
+
+        // TODO: exclude columns by default that are empty for all rows
+
+        try {
+            jQuery('#exportModal').modal({
+                keyboard: true
+            })
+        } catch(e) {
+            console.error("Export modal dismissed or error occurred:", e);
+        }
+    }
+
+    async doExportCSV() {
+        jQuery('#exportModal').modal('hide');
+
+        console.info("Exporting...", this.exportOptions)
+
+        let options = new ExportOptions();
+        options.filename = this.exportOptions.filename;
+        options.includeHeaders = this.exportOptions.includeHeaders;
+        options.includedColumns = [...this.columns()];
+        options.quoteStrings = true;
+
+        // Filter columns based on user selection
+        options.includedColumns = options.includedColumns.filter(col => this.exportOptions.columns[col]);
+
+        try {
+            await this.exportService.exportAsCSV(this.results()!, this.exportOptions.filteredOnly ? this.filteredRows() : this.results()!.data, options)
+        } catch(e) {
+            console.error("Error during export:", e);
+        }
     }
 }

@@ -9,7 +9,10 @@
     </div>
     <div class="panel panel-default" [hidden]="!state.resultsPresent()">
         <div class="panel-heading" role="tab">
-            <h3 class="panel-title" style="display: inline-block">Query Results</h3>
+            <h3 class="panel-title" style="display: inline-block">Results</h3>
+            <button type="button" class="btn btn-secondary btn-sm exportButton" [disabled]="empty()" [hidden]="!state.resultsPresent()" (click)="exportCSV()">
+                <i class="glyphicon glyphicon-export"></i> Export CSV
+            </button>
             <button type="button" style="float: right; color: #333" class="close" data-dismiss="modal" aria-label="Close" (click)="closeResultsPane()"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="panel-body" role="tabpanel">

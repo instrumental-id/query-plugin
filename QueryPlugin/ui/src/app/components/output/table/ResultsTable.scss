@@ -80,3 +80,47 @@ div.resultsMetadata {
     line-height: 1em;
   }
 }
+
+div.exportButtons {
+    float: right;
+}
+
+div.resultsTableFooter {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.columnsListHeader {
+    button {
+        font-size: 1em;
+        font-variant: all-small-caps;
+    }
+}
+
+div.columnsList {
+    border: 1px solid $border_color;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+div.inputFilter {
+    input {
+        height: 2rem;
+        font-size: 1rem;
+    }
+}
+
+div.columnCheckboxes {
+    column-count: 3;
+
+    div.checkbox {
+        margin-top: unset;
+    }
+
+    div.highlighted {
+        label {
+            background: #ffff8c;
+        }
+    }
+}

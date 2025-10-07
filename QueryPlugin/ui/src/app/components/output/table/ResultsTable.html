@@ -52,9 +52,11 @@
     }
 
     @if (!state.running() && !empty()) {
-        <ngb-pagination [(page)]="pageIndex"
-                        [pageSize]="pageSize"
-                        [collectionSize]="filteredRows().length || 0" />
+        <div class="resultsTableFooter">
+            <ngb-pagination [(page)]="pageIndex"
+                            [pageSize]="pageSize"
+                            [collectionSize]="filteredRows().length || 0" />
+        </div>
     }
 </div>
 
@@ -66,3 +68,53 @@
         <p class="text-muted">Executed on: {{host()}}</p>
     </div>
 }
+
+<div class="modal fade" tabindex="-1" role="dialog" id="exportModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Export options</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="filename">Filename: </label>
+                    <input class="form-control" type="text" [(ngModel)]="exportOptions.filename" />
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="exportOptions.includeHeaders"> Include headers in export
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="exportOptions.filteredOnly"> Only include rows matching current filters
+                    </label>
+                </div>
+                <div class="columnsListHeader">
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#exportCsvColumnsList" aria-expanded="false" aria-controls="exportCsvColumnsList">
+                        Show column selection...
+                    </button>
+                </div>
+                <div class="collapse columnsList" id="exportCsvColumnsList">
+                    <div class="inputFilter">
+                        <input type="text" class="form-control" placeholder="Highlight columns..." [(ngModel)]="columnFilter" />
+                    </div>
+                    <div class="columnCheckboxes">
+                        @for (col of columns(); track col) {
+                            <div class="checkbox" [ngClass]="{'highlighted': columnFilter() && (col.toUpperCase().includes(columnFilter().toUpperCase())) }">
+                                <label>
+                                    <input type="checkbox" (ngModelChange)="exportOptions.columns[col] = $event" [ngModel]="exportOptions.columns[col]"> {{col}}
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="doExportButton btn btn-primary" (click)="doExportCSV()">Export</button>
+            </div>
+        </div>
+    </div>
+</div>

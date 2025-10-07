@@ -1,7 +1,7 @@
 import {
-    Component,
+    Component, computed,
     inject, model,
-    OnInit,
+    OnInit, Signal,
     signal,
     viewChild,
     WritableSignal
@@ -30,6 +30,17 @@ import {HistoryTable} from "./components/history/history-table/history-table";
 export class App implements OnInit {
     api: API = inject(API);
 
+    /**
+     * Signal that disables the "Export to CSV" button when there are no results to export.
+     */
+    empty: Signal<boolean> = computed(() => {
+        let rows = this.outputPanel()?.resultsTable()?.filteredRows()?.length ?? 0;
+
+        return rows < 1
+    })
+
+    outputPanel: Signal<OutputPanel | undefined> = viewChild(OutputPanel);
+
     ready: WritableSignal<boolean> = model(false);
 
     state: ApplicationState = inject(ApplicationState);
@@ -52,5 +63,10 @@ export class App implements OnInit {
     collapsePanel(historyPanel: HTMLDivElement) {
         let panelBody = historyPanel.querySelector('div.panel-body') as HTMLDivElement;
         panelBody.classList.toggle('open')
+    }
+
+
+    exportCSV() {
+        this.outputPanel()?.resultsTable()?.exportCSV();
     }
 }
