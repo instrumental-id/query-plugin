@@ -205,7 +205,7 @@ export class ResultsTable {
         let cols = this.columns() ?? []
 
         for (let col of cols) {
-            if (col === "attributes") {
+            if (col === "attributes" || col === "uipreferences" || col === "scorecard") {
                 this.exportOptions.columns[col] = false;
             } else {
                 this.exportOptions.columns[col] = true;

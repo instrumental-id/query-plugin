@@ -4,3 +4,36 @@
   border-top: 1px solid #ccc;
   padding-top: 5px;
 }
+
+div.queryInputError {
+    animation: Shake 0.3s;
+
+    select {
+        border: 1px solid red;
+    }
+}
+
+
+
+/*Using keyframes for shaking an image*/
+@keyframes Shake {
+    0% {
+        transform: rotate(5deg);
+    }
+
+    25% {
+        transform: rotate(-6deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    75% {
+        transform: rotate(-6deg);
+    }
+
+    100% {
+        transform: rotate(5deg);
+    }
+}

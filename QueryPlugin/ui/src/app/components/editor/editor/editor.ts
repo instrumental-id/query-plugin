@@ -23,6 +23,7 @@ import {HistoryService} from "../../../services/HistoryService";
 import {EditorButtons} from "../editor-buttons/editor-buttons";
 import {CodemirrorEditor} from "../codemirror-editor/codemirror-editor";
 import {APIError} from "../../../common/APIError";
+import {NgClass} from "@angular/common";
 
 @Component({
     selector: 'qp-editor',
@@ -30,7 +31,8 @@ import {APIError} from "../../../common/APIError";
     imports: [
         FormsModule,
         EditorButtons,
-        CodemirrorEditor
+        CodemirrorEditor,
+        NgClass
     ],
     standalone: true,
     styleUrl: './editor.scss'
@@ -70,6 +72,8 @@ export class Editor {
     })
 
     protected editorComponent = viewChild<CodemirrorEditor>('codemirrorEditor')
+
+    protected errorField: WritableSignal<string | null> = signal<string | null>(null)
 
     lastEditorState: WritableSignal<EditorState | null | undefined> = signal<EditorState | null | undefined>(undefined)
 
@@ -179,6 +183,27 @@ export class Editor {
             return
         }
 
+        this.errorField.set(null);
+
+        let queryClass = this.queryClass() ?? ""
+        let type = this.queryType() ?? ""
+
+        let application = this.application() ?? ""
+
+        if (type === "Filter" || type === "XMLFilter") {
+            if (!queryClass) {
+                this.errorField.set("queryClass");
+                this.eventBus.emit(QUERY_ERROR, {error: new Error("Filter Class is required for Filter and XMLFilter query types.")});
+                return;
+            }
+        } else if (type === "Application") {
+            if (!application) {
+                this.errorField.set("application");
+                this.eventBus.emit(QUERY_ERROR, {error: new Error("Select an Application to run a query.")});
+                return;
+            }
+        }
+
         this.state.running.set(true);
 
         try {
@@ -206,6 +231,23 @@ export class Editor {
      * Emits events on completion or error.
      */
     async executeTranslate() {
+        let queryClass = this.queryClass() ?? ""
+
+        this.errorField.set(null);
+
+        if (!queryClass) {
+            this.errorField.set("queryClass");
+            this.eventBus.emit(QUERY_ERROR, {error: new Error("Filter Class is required for translation.")});
+            return;
+        }
+
+        let type = this.queryType() ?? ""
+        if (!(type === "Filter" || type === "XMLFilter" || type === "HQL")) {
+            this.errorField.set("queryType");
+            this.eventBus.emit(QUERY_ERROR, {error: new Error("Query type must be 'HQL', 'Filter' or 'XMLFilter' for translation.")});
+            return;
+        }
+
         this.state.running.set(true);
 
         try {
@@ -265,5 +307,9 @@ export class Editor {
      */
     onCodeUpdated(newSource: string) {
         this.updateContent(newSource);
+    }
+
+    onQueryTypeChange($event: any) {
+        this.errorField.set(null);
     }
 }

@@ -9,9 +9,9 @@
     </div>
     <div class="row options-container">
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'queryInputError': errorField() === 'queryType'}">
                 <label for="selectQueryType">Type:</label>
-                <select id="selectQueryType" class="form-control" [(ngModel)]="queryType">
+                <select id="selectQueryType" class="form-control" [(ngModel)]="queryType" (ngModelChange)="onQueryTypeChange($event)">
                     <option value="SQL">SQL (primary schema)</option>
                     <option value="SQLPlugin">SQL (plugin schema)</option>
                     <option value="SQLAccessHistory">SQL (access history)</option>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'queryInputError': errorField() === 'queryClass'}">
                 <label for="selectQueryClass">Filter Class:</label>
                 <select id="selectQueryClass" class="form-control" [(ngModel)]="queryClass" [disabled]="queryType() !== 'Filter' && queryType() !== 'XMLFilter'">
                     <option value="Application">Application</option>
@@ -57,7 +57,8 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="form-group">
+            @if (state.configuration().privileges.queryApplications) {
+            <div class="form-group" [ngClass]="{'queryInputError': errorField() === 'application'}">
                 <label for="applicationSelect">Application:</label>
                 <select id="applicationSelect" class="form-control" [(ngModel)]="application" [disabled]="queryType() !== 'Application'">
                     @for (app of applications(); track app) {
@@ -65,6 +66,7 @@
                     }
                 </select>
             </div>
+            }
         </div>
     </div>
 </div>
