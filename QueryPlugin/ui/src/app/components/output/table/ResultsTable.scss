@@ -1,5 +1,7 @@
 $border_color: #aaa;
 
+$horizontal_rule_color: adjust-color($border_color, $lightness: +10%);
+
 $no-results-color: #ffc16c;
 $no-results-border-color: adjust-color($no-results-color, $lightness: -20%);
 
@@ -105,9 +107,28 @@ div.columnsList {
 }
 
 div.inputFilter {
-    input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid $horizontal_rule_color;
+
+    * {
         height: 2rem;
         font-size: 1rem;
+        display: inline-block;
+    }
+
+    .inputFilterButtonContainer {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+
+        button {
+            padding: 3px;
+            margin-right: 0.2rem;
+        }
     }
 }
 

@@ -95,10 +95,18 @@
                     <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#exportCsvColumnsList" aria-expanded="false" aria-controls="exportCsvColumnsList">
                         Show column selection...
                     </button>
+                    <div style="display: inline-block; margin-left: 10px">
+                        ({{exportCalculateColumnsChecked()}} columns selected)
+                    </div>
                 </div>
                 <div class="collapse columnsList" id="exportCsvColumnsList">
                     <div class="inputFilter">
                         <input type="text" class="form-control" placeholder="Highlight columns..." [(ngModel)]="columnFilter" />
+                        <div class="inputFilterButtonContainer">
+                            <button class="btn btn-secondary" type="button" (click)="exportModalSelect('all')">Select all</button>
+                            <button class="btn btn-secondary" type="button" (click)="exportModalSelect('none')">Select none</button>
+                            <button class="btn btn-secondary" type="button" (click)="exportModalSelect('default')">Reset default</button>
+                        </div>
                     </div>
                     <div class="columnCheckboxes">
                         @for (col of columns(); track col) {

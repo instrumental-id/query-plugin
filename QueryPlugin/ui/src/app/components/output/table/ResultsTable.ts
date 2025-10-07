@@ -188,6 +188,20 @@ export class ResultsTable {
             columns: {}
         };
 
+        this.exportSelectDefaultColumns();
+
+        console.debug("Showing export options modal with inputs", this.exportOptions)
+
+        try {
+            jQuery('#exportModal').modal({
+                keyboard: true
+            })
+        } catch(e) {
+            console.error("Export modal dismissed or error occurred:", e);
+        }
+    }
+
+    private exportSelectDefaultColumns() {
         let cols = this.columns() ?? []
 
         for (let col of cols) {
@@ -198,17 +212,31 @@ export class ResultsTable {
             }
         }
 
-        console.log("Showing export options modal with inputs", this.exportOptions)
 
-        // TODO: exclude columns by default that are empty for all rows
-
-        try {
-            jQuery('#exportModal').modal({
-                keyboard: true
-            })
-        } catch(e) {
-            console.error("Export modal dismissed or error occurred:", e);
+        let allEmptyCols = []
+        for (let col of cols) {
+            let allEmpty = true;
+            for (let row of this.results()!.data) {
+                if (row[col] !== null && row[col] !== undefined && row[col] !== '') {
+                    allEmpty = false;
+                    break;
+                }
+            }
+            if (allEmpty) {
+                allEmptyCols.push(col);
+            }
         }
+
+        if (allEmptyCols.length > 0) {
+            console.debug("The following columns are empty in all rows and will be unchecked by default:", allEmptyCols);
+            for (let col of allEmptyCols) {
+                this.exportOptions.columns[col] = false;
+            }
+        }
+    }
+
+    exportCalculateColumnsChecked(): number {
+        return Object.values(this.exportOptions.columns).filter(v => v).length;
     }
 
     async doExportCSV() {
@@ -229,6 +257,20 @@ export class ResultsTable {
             await this.exportService.exportAsCSV(this.results()!, this.exportOptions.filteredOnly ? this.filteredRows() : this.results()!.data, options)
         } catch(e) {
             console.error("Error during export:", e);
+        }
+    }
+
+    exportModalSelect(type: 'all' | 'none' | 'default') {
+        if (type === 'all') {
+            for (let col of this.columns()) {
+                this.exportOptions.columns[col] = true;
+            }
+        } else if (type === 'default') {
+            this.exportSelectDefaultColumns();
+        } else {
+            for (let col of this.columns()) {
+                this.exportOptions.columns[col] = false;
+            }
         }
     }
 }
