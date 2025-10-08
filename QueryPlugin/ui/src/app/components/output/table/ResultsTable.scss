@@ -5,6 +5,29 @@ $horizontal_rule_color: adjust-color($border_color, $lightness: +10%);
 $no-results-color: #ffc16c;
 $no-results-border-color: adjust-color($no-results-color, $lightness: -20%);
 
+@keyframes slide-fade {
+    from {
+        width: 0;
+    }
+    to {
+        width: 30rem;
+    }
+}
+
+
+div.idwQueryPluginResultsPanelBody {
+    display: flex;
+}
+
+div.displayOptions {
+    width: 30rem;
+    height: fit-content;
+}
+
+.slide-fade {
+    animation: slide-fade 1s ease-in;
+}
+
 div.idwQueryPluginResultsTableContainer {
   overflow-x: scroll;
   width: 100%;
@@ -144,4 +167,13 @@ div.columnCheckboxes {
             background: #ffff8c;
         }
     }
+}
+
+div.displayOptions {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid $horizontal_rule_color;
+
+    background: #eee;
 }

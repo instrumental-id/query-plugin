@@ -12,6 +12,7 @@ import {NgbModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {RunQueryResponse} from "../../../services/API";
 import {ApplicationState} from "../../../services/ApplicationState";
 import {ExportOptions, ExportService} from "../../../services/ExportService";
+import {NgOptionComponent, NgSelectComponent} from "@ng-select/ng-select";
 
 export interface ExportModalOutput {
     filename: string;
@@ -23,13 +24,19 @@ export interface ExportModalOutput {
 
 declare var jQuery: any;
 
+function isEmpty(value: any): boolean {
+    return value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0) || (typeof value === 'object' && Object.keys(value).length === 0);
+}
+
 @Component({
   selector: 'results-table',
     imports: [
         NgClass,
         FormsModule,
         NgbPagination,
-        NgStyle
+        NgStyle,
+        NgSelectComponent,
+        NgOptionComponent
     ],
   templateUrl: './ResultsTable.html',
   styleUrl: './ResultsTable.scss',
@@ -95,9 +102,41 @@ export class ResultsTable {
         columns: {}
     }
 
-    _pageIndex: WritableSignal<number> = signal(0);
+    /**
+     * Display option allowing the user to hide specific columns
+     */
+    hiddenColumns: WritableSignal<string[]> = signal([])
 
-    _pageSize: WritableSignal<number> = signal(25);
+    /**
+     * Display option to automatically hide columns that are empty in all rows
+     */
+    hideEmptyColumns: WritableSignal<boolean> = model(false);
+
+    hiddenColumnsSet: Signal<Set<string>> = computed(() => {
+        let hidden: Set<string> = new Set()
+        if (this.hideEmptyColumns()) {
+            let emptyColumns = new Set(this.columns())
+            for (let row of this.results()?.data ?? []) {
+                for (let col of this.columns()) {
+                    if (!isEmpty(row[col])) {
+                        emptyColumns.delete(col);
+                    }
+                }
+            }
+
+            emptyColumns.forEach(col => hidden.add(col));
+        }
+
+        let hiddenCols = this.hiddenColumns() || []
+
+        hiddenCols.forEach(col => hidden.add(col));
+
+        return hidden;
+    })
+
+    _pageIndex: WritableSignal<number> = model(0);
+
+    _pageSize: WritableSignal<number> = model(25);
 
     results: WritableSignal<RunQueryResponse | null> = signal(null);
 
@@ -133,6 +172,8 @@ export class ResultsTable {
 
         return pageRows;
     });
+
+    showingDisplayOptions: WritableSignal<boolean> = signal(false);
 
     size: Signal<number | null> = computed(() => {
         return this.results()?.data.length || null;

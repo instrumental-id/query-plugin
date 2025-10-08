@@ -69,4 +69,10 @@ export class App implements OnInit {
     exportCSV() {
         this.outputPanel()?.resultsTable()?.exportCSV();
     }
+
+    showResultsDisplayOptions() {
+        this.outputPanel()?.resultsTable()?.showingDisplayOptions.set(
+            !(this.outputPanel()?.resultsTable()?.showingDisplayOptions() ?? false)
+        );
+    }
 }

@@ -1,3 +1,5 @@
+@use "@ng-select/ng-select/themes/default.theme.css" as *;
+
 div.cm-editor, div.cm-gutter, div.cm-content {
   height: 100%;
   font-size: 1em;

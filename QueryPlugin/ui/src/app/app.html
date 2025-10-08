@@ -13,6 +13,10 @@
             <button type="button" class="btn btn-secondary btn-sm exportButton" [disabled]="empty()" [hidden]="outputPanel()?.resultVariety() !== 'table'" (click)="exportCSV()">
                 <i class="glyphicon glyphicon-export"></i> Export CSV
             </button>
+            <button type="button" class="btn btn-secondary btn-sm resultsDisplayOptionsButton" (click)="showResultsDisplayOptions()" title="Toggle results display options">
+                <i aria-hidden="true" class="fa fa-sliders"></i>
+                <span class="sr-only">Results display options</span>
+            </button>
             <button type="button" style="float: right; color: #333" class="close" data-dismiss="modal" aria-label="Close" (click)="closeResultsPane()"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="panel-body" role="tabpanel">

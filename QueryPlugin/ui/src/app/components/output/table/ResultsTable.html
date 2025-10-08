@@ -1,66 +1,100 @@
-<div class="idwQueryPluginResultsTableContainer" aria-live="polite">
-    @if (state.running()) {
-        <p class="bg-info" role="alert" aria-live="polite">Query is running...</p>
-    } @else {
-        <table id="idwQueryPluginResultsTable" class="table table-striped idwQueryPluginResultsTable" [ngStyle]="{'display': empty() ? 'none' : 'block'}">
-            <thead>
-                <tr>
-                    @for (item of columns(); track item) {
-                        <td role="columnheader">
-                            <div class="header">{{item}}</div>
-                        </td>
+<div class="idwQueryPluginResultsPanelBody">
+    @if (showingDisplayOptions()) {
+        <div class="displayOptions" role="region" aria-live="polite" animate.enter="slide-fade">
+            <div class="form-group">
+                <label for="rowsPerPageSelect">Rows per page:</label>
+                <select id="rowsPerPageSelect" class="form-control" [(ngModel)]="_pageSize">
+                    @for(option of [10, 25, 50, 100]; track option) {
+                        <option [value]="option">{{option}}</option>
                     }
-                </tr>
-                <tr>
-                    @for (item of columns(); track item) {
-                        <td class="filterCell">
-                            <div class="filter">
-                                <input type="text" class="form-control" placeholder="Filter..." [ngModel]="filters()[item]" (ngModelChange)="updateFilter(item, $event)" />
-                            </div>
-                        </td>
+                </select>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" [(ngModel)]="hideEmptyColumns"> Hide empty columns
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="hiddenColumnsSelect">Hide columns:</label>
+                <ng-select id="hiddenColumnsSelect" [(ngModel)]="hiddenColumns" [multiple]="true" [clearable]="true" [searchable]="true">
+                    @for (col of columns(); track col) {
+                        <ng-option [value]="col">{{col}}</ng-option>
                     }
-                </tr>
-            </thead>
-            <tbody>
-                @for (row of rowsForPage(); track row) {
-                    <tr class="idwQueryPluginResultsTableRow">
-                        @for (item of columns(); track item) {
-                            <td class="idwQueryPluginResultsTableCell" [ngClass]="{item: true}">
-                                @if (row[item] !== undefined) {
-                                    {{row[item]}}
-                                }
-                            </td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        @if (rowsForPage().length === 0) {
-            @if (empty()) {
-                <div class="no-results" role="alert" aria-live="polite">
-                    <i class="glyphicon glyphicon-warning-sign"></i>
-                    No results to display.
-                </div>
-            } @else {
-                <div class="all-results-filtered" role="alert" aria-live="polite">
-                    <i class="glyphicon glyphicon-info-sign"></i>
-                    No unfiltered results to display.
-                </div>
-            }
-        }
+                </ng-select>
+            </div>
+        </div>
     }
 
-    @if (!state.running() && !empty()) {
+    <div class="idwQueryPluginResultsTableContainer" aria-live="polite">
+        @if (state.running()) {
+            <p class="bg-info" role="alert" aria-live="polite">Query is running...</p>
+        } @else {
+            <table id="idwQueryPluginResultsTable" class="table table-striped idwQueryPluginResultsTable" [ngStyle]="{'display': empty() ? 'none' : 'block'}">
+                <thead>
+                    <tr>
+                        @for (item of columns(); track item) {
+                            @if (!hiddenColumnsSet().has(item)) {
+                                <td role="columnheader">
+                                    <div class="header">{{item}}</div>
+                                </td>
+                            }
+                        }
+                    </tr>
+                    <tr>
+                        @for (item of columns(); track item) {
+                            @if (!hiddenColumnsSet().has(item)) {
+                                <td class="filterCell">
+                                    <div class="filter">
+                                        <input type="text" class="form-control" placeholder="Filter..." [ngModel]="filters()[item]" (ngModelChange)="updateFilter(item, $event)" />
+                                    </div>
+                                </td>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (row of rowsForPage(); track row) {
+                        <tr class="idwQueryPluginResultsTableRow">
+                            @for (item of columns(); track item) {
+                                @if (!hiddenColumnsSet().has(item)) {
+                                    <td class="idwQueryPluginResultsTableCell" [ngClass]="{item: true}">
+                                        @if (row[item] !== undefined) {
+                                            {{row[item]}}
+                                        }
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @if (rowsForPage().length === 0) {
+                @if (empty()) {
+                    <div class="no-results" role="alert" aria-live="polite">
+                        <i class="glyphicon glyphicon-warning-sign"></i>
+                        No results to display.
+                    </div>
+                } @else {
+                    <div class="all-results-filtered" role="alert" aria-live="polite">
+                        <i class="glyphicon glyphicon-info-sign"></i>
+                        No unfiltered results to display.
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+@if (!state.running()) {
+    @if (!empty()) {
         <div class="resultsTableFooter">
             <ngb-pagination [(page)]="pageIndex"
                             [pageSize]="pageSize"
                             [collectionSize]="filteredRows().length || 0" />
         </div>
     }
-</div>
 
-@if (!state.running()) {
     <div class="resultsMetadata">
         @if (size()) {
             <p class="text-muted">Total results: {{size()}}</p>

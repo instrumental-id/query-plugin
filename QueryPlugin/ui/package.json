@@ -38,6 +38,7 @@
     "@codemirror/view": "^6.9.0",
     "@fsegurai/codemirror-theme-vscode-light": "^6.2.0",
     "@ng-bootstrap/ng-bootstrap": "^19.0.1",
+    "@ng-select/ng-select": "^20.2.2",
     "@popperjs/core": "^2.11.8",
     "@uiw/codemirror-theme-vscode": "^4.24.1",
     "bootstrap": "^5.3.6",
