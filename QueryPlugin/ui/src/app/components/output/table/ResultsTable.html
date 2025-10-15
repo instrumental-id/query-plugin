@@ -1,26 +1,28 @@
 <div class="idwQueryPluginResultsPanelBody">
     @if (showingDisplayOptions()) {
-        <div class="displayOptions" role="region" aria-live="polite" animate.enter="slide-fade">
-            <div class="form-group">
-                <label for="rowsPerPageSelect">Rows per page:</label>
-                <select id="rowsPerPageSelect" class="form-control" [(ngModel)]="_pageSize">
-                    @for(option of [10, 25, 50, 100]; track option) {
-                        <option [value]="option">{{option}}</option>
-                    }
-                </select>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" [(ngModel)]="hideEmptyColumns"> Hide empty columns
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="hiddenColumnsSelect">Hide columns:</label>
-                <ng-select id="hiddenColumnsSelect" [(ngModel)]="hiddenColumns" [multiple]="true" [clearable]="true" [searchable]="true">
-                    @for (col of columns(); track col) {
-                        <ng-option [value]="col">{{col}}</ng-option>
-                    }
-                </ng-select>
+        <div class="displayOptionsContainer" animate.enter="slide-fade" animate.leave="slide-fade-out">
+            <div class="displayOptions" role="region" aria-live="polite">
+                <div class="form-group">
+                    <label for="rowsPerPageSelect">Rows per page:</label>
+                    <select id="rowsPerPageSelect" class="form-control" [(ngModel)]="_pageSize">
+                        @for(option of [10, 25, 50, 100]; track option) {
+                            <option [value]="option">{{option}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="hideEmptyColumns"> Hide empty columns
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="hiddenColumnsSelect">Hide columns:</label>
+                    <ng-select id="hiddenColumnsSelect" [(ngModel)]="hiddenColumns" [multiple]="true" [clearable]="true" [searchable]="true">
+                        @for (col of columns(); track col) {
+                            <ng-option [value]="col">{{col}}</ng-option>
+                        }
+                    </ng-select>
+                </div>
             </div>
         </div>
     }

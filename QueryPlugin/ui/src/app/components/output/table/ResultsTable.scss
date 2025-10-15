@@ -7,16 +7,38 @@ $no-results-border-color: adjust-color($no-results-color, $lightness: -20%);
 
 @keyframes slide-fade {
     from {
-        width: 0;
+        opacity: 0;
+        width: 5rem;
     }
     to {
-        width: 30rem;
+        opacity: 1;
+        width: 33rem;
     }
 }
 
+@keyframes slide-fade-out {
+    to {
+        opacity: 0;
+        width: 5rem;
+    }
+    from {
+        opacity: 1;
+        width: 33rem;
+    }
+}
 
 div.idwQueryPluginResultsPanelBody {
     display: flex;
+}
+
+div.displayOptionsContainer {
+    height: fit-content;
+    width: 33rem;
+
+    padding: 5px;
+    border: 1px solid $horizontal_rule_color;
+
+    background: #eee;
 }
 
 div.displayOptions {
@@ -25,7 +47,13 @@ div.displayOptions {
 }
 
 .slide-fade {
-    animation: slide-fade 1s ease-in;
+    animation: slide-fade 0.2s ease-in;
+    overflow-x: hidden;
+}
+
+.slide-fade-out {
+    animation: slide-fade-out 0.2s ease-out;
+    overflow-x: hidden;
 }
 
 div.idwQueryPluginResultsTableContainer {
@@ -167,13 +195,4 @@ div.columnCheckboxes {
             background: #ffff8c;
         }
     }
-}
-
-div.displayOptions {
-    margin-bottom: 10px;
-    margin-top: 5px;
-    padding: 5px;
-    border: 1px solid $horizontal_rule_color;
-
-    background: #eee;
 }
