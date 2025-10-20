@@ -73,7 +73,7 @@ dump_config
 
 find "${CSS_DIR}" -name "styles*.css" -delete
 
-if [[ -d "${UI_DIR}/dist" ]; then
+if [[ -d "${UI_DIR}/dist" ]]; then
   find "${UI_DIR}/dist" -delete
 fi
 
