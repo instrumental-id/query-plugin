@@ -72,7 +72,11 @@ fi
 dump_config
 
 find "${CSS_DIR}" -name "styles*.css" -delete
-find "${JS_DIR}/app" -delete
+find "${UI_DIR}/dist" -delete
+
+if [[ -d "${JS_DIR}/app" ]]; then
+  find "${JS_DIR}/app"  -delete
+fi
 
 mkdir -p "${JS_DIR}/app"
 
