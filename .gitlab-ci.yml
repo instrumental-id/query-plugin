@@ -1,7 +1,7 @@
 include:
   - component: $BADGE_GENERATOR_COMPONENT
 
-image: $PLUGIN_BUILDER_IMAGE:node-24
+image: $PLUGIN_BUILDER_IMAGE
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
