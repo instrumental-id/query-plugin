@@ -1,5 +1,6 @@
 <div>
     <button class="btn btn-primary" (click)="doExecuteQuery()" [disabled]="!state.ready() || state.running()">Run Query</button>
     <button class="btn btn-secondary" (click)="doClearQuery()" [disabled]="state.running()">Clear</button>
+    <button class="btn btn-secondary" (click)="doFormat()" [disabled]="state.running() || !(queryType() === 'Application' || queryType().startsWith('SQL'))">Format</button>
     <button class="btn btn-secondary" (click)="doExecuteTranslate()" [disabled]="state.running() || queryType() === null || queryType() === 'Application' || queryType().startsWith('SQL')">Translate</button>
 </div>
