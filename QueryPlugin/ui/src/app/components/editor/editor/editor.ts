@@ -235,7 +235,10 @@ export class Editor {
         let queryType = this.queryType();
         if (queryType === "Application" || queryType === "SQL" || queryType === "SQLPlugin" || queryType === "SQLAccessHistory") {
             let formatted = this.formatter.formatSql(this.content())
-            this.replaceQuery(formatted)
+
+            this.replaceQuery(formatted.formatted)
+
+            // TODO: handle parse warnings and display them to the user in some way
         } else if (queryType === "XMLFilter") {
             let formatted = this.formatter.formatXml(this.content())
             this.replaceQuery(formatted)

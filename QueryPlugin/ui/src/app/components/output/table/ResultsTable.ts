@@ -21,7 +21,6 @@ export interface ExportModalOutput {
     columns: Record<string, boolean>;
 }
 
-
 declare var jQuery: any;
 
 function isEmpty(value: any): boolean {
@@ -177,6 +176,10 @@ export class ResultsTable {
 
     size: Signal<number | null> = computed(() => {
         return this.results()?.data.length || null;
+    })
+
+    optionsNotDefault: Signal<boolean> = computed(() => {
+        return this._pageSize() !== 25 || this.hideEmptyColumns() || (this.hiddenColumns() && this.hiddenColumns()!.length > 0);
     })
 
     private readonly eventBus: EventBus = inject(EventBus);

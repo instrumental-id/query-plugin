@@ -70,6 +70,7 @@
 -dontwarn javax.xml.bind.**
 -dontwarn org.apache.tools.**
 -dontwarn org.junit.**
+-dontwarn org.apache.commons.collections4.**
 
 -dontwarn com.identityworksllc.iiq.common.versioned.JsonUtilitiesImpl
 -dontwarn com.identityworksllc.iiq.common.testing.jutask.IIQJunit5TestBase

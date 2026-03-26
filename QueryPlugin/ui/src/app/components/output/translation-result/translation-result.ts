@@ -2,8 +2,7 @@ import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {EventBus, TRANSLATE_COMPLETED} from "../../../services/EventBus";
 import {TranslateQueryResponse} from "../../../services/API";
 import {FormsModule} from "@angular/forms";
-import { format } from 'sql-formatter';
-import xmlFormat from 'xml-formatter';
+import { Formatter } from '../../../common/Formatter';
 
 type DisplayType = 'SQL' | 'HQL' | 'Filter' | 'XMLFilter';
 
@@ -21,6 +20,7 @@ export class TranslationResult {
     private eventBus = inject(EventBus);
 
     translation: WritableSignal<TranslateQueryResponse | null> = signal(null);
+    private formatter: Formatter;
 
     constructor() {
         this.eventBus.on(TRANSLATE_COMPLETED, (data: TranslateQueryResponse) => {
@@ -28,24 +28,23 @@ export class TranslationResult {
         });
 
         this.displayType = 'SQL';
+
+        this.formatter = new Formatter();
     }
 
     formatSql(sql: string | undefined, params: boolean = false): string {
         if (!sql) {
             return '';
         }
-        // TODO: Add the param values to the formatting
-        if (params) {
-            return format(sql, { language: 'mysql', paramTypes: { named: [':'], positional: true }, params: this.translation()?.params });
-        } else {
-            return format(sql, { language: 'mysql', paramTypes: { named: [':'], positional: true } });
-        }
+
+        let formatted = this.formatter.formatSql(sql, params);
+        return formatted.formatted;
     }
 
     formatXml(xml: string | undefined): string {
         if (!xml) {
             return '';
         }
-        return xmlFormat(xml);
+        return this.formatter.formatXml(xml);
     }
 }

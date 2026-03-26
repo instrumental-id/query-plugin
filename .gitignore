@@ -14,3 +14,4 @@ lib/iiq/*.jar
 QueryPlugin/ui/js/app/*.js
 QueryPlugin/ui/js/app/**/*.js
 QueryPlugin/ui/.angular
+.vscode/

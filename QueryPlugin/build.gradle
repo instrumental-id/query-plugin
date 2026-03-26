@@ -114,7 +114,7 @@ sailpointConnectorLibs.include 'jdbcConnector.jar'
 
 dependencies {
     includeLibraries group: 'com.github.jsqlparser', name: 'jsqlparser', version: '4.0'
-    includeLibraries group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
 
     implementation project(":QueryPluginShared")
 
@@ -207,6 +207,8 @@ versions.each { v ->
             from obfTask
             from configurations.includeLibraries.files
             from project(":QueryPluginShared").jar
+
+            exclude "proguard.map"
         }
 
         from(project(":JdbcConnectorAdapter").jar) {

@@ -1,5 +1,6 @@
 import {
     Component, computed,
+    effect,
     inject, model,
     OnInit, Signal,
     signal,
@@ -14,6 +15,7 @@ import {ApplicationState} from "./services/ApplicationState";
 import {API, DatabaseInfo} from "./services/API";
 import {CommonModule} from "@angular/common";
 import {HistoryTable} from "./components/history/history-table/history-table";
+import { HistoryService } from './services/HistoryService';
 
 @Component({
     selector: 'app-root',
@@ -39,14 +41,34 @@ export class App implements OnInit {
         return rows < 1
     })
 
+    historyService: HistoryService = inject(HistoryService);
+
     outputPanel: Signal<OutputPanel | undefined> = viewChild(OutputPanel);
 
     ready: WritableSignal<boolean> = model(false);
 
     state: ApplicationState = inject(ApplicationState);
 
-    constructor() {
+    optionsNotDefault: Signal<boolean> = computed(() => {
+        return this.outputPanel()?.resultsTable()?.optionsNotDefault() ?? false;
+    })
 
+    constructor() {
+        effect(() => {
+            if (this.optionsNotDefault()) {
+                this.historyService.storeResultOptions({
+                    pageSize: this.outputPanel()?.resultsTable()?._pageSize() ?? 25,
+                    hideEmptyColumns: this.outputPanel()?.resultsTable()?.hideEmptyColumns() ?? false,
+                    hiddenColumns: this.outputPanel()?.resultsTable()?.hiddenColumns() ?? null
+                });
+            } else {
+                this.historyService.storeResultOptions({
+                    pageSize: 25,
+                    hideEmptyColumns: false,
+                    hiddenColumns: null
+                });
+            }
+        })
     }
 
     ngOnInit() {
