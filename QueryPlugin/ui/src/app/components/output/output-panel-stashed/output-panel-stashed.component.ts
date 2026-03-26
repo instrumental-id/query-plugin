@@ -1,10 +1,9 @@
 import {
     Component,
-    inject, input, InputSignal
+    input, InputSignal
 } from '@angular/core';
 import {ResultsTable} from "../table/ResultsTable";
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
-import {ApplicationState} from "../../../services/ApplicationState";
 import {TranslationResult} from "../translation-result/translation-result";
 import {OutputPanelState} from "../output-panel/output-panel.component";
 

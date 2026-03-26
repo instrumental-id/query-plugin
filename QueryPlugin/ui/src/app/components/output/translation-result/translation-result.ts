@@ -23,8 +23,6 @@ type DisplayType = 'SQL' | 'HQL' | 'Filter' | 'XMLFilter';
 export class TranslationResult {
     displayType: DisplayType;
 
-    private eventBus = inject(EventBus);
-
     private formatter: Formatter;
     
     translation: InputSignal<TranslateQueryResponse | null | undefined> = input<TranslateQueryResponse | null>();

@@ -7,8 +7,8 @@
             <qp-editor></qp-editor>
         </div>
     </div>
-    <div #resultsPanel class="panel panel-default" [hidden]="!state.resultsPresent()" id="resultsPanel" animate.leave="fade-out">
-        <div class="panel-heading" role="tab" (click)="collapsePanel(resultsPanel)" style="cursor: pointer" aria-controls="resultsPanelContent" [attr.aria-expanded]="resultsPanel.classList.contains('open')">
+    <div #resultsPanel class="panel panel-default stop-scroll-x" [hidden]="!state.resultsPresent()" id="resultsPanel" animate.leave="fade-out">
+        <div class="panel-heading stop-scroll-x" role="tab" (click)="collapsePanel(resultsPanel)" style="cursor: pointer" aria-controls="resultsPanelContent" [attr.aria-expanded]="resultsPanel.classList.contains('open')">
             <h3 class="panel-title" style="display: inline-block">Results</h3>
             <button type="button" class="btn btn-secondary btn-sm exportButton" [disabled]="empty()" [hidden]="outputPanel()?.resultVariety() !== 'table'" (click)="exportCSV(); $event.stopPropagation()">
                 <i class="glyphicon glyphicon-export"></i> Export CSV
@@ -23,14 +23,19 @@
             </button>
             <button type="button" style="float: right; color: #333" class="close" aria-label="Close results panel" (click)="closeResultsPane(); $event.stopPropagation()" aria-controls="resultsPanel"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div class="panel-body open" role="tabpanel" id="resultsPanelContent">
+        <div class="panel-body open stop-scroll-x" role="tabpanel" id="resultsPanelContent">
             <output-panel #mainOutput></output-panel>
         </div>
     </div>
+    <!-- TODO: support more than one of these -->
     @if (stashedOutputState()) {
         <div class="panel panel-default" #stashedOutputPanel>
             <div class="panel-heading" role="tab" (click)="collapsePanel(stashedOutputPanel)" style="cursor: pointer" aria-controls="stashedOutputPanelContent" [attr.aria-expanded]="stashedOutputPanel.classList.contains('open')" animate.enter="pulse-green">
                 <h3 class="panel-title" style="display: inline-block">Stashed Results</h3>
+                @if (stashedOutputState()?.originalQuery) {
+                    <!-- Display the original query in small font for reference purposes -->
+                    <span class="stashed-query" [title]="stashedOutputState()?.originalQuery">({{stashedOutputState()?.originalQuery}})</span>
+                }
                 <button type="button" style="float: right; color: #333" class="close" aria-label="Close stashed results panel" (click)="clearStashedOutputPanelState()"><span aria-hidden="true">&times;</span></button>
             </div>
             <div id="stashedOutputPanelContent" class="panel-body panel-stashed-output open" role="tabpanel">

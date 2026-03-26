@@ -1,5 +1,5 @@
 <div>
-    <button class="btn btn-primary" (click)="doExecuteQuery()" [disabled]="!state.ready() || state.running()">
+    <button class="btn btn-primary" (click)="doExecuteQuery()" [disabled]="!state.textPresent() || !state.ready() || state.running()">
         <i class="glyphicon glyphicon-play"></i>
         Run Query
     </button>
@@ -7,11 +7,11 @@
         <i class="glyphicon glyphicon-remove-circle"></i>
         Clear
     </button>
-    <button class="btn btn-secondary" (click)="doFormat()" [disabled]="state.running() || !(queryType() === 'Application' || queryType().startsWith('SQL'))">
+    <button class="btn btn-secondary" (click)="doFormat()" [disabled]="!state.textPresent() || state.running() || !(queryType() === 'Application' || queryType().startsWith('SQL'))">
         <i class="glyphicon glyphicon-check"></i>
         Format
     </button>
-    <button class="btn btn-secondary" (click)="doExecuteTranslate()" [disabled]="state.running() || queryType() === null || queryType() === 'Application' || queryType().startsWith('SQL')">
+    <button class="btn btn-secondary" (click)="doExecuteTranslate()" [disabled]="!state.textPresent() || state.running() || queryType() === null || queryType() === 'Application' || queryType().startsWith('SQL')">
         <i class="bi bi-shuffle"></i>
         Translate
     </button>

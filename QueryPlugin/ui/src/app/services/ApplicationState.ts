@@ -31,4 +31,6 @@ export class ApplicationState {
     readonly resultsPresent: WritableSignal<Boolean> = signal(false);
 
     readonly running: WritableSignal<boolean> = signal(false);
+
+    readonly textPresent: WritableSignal<boolean> = signal(false);
 }

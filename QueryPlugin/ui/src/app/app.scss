@@ -8,6 +8,11 @@
   }
 }
 
+.stop-scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
 // Animated collapse for history table
 .panel-history-table {
   max-height: 0;
@@ -44,4 +49,15 @@ button.resultsDisplayOptionsButton {
 
 button.displayOptionsNotDefault {
   background-color: #faffbc;
+}
+
+span.stashed-query {
+  margin-left: 10px;
+  font-size: smaller;
+  font-style: italic;
+  max-width: 400px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

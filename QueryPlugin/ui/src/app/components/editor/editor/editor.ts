@@ -145,6 +145,12 @@ export class Editor {
         effect(() => {
             console.debug("Editor state updated with value:", this.editorState());
             this.historyService.storeEditorState(this.editorState())
+
+            if (this.editorState()?.content?.trim()) {
+                this.state.textPresent.set(true);
+            } else {
+                this.state.textPresent.set(false);
+            }
         })
 
         effect(() => {

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import {NgClass, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {NgbModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
+import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {Row, RunQueryResponse} from "../../../services/API";
 import {ApplicationState} from "../../../services/ApplicationState";
 import {ExportOptions, ExportService} from "../../../services/ExportService";
@@ -104,8 +104,6 @@ export class ResultsTable {
         return this.results()?.host ?? '';
     })
 
-    private modalService = inject(NgbModal);
-
     exportOptions: ExportModalOutput = {
         includeHeaders: true,
         filename: 'results.csv',
@@ -148,6 +146,8 @@ export class ResultsTable {
     _pageIndex: WritableSignal<number> = model(0);
 
     _pageSize: WritableSignal<number> = model(25);
+
+    query: InputSignal<string | null | undefined> = input<string | null>();
 
     results: InputSignal<RunQueryResponse | null | undefined> = input<RunQueryResponse | null>();
 
