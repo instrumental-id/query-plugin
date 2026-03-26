@@ -1,9 +1,11 @@
+@use 'sass:color';
+
 $border_color: #aaa;
 
-$horizontal_rule_color: adjust-color($border_color, $lightness: +10%);
+$horizontal_rule_color: color.adjust($border_color, $lightness: +10%);
 
 $no-results-color: #ffc16c;
-$no-results-border-color: adjust-color($no-results-color, $lightness: -20%);
+$no-results-border-color: color.adjust($no-results-color, $lightness: -20%);
 
 @keyframes slide-fade {
     from {
@@ -132,6 +134,12 @@ div.resultsMetadata {
   p {
     line-height: 1em;
   }
+}
+
+#exportModal {
+    .modal-dialog {
+        z-index: 1051 !important;
+    }
 }
 
 div.exportButtons {

@@ -1,8 +1,12 @@
 
 .options-container {
-  margin-top: 10px;
-  border-top: 1px solid #ccc;
-  padding-top: 5px;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+
+    .form-group {
+        margin-bottom: 5px;
+    }
 }
 
 div.queryInputError {
@@ -12,8 +16,6 @@ div.queryInputError {
         border: 1px solid red;
     }
 }
-
-
 
 /*Using keyframes for shaking an image*/
 @keyframes Shake {
@@ -36,4 +38,26 @@ div.queryInputError {
     100% {
         transform: rotate(5deg);
     }
+}
+
+#extraOptions {
+    border: 1px solid #ddd;
+    width: max-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #eee;
+}
+
+.row.extra-options-toggle button {
+    padding: 0;
+}
+
+.glyphicon-chevron-right {
+    transform: rotate(0deg);
+    transition: transform 0.3s linear;
+}
+
+.glyphicon-chevron-right.toggle-open {
+    transform: rotate(90deg);
+    transition: transform 0.3s linear;
 }

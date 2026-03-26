@@ -1,3 +1,5 @@
+import {WritableSignal} from "@angular/core";
+
 export function escapeRegExp(str: string): string {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -14,6 +16,10 @@ export function pulseRow(row: HTMLElement) {
     row.addEventListener("animationend", () => {
         row.classList.remove("pulse-green");
     }, { once: true });
+}
+
+export function toggleSignal(signal: WritableSignal<boolean>) {
+    signal.update(value => !value);
 }
 
 //@ts-ignore

@@ -1,19 +1,24 @@
 import {
-    Component, computed,
+    Component, computed, effect,
     inject, model,
-    OnInit, Signal,
+    OnInit, resource, ResourceRef, Signal,
     signal,
     viewChild,
     WritableSignal
 } from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {BrowserModule} from "@angular/platform-browser";
 import {Editor} from "./components/editor/editor/editor";
-import {OutputPanel} from "./components/output/panel/output-panel.component";
+import {
+    OutputPanel,
+    OutputPanelState
+} from "./components/output/output-panel/output-panel.component";
 import {ApplicationState} from "./services/ApplicationState";
-import {API, DatabaseInfo} from "./services/API";
+import {API, Configuration} from "./services/API";
 import {CommonModule} from "@angular/common";
 import {HistoryTable} from "./components/history/history-table/history-table";
+import {
+    OutputPanelStashedComponent
+} from "./components/output/output-panel-stashed/output-panel-stashed.component";
 
 @Component({
     selector: 'app-root',
@@ -24,11 +29,16 @@ import {HistoryTable} from "./components/history/history-table/history-table";
         FormsModule,
         Editor,
         OutputPanel,
-        HistoryTable
+        HistoryTable,
+        OutputPanelStashedComponent
     ]
 })
-export class App implements OnInit {
+export class App {
     api: API = inject(API);
+
+    configuration: ResourceRef<Configuration | undefined> = resource({
+        loader: () => this.api.getConfiguration()
+    })
 
     /**
      * Signal that disables the "Export to CSV" button when there are no results to export.
@@ -39,21 +49,32 @@ export class App implements OnInit {
         return rows < 1
     })
 
-    outputPanel: Signal<OutputPanel | undefined> = viewChild(OutputPanel);
+    /**
+     * The primary output panel, stored this way to avoid confusion with a future multiple output panels.
+     */
+    outputPanel: Signal<OutputPanel | undefined> = viewChild("mainOutput");
 
     ready: WritableSignal<boolean> = model(false);
+
+    resultsPanel = viewChild<HTMLDivElement>("resultsPanel");
+
+    stashedOutputPanel = viewChild<HTMLDivElement>("stashedOutputPanel");
+
+    stashedOutputState: WritableSignal<OutputPanelState | null> = signal<OutputPanelState | null>(null);
 
     state: ApplicationState = inject(ApplicationState);
 
     constructor() {
-
+        effect(() => {
+            if (this.configuration.hasValue()) {
+                this.state.configuration.set(this.configuration.value())
+                this.state.ready.set(true);
+            }
+        })
     }
 
-    ngOnInit() {
-        this.api.getConfiguration().then((config) => {
-            this.state.configuration.set(config);
-        });
-        this.state.ready.set(true);
+    clearStashedOutputPanelState() {
+        this.stashedOutputState.set(null);
     }
 
     closeResultsPane() {
@@ -74,5 +95,17 @@ export class App implements OnInit {
         this.outputPanel()?.resultsTable()?.showingDisplayOptions.set(
             !(this.outputPanel()?.resultsTable()?.showingDisplayOptions() ?? false)
         );
+    }
+
+    stashOutputPanelState() {
+        let stateToStore = this.outputPanel()?.outputState;
+        if (stateToStore) {
+            console.debug("Stashing output panel state", stateToStore);
+            this.stashedOutputState.set(stateToStore)
+            this.resultsPanel()?.querySelector('div.panel-body')?.classList.remove('open');
+            this.stashedOutputPanel()?.scrollIntoView({behavior: "smooth"});
+        } else {
+            console.warn("No output panel state to stash, how did you get here?");
+        }
     }
 }

@@ -6,6 +6,8 @@ declare var PluginHelper: IPluginHelper;
 
 export type QueryType = "XMLFilter" | "Filter" | "HQL" | "SQL" | "SQLPlugin" | "SQLAccessHistory" | "Application";
 
+export const UUID_FIELD = "__$uuid";
+
 export interface RunQueryRequest {
     application?: string;
     mergeMaps?: {
@@ -20,9 +22,16 @@ export interface RunQueryRequest {
     limit?: number;
 }
 
+export interface Row {
+    __$uuid: string;
+    $timestamp?: string;
+    [columnName: string]: any;
+}
+
 export interface RunQueryResponse {
+    executionOrder: number;
     columns: string[];
-    data: Array<Record<string, any>>;
+    data: Array<Row>;
     query?: string;
     elapsed?: number;
     host: string;
@@ -81,6 +90,11 @@ function getCookie(name: string) {
     }
     let cookieValue = xsrfCookies[0].substring(name.length + 1);
     return decodeURIComponent(cookieValue);
+}
+
+function randomID() {
+    let now = new Date().getMilliseconds()
+    return "" + now + Math.random().toString(36);
 }
 
 @Injectable({
@@ -173,7 +187,19 @@ export class API {
                 content: await response.text()
             })
         }
-        return await response.json() as RunQueryResponse;
+
+        let results = await response.json() as RunQueryResponse;
+        results.executionOrder = 0;
+        if (results.data?.length > 0) {
+            for (let row of results.data) {
+                row.__$uuid = randomID();
+            }
+
+            if (results.columns?.length === 0) {
+                results.columns = Object.keys(results.data[0]).filter(col => col !== UUID_FIELD);
+            }
+        }
+        return results;
     }
 
     /**
