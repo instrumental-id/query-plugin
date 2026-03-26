@@ -1,6 +1,10 @@
 #idwQueryPluginMain {
   div.panel-heading {
     font-size: 120%;
+
+      h3 {
+          min-height: 20px;
+      }
   }
 }
 
@@ -15,6 +19,19 @@
 .panel-history-table.open {
   max-height: 500px; /* set larger than expected content height */
   padding: 10px;
+}
+
+.panel-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    padding: 0 10px;
+}
+
+.panel-body.open {
+    max-height: fit-content;
+    transition: max-height 0.2s ease-in;
+    padding: 10px;
 }
 
 button.exportButton {

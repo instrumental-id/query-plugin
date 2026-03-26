@@ -334,6 +334,28 @@ div.cm-line span {
     "Courier New",
     monospace !important;
 }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.fade-in {
+  animation: fade-in 0.1s ease-in forwards;
+}
+.fade-out {
+  animation: fade-out 0.1s ease-out forwards;
+}
 @keyframes pulseGreen {
   0% {
     background-color: #d4edda;
@@ -354,6 +376,12 @@ div.cm-line span {
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
+}
+.qp-hidden {
+  display: none;
+}
+.modal-backdrop {
+  z-index: 1050;
 }
 
 /* angular:styles/global:styles */

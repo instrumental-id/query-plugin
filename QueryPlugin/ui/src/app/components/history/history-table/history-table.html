@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (row of rowsForPage(); track row) {
+        @for (row of rowsForPage(); track row.timestamp) {
             <tr>
                 <td class="historyColumnLoadButton"><button class="btn btn-default" (click)="loadHistory($event, row)"><i class="glyphicon glyphicon-open-file"></i></button></td>
                 <td class="historyColumnTimestamp">{{row.timestamp | date:'yyyy-MMM-dd HH:mm:ss'}}</td>

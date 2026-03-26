@@ -1,0 +1,8 @@
+<results-table [hidden]="resultVariety() !== 'table'" [results]="resultsTableData() || null"></results-table>
+<translation-result [hidden]="resultVariety() !== 'translation'" [translation]="translationResultData() || null"></translation-result>
+<div [hidden]="!errorMessage()">
+    <div class="results-error" role="alert" aria-live="polite">
+        <i class="glyphicon glyphicon-warning-sign"></i>
+        {{errorMessage()}}
+    </div>
+</div>

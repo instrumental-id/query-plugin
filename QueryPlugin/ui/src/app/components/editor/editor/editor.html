@@ -18,7 +18,7 @@
                     <option value="HQL">HQL</option>
                     <option value="Filter">Filter</option>
                     <option value="XMLFilter">XML Filter</option>
-                    @if (state.configuration().privileges.queryApplications) {
+                    @if (state.configuration().privileges.queryApplications && state.configuration().applications.length > 0) {
                         <option value="Application">Application</option>
                     }
                 </select>
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            @if (state.configuration().privileges.queryApplications) {
+            @if (state.configuration().privileges.queryApplications && state.configuration().applications.length > 0) {
             <div class="form-group" [ngClass]="{'queryInputError': errorField() === 'application'}">
                 <label for="applicationSelect">Application:</label>
                 <select id="applicationSelect" class="form-control" [(ngModel)]="application" [disabled]="queryType() !== 'Application'">
@@ -69,4 +69,28 @@
             }
         </div>
     </div>
+    <div #extraOptionsToggle class="row extra-options-toggle">
+        <div class="col-md-3">
+            <button class="btn btn-sm btn-link" (click)="toggleSignal(this.extraOptions)" aria-controls="extraOptions" [attr.aria-expanded]="extraOptions()">
+                <span>
+                    <i class="glyphicon glyphicon-chevron-right" [ngClass]="{'toggle-open': extraOptions()}"></i>
+                </span>
+                <span>More options</span>
+            </button>
+        </div>
+    </div>
+    @if (extraOptions()) {
+        <div id="extraOptions" aria-live="polite" animate.enter="fade-in" animate.leave="fade-out">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" [(ngModel)]="state.appendResults"> Append results to existing table
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" [(ngModel)]="state.appendTimestampColumn"> Append timestamp to results
+                </label>
+            </div>
+        </div>
+    }
 </div>

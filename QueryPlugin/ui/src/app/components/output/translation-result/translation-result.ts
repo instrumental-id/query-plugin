@@ -1,5 +1,10 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
-import {EventBus, TRANSLATE_COMPLETED} from "../../../services/EventBus";
+import {
+    Component,
+    inject, input,
+    InputSignal,
+    signal,
+    WritableSignal
+} from '@angular/core';
 import {TranslateQueryResponse} from "../../../services/API";
 import {FormsModule} from "@angular/forms";
 import { format } from 'sql-formatter';
@@ -18,15 +23,9 @@ type DisplayType = 'SQL' | 'HQL' | 'Filter' | 'XMLFilter';
 export class TranslationResult {
     displayType: DisplayType;
 
-    private eventBus = inject(EventBus);
-
-    translation: WritableSignal<TranslateQueryResponse | null> = signal(null);
+    translation: InputSignal<TranslateQueryResponse | null | undefined> = input<TranslateQueryResponse | null>();
 
     constructor() {
-        this.eventBus.on(TRANSLATE_COMPLETED, (data: TranslateQueryResponse) => {
-            this.translation.set(data);
-        });
-
         this.displayType = 'SQL';
     }
 
