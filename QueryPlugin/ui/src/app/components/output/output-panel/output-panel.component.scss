@@ -1,5 +1,7 @@
+@use 'sass:color';
+
 $error-response-color: #f1b9b9;
-$error-response-color-border: adjust-color($error-response-color, $lightness: -30%, $saturation: +20%);
+$error-response-color-border: color.adjust($error-response-color, $lightness: -30%, $saturation: +20%);
 
 div.results-error {
     font-size: 110%;

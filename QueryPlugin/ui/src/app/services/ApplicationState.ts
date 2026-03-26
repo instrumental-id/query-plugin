@@ -13,6 +13,10 @@ import {HistoryEntry} from "./HistoryService";
     {providedIn: 'root'}
 )
 export class ApplicationState {
+    appendResults: boolean = false;
+
+    appendTimestampColumn: boolean = false;
+
     readonly configuration: WritableSignal<Configuration> = signal<Configuration>({
         applications: [],
         privileges: {}
@@ -22,9 +26,9 @@ export class ApplicationState {
 
     readonly history: WritableSignal<HistoryEntry[]> = signal([]);
 
-    readonly ready: WritableSignal<Boolean> = signal(false);
+    readonly ready: WritableSignal<boolean> = signal(false);
 
     readonly resultsPresent: WritableSignal<Boolean> = signal(false);
 
-    readonly running: WritableSignal<Boolean> = signal(false);
+    readonly running: WritableSignal<boolean> = signal(false);
 }

@@ -1,15 +1,19 @@
 import {
-    Component, computed,
-    inject, model,
+    Component,
+    computed,
+    effect,
+    inject,
+    input,
+    InputSignal,
+    model,
     signal,
-    Signal,
+    Signal, viewChild,
     WritableSignal
 } from '@angular/core';
-import {EventBus, QUERY_COMPLETED} from "../../../services/EventBus";
 import {NgClass, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgbModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {RunQueryResponse} from "../../../services/API";
+import {Row, RunQueryResponse} from "../../../services/API";
 import {ApplicationState} from "../../../services/ApplicationState";
 import {ExportOptions, ExportService} from "../../../services/ExportService";
 import {NgOptionComponent, NgSelectComponent} from "@ng-select/ng-select";
@@ -48,7 +52,15 @@ export class ResultsTable {
             return r.columns;
         } else if (r?.data && r.data.length > 0) {
             // If columns are not provided, infer them from the first row of data
-            return Object.keys(r.data[0]);
+            let cols = []
+            let firstRow: Row = r.data[0];
+            console.debug("Inferring columns from first row:", firstRow);
+            for (let key of Object.keys(firstRow)) {
+                if (!key.startsWith("__$")) {
+                    cols.push(key);
+                }
+            }
+            return cols;
         }
         return [];
     });
@@ -63,7 +75,7 @@ export class ResultsTable {
 
     private exportService = inject(ExportService);
 
-    filteredRows: Signal<any[]> = computed(() => {
+    filteredRows: Signal<Row[]> = computed(() => {
         if (this.empty()) {
             return [];
         }
@@ -137,9 +149,9 @@ export class ResultsTable {
 
     _pageSize: WritableSignal<number> = model(25);
 
-    results: WritableSignal<RunQueryResponse | null> = signal(null);
+    results: InputSignal<RunQueryResponse | null | undefined> = input<RunQueryResponse | null>();
 
-    rowsForPage: Signal<any[]> = computed(() => {
+    rowsForPage: Signal<Row[]> = computed(() => {
         if (this.empty()) {
             return [];
         }
@@ -167,9 +179,7 @@ export class ResultsTable {
             end = 0;
         }
 
-        let pageRows = rows.slice(start, end);
-
-        return pageRows;
+        return rows.slice(start, end);
     });
 
     showingDisplayOptions: WritableSignal<boolean> = signal(false);
@@ -181,18 +191,17 @@ export class ResultsTable {
     optionsNotDefault: Signal<boolean> = computed(() => {
         return this._pageSize() !== 25 || this.hideEmptyColumns() || (this.hiddenColumns() && this.hiddenColumns()!.length > 0);
     })
-
-    private readonly eventBus: EventBus = inject(EventBus);
+    
+    exportModal: Signal<HTMLDivElement | undefined> = viewChild<HTMLDivElement>('exportModal')
 
     protected readonly state: ApplicationState = inject(ApplicationState);
 
     constructor() {
-        this.eventBus.on(QUERY_COMPLETED, (data: RunQueryResponse) => {
+        effect(() => {
             this.pageIndex = 0;
-            this.results.set(data);
             this.filters.set({});
-            console.log("Query completed:", data);
-        });
+            console.debug("Query completed:", this.results());
+        })
     }
 
     get pageIndex() {
@@ -237,7 +246,7 @@ export class ResultsTable {
         console.debug("Showing export options modal with inputs", this.exportOptions)
 
         try {
-            jQuery('#exportModal').modal({
+            jQuery('#exportModal').appendTo('body').modal({
                 keyboard: true
             })
         } catch(e) {

@@ -23,8 +23,8 @@ import {Formatter} from "../../../common/Formatter";
 import {HistoryService} from "../../../services/HistoryService";
 import {EditorButtons} from "../editor-buttons/editor-buttons";
 import {CodemirrorEditor} from "../codemirror-editor/codemirror-editor";
-import {APIError} from "../../../common/APIError";
 import {NgClass} from "@angular/common";
+import {toggleSignal} from "../../../common/utils";
 
 @Component({
     selector: 'qp-editor',
@@ -76,6 +76,8 @@ export class Editor {
 
     protected errorField: WritableSignal<string | null> = signal<string | null>(null)
 
+    protected extraOptions: WritableSignal<boolean> = signal<boolean>(false)
+
     lastEditorState: WritableSignal<EditorState | null | undefined> = signal<EditorState | null | undefined>(undefined)
 
     /**
@@ -119,6 +121,13 @@ export class Editor {
     protected readonly state: ApplicationState = inject(ApplicationState);
 
     protected readonly formatter: Formatter = new Formatter();
+    
+    /**
+     * Utility function to toggle boolean signals. Reference the global utility
+     * function here so that it's accessible in the template.
+     * @protected
+     */
+    protected readonly toggleSignal: typeof toggleSignal = toggleSignal;
 
     constructor() {
         this.eventBus.on(SOURCE_REPLACE, (event: SourceUpdatedEvent) => {
@@ -333,4 +342,5 @@ export class Editor {
     onQueryTypeChange($event: any) {
         this.errorField.set(null);
     }
+
 }

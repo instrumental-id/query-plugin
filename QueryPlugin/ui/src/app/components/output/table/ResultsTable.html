@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (row of rowsForPage(); track row) {
+                    @for (row of rowsForPage(); track row.__$uuid) {
                         <tr class="idwQueryPluginResultsTableRow">
                             @for (item of columns(); track item) {
                                 @if (!hiddenColumnsSet().has(item)) {
@@ -105,7 +105,7 @@
     </div>
 }
 
-<div class="modal fade" tabindex="-1" role="dialog" id="exportModal">
+<div #exportModal class="modal fade" tabindex="-1" role="dialog" id="exportModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

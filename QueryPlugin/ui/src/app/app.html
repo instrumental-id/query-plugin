@@ -1,28 +1,43 @@
 <div id="idwQueryPluginMain" class="bs5">
-    <div class="panel panel-default">
+    <div class="panel panel-default" #queryEditorPanel>
         <div class="panel-heading" role="tab">
             <h3 class="panel-title">Query Editor</h3>
         </div>
-        <div class="panel-body" role="tabpanel">
+        <div class="panel-body open" role="tabpanel">
             <qp-editor></qp-editor>
         </div>
     </div>
-    <div class="panel panel-default" [hidden]="!state.resultsPresent()">
-        <div class="panel-heading" role="tab">
+    <div #resultsPanel class="panel panel-default" [hidden]="!state.resultsPresent()" id="resultsPanel" animate.leave="fade-out">
+        <div class="panel-heading" role="tab" (click)="collapsePanel(resultsPanel)" style="cursor: pointer" aria-controls="resultsPanelContent" [attr.aria-expanded]="resultsPanel.classList.contains('open')">
             <h3 class="panel-title" style="display: inline-block">Results</h3>
-            <button type="button" class="btn btn-secondary btn-sm exportButton" [disabled]="empty()" [hidden]="outputPanel()?.resultVariety() !== 'table'" (click)="exportCSV()">
-                <i class="glyphicon glyphicon-cloud-download"></i> Export CSV
+            <button type="button" class="btn btn-secondary btn-sm exportButton" [disabled]="empty()" [hidden]="outputPanel()?.resultVariety() !== 'table'" (click)="exportCSV(); $event.stopPropagation()">
+                <i class="glyphicon glyphicon-export"></i> Export CSV
             </button>
-            <button type="button" class="btn btn-secondary btn-sm resultsDisplayOptionsButton" [ngClass]="{'displayOptionsNotDefault': optionsNotDefault()}" (click)="showResultsDisplayOptions()" title="Toggle results display options">
+            <button type="button" class="btn btn-secondary btn-sm resultsDisplayOptionsButton" [ngClass]="{'displayOptionsNotDefault': optionsNotDefault()}" (click)="showResultsDisplayOptions(); $event.stopPropagation()" title="Toggle results display options">
                 <i aria-hidden="true" class="fa fa-sliders"></i>
                 <span class="sr-only">Results display options</span>
             </button>
-            <button type="button" style="float: right; color: #333" class="close" data-dismiss="modal" aria-label="Close" (click)="closeResultsPane()"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="btn btn-secondary btn-sm resultsDisplayOptionsButton" (click)="stashOutputPanelState(); $event.stopPropagation()" title="Stash results pane">
+                <i aria-hidden="true" class="glyphicon glyphicon-pushpin"></i>
+                <span class="sr-only">Pin results</span>
+            </button>
+            <button type="button" style="float: right; color: #333" class="close" aria-label="Close results panel" (click)="closeResultsPane(); $event.stopPropagation()" aria-controls="resultsPanel"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div class="panel-body" role="tabpanel">
-            <output-panel></output-panel>
+        <div class="panel-body open" role="tabpanel" id="resultsPanelContent">
+            <output-panel #mainOutput></output-panel>
         </div>
     </div>
+    @if (stashedOutputState()) {
+        <div class="panel panel-default" #stashedOutputPanel>
+            <div class="panel-heading" role="tab" (click)="collapsePanel(stashedOutputPanel)" style="cursor: pointer" aria-controls="stashedOutputPanelContent" [attr.aria-expanded]="stashedOutputPanel.classList.contains('open')" animate.enter="pulse-green">
+                <h3 class="panel-title" style="display: inline-block">Stashed Results</h3>
+                <button type="button" style="float: right; color: #333" class="close" aria-label="Close stashed results panel" (click)="clearStashedOutputPanelState()"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="stashedOutputPanelContent" class="panel-body panel-stashed-output open" role="tabpanel">
+                <output-panel-stashed [stashedState]="stashedOutputState() || null"></output-panel-stashed>
+            </div>
+        </div>
+    }
     <div class="panel panel-default" #historyPanel>
         <div class="panel-heading" (click)="collapsePanel(historyPanel)" style="cursor: pointer" role="tab" aria-controls="historyPanelContent" [attr.aria-expanded]="historyPanel.classList.contains('open')">
             <h3 class="panel-title">History</h3>
