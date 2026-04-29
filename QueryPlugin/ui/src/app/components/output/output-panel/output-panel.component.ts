@@ -22,6 +22,8 @@ import {APIError} from "../../../common/APIError";
 export type ResultVariety = 'table' | 'translation' | null;
 
 export interface OutputPanelState {
+    originalQuery: string | null;
+
     errorMessage: string | null;
 
     resultsTable: RunQueryResponse | null;
@@ -45,6 +47,8 @@ export class OutputPanel {
     private eventBus = inject(EventBus);
 
     errorMessage: WritableSignal<string | null> = signal<string | null>(null);
+
+    previousQuery: WritableSignal<string | null> = signal<string | null>(null);
 
     resultsTable: Signal<ResultsTable | undefined> = viewChild(ResultsTable);
 
@@ -97,6 +101,7 @@ export class OutputPanel {
      */
     get outputState(): OutputPanelState {
         return {
+            originalQuery: this.previousQuery(),
             errorMessage: this.errorMessage(),
             resultsTable: this.resultsTableData(),
             translationResult: this.translationResultData(),
@@ -110,6 +115,7 @@ export class OutputPanel {
         this.resultVariety.set('table');
         this.state.resultsPresent.set(true);
         this.translationResultData.set(null);
+        this.previousQuery.set(data.query ?? null);
 
         if (this.state.appendTimestampColumn) {
             console.info("Appending $timestamp column to results as per user request.");

@@ -17,6 +17,7 @@ import {ApplicationState} from "../../../services/ApplicationState";
 import {
     API, QueryType,
 } from "../../../services/API";
+import {Formatter} from "../../../common/Formatter";
 
 
 import {HistoryService} from "../../../services/HistoryService";
@@ -119,6 +120,8 @@ export class Editor {
      */
     protected readonly state: ApplicationState = inject(ApplicationState);
 
+    protected readonly formatter: Formatter = new Formatter();
+    
     /**
      * Utility function to toggle boolean signals. Reference the global utility
      * function here so that it's accessible in the template.
@@ -142,6 +145,12 @@ export class Editor {
         effect(() => {
             console.debug("Editor state updated with value:", this.editorState());
             this.historyService.storeEditorState(this.editorState())
+
+            if (this.editorState()?.content?.trim()) {
+                this.state.textPresent.set(true);
+            } else {
+                this.state.textPresent.set(false);
+            }
         })
 
         effect(() => {
@@ -187,6 +196,8 @@ export class Editor {
      * Emits events on completion or error.
      */
     async executeQuery() {
+        this.editorComponent()?.syncContent();
+
         if (this.content()?.trim() === '') {
             console.warn("Cannot execute an empty query.");
             return
@@ -232,6 +243,22 @@ export class Editor {
             this.eventBus.emit(QUERY_ERROR, {error: error});
         } finally {
             this.state.running.set(false)
+        }
+    }
+
+    async executeFormat() {
+        let queryType = this.queryType();
+        if (queryType === "Application" || queryType === "SQL" || queryType === "SQLPlugin" || queryType === "SQLAccessHistory") {
+            let formatted = this.formatter.formatSql(this.content())
+
+            this.replaceQuery(formatted.formatted)
+
+            // TODO: handle parse warnings and display them to the user in some way
+        } else if (queryType === "XMLFilter") {
+            let formatted = this.formatter.formatXml(this.content())
+            this.replaceQuery(formatted)
+        } else {
+            console.warn("Formatting is only supported for SQL query types. Current type:", queryType);
         }
     }
 

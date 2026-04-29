@@ -189,6 +189,7 @@ export class API {
         }
 
         let results = await response.json() as RunQueryResponse;
+        results.query = request.query;
         results.executionOrder = 0;
         if (results.data?.length > 0) {
             for (let row of results.data) {
