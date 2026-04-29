@@ -71,6 +71,9 @@
 -dontwarn org.apache.tools.**
 -dontwarn org.junit.**
 -dontwarn org.apache.commons.collections4.**
+-dontwarn lombok.**
+-dontwarn org.apache.commons.lang3.**
+-dontwarn connector.common.**
 
 -dontwarn com.identityworksllc.iiq.common.versioned.JsonUtilitiesImpl
 -dontwarn com.identityworksllc.iiq.common.testing.jutask.IIQJunit5TestBase
