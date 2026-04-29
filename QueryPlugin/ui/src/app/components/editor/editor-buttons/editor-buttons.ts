@@ -12,6 +12,7 @@ export class EditorButtons {
   executeQuery = output<void>()
   clearQuery = output<void>()
   executeTranslate = output<void>()
+  executeFormat = output<void>()
 
   queryType: InputSignal<QueryType> = input.required<QueryType>()
 
@@ -23,6 +24,10 @@ export class EditorButtons {
 
   doClearQuery() {
     this.clearQuery.emit()
+  }
+
+  doFormat() {
+    this.executeFormat.emit()
   }
 
   doExecuteTranslate() {

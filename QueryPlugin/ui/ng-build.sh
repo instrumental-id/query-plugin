@@ -71,7 +71,12 @@ fi
 
 dump_config
 
-find "${CSS_DIR}" -name "styles*.css" -delete
+if [[ -d "${CSS_DIR}/app" ]]; then
+  find "${CSS_DIR}" -name "styles*.css" -delete
+  if [[ -d "${CSS_DIR}/app/media" ]]; then
+    rm -r "${CSS_DIR}/app/media"
+  fi
+fi
 
 if [[ -d "${UI_DIR}/dist" ]]; then
   find "${UI_DIR}/dist" -delete
@@ -86,7 +91,7 @@ mkdir -p "${JS_DIR}/app"
 greenecho "Executing Angular and Typescript builds..."
 
 ( "${NPM}" i && \
-  "${NPM}" run ng-dev ) || \
+  "${NPM}" run build ) || \
   { redecho "ERROR: Angular or Typescript build failed"; exit 2; }
 
 if [[ ! -e "${DIST_DIR}" ]]; then
@@ -98,15 +103,22 @@ if [[ ! -d "${CSS_DIR}/app" ]]; then
   mkdir -p "${CSS_DIR}/app"
 fi
 
-greenecho "Copying files to '${JS_DIR}/app' directories..."
+greenecho "Copying files to '${UI_DIR}/app' directories..."
 
 if [[ -d "${DIST_DIR}/assets" ]]; then
+  echo "Copying asset files..."
   cp -r "${DIST_DIR}"/assets/* "${JS_DIR}/app/"
 fi
+if [[ -d "${DIST_DIR}/media" ]]; then
+  echo "Copying media files..."
+  cp -r "${DIST_DIR}/media" "${CSS_DIR}/app/"
+fi
+
+echo "Copying JS and CSS files..."
 cp "${DIST_DIR}"/*.js "${JS_DIR}/app"
-cp "${DIST_DIR}"/*.js.map "${JS_DIR}/app"
+#cp "${DIST_DIR}"/*.js.map "${JS_DIR}/app"
 cp "${DIST_DIR}"/styles*.css "${CSS_DIR}/app"
-cp "${DIST_DIR}"/styles*.css.map "${CSS_DIR}/app"
+#cp "${DIST_DIR}"/styles*.css.map "${CSS_DIR}/app"
 
 greenecho "Transforming Javascript files for plugin purposes..."
 

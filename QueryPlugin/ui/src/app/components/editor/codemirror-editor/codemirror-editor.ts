@@ -1,10 +1,11 @@
 import {
-  Component, computed, effect,
+  Component, computed, DestroyRef, effect,
   ElementRef, inject, input, model,
   output,
   resource, Signal, signal,
   viewChild, WritableSignal
 } from '@angular/core';
+import {DOCUMENT} from '@angular/common';
 import {
   EditorView,
   highlightActiveLine,
@@ -64,6 +65,8 @@ export class CodemirrorEditor {
 
   codeUpdated = output<string>()
 
+  executeQuery = output<void>()
+
   /**
    * Information about the connected database, including schema and catalog.
    */
@@ -102,6 +105,21 @@ export class CodemirrorEditor {
         let view = this.editorView.value()
         this.replaceSchema(queryType, view);
     });
+
+    const doc = inject(DOCUMENT);
+    const destroyRef = inject(DestroyRef);
+    const handler = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        this.syncContent();
+        this.executeQuery.emit();
+      }
+    };
+    doc.addEventListener('keydown', handler);
+    destroyRef.onDestroy(() => {
+      doc.removeEventListener('keydown', handler);
+    });
   }
 
 
@@ -129,6 +147,16 @@ export class CodemirrorEditor {
     })
 
     const extensions: Extension = [
+      keymap.of([
+        {key: "Ctrl-Enter", run: () => {return true;}},
+        {key: "Meta-Enter", run: () => {return true;}}
+      ]),
+      EditorView.updateListener.of((v: ViewUpdate) => {
+        if (v.docChanged) {
+          const content = v.state.doc.toString();
+          debouncedUpdate(content);
+        }
+      }),
       minimalSetup,
       highlightActiveLine(),
       bracketMatching(),
@@ -136,18 +164,11 @@ export class CodemirrorEditor {
       vscodeLight,
       lineNumbers(),
       syntaxHighlighting(defaultHighlightStyle),
-      highlightSelectionMatches({minSelectionLength: 4}),
-      keymap.of(defaultKeymap),
+      highlightSelectionMatches({ minSelectionLength: 4 }),
       autocompletion({
-        activateOnTyping: false
+        activateOnTyping: false,
       }),
       compartmentExtension,
-      EditorView.updateListener.of((v: ViewUpdate) => {
-        if (v.docChanged) {
-          const content = v.state.doc.toString();
-          debouncedUpdate(content);
-        }
-      })
     ];
 
     const view = new EditorView({
@@ -275,6 +296,19 @@ export class CodemirrorEditor {
       view?.dispatch({
         effects: this.languageCompartment.reconfigure([])
       });
+    }
+  }
+
+  /**
+   * Immediately syncs the current CodeMirror document content to the parent
+   * by emitting codeUpdated, bypassing the debounce delay.
+   */
+  syncContent() {
+    if (this.editorView.hasValue()) {
+      const view = this.editorView.value();
+      if (view && view.state && view.state.doc) {
+        this.codeUpdated.emit(view.state.doc.toString());
+      }
     }
   }
 

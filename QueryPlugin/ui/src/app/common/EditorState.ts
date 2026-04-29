@@ -13,3 +13,11 @@ export interface EditorState {
 
     queryClass?: string;
 }
+
+export interface ResultOptions {
+    pageSize: number;
+    
+    hideEmptyColumns: boolean;
+    
+    hiddenColumns: string[] | null;
+}

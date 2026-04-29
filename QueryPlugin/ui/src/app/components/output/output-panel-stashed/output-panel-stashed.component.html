@@ -1,4 +1,4 @@
-<results-table [hidden]="stashedState()?.resultVariety !== 'table'" [results]="stashedState()?.resultsTable || null"></results-table>
+<results-table [hidden]="stashedState()?.resultVariety !== 'table'" [query]="stashedState()?.originalQuery" [results]="stashedState()?.resultsTable || null"></results-table>
 <translation-result [hidden]="stashedState()?.resultVariety !== 'translation'" [translation]="stashedState()?.translationResult || null"></translation-result>
 <div [hidden]="!stashedState()?.errorMessage">
     <div class="results-error" role="alert" aria-live="polite">
