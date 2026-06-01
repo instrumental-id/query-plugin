@@ -1,6 +1,4 @@
-import java.util.zip.ZipEntry
-import java.util.zip.ZipInputStream
-import java.util.zip.ZipOutputStream
+import java.util.zip.*
 
 buildscript {
     repositories {
@@ -281,7 +279,9 @@ tasks.register("repackPluginZip") {
                         newEntry.method = ZipEntry.STORED
                         newEntry.size = bytes.length
                         newEntry.compressedSize = bytes.length
-                        newEntry.crc = new java.util.zip.CRC32().with { update(bytes); value }
+                        def crc = new CRC32()
+                        crc.update(bytes)
+                        newEntry.crc = crc.value
                     } else {
                         newEntry.method = ZipEntry.DEFLATED
                     }
