@@ -1,3 +1,7 @@
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
+
 buildscript {
     repositories {
         google()
@@ -17,7 +21,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'java-library'
 
-defaultTasks "clean", "createPluginZip"
+defaultTasks "clean", "repackPluginZip"
 
 evaluationDependsOn(":QueryPluginShared")
 
@@ -168,99 +172,129 @@ dependencies {
     h5Implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.3.7.Final'
 }
 
-def versions = [
-        [
-                name: "8x",
-                sourceSet: sourceSets.h5.output,
-                implementationDeps: configurations.h5Implementation,
-                output: "${buildDir}/libs/QP-obf-8x.jar"
-        ]
-]
+def implConfig = configurations.h5Implementation.copy() + configurations.named("obfuscationInputs") + configurations.includeLibraries + sailpointLibs
 
-versions.each { v ->
-    def obfuscateTaskName = "obfuscateJava" + v.name
-    def pluginZipTaskName = "createPluginZip" + v.name
-    def jarTaskName = "jar" + v.name
+def obfTask = tasks.register("obfuscateJava", proguard.gradle.ProGuardTask) {
+    configuration 'proguard.txt'
+    injars tasks.named("jar")
+    injars configurations.named("iiqCommonLibs")
+    outjars layout.buildDirectory.file("QP-obj.jar")
+    libraryjars implConfig
+    libraryjars project(":QueryPluginShared").jar
+    if (JavaVersion.current().isJava9Compatible()) {
+        libraryjars(System.getProperty("java.home") + "/jmods")
+    } else {
+        libraryjars(System.getProperty("java.home") + "/lib/rt.jar")
+        libraryjars(System.getProperty("java.home") + "/lib/jce.jar")
+    }
+}
 
-    def implConfig = v.implementationDeps.copy() + configurations.named("obfuscationInputs") + configurations.includeLibraries + sailpointLibs
+def createPluginZipTask = tasks.register("createPluginZip", Zip) {
+    dependsOn tasks.named("angularBuild")
 
-    // Builds the version specific (h3 or h5) JAR file
-    def jarTask = tasks.register(jarTaskName, Jar) {
-        from v.sourceSet
-        archiveFileName = "QueryPlugin-" + v.name + ".jar"
+    archiveFileName = archivesBaseName + "8x.zip"
+
+    reproducibleFileOrder = true
+    preserveFileTimestamps = true
+    entryCompression = ZipEntryCompression.DEFLATED
+
+    into('jars') {
+        from obfTask
+        from configurations.includeLibraries.files
+        from project(":QueryPluginShared").jar
+
+        exclude "proguard.map"
     }
 
-    def obfTask = tasks.register(obfuscateTaskName, proguard.gradle.ProGuardTask) {
-        configuration 'proguard.txt'
-        injars tasks.named("jar")
-        injars configurations.named("iiqCommonLibs")
-        injars jarTask
-        outjars v.output
-        libraryjars implConfig
-        libraryjars project(":QueryPluginShared").jar
-        if (JavaVersion.current().isJava9Compatible()) {
-            libraryjars(System.getProperty("java.home") + "/jmods")
-        } else {
-            libraryjars(System.getProperty("java.home") + "/lib/rt.jar")
-            libraryjars(System.getProperty("java.home") + "/lib/jce.jar")
+    from(project(":JdbcConnectorAdapter").jar) {
+        rename "JdbcConnectorAdapter.jar", "JdbcConnectorAdapter.jxr"
+    }
+
+    into('import/install') {
+        from("$projectDir/config") {
+            include "**"
+            exclude "*Example*"
+            if (!skipQuickLink){
+                filter { it.replace("%%DISPLAY_NAME%%", displayName) }
+                filter { it.replace("%%PLUGIN_NAME%%", pluginName) }
+            }
+            else{
+                exclude "**/QuickLink.xml"
+            }
         }
     }
 
-    tasks.register(pluginZipTaskName, Zip) {
-        dependsOn tasks.named("angularBuild")
+    into('import/upgrade') {
+        from("$projectDir/config") {
+            include "PluginRights.xml"
+        }
+    }
 
-        archiveFileName = archivesBaseName + "${v.name}.zip"
+    from("$projectDir") {
+        include 'manifest.xml'
+        include 'db/**'
+        include "ui/page.xhtml"
+        include "ui/js/app/**"
+        include "ui/css/app/**"
+        include "ui/templates"
+        exclude "ui/js/externs/**"
+        filter { it.replace("%%BUILD_VERSION%%", getDate() + "." + gitVersion) }
+    }
+}
 
-        filesMatching('**/*.jar') {
-            entryCompression = ZipEntryCompression.STORED
+
+tasks.register("repackPluginZip") {
+    dependsOn createPluginZipTask
+
+    def inputZip = createPluginZipTask.get().archiveFile
+    def outputZip = layout.buildDirectory.file(
+            "distributions/${archivesBaseName}-repacked.zip"
+    )
+
+    inputs.file inputZip
+    outputs.file outputZip
+
+    doLast {
+        def input = inputZip.get().asFile
+        def output = outputZip.get().asFile
+
+        def readEntry = { ZipInputStream zin ->
+            def baos = new ByteArrayOutputStream()
+            def buffer = new byte[8192]
+            int len
+            while ((len = zin.read(buffer)) > 0) {
+                baos.write(buffer, 0, len)
+            }
+            baos.toByteArray()
         }
 
-        filesMatching("**/.jxr") {
-            entryCompression = ZipEntryCompression.STORED
-        }
+        new ZipInputStream(new BufferedInputStream(new FileInputStream(input))).withCloseable { zin ->
+            new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(output))).withCloseable { zout ->
+                ZipEntry entry
+                while ((entry = zin.nextEntry) != null) {
+                    def isJar = entry.name.endsWith('.jar')
 
-        into('jars') {
-            from obfTask
-            from configurations.includeLibraries.files
-            from project(":QueryPluginShared").jar
+                    def bytes = readEntry(zin)
 
-            exclude "proguard.map"
-        }
+                    def newEntry = new ZipEntry(entry.name)
+                    if (isJar) {
+                        newEntry.method = ZipEntry.STORED
+                        newEntry.size = bytes.length
+                        newEntry.compressedSize = bytes.length
+                        newEntry.crc = new java.util.zip.CRC32().with { update(bytes); value }
+                    } else {
+                        newEntry.method = ZipEntry.DEFLATED
+                    }
 
-        from(project(":JdbcConnectorAdapter").jar) {
-            rename "JdbcConnectorAdapter.jar", "JdbcConnectorAdapter.jxr"
-        }
-
-        into('import/install') {
-            from("$projectDir/config") {
-                include "**"
-                exclude "*Example*"
-                if (!skipQuickLink){
-                    filter { it.replace("%%DISPLAY_NAME%%", displayName) }
-                    filter { it.replace("%%PLUGIN_NAME%%", pluginName) }
-                }
-                else{
-                    exclude "**/QuickLink.xml"
+                    zout.putNextEntry(newEntry)
+                    zout.write(bytes)
+                    zout.closeEntry()
                 }
             }
         }
 
-        into('import/upgrade') {
-            from("$projectDir/config") {
-                include "PluginRights.xml"
-            }
-        }
-
-        from("$projectDir") {
-            include 'manifest.xml'
-            include 'db/**'
-            include "ui/page.xhtml"
-            include "ui/js/app/**"
-            include "ui/css/app/**"
-            include "ui/templates"
-            exclude "ui/js/externs/**"
-            filter { it.replace("%%BUILD_VERSION%%", getDate() + "." + gitVersion) }
-        }
+        // Replace the original
+        output.renameTo(input)
     }
 }
 
@@ -273,12 +307,5 @@ tasks.register("angularBuild", Exec) {
     commandLine './ng-build.sh'
 }
 
-tasks.register("createPluginZip") {task ->
-    versions.each { v ->
-        def pluginZipTaskName = "createPluginZip" + v.name
-        task.dependsOn tasks.named(pluginZipTaskName)
-    }
-}
-
-build.finalizedBy "angularBuild", "createPluginZip"
+build.finalizedBy "angularBuild", "repackPluginZip"
 
