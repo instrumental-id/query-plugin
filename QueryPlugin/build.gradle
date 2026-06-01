@@ -211,6 +211,14 @@ versions.each { v ->
 
         archiveFileName = archivesBaseName + "${v.name}.zip"
 
+        filesMatching('**/*.jar') {
+            entryCompression = ZipEntryCompression.STORED
+        }
+
+        filesMatching("**/.jxr") {
+            entryCompression = ZipEntryCompression.STORED
+        }
+
         into('jars') {
             from obfTask
             from configurations.includeLibraries.files
